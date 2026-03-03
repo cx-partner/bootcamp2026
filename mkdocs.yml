@@ -93,14 +93,14 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 nav:
   - Home: index.md
-  - Lab:
+  - Read Me:
       - Overview: overview.md
       - Pre-requisites: pre_requisites.md
-      - Lab 1 - Proactive Outbound Reach: lab1_campaign_manager.md
-      - Lab 2 - Automated Debt collection: lab2_debt_ai_agent.md
-      - Lab 3 - Human escalation & RT Assist: lab3_human_ai_assist.md
-      - Lab 4 - Cross-skill multi-agent orchestration: lab4_ai_agent_transfer.md
-      - Lab extra - NovaPay payment service: lab_novapay.md
+  - Lab 1 - Proactive Outbound Reach: lab1_campaign_manager.md
+  - Lab 2 - Automated Debt collection: lab2_debt_ai_agent.md
+  - Lab 3 - Human escalation & RT Assist: lab3_human_ai_assist.md
+  - Lab 4 - Cross-skill multi-agent orchestration: lab4_ai_agent_transfer.md
+  - Lab extra - NovaPay payment service: lab_novapay.md
 
   - How to use this guide:
       - Setting up and using the tool:
