@@ -1,8 +1,8 @@
 ---
-site_name: "FY26 CX Bootcamp" # This must begin with the session ID, e.g. LABXXX-1234 This is my Cisco Live Lab
-site_description: "Webex Contact Center Partner Bootcamp" # must be same as "site_name"
-site_author: Luis Garcia Delgado, Juan Corral, Sebastian Hernandez
-copyright: Copyright &copy; 2025 Cisco
+site_name: "FY26 Webex Contact Center Partner Bootcamp" 
+site_description: "WxCC Bootcamp: Proactive Debt Collection and Contention resolution"
+site_author: Luis Garcia Delgado, Juan Corral, Sebastian Hernandez, Stephanie Ross
+copyright: Copyright &copy; 2026 Cisco
 theme:
   name: material
   features:
@@ -72,10 +72,17 @@ markdown_extensions:
   - meta
   - tables
   - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true  # Makes them look much better (Material style)
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.tabbed:
       alternate_style: true
       
@@ -88,14 +95,20 @@ nav:
   - Home: index.md
   - Lab:
       - Overview: overview.md
+      - Pre-requisites: pre_requisites.md
+      - Lab 1 - Proactive Outbound Reach: lab1_campaign_manager.md
+      - Lab 2 - Automated Debt collection: lab2_debt_ai_agent.md
+      - Lab 3 - Human escalation & RT Assist: lab3_human_ai_assist.md
+      - Lab 4 - Cross-skill multi-agent orchestration: lab4_ai_agent_transfer.md
+      - Lab extra - NovaPay payment service: lab_novapay.md
 
-  #- How to use this guide:
-  #    - Setting up and using the tool:
-  #      - Initial Setup: howToUse/initialSetup.md
-  #      - Using the tool after the initial setup: howToUse/postInitial.md
-  #      - Publishing your changes: howToUse/syncChanges.md
-  #    - Styling and Advanced Features:
-  #      - Markdown and Other References: howToUse/references.md
-  #      - Custom Features: howToUse/customFeatures.md
-  #      - Custom Admonitions: howToUse/admonition.md
+  - How to use this guide:
+      - Setting up and using the tool:
+        - Initial Setup: howToUse/initialSetup.md
+        - Using the tool after the initial setup: howToUse/postInitial.md
+        - Publishing your changes: howToUse/syncChanges.md
+      - Styling and Advanced Features:
+        - Markdown and Other References: howToUse/references.md
+        - Custom Features: howToUse/customFeatures.md
+        - Custom Admonitions: howToUse/admonition.md
  
