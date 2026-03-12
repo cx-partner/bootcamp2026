@@ -1,0 +1,3252 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WxCC Bootcamp: Proactive Debt Collection and Contention resolution">
+      
+      
+        <meta name="author" content="Luis Garcia Delgado, Juan Corral, Sebastian Hernandez, Stephanie Ross">
+      
+      
+      
+        <link rel="prev" href="../lab1_campaign_manager/">
+      
+      
+        <link rel="next" href="../lab3_human_ai_assist/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../template_assets/webex75.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Lab 2 - Automated Debt collection - FY26 Webex Contact Center Partner Bootcamp</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-2-automating-debt-collection" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FY26 Webex Contact Center Partner Bootcamp" class="md-header__button md-logo" aria-label="FY26 Webex Contact Center Partner Bootcamp" data-md-component="logo">
+      
+  <img src="../template_assets/webexLogo91.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FY26 Webex Contact Center Partner Bootcamp
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 2 - Automated Debt collection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  Read Me
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pre_req_email_channel/" class="md-tabs__link">
+          
+  
+  
+  Pre-requisites
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lab1_campaign_manager/" class="md-tabs__link">
+          
+  
+  
+  Labs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../howToUse/initialSetup/" class="md-tabs__link">
+          
+  
+  
+  How to use this guide
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FY26 Webex Contact Center Partner Bootcamp" class="md-nav__button md-logo" aria-label="FY26 Webex Contact Center Partner Bootcamp" data-md-component="logo">
+      
+  <img src="../template_assets/webexLogo91.png" alt="logo">
+
+    </a>
+    FY26 Webex Contact Center Partner Bootcamp
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Me
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Read Me
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pre-requisites
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pre-requisites
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pre_req_email_channel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Email Digital Channel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../airtable.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Airtable Base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Labs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Labs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab1_campaign_manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 1 - Proactive Outbound Reach
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 2 - Automated Debt collection
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 2 - Automated Debt collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#lab-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-requisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab Overview 📌
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-21-create-alex-your-debt-collection-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2.1 - Create Alex, your Debt Collection AI Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-22-feed-alex-with-the-knowledge-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2.2 - Feed Alex with the Knowledge Base
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-23-build-the-fulfillment-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2.3 - Build the fulfillment Actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab 2.3 - Build the fulfillment Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fetch_balance-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [fetch_balance] Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authenticate_user-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Authenticate_user] Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payment_session-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [payment_session] Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confirm_payment-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [confirm_payment] Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xxxxxx-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [xxxxxx] Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xxxxxx-action_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [xxxxxx] Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-24-test-the-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2.4 - Test the AI Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-25-connect-the-ai-agent-to-the-outbound-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2.5 - Connect the AI Agent to the Outbound Call
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-26-test-the-complete-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2.6 - Test the complete scenario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab Completion ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab3_human_ai_assist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 3 - Human escalation &amp; RT Assist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab4_ai_agent_transfer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 4 - Cross-skill multi-agent orchestration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab_novapay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab extra - NovaPay payment service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to use this guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to use this guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1">
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting up and using the tool
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Setting up and using the tool
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../howToUse/initialSetup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Initial Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../howToUse/postInitial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using the tool after the initial setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../howToUse/syncChanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing your changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2">
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Styling and Advanced Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Styling and Advanced Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../howToUse/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown and Other References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../howToUse/customFeatures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../howToUse/admonition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Admonitions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lab-2-automating-debt-collection">Lab 2 - Automating Debt Collection 🤖</h1>
+<h2 id="lab-purpose">Lab Purpose</h2>
+<p>In <strong>Lab 1</strong>, you successfully configured the <strong>Webex Contact Center (WxCC) Campaign Manager</strong> to initiate proactive outbound calls to customers with an upcoming debt. While Lab 1 focused on the "how" to reach the customer, <strong>Lab 2</strong> focuses on the "what"—the intelligent conversation that follows.</p>
+<p>In this lab, you will connect those outbound calls to <strong>Alex</strong>, an autonomous AI Agent for <strong>Webex Financial Group</strong>. Alex is not just a chatbot; it is a specialized financial assistant designed to handle the sensitive process of debt recovery, account inquiries, and fraud detection. This lab will guide you through configuring the AI's persona, its strict security protocols, and its ability to execute real-time financial actions.</p>
+<details class="purpose" open="open">
+<summary>Lab Objectives</summary>
+<p>The purpose of this lab is to transform a standard outbound call into a secure, automated financial transaction. You will configure the AI Agent to automate the debt collection process. </p>
+<p>Key objectives include:</p>
+<ul>
+<li><strong>Persona Implementation:</strong> Configuring the AI Agent persona to be professional, firm, and helpful.</li>
+<li><strong>Automated Debt Payment:</strong> Use the <strong>NovaPay service</strong> to Create a payment session for the customer to realize the payment. </li>
+<li><strong>Customer Enquiry:</strong> Incorporate Knowledge for Alex to properly respond to customer enquiries. We will use the new <strong>URL injection</strong> for this.</li>
+<li><strong>Risk Management:</strong> Implementing escalation logic that identifies fraudulent or suspicious transactions and triggers a hand-off to a human specialist with all relevant transaction context.</li>
+</ul>
+</details>
+<details class="challenge" open="open">
+<summary>Lab Outcome</summary>
+<p>By the end of Lab 2, you will have a fully operational AI Agent integrated into your outbound campaign. The agent will be capable of:</p>
+<ol>
+<li><strong>Secure Verification:</strong> Confirming the identity of the recipient and obtaining consent for an authentication check.</li>
+<li><strong>Debt Resolution:</strong> Informing customers of their balance and maturity dates, then negotiating total or partial payments.</li>
+<li><strong>Financial Execution:</strong> Creating real-time payment sessions via <strong>NovaPay</strong> and confirming completion to update the Debt Database.</li>
+<li><strong>Account Support:</strong> Providing 7-day transaction histories and general account details (Balance, Rewards, etc.) upon request.</li>
+<li><strong>Fraud Safeguarding:</strong> Automatically detecting disputes or suspicious activity and escalating the call to a Human Specialist while recording critical data points (Transaction ID, Vendor, Amount).</li>
+</ol>
+</details>
+<details class="tool" open="open">
+<summary>The NovaPay payment service</summary>
+<p>In this lab, you will use a NovaPay mock-payment service built for the purpose of this Bootcamp. The NovaPay service provides:</p>
+<ol>
+<li>
+<p>A mockpayment frontend web site that mimics a typical payment user interface. The frontend offers a user interface to enter the payment data: amount, card option (visa, mastercard...) and  card details (name, number, expiration date and cvv). It allows a user to enter the data and click on a pay button to confirm the payment. The web site responds with a confirmation message that the payment has been completed. The user will see the amount payed, the last 4 digits of its credit card and a mock confirmation number.</p>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>This is a UI simulation only. It does not process real payments, store data, or connect to any backend.</p>
+<p>Note: The application does not run any format validation on the input data</p>
+</details>
+</li>
+<li>
+<p>A web service that exposes an API to allow a third party to open a payment session for the customer to pay and complete the payment. It also provides the session status to check whether the payment has been completed. You will use this API to implement the payment automation in your AI Agent. </p>
+</li>
+</ol>
+</details>
+<details class="curious" open="open">
+<summary>Want to have your own <strong>NovaPay</strong> service for your Demos?</summary>
+<p>The <a href="../lab_novapay/">Extra Lab</a> in this Bootcamp provides you a <strong>step-by-step guide</strong> to replicate and deploy your own version of the <strong>NovaPay Payment Service</strong>, using the existing implementation done for this Bootcamp</p>
+</details>
+<hr>
+<h2 id="pre-requisites">Pre-requisites</h2>
+<p>In order to be able to complete this lab, you must: </p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have your <strong>Airtable repositories</strong> completed for the <em>Customer</em> and <em>Transactions</em> data</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have an <strong>email digital channel</strong> available in your tenant</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have completed <a href="../lab1_campaign_manager/">Lab 1 - Proactive Outbound Reach</a></li>
+</ul>
+<hr>
+<h2 id="lab-overview">Lab Overview 📌</h2>
+<p>In this lab you will perform the following tasks:</p>
+<ol>
+<li>Create Alex, the debt collection AI Agent.</li>
+<li>Feed Alex with a Knowledge Base</li>
+<li>Build the fulfillment Actions</li>
+<li>Test the AI Agent</li>
+<li>Connect the AI Agent to the outbound call</li>
+<li>Test the complete scenario </li>
+</ol>
+<hr>
+<h2 id="lab-21-create-alex-your-debt-collection-ai-agent">Lab 2.1 - Create Alex, your Debt Collection AI Agent</h2>
+<p>In this first step, you will define the "brain" and personality of your AI Agent. You will configure the core identity of Alex, setting the professional and secure tone required for financial interactions. This section covers the implementation of the System Prompt, where you will establish the strict sequential logic—from name verification to debt disclosure—ensuring the agent acts as a secure first-line filter for Webex Financial Group.</p>
+<details class="webex" open="open">
+<summary>Create Alex</summary>
+<ol>
+<li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>[Contact Center]</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link. The Webex AI Agent studio will open in a new window. </li>
+<li>Click on <strong>[+ Create agent]</strong></li>
+<li>Click on <strong>[Start from scratch]</strong> and then <strong>[-&gt; Next]</strong></li>
+<li>
+<p>Select the <strong>[Autonomous]</strong> option and fill in the <strong>essential details</strong> as below:</p>
+<ul>
+<li><strong>Agent Name</strong>: <copy><code>Finance Debt Collection Agent</code></copy> (or whatever meaningful name for you)</li>
+<li><strong>AI engine</strong>: select one of the engines (<em>Webex AI Pro-US 1.0</em> is available in English only)</li>
+<li>
+<p><strong>Agent's goal</strong>: copy the below content (you can play with the goal to give the Agent your own flavour)</p>
+<p><copy><code>You are Alex, a Webex Financial Group AI agent. Your mission is to proactively resolve maturing debts while maintaining a security-first posture. Guide customers through total or partial payments using secure NovaPay links and provide general information and account or transaction history upon request. Support account inquiries and transaction history. Maintain a firm, professional, and helpful tone. Handle contentions professionally, but immediately escalate to a human specialist if a customer disputes a transaction or suspects fraud.</code> </copy></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click the <strong>[Create]</strong> button.</p>
+</li>
+</ol>
+<details class="gif" open="open">
+<summary>Create Alex</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/AI%20Agent%20Create.gif" data-title="Create AI Agent" data-desc-position="top"><img alt="Create AI Agent" src="../assets/AI%20Agent%20Create.gif"></a>
+</figure><p></p>
+</details>
+<details class="tip" open="open">
+<summary>Writing Goals for Autonomous AI Agents</summary>
+<ul>
+<li>Keep goals short, concise, and focused on the overall purpose.</li>
+<li>Avoid specific details, technical jargon, or multiple unrelated goals in one prompt.</li>
+<li>Use clear language aligned with the agent’s capabilities.</li>
+</ul>
+</details>
+</details>
+<details class="webex" open="open">
+<summary>Giving Alex a brain</summary>
+<p>Once your agent is created, you need to give him the instructions on what to do. In Webex Contact Center, the <em>System Prompt</em> is the operational "brain" of your AI Agent. Following <a href="https://help.webex.com/en-us/article/nelkmxk/Guidelines-and-best-practices-for-automating-with-AI-agent#concept-template_cce8a04c-a0d8-4c35-b20b-e5846eaf5293">Webex Best Practices</a>, a well-structured prompt ensures the LLM manages intent, handles security, and orchestrates tools correctly.</p>
+<p>From the AI Agent configuration page:</p>
+<ol>
+<li>Select your <strong>Time zone</strong></li>
+<li>
+<p>Fill in the <strong>Welcome message</strong>
+    </p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Hello, I´m Alex, a personal balance accountant from Webex Financial Group. Am I speaking to {{firstName}} {{lastName}}?
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>Copy the below prompt in the <strong>Instructions</strong> field
+    </p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>1. Identity
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Role Definition: You are Alex, a secure AI Agent for Webex Financial Group, specializing in debt resolution and account management.
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Tone: Professional, firm yet helpful, ensuring customers understand their financial obligations.
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>2. Context
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Background: This is an outbound call regarding a debt nearing maturity. The interaction is low-risk and security-focused.
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Environment: Voice line with potential background noise. Keep responses concise.
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>3. Task
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Available Actions:
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>[authenticate_user]: Authenticate user; generates random positions and returns the PIN digits.
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>[fetch_balance]: Retrieve account balance for payment offers.
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>[payment_session]: Create a payment session with NovaPay.
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>[payment_confirm]: Confirm payment completion.
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>[fetch_transactions]: Fetch recent transactions.
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Steps:
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>Name Verification: Confirm the customer's name. If the person is not the right one, ask for the right person
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>Introduction: "Hello [First Name], I’m Alex from Webex Financial Group. I’m calling about your account balance and maturity date."
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>Authentication Consent: "For your security, I need to perform an authentication check. Do you want to proceed?"
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>Authentication: Execute [fetch_balance] to retrieve customer data and the stored PIN. Next, run [authenticate_user] to identify two random digit positions. Challenge the customer for the digits at those specific positions and verify their response against the PIN values returned by the action to validate their identity.
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>Debt Disclosure: Use [fetch_balance] output to inform the customer of their balance and maturity date.
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>Payment Negotiation: Offer total or partial payment options.
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>Payment Execution: If accepted, inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>Confirmation: Use [payment_confirm] to verify payment and inform the customer of the result, including the amount paid and transaction ID.
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>Account &amp; Transaction Support: Provide account details and/or the number of recent transactions (amount, date, vendor and city) requested by the customer (below 7). 
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>General Enquiries: Use the Knowledge Base for banking questions.
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>Escalation Logic: If fraud is suspected, escalate to a Human Specialist with transaction details.
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>4. Response Guidelines
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>Formatting: Keep responses short and conversational. Avoid long lists.
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>Language Style: Use clear, direct language regarding dates and amounts.
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>5. Error Handling
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>Clarification: "I didn’t catch that. Could you repeat?"
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>Default Response: "I’m not authorized for that. I can assist with payments or account balances."
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>Action Failures: "I’m experiencing a delay. Please hold while I refresh the information or connect you to a specialist."
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>6. User Defined Guardrails
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>Stay within Webex Financial Group’s banking services.
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>Click on <strong>[Save changes]</strong></p>
+<details class="tip" open="open">
+<summary>Writing Prompts for Autonomous AI Agents</summary>
+<p>Prompt Engineering Tips:</p>
+<ul>
+<li>Use clear, concise language.</li>
+<li>Use markdown formatting (headings, lists).</li>
+<li>Define the AI agent’s persona and tone.</li>
+<li>Break tasks into step-by-step instructions.</li>
+<li>Plan for errors with fallback prompts.</li>
+<li>Preserve conversational context.</li>
+<li>Reference external actions clearly.</li>
+<li>Add guardrails to keep responses goal-focused.</li>
+<li>Provide examples to improve accuracy.</li>
+</ul>
+<p>Templates for Writing Instructions:</p>
+<ul>
+<li>Define role, tone, and demeanor.</li>
+<li>Provide background and environment context.</li>
+<li>Outline task steps and optional steps.</li>
+<li>Specify response formatting and language style.</li>
+<li>Define error handling and fallback responses.</li>
+<li>Set user-defined guardrails.</li>
+<li>Include sample conversations.</li>
+</ul>
+</details>
+<details class="challenge" open="open">
+<summary>Build your own prompt!</summary>
+<p>We encourage you to use this proposed structure as a foundation, but don't hesitate to leverage advanced AI tools like <em>ChatGPT</em> or <em>Gemini</em> to refine the language. By providing these tools with a detailed description of the agent's purpose—debt recovery, secure authentication, and fraud escalation—you can generate a highly sophisticated prompt that handles natural conversation fluently. Experiment with different tones and instructions to see how they impact the agent's decision-making during the call!</p>
+</details>
+<details class="gif" open="open">
+<summary>AI Agent profile configuration</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/AI%20Agent%20Prompt.gif" data-title="AI Agent Prompt" data-desc-position="top"><img alt="AI Agent Prompt" src="../assets/AI%20Agent%20Prompt.gif"></a>
+</figure><p></p>
+</details>
+</li>
+</ol>
+<p>You have now created your AI Agent with its own profile, but note that the Agent has not yet been published. </p>
+</details>
+<hr>
+<h2 id="lab-22-feed-alex-with-the-knowledge-base">Lab 2.2 - Feed Alex with the Knowledge Base</h2>
+<div class="admonition download inline end">
+<p class="admonition-title">Knowledge base document</p>
+<p>You can download the Knowledge base documentation from <a href="../bcamp_files/Webex%20Financial%20Group%20KB.docx">here</a>.</p>
+</div>
+<p>To ensure Alex can handle more than just transactional data, you will now provide the agent with a Knowledge Base. This section involves uploading or linking documentation regarding Webex Financial Group’s policies, general banking FAQs, and service descriptions. This allows the agent to answer "General Enquiries" accurately without needing a human specialist for basic informational questions.</p>
+<details class="webex" open="open">
+<summary>Knowledge-Base Configuration</summary>
+<ol>
+<li>In your AI agent configuration, click on <strong>[Knowledge]</strong>.</li>
+<li>Click on <strong>"Select a knowledge base"</strong> drop down box </li>
+<li>Click on <strong>[+Add new]</strong></li>
+<li>Enter a name for you KB <code>Webex Finance QandA</code>, and enter a description. </li>
+<li>Click on <strong>[Create]</strong></li>
+<li>Drag and drop the Knowledge Base document you downloaded above.</li>
+<li>Click on <strong>[Process Files]</strong></li>
+<li>The system will take some minutes to process the file. Once completed, you can see your KB file under the <strong>Processed files</strong> section.</li>
+</ol>
+<details class="gif" open="open">
+<summary>Create Knowledge Base</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/AI%20Agent%20KB.gif" data-title="Create AI Agent KowledgeBase" data-desc-position="top"><img alt="Create AI Agent KowledgeBase" src="../assets/AI%20Agent%20KB.gif"></a>
+</figure><p></p>
+</details>
+<p>To come back to the AI Agent configuration page, click on the <strong>[x]</strong> button at the top-right.</p>
+<p>Click on <strong>[Save changes]</strong> to save the KB in your AI Agent.</p>
+</details>
+<hr>
+<h2 id="lab-23-build-the-fulfillment-actions">Lab 2.3 - Build the fulfillment Actions</h2>
+<p>This is where you give Alex the power to interact with your backend systems. You will configure the specific functional "tools" or actions that the agent can execute during a call. You will define and map the following critical actions:</p>
+<ul>
+<li>[fetch_balance]: To retrieve real-time customer data.</li>
+<li>[authenticate_user]: To verify customer identity.</li>
+<li>[payment_session]: To trigger a NovaPay session and email a URL.</li>
+<li>[payment_confirm]: To validate and update the database after a payment.</li>
+<li>[fetch_transactions]: To pull the last transactions of account activity.</li>
+</ul>
+<details class="info" open="open">
+<summary>AI Agent handover to Human Agents</summary>
+<p>Note the <strong>Agent handover</strong> action is enabled by default allowing the AI agent to escalate the conversation to a human agent. It is always displayed in the Actions page of the AI agent configuration, where it can be enabled or disabled using the toggle option.</p>
+</details>
+<h3 id="fetch_balance-action"><strong>[fetch_balance]</strong> Action</h3>
+<p>The <em>fetch_balance</em> action will provide the AI Agent with all the necessary customer data to handle debt collection and to resolve customer queries. It will basically use the Airtable API to fetch the required information from your Customer table. </p>
+<p>These are the required steps: </p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the fulfillment flow that will implement the action in Webex Connect</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the action in the AI Agent</li>
+</ul>
+<details class="webex" open="open">
+<summary>Action fulfillment flow in Webex Connect</summary>
+<p>You will first build the WxConnect flow that implements the action. </p>
+<ol>
+<li>Go to <strong>Control Hub</strong> -&gt;  <strong>Contact Center</strong> -&gt;  <strong>Overview</strong> and under Digital Channels launch <strong>[Webex Connect]</strong></li>
+<li>
+<p>If you have not done it yet, create a new Service for your Bootcamp. </p>
+<ul>
+<li>Click on <strong>[Create New Service]</strong></li>
+<li>Give it a name <copy><code>Webex Finance Bootcamp</code></copy> and click on <strong>[Create]</strong></li>
+</ul>
+<details class="info" open="open">
+<summary>Create Service in WxConnect</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/Create%20Service.png" data-title="Create Service" data-desc-position="top"><img alt="Create Service" src="../assets/Create%20Service.png"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>Go to your Service and click on <strong>[Flows]</strong> to create your fulfillment flow</p>
+<ul>
+<li>Click on <strong>[Create Flow]</strong></li>
+<li>Give your flow a name <copy><code>fetch_balance</code></copy></li>
+<li>Select <strong>New Flow</strong> under <strong>Method</strong></li>
+<li>Select <strong>Start from Scratch</strong></li>
+<li>Click on <strong>[Create]</strong></li>
+</ul>
+</li>
+<li>
+<p>Configure the Start Node to trigger the flow from AI Agent</p>
+<ul>
+<li>Select the <strong>AI Agent Event</strong></li>
+<li>Set the <strong>SAMPLE JSON</strong> to the below one 
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">"PhoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23434523489"</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ul>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>The variable name in the Json sample must match the corresponding entity in the AI Agent action.</p>
+</details>
+<ul>
+<li>Click on <strong>[Parse]</strong></li>
+<li>Click on <strong>[Save]</strong></li>
+</ul>
+<p>???+ info 
+    Flows do not autosave, so make sure you save your flow whenever you make edits.</p>
+<details class="gif" open="open">
+<summary>Create the fulfillment flow</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/fetch_balance%20flow%201.gif" data-title="Create the Flow" data-desc-position="top"><img alt="Create the Flow" src="../assets/fetch_balance%20flow%201.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>We will first normalize the phone number using a <strong>Evaluate</strong> node to prepare it for the database query in our Airtable base. </p>
+<ul>
+<li>Drag and drop an <strong>Evaluate</strong> node to the canvas besides the <strong>Start Node</strong></li>
+<li>Connect the green outlet of the <strong>Start Node</strong> to the new <strong>Evaluate</strong> node.</li>
+<li>Double click on the <strong>Evaluate</strong> node</li>
+<li>Rename the node to <copy><code>Normalize Phone Number</code></copy></li>
+<li>
+<p>Copy the below javascript code in the code editor of the node
+    </p><div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">phone_Number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.PhoneNumber)"</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\+/g</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/ /g</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\(/g</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\)/g</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\-/g</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">);</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kd">var</span><span class="w"> </span><span class="nx">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nx">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'{PhoneNumber}="'</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">phone_Number</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">'"'</span><span class="p">;</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="mf">1</span><span class="p">;</span>
+</span></code></pre></div><p></p>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Make sure the $(n2.aiAgent.PhoneNumber) variable corresponds to your PhoneNumber variable in the Start Node. You can pick it up by selecting it from the <strong>Input Variables</strong> right panel, under the <strong>Start</strong> section. </p>
+</details>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>This code is a string cleaning and formatting script designed to prepare a phone number for the database query. The first part uses Regex to strip away non-numeric characters, converting the number from <code>+1 (555) 123-4567</code> -&gt; <code>15551234567</code>. </p>
+<p>The second block builds a specific string that Airtable use to find a record in the <code>filterByFormula</code> API query parameter. This code can be easily generated with <code>Generate Code using AI</code> option in the  Evaluate node or any other LLM (Geminy, Claude...)</p>
+</details>
+</li>
+<li>
+<p>Set the <strong>Script Output</strong> value to <code>1</code></p>
+</li>
+<li>Set the <strong>Branch Name</strong> value to <code>Success</code></li>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow</li>
+</ul>
+<details class="gif" open="open">
+<summary>Set the Evaluate Node</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/fetch_balance%20flow%202.gif" data-title="Set the Evaluate node" data-desc-position="top"><img alt="Set the Evaluate node" src="../assets/fetch_balance%20flow%202.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>In the last step you will fetch the customer data from your Airtable Customers repository. </p>
+<details class="important" open="open">
+<summary>Important</summary>
+<p>This part of the flow will leverage the Airtable API generated from your <em>Customer</em> table. So you must have:</p>
+<ul>
+<li>your Airtable base created, with the Customer Table populated</li>
+<li>your <a href="https://airtable.com/developers/web/api/introduction">Airtable API</a> handy for your base (from the API Reference site, click on the base you created for the Bootcamp. To see personalized documentation generated for your bases, log in to Airtable.). Your Airtable Base API is available at <code>https://airtable.com/&lt;yourBaseID&gt;/api/docs</code></li>
+<li>Your <a href="https://airtable.com/create/tokens">Personal Access token</a> created.  </li>
+</ul>
+<p>The API we will use in this flow will be as follows: </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>GET     https://api.airtable.com/v0/&lt;yourBaseID&gt;/Customers
+</span></code></pre></div>
+<p>To fetch the correct entry, we will use the <code>filterByFormula</code> query parameter set to the string value returned by the <strong>Evaluate</strong> node which corresponds to customer's phone number. </p>
+</details>
+<ul>
+<li>Drag and drop an <strong>HTTP Request</strong> node to the canvas besides the <strong>Evaluate</strong> node</li>
+<li>Connect the green outlet of the <strong>Evaluate</strong> node to the new <strong>HTTP Request</strong> node.</li>
+<li>Double click on the <strong>HTTP Request</strong> node</li>
+<li>Rename the node to <copy><code>Fetch Customer Info</code></copy></li>
+<li>
+<p>Fill in the parameters as follows: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;"><code>GET</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Endpoint URL</strong></td>
+<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/Customers?filterByFormula=$(formula)</code> </copy></td>
+<td style="text-align: left;">Replace <yourbaseid> with the value of your Airtable Base</yourbaseid></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Header</strong></td>
+<td style="text-align: left;"><copy><code>Authorization</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Value</strong></td>
+<td style="text-align: left;"><code>Bearer &lt;yourPersonalToken&gt;</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Header</strong></td>
+<td style="text-align: left;"><copy><code>Content-Type</code></copy></td>
+<td style="text-align: left;">click <strong>+ Add Another Header</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Value</strong></td>
+<td style="text-align: left;"><copy><code>application/json</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Connection Timeout</strong></td>
+<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Request Timeout</strong></td>
+<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Let's now fill in the Output Variables. For this we will use a json sample of the API output to select those values that we need for our flow. </p>
+<ul>
+<li>Make sure the <strong>JSON</strong> radio button is enabled in the <strong>Output Variables</strong> section.</li>
+<li>Click on <strong>Import From Sample</strong></li>
+<li>Copy the below json structure: </li>
+</ul>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recl7Sgmtz9kEFCI2"</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">            </span><span class="nt">"createdTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-03-06T13:33:30.000Z"</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">            </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                </span><span class="nt">"﻿CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recZkHsiTTGUvCfhj"</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">                </span><span class="nt">"FirstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">                </span><span class="nt">"LastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">                </span><span class="nt">"DOB"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-07-15"</span><span class="p">,</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">                </span><span class="nt">"SocialSecurity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-45-6789"</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">                </span><span class="nt">"PhoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12626996219"</span><span class="p">,</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">                </span><span class="nt">"Balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$10000.32"</span><span class="p">,</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">                </span><span class="nt">"CashbackBalance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$120.00"</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">                </span><span class="nt">"Address"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">                    </span><span class="s2">"2020 Main ST"</span><span class="p">,</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">                    </span><span class="s2">"Holly Springs"</span><span class="p">,</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">                    </span><span class="s2">"NC 28598"</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">                </span><span class="p">],</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">                </span><span class="nt">"RewardsTier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basic"</span><span class="p">,</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">                </span><span class="nt">"CreditCard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Travel Rewards Card"</span><span class="p">,</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">                </span><span class="nt">"PendingTransactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">                    </span><span class="s2">"rec0Spe40hczvsDQJ"</span><span class="p">,</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">                    </span><span class="s2">"recrXg2EAtdDtB5qw"</span><span class="p">,</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">                    </span><span class="s2">"rec6nO5V9JNDvp3Ek"</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">                </span><span class="p">],</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">                </span><span class="nt">"PIN"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9643"</span><span class="p">,</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">                </span><span class="nt">"Email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jdoe@domain.com"</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>Click on <strong>[Parse]</strong></li>
+<li>
+<p>Scroll down and select the following parameters to be extracted. </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$.records[0].id 
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$.records[0].fields.Email 
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>$.records[0].fields.CustomerID 
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>$.records[0].fields.RewardsTier 
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>$.records[0].fields.FirstName 
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>$.records[0].fields.CreditCard 
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>$.records[0].fields.CashbackBalance 
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>$.records[0].fields.PIN 
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>$.records[0].fields.DOB 
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>$.records[0].fields.LastName 
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>$.records[0].fields.Balance 
+</span></code></pre></div>
+</li>
+<li>
+<p>Click on <strong>[Import]</strong></p>
+</li>
+<li>
+<p>Back in the node window dialogue, fill in the <strong>Output Variable Name</strong> for every parameter as follows: (leave the <strong>Response Entity</strong> field set to <em>Body</em>)</p>
+<table>
+<thead>
+<tr>
+<th>Output Variable Name</th>
+<th>Response Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><copy>  RecordID    </copy></td>
+<td>$.records[0].id</td>
+</tr>
+<tr>
+<td><copy>  Email   </copy></td>
+<td>$.records[0].fields.Email</td>
+</tr>
+<tr>
+<td><copy>  CustomerID  </copy></td>
+<td>$.records[0].fields.﻿CustomerID</td>
+</tr>
+<tr>
+<td><copy>  RewardsTier </copy></td>
+<td>$.records[0].fields.RewardsTier</td>
+</tr>
+<tr>
+<td><copy>  FirstName   </copy></td>
+<td>$.records[0].fields.FirstName</td>
+</tr>
+<tr>
+<td><copy>  CreditCard  </copy></td>
+<td>$.records[0].fields.CreditCard</td>
+</tr>
+<tr>
+<td><copy>  CashbackBalance </copy></td>
+<td>$.records[0].fields.CashbackBalance</td>
+</tr>
+<tr>
+<td><copy>  PIN </copy></td>
+<td>$.records[0].fields.PIN</td>
+</tr>
+<tr>
+<td><copy>  DOB </copy></td>
+<td>$.records[0].fields.DOB</td>
+</tr>
+<tr>
+<td><copy>  LastName    </copy></td>
+<td>$.records[0].fields.LastName</td>
+</tr>
+<tr>
+<td><copy>  Balance </copy></td>
+<td>$.records[0].fields.Balance</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Click on <strong>[Save]</strong></p>
+</li>
+<li>
+<p>To complete the node, click on the green outlet at the right and drag it to the canvas. Release it to open the <strong>End</strong> dialogue</p>
+<ul>
+<li>Set the <strong>Node Event</strong> value to <code>onSuccess</code></li>
+<li>Set the <strong>Flow Result</strong> value to <code>101 - Successfully completed flow [Success]</code></li>
+<li>Click on <strong>[Save]</strong></li>
+</ul>
+</li>
+<li>
+<p>Save the flow!</p>
+</li>
+</ul>
+</li>
+</ul>
+<details class="gif" open="open">
+<summary>Fetching the data through the API</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/fetch_balance%20flow%203.gif" data-title="Using API to fetch data" data-desc-position="top"><img alt="Using API to fetch data" src="../assets/fetch_balance%20flow%203.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>To finish your fulfillment flow, we need to pass on the output variables back to your AI Agent. The way to do it is through the <strong>Flow Outcomes</strong></p>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>The AI Agent is notified of flow completion. By default, the notification for AI Agent is enabled under the flow setting with the default payload. On flow completion, you can update the payload shared with the AI Agent using the <strong>Flow Outcomes</strong></p>
+</details>
+<ul>
+<li>Click on the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M195.1 9.5c3-14.8 16.1-25.5 31.3-25.5h59.8c15.2 0 28.3 10.7 31.3 25.5l14.5 70c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9L477 417.9c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5h-59.8c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8l-68.1 22.5c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7l-53.4-47.5C.9 175.7-1.7 159 5.8 145.9l29.9-51.8c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8zM256.3 336a80 80 0 1 0-.6-160 80 80 0 1 0 .6 160"></path></svg></span> button at the top right of the flow editor. </li>
+<li>Click on the <strong>Flow Outcomes</strong> tab</li>
+<li>Open the ‘Last Execution Status’ Outcome. The ‘Notify AI Agent’ radio button is enabled by default for the start node with 'AI Agent’ as the trigger.</li>
+<li>
+<p>To return all the values fetched from the Airtable Customers repository, we need to add the Key and Value of every Output Variable we stored in the HTTP Request node. Click on <strong>+ Add New</strong> for every parameter in the list below. Fetch the <strong>Value</strong> variables from the <strong>Input Variables</strong> right panel, under the <strong>HTTP Request</strong> section.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><copy>  RecordID    </copy></td>
+<td>$(n3.RecordID)</td>
+</tr>
+<tr>
+<td><copy>  Email   </copy></td>
+<td>$(n3.Email)</td>
+</tr>
+<tr>
+<td><copy>  CustomerID  </copy></td>
+<td>$(n3.CustomerID)</td>
+</tr>
+<tr>
+<td><copy>  RewardsTier </copy></td>
+<td>$(n3.RewardsTier)</td>
+</tr>
+<tr>
+<td><copy>  firstName   </copy></td>
+<td>$(n3.FirstName)</td>
+</tr>
+<tr>
+<td><copy>  CreditCard  </copy></td>
+<td>$(n3.CreditCard)</td>
+</tr>
+<tr>
+<td><copy>  CashbackBalance </copy></td>
+<td>$(n3.CashbackBalance)</td>
+</tr>
+<tr>
+<td><copy>  PIN </copy></td>
+<td>$(n3.PIN)</td>
+</tr>
+<tr>
+<td><copy>  DOB </copy></td>
+<td>$(n3.DOB)</td>
+</tr>
+<tr>
+<td><copy>  lastName    </copy></td>
+<td>$(n3.LastName)</td>
+</tr>
+<tr>
+<td><copy>  balance </copy></td>
+<td>$(n3.Balance)</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Click on <strong>[Save]</strong></p>
+</li>
+<li>Save the flow!!</li>
+</ul>
+<details class="gif" open="open">
+<summary>Returning data to the AI Agent</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/fetch_balance%20flow%204.gif" data-title="Return Data to AI Agent" data-desc-position="top"><img alt="Return Data to AI Agent" src="../assets/fetch_balance%20flow%204.gif"></a>
+</figure><p></p>
+</details>
+</li>
+</ol>
+<p>Your <strong>fetch_balance</strong> flow is now completed. 
+Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow, otherwise, it will not be visible to the AI Agent Studio. </p>
+</details>
+<details class="webex" open="open">
+<summary>AI Agent action definition</summary>
+<p>To create the <em>fetch_balance</em> action, let´s get back to the <strong>AI Agent Studio</strong></p>
+<ol>
+<li>In the <strong>AI Agent Studio</strong>, select your <em>Finance Debt Collection Agent</em></li>
+<li>Click on <strong>[Actions]</strong></li>
+<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Fill in the <strong>General information</strong> of your action<ul>
+<li><strong>Action name</strong>: <copy><em>fetch_balance</em></copy></li>
+<li><strong>Action description</strong>: copy and paste the following description.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Using the customer's phone number, fetch the following details from the Customer DB: 
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    - Record ID
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    - Customer ID
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    - Account Balance
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    - Customer Information (Name, DOB)
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    - PIN number
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    - Cashback balance
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    - Rewards tier
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    - Credit card
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    - Email
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><del><strong>Action scope</strong>: select <em>Slot filling and fulfillment</em></del> This option has been removed</li>
+<li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
+<li>
+<p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Entity Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><copy><code>PhoneNumber</code></copy></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><copy><code>Customer's phone number</code></copy></td>
+<td style="text-align: left;"><copy><code>13458752396</code></copy></td>
+<td style="text-align: left;"><code>Required</code></td>
+</tr>
+</tbody>
+</table>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>The entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.</p>
+</details>
+</li>
+<li>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Webex Connect Flow Builder Fulfillment</strong> section</p>
+<ul>
+<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
+<li>Select the flow `fetch_balance``</li>
+</ul>
+</li>
+<li>Click on <strong>[-&gt; Add]</strong></li>
+</ol>
+<p>You can see now your new action in the <strong>Actions</strong> panel of your AI Agent.</p>
+<details class="gif" open="open">
+<summary>Creating a new Action</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/fetch_balance%20action.gif" data-title="Create AI Agent KowledgeBase" data-desc-position="top"><img alt="Create AI Agent KowledgeBase" src="../assets/fetch_balance%20action.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<h3 id="authenticate_user-action">[Authenticate_user] Action</h3>
+<p>The <em>authenticate_user</em> action facilitates secure customer verification. It generates two random indices between 1 and 4, extracts the digits at those positions from the stored 4-digit PIN, and provides them to the AI Agent. The Agent uses this data to conduct a challenge-response validation with the customer.</p>
+<p>We will proceed as in the previous action: </p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the fulfillment flow that will implement the action in Webex Connect</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the action in the AI Agent</li>
+</ul>
+<details class="webex" open="open">
+<summary>Action fulfillment flow in Webex Connect</summary>
+<ol>
+<li>Go to your <em>Webex Finance Bootcamp</em> Service in Webex Connect</li>
+<li>Click on <strong>[Flows]</strong> to create your new flow<ul>
+<li>Click on <strong>[Create Flow]</strong></li>
+<li>Give your flow a name <copy><code>authenticate_user</code></copy></li>
+<li>Select <strong>New Flow</strong> under <strong>Method</strong></li>
+<li>Select <strong>Start from Scratch</strong></li>
+<li>Click on <strong>[Create]</strong></li>
+</ul>
+</li>
+<li>
+<p>Configure the Start Node to trigger the flow from the AI Agent</p>
+<ul>
+<li>Select the <strong>AI Agent Event</strong></li>
+<li>Set the <strong>SAMPLE JSON</strong> to the below one 
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nt">"PIN"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234"</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
+</span></code></pre></div></li>
+<li>Click on <strong>[Parse]</strong></li>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow</li>
+</ul>
+<details class="gif" open="open">
+<summary>Create the fulfillment flow</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/authenticate_user%20flow%201.gif" data-title="Create the Flow" data-desc-position="top"><img alt="Create the Flow" src="../assets/authenticate_user%20flow%201.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>The next step in our flow will be to generate two random positions between 1 and 4 and extract the digits at those positions from the PIN. We will use an <strong>Evaluate</strong> node</p>
+<ul>
+<li>Drag and drop an <strong>Evaluate</strong> node to the canvas besides the <strong>Start Node</strong></li>
+<li>Connect the green outlet of the <strong>Start Node</strong> to the new <strong>Evaluate</strong> node.</li>
+<li>Double click on the <strong>Evaluate</strong> node</li>
+<li>Rename the node to <copy><code>Extract PIN positions</code></copy></li>
+<li>
+<p>Copy the below javascript code in the code editor of the node
+    </p><div class="language-javascript highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">position1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kd">var</span><span class="w"> </span><span class="nx">position2</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">// Keep generating position2 until it is different from position1</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nx">position2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">position1</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">position2</span><span class="p">);</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">position1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">position2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="kd">var</span><span class="w"> </span><span class="nx">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">position1</span><span class="p">;</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="nx">position1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">position2</span><span class="p">;</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="nx">position2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">temp</span><span class="p">;</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1">// Convert to string just in case it's a number</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="kd">var</span><span class="w"> </span><span class="nx">pinStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$(n2.PIN)"</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="c1">// Extract digits (Position 1 is Index 0, Position 2 is Index 1, etc.)</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="kd">var</span><span class="w"> </span><span class="nx">digit1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">pinStr</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">position1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="kd">var</span><span class="w"> </span><span class="nx">digit2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">pinStr</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">position2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="mf">1</span><span class="p">;</span>
+</span></code></pre></div><p></p>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Make sure the $(n2.PIN) variable corresponds to your PIN variable in the Start Node. You can pick it up by selecting it from the <strong>Input Variables</strong> right panel, under the <strong>Start</strong> section. </p>
+</details>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>This code implements a partial PIN challenge by selecting two unique, random positions between 1 and 4. It uses a do...while loop to ensure the second position never matches the first, then sorts them numerically so the AI Agent always prompts for digits in sequential order (e.g., "the 1st and 3rd digits"). Finally, it casts the stored PIN to a string and uses charAt() to extract the specific digits, adjusting for zero-based indexing to ensure the correct values are retrieved for verification. It ultimately returns these two extracted digits as the result of the authentication action.</p>
+</details>
+</li>
+<li>
+<p>Set the <strong>Script Output</strong> value to <code>1</code></p>
+</li>
+<li>Set the <strong>Branch Name</strong> value to <code>Success</code></li>
+<li>Click on <strong>[Save]</strong></li>
+<li>
+<p>To complete the node, click on the green outlet at the right and drag it to the canvas. Release it to open the <strong>End</strong> dialogue</p>
+<ul>
+<li>Set the <strong>Node Event</strong> value to <code>1 (Success)</code></li>
+<li>Set the <strong>Flow Result</strong> value to <code>101 - Successfully completed flow [Success]</code></li>
+<li>Click on <strong>[Save]</strong></li>
+</ul>
+</li>
+<li>
+<p>Save the flow</p>
+</li>
+</ul>
+<details class="gif" open="open">
+<summary>Set the Evaluate Node</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/authenticate_user%20flow%202.gif" data-title="Set the Evaluate node" data-desc-position="top"><img alt="Set the Evaluate node" src="../assets/authenticate_user%20flow%202.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>To finish the fulfillment flow, you need to pass on the output variables back to your AI Agent through the <strong>Flow Outcomes</strong></p>
+<ul>
+<li>Click on the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M195.1 9.5c3-14.8 16.1-25.5 31.3-25.5h59.8c15.2 0 28.3 10.7 31.3 25.5l14.5 70c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9L477 417.9c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5h-59.8c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8l-68.1 22.5c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7l-53.4-47.5C.9 175.7-1.7 159 5.8 145.9l29.9-51.8c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8zM256.3 336a80 80 0 1 0-.6-160 80 80 0 1 0 .6 160"></path></svg></span> button at the top right of the flow editor. </li>
+<li>Click on the <strong>Flow Outcomes</strong> tab</li>
+<li>Open the ‘Last Execution Status’ Outcome. The ‘Notify AI Agent’ radio button is enabled by default for the start node with 'AI Agent’ as the trigger.</li>
+<li>
+<p>You need to return the outcome of the <strong>Evaluate</strong> node, namely the gerated positions and the PIN digits matching those positions. You need to add the Key and Value for each of those values. Here we will use the notation <code>$(variable)</code>to refer to the variables in the <strong>Evaluate</strong> node.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><copy>  position1   </copy></td>
+<td><copy> $(position1) </copy></td>
+</tr>
+<tr>
+<td><copy>  position2   </copy></td>
+<td><copy> $(position2) </copy></td>
+</tr>
+<tr>
+<td><copy>  digit1  </copy></td>
+<td><copy> $(digit1)    </copy></td>
+</tr>
+<tr>
+<td><copy>  digit2  </copy></td>
+<td><copy> $(digit2)    </copy></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Click on <strong>[Save]</strong></p>
+</li>
+<li>Save the flow!!    </li>
+</ul>
+<details class="gif" open="open">
+<summary>Returning data to the AI Agent</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/authenticate_user%20flow%203.gif" data-title="Return Data to AI Agent" data-desc-position="top"><img alt="Return Data to AI Agent" src="../assets/authenticate_user%20flow%203.gif"></a>
+</figure><p></p>
+</details>
+</li>
+</ol>
+<p>Your <strong>authenticate_user</strong> flow is now completed. 
+Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow, otherwise, it will not be visible to the AI Agent Studio. </p>
+</details>
+<details class="webex" open="open">
+<summary>AI Agent action definition</summary>
+<p>Let´s get back to the AI Agent Studio now to build the action.</p>
+<ol>
+<li>From your AI Agent configuration page, click on <strong>[Actions]</strong></li>
+<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Fill in the General information of your action<ul>
+<li><strong>Action name</strong>: <copy><em>authenticate_user</em></copy></li>
+<li><strong>Action description</strong>: copy and paste the following description.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>This action returns two random postions ((1st, 2nd, 3rd, or 4th) and the corresponding digits in the 4-digit PIN. 
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>To ensure security, the AI Agent must never ask for the full PIN.
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><del><strong>Action scope</strong>: select <em>Slot filling and fulfillment</em></del> This option has been removed</li>
+<li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
+<li>
+<p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Entity Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>PIN</code></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><copy><code>Customer's PIN. Use the PIN number returned in the fetch_balance action</code></copy></td>
+<td style="text-align: left;"><code>1345</code></td>
+<td style="text-align: left;"><code>Required</code></td>
+</tr>
+</tbody>
+</table>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>The entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.</p>
+</details>
+</li>
+<li>
+<p>Now go to the <strong>Webex Connect Flow Builder Fulfillment</strong> section to associate the fulfillment flow in Webex Connect with the action. </p>
+<ul>
+<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
+<li>Select the flow <code>authenticate_user</code></li>
+</ul>
+</li>
+<li>Click on <strong>[-&gt; Add]</strong></li>
+</ol>
+<p>You can see now your new action in the <strong>Actions</strong> panel of your AI Agent.</p>
+<details class="gif" open="open">
+<summary>Creating a new Action</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/authenticate_user%20action.gif" data-title="Authenticate Action" data-desc-position="top"><img alt="Authenticate Action" src="../assets/authenticate_user%20action.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<details class="challenge" open="open">
+<summary>Test your AI Agent</summary>
+<p>Before starting, ensure your <strong>Airtable Customer</strong> table contains at least one test record with the following:</p>
+<ul>
+<li>Phone Number: A valid outbound contact number.</li>
+<li>Email Address: A functional email to receive the payment session URL.</li>
+</ul>
+<p>Testing Procedure</p>
+<ol>
+<li>Launch Preview: In the AI Agent Studio, click the [Preview] button at the top right of the configuration page.</li>
+<li>Initiate Session: Start a live chat or voice call with your Agent.</li>
+<li>
+<p>Verification Checklist: Confirm the Agent successfully executes the following logic:</p>
+<ul>
+<li>Authentication: Does the Agent retrieve customer data and correctly challenge you for two random digits of your PIN.</li>
+<li>Account Management: Does it provide an accurate account balance and present options for both total and partial payments.</li>
+<li>Knowledge &amp; Context: Does it accurately resolve queries using the integrated Knowledge Base or specific customer data points? </li>
+</ul>
+</li>
+</ol>
+</details>
+<h3 id="payment_session-action"><strong>[payment_session]</strong> Action</h3>
+<p>In this lab, you will configure the [payment_session] action to enable your AI Agent to process financial transactions through NovaPay. Before beginning, ensure that a functional email channel is available as a prerequisite in your tenant, as this is required to deliver the transaction URL to the customer. You will build the logic to trigger the payment gateway, create a payment session and automate the delivery of the unique session link to the email address stored in your database.</p>
+<p>As in the previous actions, we will: </p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the fulfillment flow that will implement the action in Webex Connect</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the action in the AI Agent</li>
+</ul>
+<details class="webex" open="open">
+<summary>Action fulfillment flow in Webex Connect</summary>
+<ol>
+<li>Go to your <em>Webex Finance Bootcamp</em> Service in Webex Connect</li>
+<li>Click on <strong>[Flows]</strong> to create your new flow<ul>
+<li>Click on <strong>[Create Flow]</strong></li>
+<li>Give your flow a name <copy><code>payment_session</code></copy></li>
+<li>Select <strong>New Flow</strong> under <strong>Method</strong></li>
+<li>Select <strong>Start from Scratch</strong></li>
+<li>Click on <strong>[Create]</strong></li>
+</ul>
+</li>
+<li>
+<p>Configure the <strong>Start Node</strong> to trigger the flow from the AI Agent</p>
+<details class="inline end" open="open">
+<summary>Screenshot    Start Node</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%201.png" data-title="Start Node" data-desc-position="top"><img alt="Start Node" src="../assets/payment_session%20flow%201.png"></a>
+</figure><p></p>
+</details>
+<ul>
+<li>Select the <strong>AI Agent Event</strong></li>
+<li>Set the <strong>SAMPLE JSON</strong> to the below one 
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="nt">"agentSessionID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxxxxx"</span><span class="p">,</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">"debt_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2000</span><span class="p">,</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name@domain.com"</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
+</span></code></pre></div></li>
+<li>Click on <strong>[Parse]</strong></li>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow</li>
+</ul>
+</li>
+<li>
+<p>We will now generate the payment session with the <strong>Novapay Service</strong>. Novapay exposes an API to create payment sessions and to verify payments. We will use the <code>create-session</code> API request. </p>
+<details class="info" open="open">
+<summary>NOVAPAY API- create payment session</summary>
+<ul>
+<li>Request: 
+    <code>POST /api/create-session</code></li>
+<li>URL: 
+    <code>https://novapay-moeh.onrender.com/api/create-session</code></li>
+<li>Body:
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">"customerEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@test.com"</span><span class="p">,</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">"agentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent01"</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
+</span></code></pre></div></li>
+<li>Response:
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">"sessionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxx"</span><span class="p">,</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">"paymentUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://&lt;your-username&gt;.github.io/NovaPay/backend/frontend/index.html?sessionId=xxxxxx&amp;amount=xxx"</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ul>
+</details>
+<ul>
+<li>Drag and drop an <strong>HTTP Request</strong> node to the canvas besides the <strong>Start Node</strong>.</li>
+<li>Connect the green outlet of the <strong>Start Node</strong> to the new <strong>HTTP Request</strong> node.</li>
+<li>Double click on the <strong>HTTP Request</strong> node</li>
+<li>Rename the node to <copy><code>Create Novapay Session</code></copy></li>
+<li>
+<p>Fill in the parameters as follows: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Endpoint URL</strong></td>
+<td style="text-align: left;"><copy><code>https://novapay-moeh.onrender.com/api/create-session</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Header</strong></td>
+<td style="text-align: left;"><copy><code>Content-Type</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Value</strong></td>
+<td style="text-align: left;"><copy><code>application/json</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Body</strong></td>
+<td style="text-align: left;"><copy> {<br>"amount": $(n2.aiAgent.debt_amount),<br>"customerEmail": "$(n2.aiAgent.email)",<br>"agentId": "$(n2.aiAgent.agentSessionID)"<br>}  </copy></td>
+<td style="text-align: left;">Make sure the referred variables correspond to the input variables defined in your <strong>Start Node</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Connection Timeout</strong></td>
+<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Request Timeout</strong></td>
+<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Finally, we will define the <strong>Output Variables</strong>. Using a JSON sample from the API response, you will select the data points required to complete the action. </p>
+<ul>
+<li>Make sure the <strong>JSON</strong> radio button is enabled in the <strong>Output Variables</strong> section.</li>
+<li>Click on <strong>Import From Sample</strong></li>
+<li>Copy the below json structure: </li>
+</ul>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="nt">"sessionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c13fbb4f-ecd9-4591-8947-5606335bf27c"</span><span class="p">,</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="nt">"paymentUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://cx-partner.github.io/NovaPay/backend/frontend/index.html?sessionId=c13fbb4f-ecd9-4591-8947-5606335bf27c&amp;amount=2500"</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>Click on <strong>[Parse]</strong></li>
+<li>Scroll down and select all the parameters </li>
+<li>Click on <strong>[Import]</strong></li>
+<li>Back in the node window dialogue, fill in the <strong>Output Variable Name</strong> for every parameter as follows: (leave the <strong>Response Entity</strong> field set to <em>Body</em>)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Output Variable Name</th>
+<th>Response Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><copy>  PaymentSessionId    </copy></td>
+<td>$.sessionId</td>
+</tr>
+<tr>
+<td><copy>  PaymentURL  </copy></td>
+<td>$.paymentUrl</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow!</li>
+</ul>
+</li>
+</ul>
+<details class="gif" open="open">
+<summary>Create a Novapay payment session</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%202.gif" data-title="Novapay payment session" data-desc-position="top"><img alt="Novapay payment session" src="../assets/payment_session%20flow%202.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>To complete the action, we will now send out the email with the payment URL to the customer. </p>
+<ul>
+<li>Drag and drop an <strong>Email</strong> node to the canvas</li>
+<li>Connect the <strong>HTTP Request</strong> node to the new <strong>Email</strong> node</li>
+<li>Double click on the <strong>HTTP Request</strong> node</li>
+<li>Rename the node to <copy><code>Email Payment URL</code></copy></li>
+<li>
+<p>Fill in the parameters as below: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Destination Type</strong></td>
+<td style="text-align: left;"><code>Email Id</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Destination ID</strong></td>
+<td style="text-align: left;"><copy><code>$(n2.aiAgent.email)</code></copy></td>
+<td style="text-align: left;">Select the variable from the right panel under the Start node</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>From Name</strong></td>
+<td style="text-align: left;"><copy><code>Alex - Your Debt Collection Agent</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Email Type</strong></td>
+<td style="text-align: left;"><code>Text</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Subject</strong></td>
+<td style="text-align: left;"><copy> <code>Secure Payment Link: Your Account with Webex Financial Group</code> </copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Message</strong></td>
+<td style="text-align: left;"><copy>Dear Customer,<br><br>Thank you for speaking with me today regarding your outstanding balance with Webex Financial Group.<br><br>As we discussed, please find the secure link below to process your payment of $$(n2.aiAgent.debt_amount). This link is unique to your account and is powered by our secure payment partner, NovaPay.<br><br>$(n3.PaymentURL)<br><br>Important Information:<br>Account Status: Completing this payment ensures your account remains in good standing before your maturity date.<br>Confirmation: Once the transaction is complete, I will automatically update your balance in our database.<br><br>If you have any questions or did not authorize this request, please contact our customer service department immediately.<br><br>Best regards,<br><br>Alex<br>Automated Service specialist<br>Webex Financial Group</copy></td>
+<td style="text-align: left;">Make sure the variables referred to in the message correspond to the node numbers in your flow. To make sure, you can select them from the Variables right panel</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Click on <strong>[Save]</strong></p>
+</li>
+<li>
+<p>To complete the flow, click on the green outlet at the right of the <strong>Email</strong> node and drag it to the canvas. Release it to open the <strong>End</strong> dialogue</p>
+<ul>
+<li>Set the <strong>Node Event</strong> value to <code>onSuccess</code></li>
+<li>Set the <strong>Flow Result</strong> value to <code>101 - Successfully completed flow [Success]</code></li>
+<li>Click on <strong>[Save]</strong></li>
+</ul>
+</li>
+<li>
+<p>Save the flow!</p>
+</li>
+</ul>
+<details class="gif" open="open">
+<summary>Sending Payment URL email</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%203.gif" data-title="Email Payment URL" data-desc-position="top"><img alt="Email Payment URL" src="../assets/payment_session%20flow%203.gif"></a>
+</figure><p></p>
+</details>
+</li>
+<li>
+<p>To complete the flow, map the output variables that will be sent back to your AI Agent via the <strong>Flow Outcomes</strong> section. </p>
+<details class="inline end" open="open">
+<summary>Screenshot Returning data to the AI Agent</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%204.png" data-title="Return Data to AI Agent" data-desc-position="top"><img alt="Return Data to AI Agent" src="../assets/payment_session%20flow%204.png"></a>
+</figure><p></p>
+</details>
+<ul>
+<li>Click on the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M195.1 9.5c3-14.8 16.1-25.5 31.3-25.5h59.8c15.2 0 28.3 10.7 31.3 25.5l14.5 70c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9L477 417.9c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5h-59.8c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8l-68.1 22.5c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7l-53.4-47.5C.9 175.7-1.7 159 5.8 145.9l29.9-51.8c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8zM256.3 336a80 80 0 1 0-.6-160 80 80 0 1 0 .6 160"></path></svg></span> button at the top right of the flow editor. </li>
+<li>Click on the <strong>Flow Outcomes</strong> tab</li>
+<li>Open the <code>Last Execution Status</code> Outcome. The <code>Notify AI Agent</code> radio button is enabled by default for the start node with <code>AI Agent</code> as the trigger.</li>
+<li>Click on <strong>+ Add New</strong> to add a new variable. </li>
+<li>Set the new <strong>KEY</strong> to <copy><code>PaymentSessionId</code></copy></li>
+<li>Set the <strong>VALUE</strong> to the <code>$(n3.PaymentSessionId)</code> variable returned by the <strong>HTTP Request</strong> node. Pick it up from the Input Variables right panel, under the HTTP Request section. </li>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow!!</li>
+</ul>
+</li>
+</ol>
+<p>Your <strong>payment_session</strong> flow is now completed. 
+Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow to make it visible to the AI Agent Studio. In the Make Live dialogue, select the email application that you will use to deliver the email to the user. </p>
+</details>
+<details class="webex" open="open">
+<summary>AI Agent action definition</summary>
+<p>Go back to the AI Agent Studio to configure the new action.</p>
+<ol>
+<li>From the AI Agent configuration page, click on <strong>[Actions]</strong></li>
+<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>
+<p>Fill in the General information of your action</p>
+<ul>
+<li><strong>Action name</strong>: <copy><em>payment_session</em></copy></li>
+<li>
+<p><strong>Action description</strong>: copy and paste the following description.</p>
+<p><copy> Generates a NovaPay payment session for the amount selected by the customer. The payment session URL is sent to the customer via email.</copy></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></p>
+</li>
+<li>
+<p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entity name</strong></td>
+<td style="text-align: left;"><copy><code>SessionId</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity type</strong></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity description</strong></td>
+<td style="text-align: left;"><copy><code>The  current Agent session ID</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity examples</strong></td>
+<td style="text-align: left;"><copy><code>e04f291b-aade-4cf3-8787-8661b4af0820</code></copy></td>
+<td style="text-align: left;">click <strong>[+ Add]</strong> and enter a valid example</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Settings</strong></td>
+<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>repeat the action for the next two variables: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entity name</strong></td>
+<td style="text-align: left;"><copy><code>debt_amount</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity type</strong></td>
+<td style="text-align: left;"><code>number</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity description</strong></td>
+<td style="text-align: left;"><copy><code>The customer selected amount for payment</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity examples</strong></td>
+<td style="text-align: left;"><copy><code>5000</code></copy></td>
+<td style="text-align: left;">click <strong>[+ Add]</strong> and enter a valid example</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Settings</strong></td>
+<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entity name</strong></td>
+<td style="text-align: left;"><copy><code>email</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity type</strong></td>
+<td style="text-align: left;"><code>email</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity description</strong></td>
+<td style="text-align: left;"><copy><code>A valid customer email address where the payment URL is to be sent</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity examples</strong></td>
+<td style="text-align: left;"><copy><code>JohnDoe@domain.com</code></copy></td>
+<td style="text-align: left;">click <strong>[+ Add]</strong> and enter a valid example</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Settings</strong></td>
+<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Remember the entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.</p>
+</details>
+</li>
+<li>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Webex Connect Flow Builder Fulfillment</strong> section</p>
+<ul>
+<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
+<li>Select the flow <code>payment_session</code></li>
+</ul>
+</li>
+<li>Click on <strong>[-&gt; Add]</strong></li>
+</ol>
+<p>You can see now your new action in the <strong>Actions</strong> panel of your AI Agent.</p>
+<details class="gif" open="open">
+<summary>Creating a new Action</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20action.gif" data-title="Create AI Agent KowledgeBase" data-desc-position="top"><img alt="Create AI Agent KowledgeBase" src="../assets/payment_session%20action.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<h3 id="confirm_payment-action">[confirm_payment] Action</h3>
+<details class="webex" open="open">
+<summary>AI Agent action definition</summary>
+<ol>
+<li>Click on <strong>[Actions]</strong></li>
+<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>
+<p>Fill in the General information of your action</p>
+<ul>
+<li><strong>Action name</strong>: <em>fetch_balance</em></li>
+<li><strong>Action description</strong>: copy and paste the following description.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Using the customer's phone number, fetch the following details from the Customer DB: 
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    - Record ID
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    - Customer ID
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    - Account Balance
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>    - Customer Information (Name, DOB)
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    - Cashback balance
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>    - Rewards tier
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>    - Credit card
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>    - Email
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></p>
+</li>
+<li>
+<p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entity name</strong></td>
+<td style="text-align: left;"><code>PhoneNumber</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity type</strong></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity description</strong></td>
+<td style="text-align: left;"><code>Customer's phone number</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity examples</strong></td>
+<td style="text-align: left;"><code>13458752396</code></td>
+<td style="text-align: left;">click <strong>[+ Add]</strong> and enter a number example</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Settings</strong></td>
+<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<p>Let´s leave the Action configuration in the AI Agent Studio here, as we need to create the Action Flow in WxConnect to complete the action configuration. </p>
+<details class="gif" open="open">
+<summary>Creating a new Action</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/AI%20Agent%20KB.gif" data-title="Create AI Agent KowledgeBase" data-desc-position="top"><img alt="Create AI Agent KowledgeBase" src="../assets/AI%20Agent%20KB.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<details class="webex" open="open">
+<summary>Action fulfillment flow in Webex Connect</summary>
+</details>
+<details class="webex" open="open">
+<summary>Associate WxConnect fulfillment flow with Action</summary>
+</details>
+<h3 id="xxxxxx-action">[xxxxxx] Action</h3>
+<details class="webex" open="open">
+<summary>AI Agent action definition</summary>
+<ol>
+<li>Click on <strong>[Actions]</strong></li>
+<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Fill in the General information of your action<ul>
+<li><strong>Action name</strong>: <em>fetch_balance</em></li>
+<li><strong>Action description</strong>: copy and paste the following description.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Using the customer's phone number, fetch the following details from the Customer DB: 
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    - Record ID
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    - Customer ID
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    - Account Balance
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    - Customer Information (Name, DOB)
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    - Cashback balance
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    - Rewards tier
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>    - Credit card
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    - Email
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><del><strong>Action scope</strong>: select <em>Slot filling and fulfillment</em></del> This option has been removed</li>
+<li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
+<li>
+<p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entity name</strong></td>
+<td style="text-align: left;"><code>PhoneNumber</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity type</strong></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity description</strong></td>
+<td style="text-align: left;"><code>Customer's phone number</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity examples</strong></td>
+<td style="text-align: left;"><code>13458752396</code></td>
+<td style="text-align: left;">click <strong>[+ Add]</strong> and enter a number example</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Settings</strong></td>
+<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<p>Let´s leave the Action configuration in the AI Agent Studio here, as we need to create the Action Flow in WxConnect to complete the action configuration. </p>
+<details class="gif" open="open">
+<summary>Creating a new Action</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/AI%20Agent%20KB.gif" data-title="Create AI Agent KowledgeBase" data-desc-position="top"><img alt="Create AI Agent KowledgeBase" src="../assets/AI%20Agent%20KB.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<details class="webex" open="open">
+<summary>Action fulfillment flow in Webex Connect</summary>
+</details>
+<details class="webex" open="open">
+<summary>Associate WxConnect fulfillment flow with Action</summary>
+</details>
+<h3 id="xxxxxx-action_1">[xxxxxx] Action</h3>
+<details class="webex" open="open">
+<summary>AI Agent action definition</summary>
+<ol>
+<li>Click on <strong>[Actions]</strong></li>
+<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Fill in the General information of your action<ul>
+<li><strong>Action name</strong>: <em>fetch_balance</em></li>
+<li><strong>Action description</strong>: copy and paste the following description.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Using the customer's phone number, fetch the following details from the Customer DB: 
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    - Record ID
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    - Customer ID
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    - Account Balance
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    - Customer Information (Name, DOB)
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    - Cashback balance
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    - Rewards tier
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>    - Credit card
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>    - Email
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><strong>Action scope</strong>: select <em>Slot filling and fulfillment</em></li>
+<li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
+<li>
+<p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entity name</strong></td>
+<td style="text-align: left;"><code>PhoneNumber</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity type</strong></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity description</strong></td>
+<td style="text-align: left;"><code>Customer's phone number</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entity examples</strong></td>
+<td style="text-align: left;"><code>13458752396</code></td>
+<td style="text-align: left;">click <strong>[+ Add]</strong> and enter a number example</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Settings</strong></td>
+<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<p>Let´s leave the Action configuration in the AI Agent Studio here, as we need to create the Action Flow in WxConnect to complete the action configuration. </p>
+<details class="gif" open="open">
+<summary>Creating a new Action</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/AI%20Agent%20KB.gif" data-title="Create AI Agent KowledgeBase" data-desc-position="top"><img alt="Create AI Agent KowledgeBase" src="../assets/AI%20Agent%20KB.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<details class="webex" open="open">
+<summary>Action fulfillment flow in Webex Connect</summary>
+</details>
+<details class="webex" open="open">
+<summary>Associate WxConnect fulfillment flow with Action</summary>
+</details>
+<hr>
+<h2 id="lab-24-test-the-ai-agent">Lab 2.4 - Test the AI Agent</h2>
+<p>Before going live, it is essential to validate that Alex follows the programmed logic and security guardrails. In this section, you will use the preview tool in the AI Agent Studio to simulate customer scenarios. You will verify that the agent correctly refuses to disclose debt before authentication, handles partial payment negotiations, automates debt payment, and—most importantly—triggers an immediate escalation to a human specialist when a "suspicious transaction" is mentioned.</p>
+<div class="admonition note">
+<p class="admonition-title">Documentation Link</p>
+<p>You can find the official documentation <a href="https://link-to-docs.com">here</a>.</p>
+</div>
+<details class="webex" open="open">
+<summary>Step-by-Step Configuration</summary>
+<ol>
+<li>Open the <strong>[Tool Name]</strong>.</li>
+<li>Locate your resource and update the values as shown in the table below:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Variable A</strong></td>
+<td style="text-align: left;"><code>$(n2.Value)</code></td>
+<td style="text-align: left;">Use the node ID from your flow</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Variable B</strong></td>
+<td style="text-align: left;"><code>67e2e90e...</code></td>
+<td style="text-align: left;">Provided Lab ID</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>For JSON configurations, use the snippet below:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.transId)"</span><span class="p">,</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="nt">"pod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XX"</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ol>
+<details class="tip" open="open">
+<summary>Pro-Tip</summary>
+<p>If you encounter an error during validation, ensure there are no trailing spaces in your URL.</p>
+</details>
+</details>
+<hr>
+<h2 id="lab-25-connect-the-ai-agent-to-the-outbound-call">Lab 2.5 - Connect the AI Agent to the Outbound Call</h2>
+<p>In the final stage of Lab 2, you will bridge the gap between the Campaign Manager (configured in Lab 1) and your new AI Agent. You will complete the flow in Webex Contact Center to ensure that when a customer answers an outbound call triggered by a debt maturity date, they are immediately greeted by Alex. This completes the end-to-end automation of the proactive debt collection use case.</p>
+<div class="admonition note">
+<p class="admonition-title">Documentation Link</p>
+<p>You can find the official documentation <a href="https://link-to-docs.com">here</a>.</p>
+</div>
+<details class="webex" open="open">
+<summary>Step-by-Step Configuration</summary>
+<ol>
+<li>Open the <strong>[Tool Name]</strong>.</li>
+<li>Locate your resource and update the values as shown in the table below:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Variable A</strong></td>
+<td style="text-align: left;"><code>$(n2.Value)</code></td>
+<td style="text-align: left;">Use the node ID from your flow</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Variable B</strong></td>
+<td style="text-align: left;"><code>67e2e90e...</code></td>
+<td style="text-align: left;">Provided Lab ID</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>For JSON configurations, use the snippet below:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.transId)"</span><span class="p">,</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nt">"pod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XX"</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ol>
+<details class="tip" open="open">
+<summary>Pro-Tip</summary>
+<p>If you encounter an error during validation, ensure there are no trailing spaces in your URL.</p>
+</details>
+</details>
+<hr>
+<h2 id="lab-26-test-the-complete-scenario">Lab 2.6 - Test the complete scenario</h2>
+<div class="admonition note">
+<p class="admonition-title">Documentation Link</p>
+<p>You can find the official documentation <a href="https://link-to-docs.com">here</a>.</p>
+</div>
+<details class="webex" open="open">
+<summary>Step-by-Step Configuration</summary>
+<ol>
+<li>Open the <strong>[Tool Name]</strong>.</li>
+<li>Locate your resource and update the values as shown in the table below:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Variable A</strong></td>
+<td style="text-align: left;"><code>$(n2.Value)</code></td>
+<td style="text-align: left;">Use the node ID from your flow</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Variable B</strong></td>
+<td style="text-align: left;"><code>67e2e90e...</code></td>
+<td style="text-align: left;">Provided Lab ID</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>For JSON configurations, use the snippet below:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.transId)"</span><span class="p">,</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span><span class="nt">"pod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XX"</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ol>
+<details class="tip" open="open">
+<summary>Pro-Tip</summary>
+<p>If you encounter an error during validation, ensure there are no trailing spaces in your URL.</p>
+</details>
+</details>
+<hr>
+<h2 id="lab-completion">Lab Completion ✅</h2>
+<p>At this point, you have built a <strong>Proactive Front Door</strong> that:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Uses a Debt Collection AI Agent</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Proactively identifies debt maturity and contact the customer</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Automates debt payment</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Resolves customer enquiries</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Identify fraud situations and escalates to a Human Agent</li>
+</ul>
+<p><strong>Congratulations!</strong> You now have a fully operational <strong>Proactive Debt Collection</strong> service in place.
+You have successfully completed Lab 2. You are now ready to move on to the next Lab.</p>
+<p><a class="md-button md-button--primary" href="../lab3_human_ai_assist/">Next Lab: Lab 3 - Human escalation &amp; RT Assist</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../lab1_campaign_manager/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 1 - Proactive Outbound Reach">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lab 1 - Proactive Outbound Reach
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab3_human_ai_assist/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 3 - Human escalation &amp; RT Assist">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 3 - Human escalation &amp; RT Assist
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Cisco
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexesmkd", "navigation.instant", "navigation.top", "navigation.footer", "search.suggest", "content.code.copy", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../template_assets/js/newLoad.js"></script>
+      
+        <script src="../template_assets/js/setInfo.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "fade", "closeEffect": "fade", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
