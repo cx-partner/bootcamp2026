@@ -84,18 +84,26 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.tabbed:
-      alternate_style: true
-      
+      alternate_style: true    
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.keys
+  
+
 nav:
   - Home: index.md
   - Read Me:
       - Overview: overview.md
-      - Pre-requisites: pre_requisites.md
+  - Pre-requisites: 
+    - Email Digital Channel: pre_req_email_channel.md
+    - Airtable Base: airtable.md
   - Labs:
     - Lab 1 - Proactive Outbound Reach: lab1_campaign_manager.md
     - Lab 2 - Automated Debt collection: lab2_debt_ai_agent.md
