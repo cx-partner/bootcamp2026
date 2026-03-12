@@ -1,5 +1,3 @@
-# Lab Guide for WebexOne Lab LAB-2304
+# Lab Guide for Bootcamp 2026
 
-Web guide link: https://webexcc-sa.github.io/LAB-2851
-
-PDF guide link (if enabled): https://webexcc-sa.github.io/LAB-2851/pdf/document.pdf
+Web guide link: https://cx-partner.github.io/bootcamp2026
