@@ -118,30 +118,32 @@ In this first step, you will define the "brain" and personality of your AI Agent
         Tone: Professional, firm yet helpful, ensuring customers understand their financial obligations.
 
         2. Context
-        Background: This is an outbound call regarding a debt nearing maturity. The interaction is low-risk and security-focused.
-        Environment: Voice line with potential background noise. Keep responses concise.
+        Background: You handle outbound calls regarding a debt nearing maturity. The interaction is low-risk and security-focused.
+        Environment: Voice line with potential background noise. Keep responses clear and concise.
 
         3. Task
         Available Actions:
 
-        [authenticate_user]: Authenticate user; generates random positions and returns the PIN digits.
-        [fetch_balance]: Retrieve account balance for payment offers.
+        [fetch_balance]: Retrieve  customer data including account balance for payment offers.
+        [authenticate_user]: Authenticate customer; generates random positions and returns the corresponding PIN digits.
         [payment_session]: Create a payment session with NovaPay.
         [payment_confirm]: Confirm payment completion.
-        [fetch_transactions]: Fetch recent transactions.
+        [fetch_transactions]: Retrieve recent transactions.
+
         Steps:
 
-        Name Verification: Confirm the customer's name. If the person is not the right one, ask for the right person
+        Name Verification: Confirm the customer's name. If the person is not the right one, ask for the right person.
         Introduction: "Hello [First Name], I’m Alex from Webex Financial Group. I’m calling about your account balance and maturity date."
         Authentication Consent: "For your security, I need to perform an authentication check. Do you want to proceed?"
-        Authentication: Execute [fetch_balance] to retrieve customer data and the stored PIN. Next, run [authenticate_user] to identify two random digit positions. Challenge the customer for the digits at those specific positions and verify their response against the PIN values returned by the action to validate their identity.
-        Debt Disclosure: Use [fetch_balance] output to inform the customer of their balance and maturity date.
+        Authentication: Execute [fetch_balance] with the users's phone number to recover the PIN . If the phone number is not available, ask the customer. Then [authenticate_user]. Ask the user for the digits in the returned positions. Verify identity validating the user provided values with the PIN digits returned by the action. 
+        Debt Disclosure: Use [fetch_balance]  output to inform the customer of their balance and maturity date.
         Payment Negotiation: Offer total or partial payment options.
-        Payment Execution: If accepted, inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
-        Confirmation: Use [payment_confirm] to verify payment and inform the customer of the result, including the amount paid and transaction ID.
-        Account & Transaction Support: Provide account details and/or the number of recent transactions (amount, date, vendor and city) requested by the customer (below 7). 
+        Payment Execution: If accepted, execute [payment_session] and inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
+        Confirmation: Use [payment_confirm] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
+        Account & Transaction Support: Provide account details and/or the number of recent transactions (amount, date, vendor and city) requested by the customer. 
         General Enquiries: Use the Knowledge Base for banking questions.
-        Escalation Logic: If fraud is suspected, escalate to a Human Specialist with transaction details.
+        Escalation Logic:
+        If fraud is suspected, escalate to a Human Specialist with transaction details.
 
         4. Response Guidelines
         Formatting: Keep responses short and conversational. Avoid long lists.
@@ -151,8 +153,10 @@ In this first step, you will define the "brain" and personality of your AI Agent
         Clarification: "I didn’t catch that. Could you repeat?"
         Default Response: "I’m not authorized for that. I can assist with payments or account balances."
         Action Failures: "I’m experiencing a delay. Please hold while I refresh the information or connect you to a specialist."
+
         6. User Defined Guardrails
         Stay within Webex Financial Group’s banking services.
+        Never disclose personal customer data or security information like the PIN number.
         ```
     4. Click on **[Save changes]**
 
@@ -189,6 +193,26 @@ In this first step, you will define the "brain" and personality of your AI Agent
             </figure>
 
     You have now created your AI Agent with its own profile, but note that the Agent has not yet been published. 
+
+    ???+ tip "Managing Alex's Conversational capabilities"
+
+        From the **Conversation** tab of your AI Agent configuration you can manage the Conversational settings of the Agent.
+
+        To transform a technical interaction into a natural dialogue, you must fine-tune how Alex speaks and listens. Under the **Conversation** tab, you have four primary levers to control the "human" feel of your debt collection agent:
+
+        1. Persona and Presence (Voice & Style)
+        The *Response Style* dictates the agent's "thinking" behavior. Choosing Active ensures the agent provides immediate verbal cues like "I understand" or "Got it," which is essential in debt collection to reassure the customer they are being heard. Pairing this with *Disfluencies* (fillers like "um") and a calibrated Speaking Rate (0.7 to 1.2) creates a relatable, less robotic persona.
+
+        2. Recognition Precision (Custom *Vocabulary*)
+        Technical jargon or specific brand names like "NovaPay" or "QDF" can sometimes trip up standard AI. Use the Custom *Vocabulary* field to program up to 100 industry-specific terms, ensuring the agent correctly identifies intent even when customers use niche terminology.
+
+        3. Fluidity and Patience (*Delays & Interruptions*)
+        Managing the "silence" is critical. The *End of Speech Sensitivity* slider determines how quickly Alex responds once a customer stops talking. For high-stress calls, a Relaxed setting (closer to 2000 ms) prevents the agent from cutting the customer off. The *Caller turn timeout* defines the specific time the system waits before checking if the customer has finished speaking. This setting helps to prevent the agent from "clipping" the caller. In a debt collection scenario, customers often pause to look up credit card details or account numbers; a slightly higher timeout (closer to 3000 ms) ensures Alex doesn't interrupt them while they are searching for information. Additionally, enabling *Allow customer to interrupt* is vital for empathy, allowing Alex to stop speaking the moment the customer voice-activates.
+
+        4. Technical Guardrails (Timeouts & *DTMF*)
+        Finally, use Timeouts to manage the "dead air." The *No-input timeout* ensures the agent re-engages if a customer goes silent, while *DTMF* settings provide a fallback for secure data entry, allowing customers to use their keypad to signal the end of a digit string (e.g., using #) during the authentication phase. 
+
+        In this lab we are not prescripting the conversational parameters to use. We leave you to play with them and evaluate the conversational effect they produce. 
 
 ---
 
@@ -342,7 +366,7 @@ These are the required steps:
             GET     https://api.airtable.com/v0/<yourBaseID>/Customers
             ```
 
-            To fetch the correct entry, we will use the `filterByFormula` query parameter set to the string value returned by the **Evaluate** node which corresponds to customer's phone number. 
+            To fetch the correct entry, we will use the `filterByFormula` query parameter set to the string value returned by the **Evaluate** node which corresponds to customer's normalized phone number. 
 
         - Drag and drop an **HTTP Request** node to the canvas besides the **Evaluate** node
         - Connect the green outlet of the **Evaluate** node to the new **HTTP Request** node.
@@ -353,9 +377,9 @@ These are the required steps:
             | Parameter | Value | Notes |
             | :--- | :--- | :--- |
             | **Method** | `GET` | |
-            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/<yourBaseID>/Customers?filterByFormula=$(formula)` </copy>| Replace <yourBaseID> with the value of your Airtable Base|
+            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/<yourBaseID>/Customers?filterByFormula=$(formula)` </copy>| Replace `yourBaseID` with the value of your Airtable Base|
             | **Header** | <copy>`Authorization`</copy>  |  |
-            | **Value** | `Bearer <yourPersonalToken>` |  |
+            | **Value** | `Bearer <yourPersonalToken>` |  Enter `yourPersonalToken`from [Airtable](https://airtable.com/create/tokens)|
             | **Header** | <copy>`Content-Type`</copy> | click **+ Add Another Header** |
             | **Value** | <copy>`application/json`</copy> |  |
             | **Connection Timeout** | <copy>`10000`</copy> | |
@@ -379,8 +403,8 @@ These are the required steps:
                             "LastName": "Doe",
                             "DOB": "1985-07-15",
                             "SocialSecurity": "123-45-6789",
-                            "PhoneNumber": "12626996219",
-                            "Balance": "$10000.32",
+                            "PhoneNumber": "34626996219",
+                            "Balance": 4000,
                             "CashbackBalance": "$120.00",
                             "Address": [
                                 "2020 Main ST",
@@ -395,7 +419,8 @@ These are the required steps:
                                 "rec6nO5V9JNDvp3Ek"
                             ],
                             "PIN": "9643",
-                            "Email": "jdoe@domain.com"
+                            "Email": "jdoe@cisco.com",
+                            "MaturityDate": "2026-04-28"
                         }
                     }
                 ]
@@ -410,7 +435,8 @@ These are the required steps:
                 $.records[0].fields.Email 
                 $.records[0].fields.CustomerID 
                 $.records[0].fields.RewardsTier 
-                $.records[0].fields.FirstName 
+                $.records[0].fields.FirstName
+                $.records[0].fields.MaturityDate
                 $.records[0].fields.CreditCard 
                 $.records[0].fields.CashbackBalance 
                 $.records[0].fields.PIN 
@@ -424,17 +450,18 @@ These are the required steps:
 
                 |		Output Variable Name		|	Response Path	|
                 |		-----		|	-----	|
-                |	<copy>	RecordID	</copy>	|	$.records[0].id	|
-                |	<copy>	Email	</copy>	|	$.records[0].fields.Email	|
-                |	<copy>	CustomerID	</copy>	|	$.records[0].fields.﻿CustomerID	|
-                |	<copy>	RewardsTier	</copy>	|	$.records[0].fields.RewardsTier	|
-                |	<copy>	FirstName	</copy>	|	$.records[0].fields.FirstName	|
-                |	<copy>	CreditCard	</copy>	|	$.records[0].fields.CreditCard	|
-                |	<copy>	CashbackBalance	</copy>	|	$.records[0].fields.CashbackBalance	|
-                |	<copy>	PIN	</copy>	|	$.records[0].fields.PIN	|
-                |	<copy>	DOB	</copy>	|	$.records[0].fields.DOB	|
-                |	<copy>	LastName	</copy>	|	$.records[0].fields.LastName	|
-                |	<copy>	Balance	</copy>	|	$.records[0].fields.Balance	|
+                |	<copy>RecordID</copy>	|	$.records[0].id	|
+                |	<copy>Email</copy>	|	$.records[0].fields.Email	|
+                |	<copy>CustomerID</copy>	|	$.records[0].fields.﻿CustomerID	|
+                |	<copy>RewardsTier</copy>	|	$.records[0].fields.RewardsTier	|
+                |	<copy>FirstName</copy>	|	$.records[0].fields.FirstName	|
+                |	<copy>MaturityDate</copy>	|	$.records[0].fields.MaturityDate	|
+                |	<copy>CreditCard</copy>	|	$.records[0].fields.CreditCard	|
+                |	<copy>CashbackBalance</copy>	|	$.records[0].fields.CashbackBalance	|
+                |	<copy>PIN</copy>	|	$.records[0].fields.PIN	|
+                |	<copy>DOB</copy>	|	$.records[0].fields.DOB	|
+                |	<copy>LastName</copy>	|	$.records[0].fields.LastName	|
+                |	<copy>Balance</copy>	|	$.records[0].fields.Balance	|
            
             - Click on **[Save]**
             - To complete the node, click on the green outlet at the right and drag it to the canvas. Release it to open the **End** dialogue
@@ -444,7 +471,7 @@ These are the required steps:
                 - Click on **[Save]**
             - Save the flow!
 
-        ???+ gif "Fetching the data through the API"
+        ???+ gif "Fetching Customer data through the API"
 
             <figure markdown>
             ![Using API to fetch data](./assets/fetch_balance%20flow%203.gif)
@@ -463,17 +490,18 @@ These are the required steps:
 
             |		Key		|	Value	|
             |		-----		|	-----	|
-            |	<copy>	RecordID	</copy>	|	$(n3.RecordID)	|
-            |	<copy>	Email	</copy>	|	$(n3.Email)	|
-            |	<copy>	CustomerID	</copy>	|	$(n3.CustomerID)	|
-            |	<copy>	RewardsTier	</copy>	|	$(n3.RewardsTier)	|
-            |	<copy>	firstName	</copy>	|	$(n3.FirstName)	|
-            |	<copy>	CreditCard	</copy>	|	$(n3.CreditCard)	|
-            |	<copy>	CashbackBalance	</copy>	|	$(n3.CashbackBalance)	|
-            |	<copy>	PIN	</copy>	|	$(n3.PIN)	|
-            |	<copy>	DOB	</copy>	|	$(n3.DOB)	|
-            |	<copy>	lastName	</copy>	|	$(n3.LastName)	|
-            |	<copy>	balance	</copy>	|	$(n3.Balance)	|
+            |	<copy>RecordID</copy>	|	$(n3.RecordID)	|
+            |	<copy>Email</copy>	|	$(n3.Email)	|
+            |	<copy>CustomerID</copy>	|	$(n3.CustomerID)	|
+            |	<copy>RewardsTier</copy>	|	$(n3.RewardsTier)	|
+            |	<copy>firstName</copy>	|	$(n3.FirstName)	|
+            |	<copy>CreditCard</copy>	|	$(n3.CreditCard)	|
+            |	<copy>CashbackBalance</copy>	|	$(n3.CashbackBalance)	|
+            |	<copy>PIN</copy>	|	$(n3.PIN)	|
+            |	<copy>DOB</copy>	|	$(n3.DOB)	|
+            |	<copy>lastName</copy>	|	$(n3.LastName)	|
+            |	<copy>balance</copy>	|	$(n3.Balance)	|
+            |	<copy>MaturityDate</copy>	|	$(n3.MaturityDate)	|
 
         - Click on **[Save]**
         - Save the flow!!
@@ -500,6 +528,7 @@ These are the required steps:
             - Record ID
             - Customer ID
             - Account Balance
+            - Maturity Date
             - Customer Information (Name, DOB)
             - PIN number
             - Cashback balance
@@ -657,10 +686,9 @@ We will proceed as in the previous action:
     3. Fill in the General information of your action
         - **Action name**: <copy>*authenticate_user*</copy>
         - **Action description**: copy and paste the following description.
-        ```
-        This action returns two random postions ((1st, 2nd, 3rd, or 4th) and the corresponding digits in the 4-digit PIN. 
-        To ensure security, the AI Agent must never ask for the full PIN.
-        ```
+       
+            <copy>This action returns two random postions ((1st, 2nd, 3rd, or 4th) and the corresponding digits in the 4-digit PIN. To ensure security, the AI Agent must never ask for the full PIN. </copy>
+        
     4. ~~**Action scope**: select *Slot filling and fulfillment*~~ This option has been removed
     5. Under **Slot filling** click on **[New input entity]**
     6. In the **Add a new input entity** dialogue window, populate: 
@@ -921,149 +949,543 @@ As in the previous actions, we will:
 
 ### [confirm_payment] Action
 
-???+ webex "AI Agent action definition"
-    
-    1. Click on **[Actions]**
-    2. Click on **[Create new]** and select **Fulfillment**
-    3. Fill in the General information of your action
-        - **Action name**: *fetch_balance*
-        - **Action description**: copy and paste the following description.
-        ```
-        Using the customer's phone number, fetch the following details from the Customer DB: 
-            - Record ID
-            - Customer ID
-            - Account Balance
-            - Customer Information (Name, DOB)
-            - Cashback balance
-            - Rewards tier
-            - Credit card
-            - Email
-        ```
+With the NovaPay session initiated and the payment URL sent, the final step in the debt resolution flow is verification. The *payment_confirm* action acts as the AI Agent’s 'closing clerk.' In this section, you will configure the logic that allows Alex to move beyond simply providing a link to actually validating the transaction's success. This action queries the NovaPay API to check the real-time status of the payment session. Once a 'Success' state is detected, the agent will trigger a synchronized update to the Debt Database, ensuring the customer's balance is reconciled immediately. Mastering this action is key to building an autonomous agent that doesn't just talk about debt, but actively resolves it.
 
-    5. Under **Slot filling** click on **[New input entity]**
-    6. In the **Add a new input entity** dialogue window, populate: 
-    
-        | Parameter | Value | Notes |
-        | :--- | :--- | :--- |
-        | **Entity name** | `PhoneNumber` |  |
-        | **Entity type** | `String` |  |
-        | **Entity description** | `Customer's phone number` |  |
-        | **Entity examples** | `13458752396` | click **[+ Add]** and enter a number example |
-        | **Settings** | `Required` |  |
+As before, we will follow our typical approach: 
 
-
-    Let´s leave the Action configuration in the AI Agent Studio here, as we need to create the Action Flow in WxConnect to complete the action configuration. 
-
-    ???+ gif "Creating a new Action"
-
-        <figure markdown>
-        ![Create AI Agent KowledgeBase](./assets/AI Agent KB.gif)
-        </figure>
+* [x] Create the fulfillment flow that will implement the action in Webex Connect
+* [x] Create the action in the AI Agent
 
 ???+ webex "Action fulfillment flow in Webex Connect"
 
+    1. Go to your *Webex Finance Bootcamp* Service in Webex Connect
+    2. Click on **[Flows]** to create your new flow
+        - Click on **[Create Flow]**
+        - Give your flow a name <copy>`confirm_payment`</copy>
+        - Select **New Flow** under **Method**
+        - Select **Start from Scratch**
+        - Click on **[Create]**
+    3. Configure the **Start Node** to trigger the flow from the AI Agent
+         
+        ???+ inline end "Screenshot    Start Node"
+            <figure markdown>
+            ![Start Node](./assets/confirm_payment%20flow%201.png)
+            </figure>
+
+        - Select the **AI Agent Event**
+        - Set the **SAMPLE JSON** to the below one 
+            ```json
+            {
+                "Balance": 15000,
+                "RecordID": "recZkHsiTTGUvCfhj",
+                "PaymentSessionId": "c13fbb4f-ecd9-4591-8947-5606335bf27c"
+            }
+            ```
+        - Click on **[Parse]**
+        - Click on **[Save]**
+        - Save the flow
+
+    4. We will now use the **Novapay Service** API to recover the payment status. We will use the `session-status` API request. 
+
+        ???+ webex "Verify Payment status"
+            - Request: 
+                ```GET /api/session-status```
+            - URL: 
+                ```https://novapay-xxxx.onrender.com/api/session-status?sessionId=xxxx```
+            - Response:
+                Payment pending: 
+                ```json
+                {
+                    "agentId": "agent123",
+                    "amount": 2500,
+                    "customerEmail": "jucorral@cisco.com",
+                    "status": "pending"
+                }
+                ```
+
+                Payment completed:
+                ```json
+                {
+                    "agentId": "agent123",
+                    "amount": 2500,
+                    "customerEmail": "jucorral@cisco.com",
+                    "status": "completed",
+                    "last4": "1234",
+                    "confirmationCode": "NP-47QXLJCS"
+                }
+                ```
+
+        ???+ inline end "Screenshot   Get Transaction Status"
+            <figure markdown>
+            ![Transaction Status](./assets/confirm_payment%20flow%202.png)
+            </figure>
+
+        - Drag and drop an **HTTP Request** node to the canvas besides the **Start Node**.
+        - Connect the green outlet of the **Start Node** to the new **HTTP Request** node.
+        - Double click on the **HTTP Request** node
+        - Rename the node to <copy>`Check Novapay Session`</code>
+        - Fill in the parameters as follows: 
+
+            | Parameter | Value | Notes |
+            | :--- | :--- | :--- |
+            | **Method** | `GET` | |
+            | **Endpoint URL** | <copy>`https://novapay-moeh.onrender.com/api/session-status?sessionId=$(n2.aiAgent.PaymentSessionId)`</copy>| Make sure your aiAgent.PaymentSessionId matches the variable in your **Start Node**|
+            | **Connection Timeout** | <copy>`10000`</copy> | |
+            | **Request Timeout** | <copy>`10000`</copy> |  |
+
+        - Finally, we will define the **Output Variables**. Using a JSON sample from the API response, you will select the data points required to complete the action. 
+            
+            ???+ inline end "Screenshot    Output Variables"
+                <figure markdown>
+                ![Output Variables](./assets/confirm_payment%20flow%203.png)
+                </figure>
 
 
-???+ webex "Associate WxConnect fulfillment flow with Action"
+            - Make sure the **JSON** radio button is enabled in the **Output Variables** section.
+            - Click on **Import From Sample**
+            - Copy the below json structure: 
+
+            ```json
+            {
+                "agentId": "agent123",
+                "amount": 2500,
+                "customerEmail": "jdoe@domain.com",
+                "status": "completed",
+                "last4": "1234",
+                "confirmationCode": "NP-OMGRF524"
+            }
+            ```
+            
+            - Click on **[Parse]**
+            - Scroll down and select the below parameters:
+
+                $.last4
+                $.confirmationCode
+                $.amount
+                $.status
+
+            - Click on **[Import]**
+            - Back in the node window dialogue, fill in the **Output Variable Name** for every parameter as follows: (leave the **Response Entity** field set to *Body*)
+
+            |		Output Variable Name		|	Response Path	|
+            |		-----		|	-----	|
+            |	<copy>	cardLast4	</copy>	|	$.last4 |
+            |	<copy>	confirmationCode	</copy>	|	$.confirmationCode	|
+            |	<copy>	amountPayed	</copy>	|	$.amount	|
+            |	<copy>	paymentStatus	</copy>	|	$.status	|
+
+            - Click on **[Save]**
+            - Save the flow!
     
+    5. Now we check the payment status returned by the **Novapay Service**. 
 
-### [xxxxxx] Action
+        ???+ inline end "Screenshot    Check Transaction"
+            <figure markdown>
+            ![Check Transaction](./assets/confirm_payment%20flow%204.png)
+            </figure>
+
+        - Drag and drop a **Branch** node to the canvas
+        - Connect the **HTTP Request** node to the new **Branch** node
+        - Double click on the **Branch** node
+        - Rename the node to <copy>`Check Transaction`</code>
+        - Rename the *Branch1* into <copy>`Transaction Completed`</code>
+
+            - Set the fields of the branch as follows
+
+                |		Variable		|	Condition	|  Value	|
+                |		-----		|	-----	| -----	|
+                |  `$(n3.paymentStatus)`	|	*Equals ignore case* | <copy> completed </copy> |
+
+                Make sure the *$(n3.paymentStatus)* matches the output variable of the **HTPP Request** node.
+
+            - Set the *None of the above* branch to <copy> Transaction not Completed </copy>
+
+        - Click on **[Save]**
+
+        ???+ inline end "Screenshot - Transaction failed"
+            <figure markdown>
+            ![Transaction Failed](./assets/confirm_payment%20flow%205.png)
+            </figure>
+
+        - To complete the node, click on the green outlet at the right of the **Email** node and drag it to the canvas. Release it to open the **End** dialogue. Let´s set the *Transaction not Complete* option
+
+            - Set the **Node Event** value to `Transaction not Complete`
+            - Set the **Flow Result** value to `102 - Flow completed with an error [Error]`
+            - Click on **[Save]**
+        - Save the flow!
+
+    6. In case the transaction has been completed, we calculate the remaining balance. Let's use an **Evaluate** node
+
+        ???+ inline end "Screenshot - re-Calculate Balance"
+            <figure markdown>
+            ![recalculate balance](./assets/confirm_payment%20flow%206.png)
+            </figure>
+
+        - Drag and drop an **Evaluate** node to the canvas
+        - Connect the **Branch** node to the new **Evaluate** node. That should be the *Transaction Completed* branch.
+        - Double click on the **Evaluate** node
+        - Rename the node to <copy>`Recalculate Balance`</code>
+        - Copy the following javascript in the javascript editor of the node
+            ```javascript
+            // 1. Get your values safely
+            var currentBalance = parseFloat("$(n2.aiAgent.Balance)") || 0;
+            var paymentAmount = parseFloat("$(n3.amountPayed)") || 0;
+
+            // 2. Perform the math
+            var newBalance = currentBalance - paymentAmount;
+
+            1;
+            ```
+
+            Make sure the `$(n2.aiAgent.Balance)` and `$(n3.amountPayed)` variables correspond to the variables in your flow.
+
+        - Set the **Script Output** field to `1``
+        - Set the **Branch Name** to <copy>Success</copy>
+        - Click **[Save]**
+        - Save the flow!!
+
+    7. To complete the action, we need to update the new Balance value in the Airtable Customers table. We will use the **HTTP Request** and the Airtable API. 
+        
+        ???+ Inline End "Screenshot Update Customer Balance"
+            <figure markdown>
+            ![Update Customer Balance](./assets/confirm_payment%20flow%207.png)
+            </figure>
+        
+        - Drag and drop an **HTTP Request** node to the canvas besides the **Evaluate** node
+        - Connect the green outlet of the **Evaluate** node to the new **HTTP Request** node.
+        - Double click on the **HTTP Request** node
+        - Rename the node to <copy>`Update Balance`</code>
+        - Fill in the parameters as follows: 
+
+            | Parameter | Value | Notes |
+            | :--- | :--- | :--- |
+            | **Method** | `PATCH` | |
+            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/appcyTYF3nQqgReHR/Customers/$(n2.aiAgent.RecordID)` </copy>| Make sure the RecordID value corresponds to the variable in your **Start Node**|
+            | **Header** | <copy>`Authorization`</copy>  |  |
+            | **Value** | `Bearer <yourPersonalToken>` | Populate your [Airtable personal token](https://airtable.com/create/tokens) |
+            | **Header** | <copy>`Content-Type`</copy> | click **+ Add Another Header** |
+            | **Value** | <copy>`application/json`</copy> |  |
+            | **Body**  | <copy> {<br> "fields": { <br>"Balance": $(newBalance)<br>}<br>}  </copy>
+            | **Connection Timeout** | <copy>`10000`</copy> | |
+            | **Request Timeout** | <copy>`10000`</copy> |  |
+
+        - Click **[Save]**
+        - Save the flow!
+
+        - To finish the flow, click on the green outlet and drag it to the canvas. 
+            
+            ???+ Inline End "Screenshot Balance Update Result"
+                <figure markdown>
+                ![ Balance Update Result](./assets/confirm_payment%20flow%208.png)
+                </figure>
+
+            - In the **End** pop up window, select the *onSuccess* value in the **Node Event** field and the *101 - Succesfully completed flow [success]* in the **Flow Result** field. 
+            - Click on **Transition Actions** at the top
+                - Click **+ Add Action**
+                - In this action we will return the result of the transaction to the AI Agent. This will tell the AI Agent if the Balance update has been successful For that we need to create a variable.
+                    
+                    - Click on the *Custom Variables* section in the **Input Variables** right panel. 
+                    - Click on *+ Add New Custom Variable*
+                    - Populate the Variable Name: <copy>balanceUpdate</copy>
+                    - Set the **Default Value** to <copy>Not Updated</copy>
+                    - Click **Save**
+
+                - Back in the **End** dialgue, Populate this values: 
+
+                    |		Parameter		|	Value	|  Note.  |
+                    |		-----		|	-----	|   -----	|
+                    |	Time	|	*On-enter* |	|
+                    |	Action	|	*Set variable*	|	|
+                    |	Variable	|	<copy>balanceUpdate</copy>	| Select the variable you just created|
+                    |	Value	|	<copy>Updated</copy>	|	|
+
+            - Click **[Save]**
+            - Save the flow.
+  
+        
+    8. To complete the flow, we need to update the **Output Variables** that will be returned to the AI Agent.
+        
+        ???+ Inline End "Screenshot Output Variables"
+            <figure markdown>
+            ![Output Variables](./assets/confirm_payment%20flow%209.png)
+            </figure>
+
+        - Click on the :fontawesome-solid-gear: button at the top right of the flow editor. 
+        - Click on the **Flow Outcomes** tab
+        - Open the `Last Execution Status` Outcome. The `Notify AI Agent` radio button is enabled by default for the start node with `AI Agent` as the trigger.
+        - Click on **+ Add New** to add a new variables:
+
+            |		Key		|	Value	|
+            |		-----		|	-----	|
+            |	<copy>	cardLast4	</copy>	|	<copy> $(n3.cardLast4)	</copy>|
+            |	<copy>	confirmationCode	</copy> |	<copy> $(n3.confirmationCode)	</copy>	|
+            |	<copy>	amountPayed	</copy>	|	<copy> $(n3.amountPayed)	</copy>	|
+            |	<copy>	paymentStatus	</copy>	|	<copy> $(n3.paymentStatus)	</copy>		|
+            |	<copy>	balanceUpdate	</copy>	|	<copy> $(balanceUpdate)	</copy>		|
+ 
+        - Click on **[Save]**
+        - Save the flow!!
+    
+        ???+ note 
+            The success of this action depends on the correlation of two specific output variables: *paymentStatus* and *balanceUpdate*. The AI Agent evaluates these values in tandem to determine the final transaction result and dictate the next step in the conversation flow.
+
+    Your **confirm_payment** flow is now completed. 
+    Before leaving the flow editor, make sure you **[Make Live]** the flow to make it visible to the AI Agent Studio. 
+
+
 
 ???+ webex "AI Agent action definition"
     
+    ???+ Inline End "Screenshot AI Agent action"
+        <figure markdown>
+        ![AI Agent Action](./assets/confirm_payment%20action.png)
+        </figure>
+
+
     1. Click on **[Actions]**
     2. Click on **[Create new]** and select **Fulfillment**
     3. Fill in the General information of your action
-        - **Action name**: *fetch_balance*
+        - **Action name**: *confirm_payment*
         - **Action description**: copy and paste the following description.
-        ```
-        Using the customer's phone number, fetch the following details from the Customer DB: 
-            - Record ID
-            - Customer ID
-            - Account Balance
-            - Customer Information (Name, DOB)
-            - Cashback balance
-            - Rewards tier
-            - Credit card
-            - Email
-        ```
-    4. ~~**Action scope**: select *Slot filling and fulfillment*~~ This option has been removed
-    5. Under **Slot filling** click on **[New input entity]**
-    6. In the **Add a new input entity** dialogue window, populate: 
+        
+            <copy>
+            Confirms payment with NovaPay service once the customer confirms completion of the transaction, and updates the remaining balance in the customer DB. The action returns payment details: amount payed, the last 4 digits of the card and the Novapay confirmation code. The result of the operation is determined by the correlation of the {{paymentStatus}} and the {{balaceUpdate}} values.
+            </copy>
+
+    4. Under Slot filling click on [New input entity] 
+    5. In the **Add a new input entity** dialogue window, populate: 
     
         | Parameter | Value | Notes |
         | :--- | :--- | :--- |
-        | **Entity name** | `PhoneNumber` |  |
-        | **Entity type** | `String` |  |
-        | **Entity description** | `Customer's phone number` |  |
-        | **Entity examples** | `13458752396` | click **[+ Add]** and enter a number example |
+        | **Entity name** | <copy>`Balance`</copy> |  |
+        | **Entity type** | `number` |  |
+        | **Entity description** | <copy>`The account balance before payment. It is the {{Balance}} value returned by the [fetch_balance] action`</copy>  |  |
+        | **Entity examples** |  |  |
         | **Settings** | `Required` |  |
 
+    6. Repeate the action for the following entities
 
-    Let´s leave the Action configuration in the AI Agent Studio here, as we need to create the Action Flow in WxConnect to complete the action configuration. 
+        | Parameter | Value | Notes |
+        | :--- | :--- | :--- |
+        | **Entity name** | <copy>`RecordID`</copy> |  |
+        | **Entity type** | `string` |  |
+        | **Entity description** | <copy>`The customer record to update. Use the {{RecordID}} value retrieved in the [fetch_balance] action`</copy>  |  |
+        | **Entity examples** | <copy>recl7Sgmtz9kEFCI2</copy> |  |
+        | **Settings** | `Required` |  |
 
-    ???+ gif "Creating a new Action"
+        | Parameter | Value | Notes |
+        | :--- | :--- | :--- |
+        | **Entity name** | <copy>`PaymentSessionId`</copy> |  |
+        | **Entity type** | `string` |  |
+        | **Entity description** | <copy>`The {{PaymentSessionId}} value generated by Novapay service for payment`</copy>  |  |
+        | **Entity examples** | <copy>c13fbb4f-ecd9-4591-8947-5606335bf27c</copy> |  |
+        | **Settings** | `Required` |  |
 
-        <figure markdown>
-        ![Create AI Agent KowledgeBase](./assets/AI Agent KB.gif)
-        </figure>
+        ???+ info 
+            Remember the entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.
+
+    7. The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the **Webex Connect Flow Builder Fulfillment** section
+        - Select the Webex Connect Service `Webex Finance Bootcamp`
+        - Select the flow `confirm_payment`
+    8. Click on **[-> Add]**
+
+    You can see now your new action in the **Actions** panel of your AI Agent.
+
+
+### [fetch_transactions] Action
+
+The *fetch_transaction* action provides the AI Agent with "financial memory," transforming a generic debt collection call into a personalized account review. In this section, you will configure the agent to bridge the gap between two critical data points: using the {{CustomerID}} retrieved during the initial balance check to unlock the Airtable Transactions table. By mapping this function, you enable Alex to retrieve a snapshot of the **five most recent** account activities—including dates, vendors, and amounts. This transparency is vital for resolving disputes and providing the customer with a clear history, ensuring that the conversation is rooted in real-time data rather than general estimates.
+
+To retrieve a record in Airtable, we will use a GET request to the record enpoint, using the [Airtable API](https://airtable.com/developers/web/api/introduction). 
+
+We will follow the well known steps: 
+
+* [x] Create the fulfillment flow that will implement the action in Webex Connect
+* [x] Create the action in the AI Agent
 
 ???+ webex "Action fulfillment flow in Webex Connect"
 
+    Let´s build the WxConnect flow that implements the action. 
 
-
-???+ webex "Associate WxConnect fulfillment flow with Action"
     
+    3. In Webex Connect, go to your Service and click on **[Flows]** to create your fulfillment flow
+        - Click on **[Create Flow]**
+        - Give your flow a name <copy>`fetch_transactions`</copy>
+        - Select **New Flow** under **Method**
+        - Select **Start from Scratch**
+        - Click on **[Create]**
+    4. Configure the Start Node to trigger the flow from AI Agent
+        
+        ???+ inline end "Screenshot - AI Agent Start node"
+            <figure markdown>
+            ![Start node](./assets/fetch_transactions%20flow%201.png)
+            </figure>
 
-### [xxxxxx] Action
+        - Select the **AI Agent Event**
+        - Set the **SAMPLE JSON** to the below one 
+            ```json
+            {
+                "CustomerID": "recZkHsiTTGUvCfhj"
+            }
+            ```
+        ???+ info 
+            The variable name in the Json sample must match the corresponding entity in the AI Agent action.
+
+        - Click on **[Parse]**
+        - Click on **[Save]**
+        
+
+    5. The communicatioh with Airtable requires a perfectly formatted request. In this step, you will use an **Evaluate** Node to act as the "URL Builder" for the [fetch_transactions] action.
+
+        The purpose of this node is to take the raw **CustomerID* and combine it with the necessary API parameters—such as filtering logic, sorting by date, and record limits—into a single, continuous string. By centralizing this logic in an Evaluate Node, you ensure that the complex syntax required by Airtable (like the filterByFormula and sort directions) is pre-processed and ready to be injected into the API call. This prevents errors during the live conversation and ensures Alex always retrieves the 5 most recent transactions in the correct chronological order. 
+
+        ???+ inline end "Screenshot - Set the Evaluate Node"
+            <figure markdown>
+            ![Set the Evaluate node](./assets/fetch_transactions%20flow%202.png)
+            </figure>
+
+
+        - Drag and drop an **Evaluate** node to the canvas besides the **Start Node**
+        - Connect the green outlet of the **Start Node** to the new **Evaluate** node.
+        - Double click on the **Evaluate** node
+        - Rename the node to <copy>`URL Builder`</code>
+        - Copy the below javascript code in the code editor of the node
+            ```javascript
+            var customerID = "$(n2.aiAgent.CustomerID)";
+
+            var filter = "filterByFormula=" + '{CustomerID}="' + customerID + '"';
+            var sort = "sort[0][field]=Date&sort[0][direction]=desc";
+            var limit = "maxRecords=5";
+
+            var formula = "?" + filter + "&" + sort + "&" + limit;
+
+            1;
+            ```
+            
+            ???+ warning
+                Make sure the $(n2.aiAgent.CustomerID) variable corresponds to your CustomerID variable in the Start Node. You can pick it up by selecting it from the **Input Variables** right panel, under the **Start** section. 
+            
+            
+            ???+ info 
+                The proposed JavaScript logic serves as a dynamic query builder for the specific syntax required by the query we need. Apart from the `filterByFormula` parameter, the query includes a `sort` parameter to get the transactions in descending chronological order based on the *Date* field. It also includes a `maxRecords` filter to limit the number of transactions the maximum of 5.
+
+        - Set the **Script Output** value to `1`
+        - Set the **Branch Name** value to `Success`
+        - Click on **[Save]**
+        - Save the flow
+
+        
+    6. In the last step you will fetch the customer data from your Airtable Customers repository. 
+
+        ???+ Important
+            This part of the flow will leverage the Airtable API generated from your *Transactions* table. So you must have:
+
+            - your Airtable base created, with the Transactions Table populated
+            - your [Airtable API](https://airtable.com/developers/web/api/introduction) handy for your base (from the API Reference site, click on the base you created for the Bootcamp. To see personalized documentation generated for your bases, log in to Airtable). Your Airtable Base API is available at `https://airtable.com/<yourBaseID>/api/docs`
+            - Your [Personal Access token](https://airtable.com/create/tokens) created.  
+
+            The API we will use in this flow will be as follows: 
+
+            ``` text
+            GET     https://api.airtable.com/v0/<yourBaseID>/Transactions
+            ```
+
+            To fetch the correct entry, we will use the URL query parameters set to the string value returned by the **Evaluate** node. 
+
+        ???+ inline end "Fetching Transaction data through the API"
+
+            <figure markdown>
+            ![Using API to fetch transactions](./assets/fetch_transactions%20flow%203.png)
+            </figure>
+        
+        
+        - Drag and drop an **HTTP Request** node to the canvas besides the **Evaluate** node
+        - Connect the green outlet of the **Evaluate** node to the new **HTTP Request** node.
+        - Double click on the **HTTP Request** node
+        - Rename the node to <copy>`Fetch Transactions Info`</code>
+        - Fill in the parameters as follows: 
+
+            | Parameter | Value | Notes |
+            | :--- | :--- | :--- |
+            | **Method** | `GET` | |
+            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/<yourBaseID>/Transactions$(formula)` </copy>| Replace `yourBaseID` with the value of your Airtable Base|
+            | **Header** | <copy>`Authorization`</copy>  |  |
+            | **Value** | `Bearer <yourPersonalToken>` |  Enter `yourPersonalToken`from [Airtable](https://airtable.com/create/tokens)|
+            | **Value** | <copy>`application/json`</copy> |  |
+            | **Connection Timeout** | <copy>`10000`</copy> | |
+            | **Request Timeout** | <copy>`10000`</copy> |  |
+
+        - We will not fill any Output Variables in this case. As you will see below, in the flow Output Variables we will provide the entire output of the HTTP Request, which will contain the list of transactions fetched. So we do not need to extract any specific variable here. 
+
+        ???+ inline end "Return transactions"
+
+            <figure markdown>
+            ![Return transactions](./assets/fetch_transactions%20flow%204.png)
+            </figure>
+
+        - Click on **[Save]**
+        - To complete the node, click on the green outlet at the right and drag it to the canvas. Release it to open the **End** dialogue
+
+            - Set the **Node Event** value to `onSuccess`
+            - Set the **Flow Result** value to `101 - Successfully completed flow [Success]`
+            - Click on **[Save]**
+        - Save the flow!
+
+
+    7. To finish your fulfillment flow, we need to pass on the output variables back to your AI Agent through the **Flow Outcomes**
+
+        - Click on the :fontawesome-solid-gear: button at the top right of the flow editor. 
+        - Click on the **Flow Outcomes** tab
+        - Open the `Last Execution Status` Outcome. The *Notify AI Agent* radio button is enabled by default for the start node with `AI Agent` as the trigger.
+        - Click on **+ Add New** for the only variable we will return here: the *HTTP.responseBody*. Fetch the **Value** variable from the **Input Variables** right panel, under the **HTTP Request** section.
+
+            |		Key		|	Value	|
+            |		-----		|	-----	|
+            |	<copy>PendingTransactions</copy>	|	$(n4.http.responseBody)	|
+            
+
+        - Click on **[Save]**
+        - Save the flow!!
+
+
+    Your **fetch_transactions** flow is now completed. 
+    Before leaving the flow editor, make sure you **[Make Live]** the flow, otherwise, it will not be visible to the AI Agent Studio. 
 
 ???+ webex "AI Agent action definition"
-    
+    To create the *fetch_transactions* action, let´s get back to the **AI Agent Studio**
+
+    ???+ inline end "fetch_transactions action"
+
+            <figure markdown>
+            ![fetch_transactions action](./assets/fetch_transactions%20action.png)
+            </figure>
+
+    1. In the **AI Agent Studio**, select your *Finance Debt Collection Agent*
     1. Click on **[Actions]**
     2. Click on **[Create new]** and select **Fulfillment**
-    3. Fill in the General information of your action
-        - **Action name**: *fetch_balance*
+    3. Fill in the **General information** of your action
+        - **Action name**: <copy>*fetch_transactions*</copy>
         - **Action description**: copy and paste the following description.
         ```
-        Using the customer's phone number, fetch the following details from the Customer DB: 
-            - Record ID
-            - Customer ID
-            - Account Balance
-            - Customer Information (Name, DOB)
-            - Cashback balance
-            - Rewards tier
-            - Credit card
-            - Email
+        Fetch recent transactions from a customer account. Use the {{CustomerID}} value from the [fetch_balance] function.
         ```
-    4. **Action scope**: select *Slot filling and fulfillment*
     5. Under **Slot filling** click on **[New input entity]**
     6. In the **Add a new input entity** dialogue window, populate: 
+
+        | Entity Name | Type | Description | Example | Required |
+        | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`CustomerID`</copy> | `String` | <copy>The {{CustomerID}} value retrieved by the [fetch_balance] action. </copy> | <copy>`recZkHsiTTGUvCfhj`</copy> |`Required` |
+
+        ???+ info 
+            The entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.
+
+    7. The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the **Webex Connect Flow Builder Fulfillment** section
+        - Select the Webex Connect Service `Webex Finance Bootcamp`
+        - Select the flow `fetch_transactions`
+    8. Click on **[-> Add]**
+
+    You can see now your new action in the **Actions** panel of your AI Agent.
     
-        | Parameter | Value | Notes |
-        | :--- | :--- | :--- |
-        | **Entity name** | `PhoneNumber` |  |
-        | **Entity type** | `String` |  |
-        | **Entity description** | `Customer's phone number` |  |
-        | **Entity examples** | `13458752396` | click **[+ Add]** and enter a number example |
-        | **Settings** | `Required` |  |
-
-
-    Let´s leave the Action configuration in the AI Agent Studio here, as we need to create the Action Flow in WxConnect to complete the action configuration. 
-
-    ???+ gif "Creating a new Action"
-
-        <figure markdown>
-        ![Create AI Agent KowledgeBase](./assets/AI Agent KB.gif)
-        </figure>
-
-???+ webex "Action fulfillment flow in Webex Connect"
-
-
-
-???+ webex "Associate WxConnect fulfillment flow with Action"
-    
-
-
 
 ---
 
