@@ -1,6 +1,6 @@
 ---
-site_name: "FY26 Webex Contact Center Partner Bootcamp" 
-site_description: "WxCC Bootcamp: Proactive Debt Collection and Contention resolution"
+site_name: "2026 Webex Contact Center Partner Bootcamp" 
+site_description: "Proactive Debt Collection and Contention resolution"
 site_author: Luis Garcia Delgado, Juan Corral, Sebastian Hernandez, Stephanie Ross
 copyright: Copyright &copy; 2026 Cisco
 theme:
@@ -14,7 +14,9 @@ theme:
     - navigation.footer
     - search.suggest
     - content.code.copy
+    - toc.follow
     - toc.integrate
+   
   custom_dir: docs/overrides
   palette:
     # Palette toggle for light mode
@@ -95,15 +97,19 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.critic
   - pymdownx.keys
+  - toc:
+      permalink: true
+      toc_depth: 3
+
   
 
 nav:
   - Home: index.md
-  - Read Me:
-      - Overview: overview.md
+  - Readme:
+      - 2026 WxCC Bootcamp: overview.md
   - Pre-requisites: 
     - Email Digital Channel: pre_req_email_channel.md
-    - Airtable Base: airtable.md
+    - Airtable Base: pre_req_airtable.md
   - Labs:
     - Lab 1 - Proactive Outbound Reach: lab1_campaign_manager.md
     - Lab 2 - Automated Debt collection: lab2_debt_ai_agent.md
@@ -120,4 +126,6 @@ nav:
         - Markdown and Other References: howToUse/references.md
         - Custom Features: howToUse/customFeatures.md
         - Custom Admonitions: howToUse/admonition.md
+
+  - Webex Bank Knowledge Base: ./bcamp_files/Webex_Financial_Group_KB.md
  

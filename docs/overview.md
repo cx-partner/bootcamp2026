@@ -1,35 +1,108 @@
-# Overview
+# 2026 WxCC Bootcamp
 
-## Learning Objectives :open_book:
+## Overview
 
-This lab will give you an introduction to Customer Journey Data Service (CJDS) for Webex Contact Center. Next, you'll access a Webex Contact Center developer sandbox, get hands-on with modifying an IVR flow in the Flow Designer tool, and utilize a Bruno collection to make API calls & send JDS events in the flow. Then, you'll validate the flow by calling the assigned inbound phone number and test the IVR as a customer. After that, you'll explore the Agent Desktop and observe how it all comes together inside of a Widget. 
+Welcome to the 2026 Webex Contact Center (WxCC) Partner Bootcamp — an immersive, hands-on experience designed to equip partners with the skills needed to design, build, and demonstrate next-generation customer journeys powered by AI. Over the course of two days, you will implement a complete, real-world use case for Webex Bank, a fictitious retail banking organization:
 
-## Disclaimer
+<p align="center"><strong>Proactive Debt Collection and Contention Resolution</strong></p>
 
-Although the lab design and configuration examples could be used as a reference, for design related questions please contact your representative at Cisco, or a Cisco partner.
+This use case showcases how organizations can:
 
-## Lab Access :key:
+- Proactively engage customers
+- Automate routine interactions using AI
+- Seamlessly orchestrate human intervention when needed
+- Deliver secure, compliant, and frictionless experiences
 
-You'll be assigned a lab number and sandbox credentials by an instructor. 
+By the end of the bootcamp, you will have built a fully functional, end-to-end use case in your own Gold Tenant environment.
 
-## Getting Started :rocket:
+---
+## Bootcamp Description
 
-In this section, we’ll prepare the environment needed to complete the lab. Please follow each step carefully to ensure everything is ready for the hands-on exercises. Once the environment is configured, you’ll be ready to dive into the lab activities!
+By leveraging cutting-edge functionality, you will learn to deliver fully connected customer journeys for **Webex Bank**, a fictitious retail banking entity. Our goal is to demonstrate how to boost debt recovery while significantly cutting agent workload through state-of-the-art AI automation.
 
-To get started, you’ll need to download the Bruno collection for this lab. This collection contains all the necessary API requests to complete the exercises. Follow these steps:
+The bootcamp is structured as a progressive, hands-on implementation, where each lab builds on the previous one to create a complete customer journey.
 
-1. Download the Collection: <a href="https://github.com/WebexCC-SA/LAB-2851/blob/main/docs/assets/Bruno_Wx1_JDS_Collection.json" target="_blank">WebexOne JDS Bruno Collection</a>  - Click on the link to download the Bruno collection file.
-2. Import into Bruno:
-    - Open Bruno.
-    - Go to File > Import.
-    - Select the downloaded collection file and import it.
+You will work within your own WxCC tenant (Gold Tenant or NFR demo/lab) to deploy a production-like scenario that combines outbound engagement, AI automation, and human-assisted resolution.
 
-???+ tip "Bruno Import GIF"
-    <figure markdown>
-    ![Bruno Import](./assets/import_collection_bruno.gif)
-    </figure>
+**Day 1 – Proactive Automation & AI Foundations**
 
-???+ info "Postman Collection"
-    Instructions in this guide were written using Bruno, but you can download the Postman collection here: <a href="https://github.com/WebexCC-SA/LAB-2851/blob/main/docs/assets/Wx1_JDS_Collection.postman_collection.json" target="_blank">WebexOne JDS Postman Collection</a>
+- Lab 1 - *Proactive Outbound Reach*
 
-Once imported, you’ll be able to access the collection and use it to complete the lab tasks.
+    Configure the Native Campaign Manager to trigger voice calls based on debt maturity dates found in your Airtable database.
+
+- Lab 2 - *Automated Customer Engagement* 
+    
+    Build an autonomous AI Agent capable of authenticating customers, retrieving debt balances, offering payment options and generating and delivering payment links via NovaPay integration.
+
+**Day 2: Advanced Orchestration & Human-in-the-Loop AI**
+
+- Lab 3 - *Value of the Human Touch* 
+    Implement intelligent escalation to a Human Fraud Specialist, including full context transfer via VA Summary, Real-time agent guidance with RT Assist and automated wrap-up and backend actions.
+
+- Lab 4 - *Cross-Skill and Multi-Agent Orchestration* 
+    Desing a multi-agent architecture where a Debt Collection AI Agent hands off to an Investment Advisor AI Agent, using Agent transfer capabilities, and automate scheduled appointments with a human advisor.
+ 
+---
+## Learning Objectives
+
+By participating in this bootcamp, you will::
+
+- [x] Understand Proactive Engagement and learn how to design outbound, event-driven customer journeys using Webex Contact Center
+- [x] Master AI Capabilities in Webex Contact Center and gain hands-on experience with autonomous AI Agents, AI Assistant and RT Assist, Multi-agent orchestration and Campaign Manager
+- [x] Build and implement a complete, business-relevant use case within your own Tenant
+- [x] Drive Measurable Business Outcomes by increasing operational efficiency through automation, reducing agent workload and after-call work and improving customer experience with seamless interactions.
+---
+## Lab Infrastructure & Pre-requisites
+
+To ensure a smooth experience during the bootcamp, the following must be pre-configured in your Gold Tenant before starting Lab 1:
+
+1. Digital Channel for Outbound Notifications
+
+    A digital channel must be enabled to allow the AI Agent to send payment links. Recommended: Email channel via Webex Connect
+
+2. Airtable Base (Customer Data Repository)
+
+    You must configure an Airtable Base that will act as the Customer Debt Database, including Customers table, Transactions table and Investments table. 
+
+    This database will be used by AI Agents for customer authentication, debt retrieval, transaction validation and investment advisory scenarios
+
+Additionally, you will leverage the **NovaPay mock-payment service** built for the purpose of this Bootcamp. The NovaPay service provides a mockpayment frontend web site that mimics a typical payment user interface and a web service that exposes an API to create payment sessions, accept payments and check the payment status. Should you want to replicate the Novapay services for your demos, the [Extra Lab](lab_novapay.md) in this Bootcamp provides you a **step-by-step guide** to do so.
+
+Detailed setup instructions are provided in the [Pre-requisites](pre_req_email_channel.md) section of the lab guides.
+
+---
+## Disclaimers
+
+- Limited AI Scope: AI Agents in this bootcamp are intentionally restricted to low-risk, reversible, and controlled actions.
+
+- Human Oversight: All high-sensitivity and regulatory processes (e.g., fraud confirmation, financial liability decisions) are handled by human agents.
+
+- Fictitious Data: *Webex Bank* and *NovaPay* are simulated entities and all data and scenarios related to *Webex Bank* and *NovaPay* is for training purposes only.
+
+- Non-Production Setup: This environment is designed for demo and learning purposes, not for production deployment.
+
+
+---
+## Useful Links & Tools
+During the bootcamp, you will actively use the following platforms and tools:
+
+- Cisco Platforms: 
+    - Control Hub 
+    - Webex Connect portal
+    - AI Agent Studio
+    - Campaign Manager portal
+
+- External tools: 
+    - Airtable: Your primary data repository for customer and financial records.
+    - NovaPay Mock Service: for payment sessions and confirmation service.
+---
+## Proctors and Support
+Our proctors are available throughout the bootcamp to support you during the labs. Please reach out at any time if you need assistance.
+
+AMER: Juan, Stephanie, Luis.
+
+EMEA: Juan, David, Christian, Juliet, Sebastian, Asmesh, Adam, Pankaj.
+
+APJ: Juan.
+
+

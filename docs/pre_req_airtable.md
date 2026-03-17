@@ -1,186 +1,179 @@
-## Airtable 
+# Airtable Base
 
-[Airtable](https://airtable.com/) is a cloud-based platform that
-combines the features of a spreadsheet with the power of a relational
-database. It allows users to create **bases**---customizable
-databases---for organizing, managing, and collaborating on data.
-Airtable provides a robust REST API that enables developers to
-programmatically access and manipulate data in any base. Uses personal
-access tokens or OAuth for secure API access. Each base has
-automatically generated, interactive API documentation tailored to its
-structure. The Airtable free plan allows unlimited bases with up to 1000
-records each and up to 1GB storage per base. It does support up to 1000
-API calls per workspace each month.
+## Introduction to Data Repositories: Airtable 
 
-During the Bootcamp you will be implementing an Order Management use
-case for an online company. In the context of the Bootcamp, we will use
-Airtable to simulate the interactions of a production database
-containing the orders and customer information. Here we describe how you
-can build your Airtable base with the required data and setup the API
-that you will need to use it to implement HTTP data requests in the
-flows.
+[Airtable](https://airtable.com/) is a cloud-based platform that blends the intuitive interface of a spreadsheet with the advanced capabilities of a relational database. It allows users to create **Bases**—highly customizable databases—to organize, manage, and collaborate on complex data sets. For our purposes, Airtable provides a robust **REST API** that enables the AI Agent to programmatically access and manipulate data in real-time.
 
-NOTE: This can be a shared resource for all your attendees in the
-Bootcamp. Every attendee would need to create its own customer record
-for their labs if you are not working as a team . That will be described
-in lab 1. In this document we will cover the construction of your
-Airtable base and the required setup in Postman to test and make sure
-the Airtable base API collection is ready for the Bootcamp.
+During this bootcamp, you will implement a financial service use case for **Webex Bank**. Airtable serves as our centralized *"Headless Database"*, providing the backend logic required to power the AI Agent’s decision-making. We will establish three core tables to simulate a production-grade enterprise environment:
 
-***This is a very useful tool for you to use with your customer demos,
-as it allows you to build customer data that can be easily customized to
-your customers´ use cases and leveraged to personalize your WxCC flows
-as well as to visualize how a flow can also modify the data. It also
-provides a ready-to-use API to access the data from your flows.***
+- **Customers**: For identity verification, profile management and debt status.
+- **Transactions**: For retrieving recent account activity and resolving disputes.
+- **Investments**: For providing real-time portfolio updates and financial advice.
 
-###  Build your Airtable base
+Rather than just manual data entry, you will leverage the **Airtable API** to transform static records into dynamic conversational triggers. This allows your AI Agent to perform sophisticated logic—such as verifying a caller's identity or fetching a 7-day transaction history—effectively bridging the gap between AI orchestration and external data repositories.
 
-1.  **Create your free account in Airtable**.
+Each Airtable base includes interactive, auto-generated API documentation tailored to its specific structure. For the scope of these labs:
 
-> You can skip this step if you have already an account.
->
-> Got to <https://www.airtable.com/> and click on "Sign up for free".
->
-> ![A screenshot of a web page AI-generated content may be
-> incorrect.](./images/media/image1.png){width="5.995386045494313in"
-> height="3.0151235783027124in"}
->
-> Complete the steps to create your new account. You can skip adding
-> coworkers. Also you can skip creating your first app by clicking on
-> the "x" at the upper-right corner of the screen. You will also get a
-> 14-day trial of a Team plan. No payment is required and it will
-> rollback to the free plan after 14 days.
->
-> After all this process, you will land into a brand new empty Base. A
-> **Base** is the fundamental organizational unit---think of it as a
-> database for a specific project or purpose. A Base is a container that
-> holds all the tables, fields, records, views, and automations related
-> to a single project or workflow. It\'s similar to a spreadsheet
-> workbook or a relational database, but with a more visual and
-> user-friendly interface.
->
-> Before building our Base, we will setup some other entities in
-> Airtable. Click on the upper-left Airtable logo close to the "Untitled
-> Base" name to "go home".
+- Authentication: Access is secured via **Personal Access Tokens** (PAT).
+- Capacity: The Airtable Free Plan supports up to 1,000 records and 1GB of storage per base.
+- API Limits: The workspace supports up to 1,000 API calls per month, which is ample for our lab exercises.
 
-Click here to go to the home page
+The following sections will guide you through constructing your Airtable base and optionally configuring Postman to validate that your API collection is ready for integration.
 
-2.  **Create your first Workspace**.
+???+ tip
+    Airtable is a versatile asset for customer demonstrations, enabling you to build bespoke datasets that align perfectly with a client's specific use case. By integrating this data, you can demonstrate highly personalized Webex Contact Center (WxCC) flows that not only retrieve information in real-time but also dynamically update the database based on customer interactions. With its ready-to-use API, Airtable allows you to visualize and prove the power of a data-driven customer experience with minimal configuration.
 
-> Click on the "+" sign besides the "All workspaces"
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image3.png){width="4.601804461942257in"
-> height="3.109851268591426in"}
->
-> In the next window, give your Workspace a name. Say "WxCC Partner
-> Bootcamp".
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image4.png){width="5.206747594050744in"
-> height="2.811574803149606in"}
+---
 
-3.  **Create your Bootcamp Base**.
+##  Build your Airtable base
 
-> Click on "Start from scratch" box to create your base. You will get
-> into this empty Grid view:
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image5.png){width="6.361731189851269in"
-> height="3.4352504374453194in"}
->
-> Let´s build our base. Give it first a name, changing the "Untitled
-> Base" into a meaningful name: "WxCC Bootcamp".
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image6.png){width="2.1665879265091865in"
-> height="2.9603805774278213in"}
->
-> Now, rename your Table into "Order_CRM". This will be our customer and
-> order data repository for the Bootcamp. You can also give a name to
-> every record in the table: "Order". Save it.
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image7.png){width="2.1693022747156605in"
-> height="3.047020997375328in"} ![A screenshot of a computer
-> AI-generated content may be
-> incorrect.](./images/media/image8.png){width="1.7706113298337707in"
-> height="2.550323709536308in"}
+Let´s start building your Airtable Base
 
-4.  **Build the structure of your Database**.
+???+ Webex "Create your free account in Airtable"
 
-> We will now define the fields for our database. For that we will need
-> to change the existing fields an add new ones. To change a field,
-> click on the "v" symbol in the field header and "Edit field". To add a
-> new one, simply click on the "+" symbol at the right of the last
-> field.
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image9.png){width="6.270287620297463in"
-> height="3.0123206474190725in"}
->
-> Let´s modify the first one as an example. Click on the "v" symbol on
-> the right of the field "name" and then click "Edit field". In the next
-> panel, give it the name "orderId" and select the "Single line text"
-> field type. This will be our primary field in the table. Save it to
-> get your first field.
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image10.png){width="3.0435772090988626in"
-> height="2.9634831583552055in"}
->
-> Proceed in the same way, modifying or creating new fields until you
-> complete the below table structure.
->
-> NOTE: we recommend you to use the proposed names below as it will make
-> easy to keep up with the lab documents during the bootcamp.
+    **You can skip this step if you have already an account**.
 
-  ----------------------------------------
-  Field name         Field type
-  ------------------ ---------------------
-  orderId            Single line text
+    Got to <https://www.airtable.com/> and click on "Sign up for free".
 
-  consentComs        Single line text
+    ???+ inline end "Create Airtable account"
 
-  fName              Single line text
+        <figure markdown>
+        ![Create Airtable Account](./assets/airtable1.png)
+        </figure>
 
-  lName              Single line text
+    Complete the steps to create your new account. You can skip creating your first app with the Assistant by clicking on
+    the "x" at the upper-right corner of the screen and move to create a blank app. 
+    
+    After all this process, you will land into a brand new empty Base. A **Base** is the fundamental organizational unit---think of it as a database for a specific project or purpose. A Base is a container that holds all the tables, fields, records, views, and automations related to a single project or workflow. It\'s similar to a spreadsheet
+    workbook or a relational database, but with a more visual and user-friendly interface.
+    
+    ???+ inline end "Create Airtable Base"
 
-  phoneNumber        Single line text
+        <figure markdown>
+        ![Create Airtable Base](./assets/airtable2.png)
+        </figure>
 
-  email              Email
+    Before building our Base, we will setup some other entities in Airtable. Click on the upper-left Airtable logo to "go home".
 
-  address            Single line text
+???+ Webex "Create your first Workspace"
 
-  timezone           Single line text
+    ???+ inline end "Create Workspace"
+         <figure markdown>
+        ![Create Workspace](./assets/airtable3.png)
+        </figure>
+    
+    Click on the "+" sign besides the "All workspaces"
+    
+    In the next window, give your Workspace a name. Say "WxCC Bootcamp".
+    Then click on **[+ Create]** and in the next dialogue select **Build an app on your own**. Your are now ready to create your Base. 
+    
 
-  productName        Single line text
+???+ Webex "Create your Bootcamp Base"
 
-  deliveryAddress    Single line text
+    ???+ gif inline end "Create your Base"
+        <figure markdown>
+        ![Create Base](./assets/airtable6.gif)
+        </figure>
 
-  deliveryETA        Date -\> Local
+    
+    Let´s build our base. After the previous step, you will land into an empty grid view similar to the one below:
 
-  altDate1           Date -\> Local
 
-  altDate2           Date -\> Local
+    First, give it a name, changing the "Untitled Base" into a meaningful name: "Webex Bank". For that, click in the "Untitle Base" and provide the new name. 
+   
+    Next we will need to create the three tables for our Webex Bank: **Customers**, **Transactions** and **Investments**. We will proceed the same way for them: 
 
-  safeLocation       Single line text
+    1. Import a csv file with the table template
+    2. Rename the table
+    2. Change the field types to the appropiate ones (the import converts all field types into *long string*)
 
-  deliveryStatus     Single line text
-  ----------------------------------------
+    ???+ Webex "***Customers*** table"
 
-> Your Order_CRM table should look like and empty version of the one
-> below:
+        !!! download "Customers Table"
+            Download the csv file for the [Customers Table](./bcamp_files/airtable_Customers.csv).
 
-![](./images/media/image11.png){width="6.9028696412948385in"
-height="0.9587062554680665in"}
+        1. Once you have downloaded your .csv file, click on **+ Add or import** and select **CSV file**. Drop or select your `airtable_Customers.csv` file and click **[Upload 1 file]**
 
-> Your Airtable Base is now ready for the Bootcamp!!! Let´s now setup
-> the API that will allow you to access your data from your flows.
+        2. In the **Import your file** dialogue, select *+ Create a new table* and click **[Next]**
 
-### Setting up your Airtable API
+        2. In the next window, you will need to adjust the type of some of the fields. Click the chevron next to the field name to expand the properties menu, then select the correct field type for the following fields: 
 
-Airtable\'s API uses token-based authentication, allowing users to
+            |   Field   | Type       |
+            | :----     | :----     |
+            | CustomerID | `Single line text` |
+            | PIN      | `Single line text` |
+            | DOB       |   `Date`  |
+            | Balance   |   `Currency`|
+            | MaturityDate | `Date`  |
+            | CashbackBalance |  `Currency`|
+            | Email | `Email` |
+            | RewardsTier | `Single select`|
+            | CreditCard    | `Single select`|
+
+            Now, click **[Import]**
+
+        3. Change the name of the Imported table to **Customers**. Click on the chevron `v` besides the **Imported table** table name  and select *Rename table*. Type **Customers** and click **[Save]**
+
+        4. Make sure the Date type fields have a proper date configuration (**DOB** and **MaturityDate**). Click  the chevron in the field, select **Edit field** and under **Date format** select *Local* and make sure the **include time* option is deactivated. Click **[Save]*
+
+        4. Now populate the values for the *Single select* field types: 
+
+            - Click the chevron besides the **RewardsTier** field, click **Edit field** and then **+ Add option** to add the following options: 
+                
+                    
+                <br><copy>Basic</copy>
+                <br><copy>Standard</copy>
+                <br><copy>Elite</copy>
+                    
+                Select *Basic* as the **Default** value and click **[Save]**
+
+            - Do the same for the **CreditCard** field with the following values: 
+
+                <br><copy>Standard Cashback</copy>
+                <br><copy>Travel Rewards Card</copy>
+                <br><copy>Platinum Card</copy>
+
+                Select *Standard Cashback* as the **Default** value and click **[Save]** 
+
+        Your **Customers** table is ready.     
+        
+    ???+ Webex "***Transactions*** table"
+
+        !!! download "Transactions Table"
+            Download the csv file for the [Transactions Table](./bcamp_files/airtable_Transactions.csv).
+
+        Now proceed as in the **Customers** table to import the csv file of the **Transactions** table and adjust the field types for the following fields: 
+
+        |   Field   | Type       |
+        | :----     | :----     |
+        | Amount      | `Currency`  |
+        | Vendor       |   `Single line text`  |
+        | City       |   `Single line text`  |
+        | Date   |   `Date`|
+        
+        Click **[Import]**
+        
+        Change the name of the Imported table to **Transactions**: Click on the chevron besides the table name *Imported table* and select *Rename table*. Type **Transactions** and click **[Save]**
+        
+        We still need to adjust a few fields: 
+
+        - In the  **TransactionID** field, click the chevron, select **Edit field** and change the type to *Autonumber*. This will automatically generate a transaction ID to every record you create.
+        - In the **CustomerID** field, click the chevron, select **Edit field** and change the type to *Link to another record*. From the existing tables list, select **Customers** and click **[Save]**.
+            - In the next dialogue window, select the fields we want to import from the **Customers** table: **FirstName** and **LastName**. Click **[Add 2 fields]**. This will create two new columns in your table.
+        This will keep both tables connected and consistent. You will see in your Customers table a new field called **Transactions**. it will contain links to all the transactions associated to the customer. 
+       
+    ???+ Webex "***Investments*** table"
+
+        !!! download "Investments Table"
+            Download the csv file for the [Investments Table](./bcamp_files/airtable_Investments.csv).
+
+
+    Your Airtable Base is now ready for the Bootcamp!!! Let´s now setup the API that will allow you to access your data from your flows.
+---
+
+## Setting up your Airtable API
+
+Airtable's API uses token-based authentication, allowing users to
 authenticate API requests by inputting their tokens into the HTTP
 authorization bearer token header. Two type of tokens are supported:
 personal access tokens and OAuth access tokens. As this is for a demo
@@ -188,295 +181,87 @@ environment, we will use [Personal Access
 Tokens](https://airtable.com/developers/web/guides/personal-access-tokens)
 (PAT).
 
-To create your PAT, go to <https://airtable.com/create/tokens> and click
-on "Create token".
+???+ Webex "Create a Personal Access Token"
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image12.png){width="3.595240594925634in"
-height="2.385931758530184in"}
+    1. To create your PAT, go to <https://airtable.com/create/tokens> and click
+    on "Create token".
 
-- Now, give your token a name: "WxCCPartnerBootcamp".
+    ???+ gif inline end "Create your Token"
+        <figure markdown>
+        ![Create Token](./assets/airtable7.gif)
+        </figure>
 
-- Define the Scope for your token. You will need to select
-  **data.records:read** and **data.records:write**, as we will need R/W
-  access to the data.
+    2. Give your token a name: "Webex Bank PAT".
 
-- Select your workspace to enable API access to your database.
+    3. Define the Scope for your token. You will need to select **data.records:read** and **data.records:write**, as we will need R/W access to the data.
 
-- Click on "Create Token"
+    4. Click **+ Add a base** and select your workspace to enable API access to your database.
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image13.png){width="3.6569663167104114in"
-height="3.0254418197725284in"}
+    5. Click on "Create Token"
 
-You should see a confirmation panel with your newly created token. This
-will be the only time you will see your token, it will never be shown
-again, so make sure you copy it in a safe place for further use. Once
-saved, you can click on "Done".
+    6. You should see a confirmation panel with your newly created token. This   will be the only time you will see your token, it will never be shown again, so make sure you copy it in a safe place for further use. Once saved, you can click on "Done".
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image14.png){width="3.5972222222222223in"
-height="2.2083333333333335in"}
+    Now you will see your new token in your Personal access token site:
 
-Now you will see your new token in your Personal access token site:
+???+ Webex "APi Documentation"
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image15.png){width="5.778260061242345in"
-height="1.7569969378827646in"}
+    ???+ inline end "Create your Token"
+        <figure markdown>
+        ![Create Token](./assets/airtable16.png)
+        </figure>
+    
+    Let's now generate the API documentation for your Airtable Base:
 
-Let's now generate the API documentation for your Airtable Base:
+    1.  Go to <https://airtable.com/api>. This is Airtable's official API documentation portal.
 
-1.  **Go to https://airtable.com/api**\
-    This is Airtable's official API documentation portal.
+    2.  Log into your Airtable account (if you're not already logged in).
 
-2.  **Log into your Airtable account** (if you're not already logged
-    in).
+    3.  You'll see the list of **Bases** you have access to. Click on your **Base**.
 
-3.  You'll see a list of **Bases** you have access to.\
-    Click on your **Base**.
+    
+    4.  Airtable will generate **auto-documented API reference** for that Base, which includes:
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image16.png){width="4.811069553805774in"
-height="3.491246719160105in"}
+        - Authentication setup
 
-4.  Airtable will generate **auto-documented API reference** for that
-    Base, which includes:
+        - Endpoints for each **Table**
 
-- Authentication setup
+        - Example **GET**, **POST**, **PATCH**, and **DELETE** requests
 
-- Endpoints for each **Table**
+        - Field names and data types
 
-- Example **GET**, **POST**, **PATCH**, and **DELETE** requests
+        - Sample code snippets (e.g., using curl, JavaScript, etc.)
 
-- Field names and data types
+    ???+ inline end "API Documentation"
+        <figure markdown>
+        ![API Documentation](./assets/airtable17.png)
+        </figure>
 
-- Sample code snippets (e.g., using curl, JavaScript, etc.)
 
-![A screenshot of a computer screen AI-generated content may be
-incorrect.](./images/media/image17.png){width="5.32485564304462in"
-height="3.64329615048119in"}
+    ???+ Tip
+        Make sure you have populated at least one entry in your tables so that the API documentation includes examples.
 
-Bookmark this page as it will be your API reference for your base.
+    Bookmark this page as it will be your API reference for your base.
 
-As you can see on the documentation, The **Airtable API URL** to access
-a base's content is constructed using a specific format that includes
-your **Base ID**, **Table Name (or ID)**, and the **API version**:
+    As you can see on the documentation, The **Airtable API URL** to access a base's content is constructed using a specific format that includes your **Base ID**, **Table Name (or ID)**, and the **API version**:
 
-*https://api.airtable.com/v0/{{baseId}}/{{tableId}}*
+        https://api.airtable.com/v0/{{baseId}}/{{tableId}}
 
-- {{baseId}} -- A unique identifier for your base (e.g.,
-  app1234567890abcdef).
+    - {{baseId}} -- A unique identifier for your base (e.g. app1234567890abcdef).
 
-- {{tableId}} -- The unique identity of the table you want to access.
-  (e.g., tblABCDsGD34DS49J2). The tableId can be replaced by the
-  {{tableName}}. If the table name contains spaces or special
-  characters, it should be **URL-encoded** (e.g., My%20Table). To avoid
-  formating issues, we recommend you to use {{tableld}}
+    - {{tableId}} -- The unique identity of the table. (e.g., tblABCDsGD34DS49J2). The tableId can be replaced by the
+    {{tableName}}. If the table name contains spaces or special characters, it should be **URL-encoded** (e.g., My%20Table). To avoid formatting issues, we recommend you to use {{tableld}}
 
-Where you can find this information? This is detailed in the generated
-API documentation for your base, but also is availble in your base
-itself. If you go to your Base page, here is the data:
+    ???+ inline end "API URL components"
+        <figure markdown>
+        ![API URL](./assets/airtable18.png)
+        </figure>
+    
+    Where you can find this information? This is detailed in the generated API documentation for your base, but it is also available in your base page. See the picture on the right.
 
-*{{tableName}} {{baseId}} {{tableId}} }}{{tableName}}{{tableName}}
-{{tableName}} {{tableId}}*
+    Take note of those values.
 
-Take note of those values.
+---
 
-### Build your Airtable API collection in Postman
+???+ Challenge "Test your Airtable API with Postman"
 
-NOTE: you can create records, modify information and visualize the data
-in your Airtable Base through the Airtable web interface. So strictly
-speaking, you would not need to define an Airtable API collection in
-Postman for the Bootcamp labs. But this collection in Postman will allow
-you to test and verify that your Airtable API is working fine, as we
-will use the API from our flows to read and write data in the Order_CRM.
-
-We will setup a basic API collection in Postman so that we can
-manipulate your Base data through the API and test it is working
-correctly. You must follow the below steps:
-
-1.  Download this Postman collection for your Airtable API set:
-    [Airtable - Bootcamp
-    CRM.postman_collection.json](https://cisco.sharepoint.com/sites/WebexCCTechnicalBootcamp/_layouts/15/download.aspx?UniqueId=993109b8a1c140b3ba6395c9676700d0&e=a7UQPW)
-
-2.  Log into Postman desktop app and click on "Import" or go to
-    File-\>Import, navigate to the file you downloaded and import it
-    into Postman. You should now see a full collection of
-    "Airtable-Bootcamp CRM" API calls structured for Postman.
-
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image19.png){width="3.8627744969378828in"
-height="2.0601465441819773in"}
-
-3.  Now we will change some of the collection settings for this new
-    collection to make it work for your Airtable Base.
-
-    I.  Select the Airtable-Bootcamp CRM collection and then click on
-        the Variables tab. Fill in the variables with your Airtable base
-        identities (base-id and table-id) and the bearer-token with the
-        PAT you generated for your Base. Leave the orderId blank for the
-        moment. Click Save when updated.
-
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image20.png){width="5.095956911636046in"
-height="2.285918635170604in"}
-
-II. Click on the Authorization tab and verify the Auth Type is set to
-    Bearer Token and the actual Token is set to the variable
-    {{bearer-token}}.
-
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image21.png){width="4.2310804899387575in"
-height="2.1504265091863517in"}
-
-III. Filter your GET operation to selected records: Click on the "Get
-     Order" request. Then go to the params tab. Disable the populated
-     "maxRecords" and "view params". We will not use them. Create a new
-     param called "filterByFormula" and assign it the value
-     "orderId={{orderId}}". This will allow us to filter the GET
-     operation for a specific order record. Click Save.
-
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image22.png){width="4.938780621172353in"
-height="2.004511154855643in"}
-
-> You can now test your API. Disable the "filterByFormula" param and
-> click on "Send". This should return the records available in your
-> base. You should get a 200OK response and the content of the available
-> records. If that is not the case, check the value of your variables
-> and token.
->
-> If the Base is empty, you will get this JSON response:
->
-> {
->
-> \"records\": \[\]
->
-> }
->
-> If you have an empty record in the Base, this is what you get:
->
-> {
->
-> \"records\": \[
->
-> {
->
-> \"id\": \"reclOznQZ7SSNcV0r\",
->
-> \"createdTime\": \"2025-04-09T10:06:36.000Z\",
->
-> \"fields\": {}
->
-> }
->
-> \]
->
-> }
->
-> Note the "id" value in the response is the Record identity. This will
-> be required if you want to modify any field in your record via a PATCH
-> operation.
-
-IV. Let´s now create a new record to test your API. Go to the POST --
-    Add Order request. Under the Body tab, select "raw" and "JSON"
-    format. Overwrite the content there with the following one:
-
-> {
->
-> \"fields\": {
->
-> \"orderId\": \"41223335467\",
->
-> \"consentComs\": \"True\",
->
-> \"fName\": \"John\",
->
-> \"lName\": \"Doe\",
->
-> \"phoneNumber\": \"41223335467\",
->
-> \"email\": \"jdoe@domain.com\",
->
-> \"address\": \"2345 Nowhere str, Miami, USA\",
->
-> \"timezone\": \"America/Miami\",
->
-> \"productName\": \"Core Trio QI Charger\",
->
-> \"deliveryAddress\": \"2345 Nowhere str, Miami, USA\",
->
-> \"deliveryETA\": \"2025-04-30\",
->
-> \"altDate1\": \"2025-05-05\",
->
-> \"altDate2\": \"2025-05-06\",
->
-> \"safeLocation\": \"Front Door\",
->
-> \"deliveryStatus\": \"\"
->
-> }
->
-> }
->
-> This should match the JSON format of your Base structure. If you have
-> changed any of the proposed field names, make sure you also change the
-> name in the JSON body above. Fields in the JSON structure must match
-> the fields in your Airtable Base.
->
-> TIP: you can always go to your Base **auto-documented API reference**
-> and copy the JSON structure from there.
->
-> Click on Send. You should get a 200 OK response with the newly created
-> record content.
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image23.png){width="5.38213801399825in"
-> height="4.425347769028871in"}
->
-> Now you can check on your Base the new record has been created.
-
-![A screenshot of a computer AI-generated content may be
-incorrect.](./images/media/image24.png){width="7.315265748031496in"
-height="1.1085695538057743in"}
-
-V.  To complete the verification of your Airtable API, let´s now modify
-    a field in your new record. As you can see, the deliveryStatus field
-    is empty. Let´s change it into "not Shipped". First you need to get
-    the record identity of the record you want to modify. That is
-    available in the response you got when you created the record. Take
-    note of it.
-
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image23.png){width="5.469396325459318in"
-> height="2.023073053368329in"}
->
-> Now in Postman, go to your PATCH-Modify Order Request. Hover on the
-> {{record-id}} variable in the operation URL and insert the value of
-> our record id.
->
-> Make sure the Body of your request is in raw-JSON format and has the
-> following content:
->
-> {
->
-> \"fields\": {
->
-> \"deliveryStatus\": \"not shipped\"
->
-> }
->
-> }
->
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./images/media/image25.png){width="6.059318678915136in"
-> height="1.7667957130358705in"}
->
-> Click on Send. You should get a 200 OK response with the modified
-> record in the body. Check in your Airtable Base that the value has
-> been updated.
->
-> NOTE: if you get a 404 Not Found error, try changing the name of the
-> variable {{record-id}} to, for instance {{recordid}} or directly
-> remove the variable and paste the actual value instead.
+    you can create records, modify information and visualize the data in your Airtable Base through the Airtable web interface. So strictly speaking, you would not need to define an Airtable API collection in Postman for the Bootcamp labs. But this collection in Postman would allow you to test and verify that your Airtable API is working fine, as we will use the API from our flows to read and write data in the Base. So feel free to setup your Airtable API collection in Postman and test your Base to get it fully ready for the Bootcamp. 

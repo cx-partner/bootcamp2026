@@ -1,4 +1,6 @@
-# Introduction
+# Email Digital Channel
+
+## Introduction
 
 For the purposes of this Bootcamp, we are using Email to trigger proactive customer engagements. Although SMS or WhatsApp are more ubiquitous for 'near-instant' communication, the email channel was chosen to minimize configuration complexity. We will proceed with this setup, acknowledging that the response time may be less immediate than in a production-grade SMS environment.
 
@@ -14,11 +16,11 @@ The implementation consists of the following steps:
 * [x] **Inbound Routing**: Configure a Forwarding Rule in Gmail to redirect incoming emails to the Webex Connect platform.
 ---
 
-# Gmail Account Readiness  
+## Gmail Account Readiness  
 Create a dedicated (or use and existing) gmail account. 
 
 ---
-# Google Cloud Configuration
+## Google Cloud Configuration
 To integrate Gmail with Webex Connect, you must configure an OAuth 2.0 Client ID within the Google Cloud Console to establish a secure, token-based authorization link. This industry-standard protocol is required because Google has deprecated "Less Secure Apps" (basic password authentication) in favor of scoped access, which allows Webex Connect to send and receive emails without ever accessing your primary account credentials. 
 
 ???+ webex "Google Cloud Configuration"
@@ -84,7 +86,7 @@ To integrate Gmail with Webex Connect, you must configure an OAuth 2.0 Client ID
 
 
 ---
-# Webex Connect Email Integration
+## Webex Connect Email Integration
 Now that your Google Cloud credentials are ready, the third step is to register the Email Asset within the Webex Connect platform. This process serves as the formal "handshake" where you input your Client ID and Client Secret to authorize Webex Connect to act on behalf of your Gmail account. By configuring this asset, you enable the platform to listen for incoming messages and programmatically trigger outbound emails, effectively transforming a standard mailbox into a powerful communication node within your flows. 
 
 ???+ webex "Webex Connect Email Integration"
@@ -127,7 +129,7 @@ Now that your Google Cloud credentials are ready, the third step is to register 
 			- Select the Service and click **[Register]**
 
 ---
-# Gmail Inbound Routing
+## Gmail Inbound Routing
 The final step in this lab is to establish a Gmail Forwarding Rule, which ensures that any inbound email messages are instantly redirected to the Webex Connect platform. This process involves a security handshake: Google will issue a verification email containing a unique validation URL to your Webex Connect address. To "catch" this URL, you will deploy a simple Email Flow to intercept the incoming message and use the Flow Debugger to extract the link from the raw metadata. Completing this step creates the closed-loop system necessary for your AI Agent to handle real-time, two-way email conversations. 
 
 ???+ webex "Create the email flow in Webex Connect"
