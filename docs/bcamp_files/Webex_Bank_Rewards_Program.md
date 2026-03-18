@@ -6,8 +6,6 @@
 <title>Webex Bank Rewards Portal</title>
 
 <style>
-
-/* ===== GLOBAL ===== */
 body {
   margin: 0;
   font-family: "Segoe UI", Roboto, sans-serif;
@@ -15,7 +13,7 @@ body {
   color: #1a1a1a;
 }
 
-/* ===== NAVBAR ===== */
+/* NAVBAR */
 .navbar {
   position: sticky;
   top: 0;
@@ -25,57 +23,31 @@ body {
   padding: 15px 40px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-}
-
-.navbar h2 {
-  margin: 0;
-  font-weight: 600;
 }
 
 .navbar a {
   color: white;
   margin-left: 20px;
   text-decoration: none;
-  font-size: 14px;
   opacity: 0.9;
-  transition: 0.3s;
 }
 
-.navbar a:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-/* ===== HERO ===== */
+/* HERO */
 .hero {
   background: linear-gradient(135deg, #0b3d91, #1e90ff);
   color: white;
   padding: 80px 20px;
   text-align: center;
-  animation: fadeIn 1s ease-in-out;
 }
 
-.hero h1 {
-  font-size: 2.8em;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  max-width: 600px;
-  margin: auto;
-  opacity: 0.9;
-}
-
-/* ===== CONTAINER ===== */
+/* CONTAINER */
 .container {
   max-width: 1100px;
   margin: auto;
   padding: 30px;
 }
 
-/* ===== CARDS ===== */
+/* CARDS */
 .cards {
   display: flex;
   gap: 20px;
@@ -88,38 +60,23 @@ body {
   background: white;
   padding: 25px;
   border-radius: 16px;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 4px;
-  top: 0;
-  left: 0;
-  background: linear-gradient(90deg, #1e90ff, #0b3d91);
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  transform: translateY(-10px);
 }
 
-/* ===== SECTIONS ===== */
+/* SECTION */
 .section {
   margin-top: 30px;
   background: white;
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  animation: fadeUp 0.6s ease;
 }
 
-/* ===== TABS ===== */
+/* TABS */
 .tabs {
   display: flex;
   margin-bottom: 15px;
@@ -131,7 +88,6 @@ body {
   background: #e9effa;
   margin-right: 10px;
   border-radius: 8px;
-  transition: 0.3s;
 }
 
 .tab.active {
@@ -147,39 +103,18 @@ body {
   display: block;
 }
 
-/* ===== FOOTER ===== */
 .footer {
   text-align: center;
   padding: 40px;
-  font-size: 0.9em;
   color: #777;
 }
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
-  <h2>Webex Bank</h2>
+  <div><strong>Webex Bank</strong></div>
   <div>
     <a href="#">Accounts</a>
     <a href="#">Cards</a>
@@ -188,15 +123,14 @@ body {
   </div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <h1>Rewards That Move With You</h1>
-  <p>Earn more from every purchase with flexible rewards, premium benefits, and total transparency.</p>
+  <p>Earn more from every purchase with flexible rewards and premium benefits.</p>
 </div>
 
 <div class="container">
 
-<!-- CARDS -->
+<!-- CARDS (UNCHANGED) -->
 <h2>Our Cards</h2>
 <div class="cards">
 
@@ -232,19 +166,10 @@ body {
       <strong>5% bonus categories</strong>.
     </p>
     <p>
-      Includes <strong>loyalty boost up to +50%</strong> based on relationship value.
+      Includes <strong>loyalty boost up to +50%</strong>.
     </p>
   </div>
 
-</div>
-
-<!-- LOYALTY -->
-<div class="section">
-  <h2>Loyalty Boost Program</h2>
-  <p>
-    Webex Bank rewards long-term relationships. Customers with higher balances or multiple products 
-    receive bonus rewards between <strong>10% and 50%</strong>.
-  </p>
 </div>
 
 <!-- TERMS -->
@@ -255,44 +180,83 @@ body {
     <div class="tab active" onclick="openTab(event, 'earning')">Earning</div>
     <div class="tab" onclick="openTab(event, 'redemption')">Redemption</div>
     <div class="tab" onclick="openTab(event, 'expiration')">Expiration</div>
+    <div class="tab" onclick="openTab(event, 'account')">Account</div>
+    <div class="tab" onclick="openTab(event, 'limitations')">Limitations</div>
+    <div class="tab" onclick="openTab(event, 'security')">Security</div>
   </div>
 
   <div id="earning" class="tab-content active">
     <p>
-      Earn rewards on eligible purchases with base rates from 1.5% to 2%, 
-      and up to 5% in bonus categories.
+      Rewards are earned on most standard purchase transactions, including dining, retail, groceries, and travel. 
+      The earning rate depends on your card type and purchase category.
     </p>
     <p>
-      Exclusions include cash advances, fees, and refunds.
+      Transactions such as cash advances, balance transfers, interest charges, fees, and refunded purchases are excluded.
+    </p>
+    <p>
+      Webex Bank may introduce promotional categories or partner offers with enhanced earning rates.
     </p>
   </div>
 
   <div id="redemption" class="tab-content">
     <p>
-      Redeem rewards for cashback, travel, or partner services. 
-      Rewards have no value until redeemed and cannot be transferred.
+      Rewards hold no value until redeemed. Cashback is typically applied as statement credit, 
+      while travel rewards may be redeemed for flights and hotels.
+    </p>
+    <p>
+      Rewards are personal and cannot be transferred or sold.
     </p>
   </div>
 
   <div id="expiration" class="tab-content">
     <p>
-      Rewards expire between 24–60 months.  
-      Accounts in bad standing or fraud cases may forfeit rewards.
+      Rewards are valid between two and five years depending on the card type.
+    </p>
+    <p>
+      Rewards expire if unused and may be forfeited due to account closure or fraud.
+    </p>
+  </div>
+
+  <div id="account" class="tab-content">
+    <p>
+      Accounts must remain active and in good standing to earn and redeem rewards.
+    </p>
+    <p>
+      Delinquent or suspended accounts may lose reward privileges.
+    </p>
+  </div>
+
+  <div id="limitations" class="tab-content">
+    <p>
+      Rewards cannot be exchanged directly for cash. Returned purchases reverse earned rewards.
+    </p>
+    <p>
+      Some benefits may be limited to specific merchants or categories.
+    </p>
+  </div>
+
+  <div id="security" class="tab-content">
+    <p>
+      Fraudulent or abusive activity disqualifies rewards and may result in forfeiture.
+    </p>
+    <p>
+      Webex Bank reserves the right to modify the program at any time.
     </p>
   </div>
 
 </div>
 
-<!-- SECURITY -->
+<!-- FINAL NOTES -->
 <div class="section">
-  <h2>Security & Trust</h2>
+  <h2>Final Notes</h2>
   <p>
-    Advanced fraud detection ensures secure transactions. Suspicious activity may result in 
-    reward forfeiture or account restrictions.
+    The Webex Bank Rewards Program is designed to deliver long-term value and flexibility.
+  </p>
+  <p>
+    Customers are encouraged to review full terms or contact support for additional details.
   </p>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
   © 2026 Webex Bank — Simulated Demo Environment
 </div>
