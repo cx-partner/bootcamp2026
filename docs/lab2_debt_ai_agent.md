@@ -1726,7 +1726,7 @@ As the contact list is uploaded and processed in your campaign, a call should be
 
 ???+ Warning
 
-    As the room environment may be noisy, please ensure your customer phone is muted if you are not when interacting with the AI Agent to avoid unintended responses.  
+    As the room environment may be noisy, please avoid using speaker mode for your calls to avoid unintended responses.  
 
 
 
