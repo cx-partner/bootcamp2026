@@ -61,13 +61,13 @@
 > 
     > In your terminal enter the following commands:
     >
-    > <copy>python -m venv venv</copy>
+    > <copy>python3 -m venv venv</copy>
     >
     > <copy>source venv/bin/activate</copy>
     >     
     > <copy>pip install -r requirements.txt</copy>
     >
-    > <copy>mkdocs serve</copy>
+    > <copy>mkdocs serve --livereload</copy>
     >
     > Open a browser to [http://127.0.0.1:8000](http://127.0.0.1:8000){:target="_blank"}
 

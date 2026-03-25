@@ -4,7 +4,7 @@
 
 In **Lab 1**, you successfully configured the **Webex Contact Center (WxCC) Campaign Manager** to initiate proactive outbound calls to customers with an upcoming debt. While Lab 1 focused on the "how" to reach the customer, **Lab 2** focuses on the "what"—the intelligent conversation that follows.
 
-In this lab, you will connect those outbound calls to **Alex**, an autonomous AI Agent for **Webex Financial Group**. Alex is not just a chatbot; it is a specialized financial assistant designed to handle the sensitive process of debt recovery, account inquiries, and fraud detection. This lab will guide you through configuring the AI's persona, its strict security protocols, and its ability to execute real-time financial actions.
+In this lab, you will connect those outbound calls to **Alex**, an autonomous AI Agent for **Webex Financial Group**. Alex is not just a chatbot; it is a specialized financial assistant designed to handle the sensitive process of debt recovery, account inquiries, and fraud detection. This lab will guide you through configuring the AI's persona, its strict security protocols and its ability to execute real-time financial actions.
 
 
 ???+ purpose "Lab Objectives"
@@ -225,7 +225,7 @@ To ensure Alex can handle more than just transactional data, you will now provid
 Webex AI Agent supports three types of sources for the Knowledge Base: 
 
 - *Files*: upload PDF, .docx, .doc, .txt, .xlsx, .xls, and .CSV files.
-- *Articles*: editalbe documents in the AI Agent Studio
+- *Articles*: editable documents in the AI Agent Studio
 - *Websites*: website content using web URLs
 
 In this lab, we will use *Files* and *Websites* ingestion. This might be a common situation when, for instance, we need to feed the AI Agent with specific information and FAQ material (this would be via an ad-hoc file) and also provide him with customer facing information available through a web site (in our case, **the Webex Bank Rewards Program**)
@@ -235,7 +235,7 @@ In this lab, we will use *Files* and *Websites* ingestion. This might be a commo
 
     Website extraction uses automated crawling techniques to browse the internet to find and download the relevant content from web pages and transform it into knowledge that your AI agents can access. Crawling begins with the starting URL that you provide. Based on the depth and the page limits that you specify, the crawler application navigates from the home page, visits the websites, and fetches the required content based on the URL patterns and sub-domain definitions.
 
-    For the sake of the Bootcamp, we have created a simple content and pushed it to a website that you can access through the   Bootcamp Web Lab documentation at [Webex Bank Knowledge Base](https://cx-partner.github.io/bootcamp2026/bcamp_files/Webex_Bank_Rewards_Program/) tab. Let's configure the Knowledge Base for Alex. 
+    For the sake of the Bootcamp, we have created a simple content and pushed it to a website that you can access through the   Bootcamp Web Lab documentation at [Webex Bank Rewards Program](https://cx-partner.github.io/bootcamp2026/bcamp_files/Webex_Bank_Rewards_Program/) tab. Let's configure the Knowledge Base for Alex. 
 
     1. In your AI agent Studio, click on **[Knowledge]** icon in the left navigation panel.
     2. Click on **[+ Create knowledge base]** button in the upper-right corner. 
@@ -257,7 +257,7 @@ In this lab, we will use *Files* and *Websites* ingestion. This might be a commo
 
     9. Click **[Add source]** at the bottom of the window
 
-    Once completed, the system starts building the content. You will see the status as *Syncing* and then *Processing*. It might take some minutes until it becomes *Processed*. When you see this state, your web Knowledge Base is ready. 
+    Once completed, the system starts building the content. You will see the status as *Syncing* and then *Processing*. It might take some minutes until it becomes *Processed*. When you see this state, your web Knowledge Base source input is ready. 
 
     ???+ gif "Create Knowledge Base"
          <figure markdown>
@@ -272,8 +272,8 @@ In this lab, we will use *Files* and *Websites* ingestion. This might be a commo
 
     While web ingestion is ideal for dynamic content, state-of-the-art AI agents often require access to specific, structured data housed in internal documents. In this section, you will explore the file ingestion capability, which allows you to upload PDFs, DocX, or text files directly into the AI Agent’s Knowledge Base. This can be a critical functionality in certain scenarios, as it enables the agent to reference specific policy manuals, updated credit terms, or internal FAQs that are not publicly available on the web. By using this ingestion method, you ensure your agent has a robust, multi-source intelligence layer to handle complex customer inquiries.
 
-    !!! download inline end "Knowledge base document"
-    You can download the Knowledge base file documentation from [here](./bcamp_files/Webex_Financial_Group_KB.docx).
+    !!! download "Knowledge base document"
+        Download the Knowledge Base file from [here](./bcamp_files/Webex_Financial_Group_KB.docx).
 
     1. In the Knowledge Base configuration page you left in the previous step, click on **[Add source]** in the top-right and select **Files**
     6. Drag and drop or **[Add]** the `Webex_Financial_Group_KB.docx` you downloaded above.
@@ -292,8 +292,9 @@ In this lab, we will use *Files* and *Websites* ingestion. This might be a commo
 
     Your AI Agent has now the required RAG information to support customer queries.
 
+???+ Warning
 
-    
+    Processing the sources may take a little while - especially the web ones. Go ahead and continue with the next lab steps. By the time you’re ready to test your agent, the file inputs should already be processed.
 ---
 
 ## Lab 2.3 - Build the fulfillment Actions
@@ -307,7 +308,7 @@ This is where you give Alex the power to interact with your backend systems. You
 - [fetch_transactions]: To pull the last transactions of account activity.
 
 ???+ info "AI Agent handover to Human Agents"
-     Note the **Agent handover** action is enabled by default allowing the AI agent to escalate the conversation to a human agent. It is always displayed in the Actions page of the AI agent configuration, where it can be enabled or disabled using the toggle option.
+     Note the **Agent handover** action shows enabled by default, allowing the AI agent to escalate the conversation to a human agent. It is always displayed in the Actions page of the AI agent configuration, where it can be enabled or disabled using the toggle option.
 
 ### **[fetch_balance]** Action
 
@@ -585,7 +586,7 @@ These are the required steps:
             - Credit card
             - Email
         ```
-    4. ~~**Action scope**: select *Slot filling and fulfillment*~~ This option has been removed
+
     5. Under **Slot filling** click on **[New input entity]**
     6. In the **Add a new input entity** dialogue window, populate: 
 
@@ -762,26 +763,87 @@ We will proceed as in the previous action:
         ![Authenticate Action](./assets/authenticate_user%20action.gif)
         </figure>
 
-???+ challenge "Test your AI Agent"
-    Before starting, ensure your **Airtable Customer** table contains at least one test record with the following:
+### Test your AI Agent
 
-    - Phone Number: A valid outbound contact number.
-    - Email Address: A functional email to receive the payment session URL.
+At this point, you can start using the **Preview** tool in the AI Agent Studio to simulate customer scenarios.
+Before starting, make sure your **Airtable Customer** table contains at least one record for a test-customer, including:
 
-    Testing Procedure
+- Phone Number: A valid outbound contact number.
+- Email Address: A functional email to receive the payment session URL.
+
+The rest of the data can be fake data.
+
+Testing Procedure
+
+1. Launch the Preview widget: In the AI Agent Studio, click the [Preview] button at the top right of the configuration page.
+2. You can do a preview chat conversation or a preview voice conversation. Initiate Session: Start a live chat or voice call with Alex.
+3. Verification Checklist: Confirm the Agent successfully executes the following logic:
+
+    - Authentication: Does the Agent retrieve customer data and correctly challenge you for two random digits of your PIN.
+    - Account Management: Does it provide an accurate account balance and present options for both total and partial payments.
+    - Knowledge & Context: Does it accurately resolve queries using the integrated Knowledge Base or specific customer data points? 
+
+???+ bug "Troubleshooting your AI Agent"
+
+    The **Sessions** option in the left navigation panel of your AI Agent configuration window provides a comprehensive record of all interactions between AI agents and users. In the **Sessions** panel, each session is displayed as a record that contains all the messages of the session. This information is useful to audit, analyze, and improve the AI agent. 
+
+    To view the session details click on an individual row in the sessions table for a detailed view of that session. If the session is locked, click the **[Decrypt content]** button to view the session data.
+
+    ???+ Warning
+        The **[Decrypt content]** button appears only if you have decrypt access within the AI agent studio application. If you do not have access, ask your administrator to grant you decryption privileges in the Enterprise profile. To set it, click on the bottom-left button in the AI Agent Studion left-navigation panel, then click on **[Teammates]** at the top and on the *User Name* click on the pencil undero *Controls*. Then, under **Session access**, enable the *User can decrypt session transcripts*
+
     
-    1. Launch Preview: In the AI Agent Studio, click the [Preview] button at the top right of the configuration page.
-    2. Initiate Session: Start a live chat or voice call with your Agent.
-    3. Verification Checklist: Confirm the Agent successfully executes the following logic:
+    ???+ inline end "Enable Descriptive logs"
 
-        - Authentication: Does the Agent retrieve customer data and correctly challenge you for two random digits of your PIN.
-        - Account Management: Does it provide an accurate account balance and present options for both total and partial payments.
-        - Knowledge & Context: Does it accurately resolve queries using the integrated Knowledge Base or specific customer data points? 
+        <figure markdown>
+        ![Descriptive logs](./assets/Descriptive%20logs.png)
+        </figure>
+
+    To debug the Actions, you will need to use the *Flow Debugging* tool in Webex Connect. If you need to troubleshoot, you should turn on some debugging settings, so you have them enabled when you need to debug the flow.  
+    
+    - Click the :fontawesome-solid-gear: located at the top-right of the screen in the flow editor next to “Save”.
+    - On the **Flow Settings** screen enable *Descriptive Logs* in the **General** tab.  You will get a field asking how many minutes or transactions you want Descriptive logs turned on. Fill it in with a meaningful quantity in the first field.
+
+    To debug the flow in Webex Connect: 
+
+    - First of all, check that your manage user permissions in your WxConnect tenant include an owner or full access role and decryption access is enabled. If it is not, ask the owner to enable it for you. 
+
+    ???+ "Decryption access in WxC"
+
+        <figure markdown>
+        ![Decryption access](./assets/Decription%20access%20WxC.png)
+        </figure>       
+
+    
+    ???+ inline end "WxC flow debugger"
+
+        <figure markdown>
+        ![flow debugger](./assets/Launch%20debugger.png)
+        </figure> 
+    
+    - Go to your flow in the WxConnect Flow Designer and click on the little **Bug** icon on the far-right navigation pane.
+        
+    Note the debug button will not appear if the flow has not been made live. 
+
+    -This will open a debug panel with some flow executions below the canvas.  
+
+    - First you need to decrypt the logs.  This is done by clicking on the **Decrypt Logs** menu option just above and to the right of the blue **Search button** in the debugging panel.  Once you click on it, it will disappear and now you can click on any flow execution you want to debug.
+    - The transactions log in the debuggin panel shows you each node that was hit during the flow execution, with detailed logs in the right panel for the node you select.
+    
+    ???+ "WxC Debug Panel"
+
+        <figure markdown>
+        ![debug panel](./assets/WxC%20debugging.png)
+        </figure> 
+        
+    
+
+    
 
     
 ### **[payment_session]** Action
 
-In this lab, you will configure the [payment_session] action to enable your AI Agent to process financial transactions through NovaPay. Before beginning, ensure that a functional email channel is available as a prerequisite in your tenant, as this is required to deliver the transaction URL to the customer. You will build the logic to trigger the payment gateway, create a payment session and automate the delivery of the unique session link to the email address stored in your database.
+In this section, you will configure the [payment_session] action to enable your AI Agent to process financial transactions through NovaPay. Before beginning, ensure that a functional email channel is available as a prerequisite in your tenant, as this is required to deliver the transaction URL to the customer. You will build the logic to trigger the payment gateway, create a payment session and automate the delivery of the unique session link to the email address stored in your database.
 
 As in the previous actions, we will: 
 
@@ -1540,95 +1602,133 @@ We will follow the well known steps:
 
 ## Lab 2.4 - Test the AI Agent
 
-Before going live, it is essential to validate that Alex follows the programmed logic and security guardrails. In this section, you will use the preview tool in the AI Agent Studio to simulate customer scenarios. You will verify that the agent correctly refuses to disclose debt before authentication, handles partial payment negotiations, automates debt payment, and—most importantly—triggers an immediate escalation to a human specialist when a "suspicious transaction" is mentioned.
+Before going live, it is essential to validate that Alex follows the programmed logic and security guardrails. In this section, you will use again the **Preview** tool in the AI Agent Studio to simulate custamer scenarios. You will verify that the agent correctly refuses to disclose debt before authentication, handles partial payment negotiations, automates debt payment, and—most importantly—triggers an immediate escalation to a human specialist when a "suspicious transaction" is mentioned.
 
-!!! note "Documentation Link"
-    You can find the official documentation [here](https://link-to-docs.com).
+Make sure you have a populated entry in your **Airtable Customers** table with some fake data for your test-customer. The only real data that is required is the phone-number and the email.
 
-???+ webex "Step-by-Step Configuration"
-    1. Open the **[Tool Name]**.
-    2. Locate your resource and update the values as shown in the table below:
+Refer to the [Test your AI Agent](#test-your-ai-agent) section for details on how to troubleshoot the AI Agent and the Actions in case of error.
 
-    | Parameter | Value | Notes |
-    | :--- | :--- | :--- |
-    | **Variable A** | `$(n2.Value)` | Use the node ID from your flow |
-    | **Variable B** | `67e2e90e...` | Provided Lab ID |
-
-    3. For JSON configurations, use the snippet below:
-    ```json
-    {
-      "id": "$(n2.aiAgent.transId)",
-      "status": "active",
-      "data": {
-        "pod": "XX"
-      }
-    }
-    ```
-
-    ???+ tip "Pro-Tip"
-        If you encounter an error during validation, ensure there are no trailing spaces in your URL.
-
----
 
 ## Lab 2.5 - Connect the AI Agent to the Outbound Call
 
 In the final stage of Lab 2, you will bridge the gap between the Campaign Manager (configured in Lab 1) and your new AI Agent. You will complete the flow in Webex Contact Center to ensure that when a customer answers an outbound call triggered by a debt maturity date, they are immediately greeted by Alex. This completes the end-to-end automation of the proactive debt collection use case.
 
-!!! note "Documentation Link"
-    You can find the official documentation [here](https://link-to-docs.com).
+???+ webex "Delivering the outbound call to Alex"
 
-???+ webex "Step-by-Step Configuration"
-    1. Open the **[Tool Name]**.
-    2. Locate your resource and update the values as shown in the table below:
+    At the end of Lab 1, the outbound call was routed to a flow where only a message was played to the customer. In this step, you will modify that flow to route the call to your AI Agent.
 
-    | Parameter | Value | Notes |
-    | :--- | :--- | :--- |
-    | **Variable A** | `$(n2.Value)` | Use the node ID from your flow |
-    | **Variable B** | `67e2e90e...` | Provided Lab ID |
+    ???+ inline end "Initial flow"
 
-    3. For JSON configurations, use the snippet below:
-    ```json
-    {
-      "id": "$(n2.aiAgent.transId)",
-      "status": "active",
-      "data": {
-        "pod": "XX"
-      }
-    }
-    ```
+        <figure markdown>
+        ![initial flow](./assets/AI_Agent%20flow%201.png)
+        </figure> 
 
-    ???+ tip "Pro-Tip"
-        If you encounter an error during validation, ensure there are no trailing spaces in your URL.
+
+    1. Go to Control Hub -> Contact Center -> Flows
+    2. Open your flow **AI_Agent_DebtCollection**
+    3. Delete the **Play Message** node
+    4. From the *Activities Library* drag and drop a **Virtual Agent V2** to the right of the **Start Node**. 
+    5. Connect the **Start Node** to the new node.
+    6. Click on the **Virtual Agent V2** node and configure the settings below in the *Activity Settings* panel on the right side of the canvas. 
+
+        - Click in the pencil of the **Activity Label** and provide a name: <copy>DebtCollectionAgent</copy>. Make sure you click the tick on the right after editing to save the name. 
+        - Provide an *Activity Description*
+        - Under *Conversational Experience*, set the **Static Contact Center AI Config**
+        - Then, in the *Contact Center AI Config* select **Webex AI Agent (Autonomous)**
+        - In the *Virtual Agent* drop down menu, select your AI Agent (Alex). 
+        - In the *State Event* section, we will make sure the required data points are passed on to the AI Agent. Copy the below json structure in the *Event Data* field:
+
+            ```jason
+            {
+                "phoneNumber": '{{NewPhoneContact.DNIS}}', 
+                "firstName":'{{firstName}}', 
+                "lastName":'{{lastName}}'
+            }
+            ``` 
+        The variables **firstName** and **lastName** on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the *Outbound_DebtCollection* flow to this flow. 
+
+        The variables **phoneNumber**, **firstName** and **lastName** on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).
+
+        - In the *Decryption Settings*, set the **Enable decryption** slider to ease troubleshooting during debugging. Make sure the **enable decryption** slider is set in the **Global Flow Properties** panel 
+
+        ???+ "AI Agent node"
+
+            <figure markdown>
+            ![AI Agent node](./assets/AI_Agent%20flow%202.png)
+            </figure> 
+
+    7. Connect the *Handled* outcome outlet of the **Virtual Agent** node to the **Disconnect Contact** node.
+    8. The *Escalated* outcome will be covered in Lab 3, where we will connect the AI Agent to a queue that routes the call to a human agent. For now, to allow you to test the end-to-end scenario, we will simply play a message: 
+
+        ???+ inline end "Play Temporary message"
+
+            <figure markdown>
+            ![Temporary message](./assets/AI_Agent%20flow%203.png)
+            </figure> 
+
+        - Drag an drop a **Play Message** node to the right of the **Virtual Agent** node and, from the *Escalated* outlet of the **Virtual Agent** node, connect both together . 
+        - Click on the **Play Message** node to edit its properties in the activity settings panel. 
+        - Give it a name and a description. 
+        - Under **Prompt** section, set the *Enable Text-to-Speech* slider. 
+        - Under **Connector** select the *Cisco Cloud Text-to-Speech*
+        - Click the *Add Text-to-Speech Message* button and provide your temporary message: 
+        
+        <copy>`Your call will be sent to a human expert once you complete your Lab 3`</copy>
+
+        - make sure you delete the unused *Audio File* option above.
+
+    9. Connect te outlet of the **Play Message** node to the **Disconnect** node. 
+
+    9. To complete the handling of the Virtual Agent outcomes, we will also play an error message in case of error and will leave the call to be escalated to the human agent. 
+        
+        ???+ inline end "Play Error message"
+
+            <figure markdown>
+            ![Error message](./assets/AI_Agent%20flow%204.png)
+            </figure> 
+
+        - Drag and drop a **Play Message** node to the right of the **Virtual Agent** node and connect both together from the *Errored* outlet of the **Virtual Agent** node. 
+        - Click on the **Play Message** node. You can give it a name and a description. 
+        - Under **Prompt** section, set the *Enable Text-to-Speech* slider. 
+        - Under **Connector** select the *Cisco Cloud Text-to-Speech*
+        - Click the *Add Text-to-Speech Message* button and provide your temporary message: 
+        
+        <copy>`We are experiencing some system errors. Please wait while I transfer you to an agent`</copy>
+
+        - Delete the *Audio File* option above.
+
+    10. Connect te outlet of the **Play Message** error node to the inlet of the temporary **Play Message** node. 
+
+    11. Enable the **Validation** check with the slider in the bottom right of the editor to validate the flow and if there are no erros, click **[Publish Flow]** to publish it. 
+    
+    
+    
+Your Agent flow should look like the one below and is now ready for testing!!
+
+???+ "AI Agent flow"
+
+    <figure markdown>
+    ![AI Agent flow](./assets/AI_Agent%20flow%205.png)
+    </figure> 
 
 ---
 
 ## Lab 2.6 - Test the complete scenario
 
-!!! note "Documentation Link"
-    You can find the official documentation [here](https://link-to-docs.com).
+You can now test the complete scenario. Follow this steps: 
 
-???+ webex "Step-by-Step Configuration"
-    1. Open the **[Tool Name]**.
-    2. Locate your resource and update the values as shown in the table below:
+1. In the Campaign Manager portal, upload your contact list to your campaign with an entry that corresponds to your test customer. It should have the proper *first name*, *last_name* and *phone number*.
+2. Make sure those details are the same as the ones populated in your *Airtable Customers* table for the test customer, including the real email where the payment session will be sent
+3. Make sure your *Airtable Transactions* table is populated with some entries if you want to test the transacions query with the AI Agent. 
 
-    | Parameter | Value | Notes |
-    | :--- | :--- | :--- |
-    | **Variable A** | `$(n2.Value)` | Use the node ID from your flow |
-    | **Variable B** | `67e2e90e...` | Provided Lab ID |
+As the contact list is uploaded and processed in your campaign, a call should be generated to your customer phone number. Once you answer the call, it will be connected to the AI Agent. You can now test all the AI Agent capabilities that we have designed in this lab in a live call. 
 
-    3. For JSON configurations, use the snippet below:
-    ```json
-    {
-      "id": "$(n2.aiAgent.transId)",
-      "status": "active",
-      "data": {
-        "pod": "XX"
-      }
-    }
-    ```
 
-    ???+ tip "Pro-Tip"
-        If you encounter an error during validation, ensure there are no trailing spaces in your URL.
+???+ Warning
+
+    As the room environment may be noisy, please ensure your customer phone is muted if you are not when interacting with the AI Agent to avoid unintended responses.  
+
+
 
 ---
 

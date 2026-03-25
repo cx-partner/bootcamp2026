@@ -1,7 +1,7 @@
 
 # Extra Lab: NovaPay Payment Service
 
-During the Bootcamp, you have used a NovaPay mock-payment service provided by Cisco. As this service is not guaranteed to be maintained beyond the Bootcamp, this lab will allow you to build your own fake payment service for demo purposes. The outcome of this lab is two fold: 
+During the Bootcamp, you have used a NovaPay mock-payment service provided by Cisco. As this service is not guaranteed to be maintained beyond the Bootcamp, this lab will allow you to build your own fake payment service for demo purposes. The outcome of this lab is twofod: 
 
 1. A mockpayment frontend web site that mimics a typical payment user interface. The frontend offers a user interface to enter the payment data: amount, card option (visa, master card...) and  card details (name, number, expiration date and cvv). It allows a user to enter the data and click on a pay button to confirm the payment. The web site responds with a confirmation message that the payment has been completed. The user will see the amount payed, the last 4 digits of its credit card and a mock confirmation number.
 
