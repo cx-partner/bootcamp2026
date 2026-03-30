@@ -2,200 +2,300 @@
 
 ## Lab Purpose
 
-In this lab, you will configure the **Webex Contact Center (WxCC) Campaign Manager** to initiate proactive outbound calls to customers with an upcoming debt maturity. This lab sets the foundation for the full debt collection use case that continues in Lab 2, where an AI Agent will handle the conversations triggered by the outbound campaign.
+In this lab, you will configure the **Webex Contact Center (WxCC) Campaign Manager** to initiate proactive outbound calls to customers with an upcoming debt maturity. This lab builds the full outbound infrastructure that **Lab 2** relies on — the AI Agent you configure there will be the voice answering every call you launch here.
 
-**Webex Campaign Management** is an add-on module for the **Webex Contact Center** platform, providing administrators and supervisors the ability to configure, manage, and optimize outbound communication campaigns. This module is accessed through the **Webex Control Hub**, a unified administration console that centralizes management of all Webex Contact Center services.
+**Webex Campaign Management** is an add-on module for the **Webex Contact Center** platform that gives administrators and supervisors the tools to configure, manage, and optimize outbound communication campaigns. It is accessed through **Webex Control Hub**, the unified administration console that centralizes management of all WxCC services.
 
-The module supports the deployment of agent-assisted outbound campaigns using multiple dialing modes such as preview, progressive, and predictive to maximize agent efficiency and contact rates. Additionally, it facilitates the execution of agentless IVR campaigns, enabling automated outbound interactions without live agent involvement.
+The module supports agent-assisted campaigns using preview, progressive, and predictive dialing modes, as well as fully agentless IVR campaigns that automate outbound interactions without live agent involvement.
 
-Lab Objectives
+???+ purpose "Lab Objectives"
+    The purpose of this lab is to build the end-to-end outbound campaign infrastructure for the **Proactive Debt Collection** use case.
 
-* **Control Hub Configuration:** Configure agents, teams, queues, and global variables in Webex Control Hub.
-* **Flow Builder:** Create a dummy validation flow and the outbound campaign flow with the required event handling.
-* **Campaign Manager:** Configure all pre-requisites (contact modes, field mappings, suppression rules, meta-tags, etc.) and create and activate an outbound campaign.
-* **End-to-End Validation:** Successfully receive a test call confirming the lab completion.
+    Key objectives include:
 
-Lab Outcome
+    * **Control Hub Configuration:** Create the users, teams, queues, and global variables that the campaign depends on.
+    * **Flow Builder:** Build a dummy validation flow and the outbound campaign flow with full event handling.
+    * **Campaign Manager Setup:** Configure all pre-requisites — contact modes, field mappings, suppression rules, meta-tags, telephony outcomes, and wrap-up codes.
+    * **Campaign Activation:** Create, activate, and test a Progressive IVR outbound campaign end to end.
 
-By the end of Lab 1, you will have a fully operational outbound campaign infrastructure in place. The campaign will be capable of:
+???+ Challenge "Lab Outcome"
+    By the end of Lab 1, you will have a fully operational outbound campaign infrastructure. The campaign will be capable of:
 
-1. **Dialling contacts** from an uploaded contact list using a Progressive IVR campaign mode.
-2. **Routing answered calls** through a WxCC flow that passes customer data to a destination flow.
-3. **Handling call outcomes** (AMD, Abandoned, Live Voice) using event-driven flow logic.
-4. **Delivering a test message** confirming that the full outbound path is working end to end.
+    1. **Dialling contacts** from an uploaded CSV contact list using Progressive IVR mode.
+    2. **Routing answered calls** through a WxCC flow that hands customer data to a destination flow.
+    3. **Handling all call outcomes** — AMD, Abandoned, and Live Voice — using event-driven flow logic.
+    4. **Delivering a confirmation message** to verify the full outbound path is working end to end.
 
-???+ warning
-    This lab must be completed before starting Lab 2. The outbound campaign infrastructure configured here is required by the AI Agent integration in Lab 2.
+---
+
+## Pre-requisites
+
+In order to complete this lab, you must:
+
+* [x] Have access to a **Webex Contact Center** tenant with Campaign Manager enabled
+* [x] Have **administrator access** to Webex Control Hub
+* [x] Have completed the [Pre-requisites](pre_req_wxcc.md) section of this Bootcamp
 
 ---
 
 ## Lab Overview 📌
 
-A high-level overview of the different modules associated with Control Hub within Webex Contact Center:
+A high-level overview of the WxCC modules involved in this lab:
 
-[![Architecture Overview](assets/image1.png)](assets/image1.png)
+<figure markdown>
+![Architecture Overview](assets/image1.png)
+</figure>
 
 In this lab you will perform the following tasks:
 
-1. Configure Agents, Teams, Queues and Global Variables in Control Hub
+1. Configure Agents, Teams, Queues, and Global Variables in Control Hub
 2. Create a dummy validation flow
-3. Create the Outbound Campaign Flow
-4. Create the Entry Point (Channel) and Outdial ANI
-5. Configure Business Hours in Control Hub
+3. Create the Outbound Campaign Flow with event handling
+4. Configure the Entry Point (Channel) and Outdial ANI
+5. Configure Business Hours
 6. Configure Campaign Manager pre-requisites
-7. Create and Activate the Campaign
-8. Upload the Contact List and test the end-to-end scenario
+7. Create and activate the Campaign
+8. Upload the Contact List and test end to end
 
 ---
 
 ## Lab 1.1 - Configure Agents and Teams in Control Hub
 
-In this section you will configure the basic WxCC resources required for the outbound campaign: user, team, out-dial queue, and global variables.
+Before building any flows or campaigns, you need to set up the foundational WxCC resources: a licensed agent user, a team, an out-dial queue, and the global variables that will carry customer data through the entire lab series.
 
-### Create User and Assign Contact Center Licence
+### Create a User and Assign the Contact Center Licence
 
-1. Navigate to [Control Hub](https://admin.webex.com) and go to **Users**.
-2. Create the user and assign the **Contact Center licence** (standard or premium).
+???+ webex "Create User"
 
-[![Create User](assets/image2.png)](assets/image2.png)
+    1. Navigate to [Control Hub](https://admin.webex.com) and go to **Users**.
+    2. Click **Manage Users** and add or invite the user account that will act as the agent for this lab.
+    3. Once the user exists, open their profile and assign the **Webex Contact Center** licence — select either **Standard** or **Premium** depending on your tenant configuration.
 
-[![Assign Licence](assets/image3.png)](assets/image3.png)
+    <figure markdown>
+    ![Create user and assign CC licence](assets/image2.png)
+    </figure>
 
-### Create Team
+    <figure markdown>
+    ![User licence confirmation](assets/image3.png)
+    </figure>
 
-1. In Control Hub, navigate to **Contact Center** > **Teams**.
-2. Click **Create Team** and fill in the required details.
+### Create a Team
 
-[![Create Team](assets/image4.png)](assets/image4.png)
+???+ webex "Create Team"
 
-### Enable Contact Center for the User
+    1. In Control Hub, navigate to **Contact Center** → **Teams**.
+    2. Click **Create Team**.
+    3. Enter a meaningful team name (e.g. `DebtCollection_Team`) and associate the user created above.
+    4. Click **Save**.
 
-1. Navigate to the user's profile and enable **Contact Center**.
-2. Configure the agent settings as required.
+    <figure markdown>
+    ![Create Team](assets/image4.png)
+    </figure>
 
-[![Enable CC](assets/image5.png)](assets/image5.png)
+### Enable Contact Center for the User and Configure the Agent Profile
 
-### Create Out-Dial Queue
+???+ webex "Enable Contact Center"
 
-1. Navigate to **Contact Center** > **Queues**.
-2. Click **Create Queue** and select **Outbound** as the queue type.
-3. Fill in the required details and associate the team created above.
+    1. In Control Hub, navigate to **Users** and open the user you created.
+    2. Under the **Contact Center** tab, set the **Contact Center Enabled** toggle to **On**.
+    3. Configure the agent profile — assign the team and set the desktop profile as appropriate.
+    4. Click **Save**.
 
-[![Create Queue](assets/image6.png)](assets/image6.png)
+    <figure markdown>
+    ![Enable Contact Center for User](assets/image5.png)
+    </figure>
 
-[![Queue Configuration](assets/image7.png)](assets/image7.png)
+### Create an Out-Dial Queue
+
+The out-dial queue is the routing destination for answered outbound calls. The Campaign Manager will use this queue to connect live calls to agents or IVR flows.
+
+???+ webex "Create Out-Dial Queue"
+
+    1. Navigate to **Contact Center** → **Queues**.
+    2. Click **Create Queue**.
+    3. Set the **Queue Type** to **Outbound**.
+    4. Enter a name (e.g. `OutDial_DebtCollection`) and assign the team created above.
+    5. Click **Save**.
+
+    <figure markdown>
+    ![Create Out-Dial Queue](assets/image6.png)
+    </figure>
+
+    <figure markdown>
+    ![Queue configuration](assets/image7.png)
+    </figure>
 
 ### Configure Global Variables
 
-Global variables refer to attribute values that identify a customer during calls with agents. These variables will be used by the AI Agent in Lab 2 and displayed on the Agent Desktop.
+Global variables carry customer data — in this case, first and last name — from the contact list through the campaign flow all the way to the AI Agent in Lab 2. They also appear on the Agent Desktop during escalated calls.
 
-1. Navigate to **Contact Center** > **Flows** > **Global Variables**.
-2. Create the following two variables:
+???+ webex "Create Global Variables"
 
-| Variable Name | Description |
-|---|---|
-| `firstName` | Customer first name, passed from the contact list |
-| `lastName` | Customer last name, passed from the contact list |
+    1. In Control Hub, navigate to **Contact Center** → **Flows** → **Global Variables**.
+    2. Create the following two variables:
 
-[![Global Variables](assets/image8.png)](assets/image8.png)
+        | Variable Name | Type | Description |
+        | :--- | :--- | :--- |
+        | `firstName` | `String` | Customer first name, mapped from the contact list |
+        | `lastName` | `String` | Customer last name, mapped from the contact list |
+
+    3. Click **Save** after creating each variable.
+
+    <figure markdown>
+    ![Global Variables configuration](assets/image8.png)
+    </figure>
+
+    ???+ warning
+        These exact variable names — `firstName` and `lastName` — are referenced by the AI Agent in Lab 2. Do not use different casing or names, or the data mapping will break.
+
+### Configure a Wrap-up Code
+
+Wrap-up codes are applied by agents after a call to classify the interaction outcome. Campaign Manager uses them to determine whether a contact should be retried. You need at least one configured before creating the campaign.
+
+???+ webex "Create Wrap-up Code"
+
+    1. In Control Hub, navigate to **Contact Center** → **Wrap-up Codes**.
+    2. Click **Create Wrap-up Code**.
+    3. Enter the name `debt` and a short description.
+    4. Click **Save**.
+
+    <figure markdown>
+    ![Wrap-up Code configuration](assets/image9.png)
+    </figure>
 
 ---
 
 ## Lab 1.2 - Create the Dummy Validation Flow
 
-Before creating the campaign flow, you will create a simple "dummy" flow to validate the end-to-end campaign setup. This flow will be used as the destination of the outbound call during this lab and will be replaced by the AI Agent flow in Lab 2.
+Before building the campaign flow, you will create a simple "dummy" destination flow. Its only purpose is to confirm that the outbound call reached its destination — it plays a congratulations message and ends the call. You will use this same flow as the target in Lab 2 until the AI Agent is configured.
 
-???+ info
-    Make sure you add `firstName` and `lastName` as **Global Variables** in the flow configuration.
+???+ webex "Create the Dummy Flow"
 
-1. Navigate to **Contact Center** > **Flows** and click **Create Flow**.
-2. Give it a meaningful name (e.g. `Dummy_Lab1_Validation`).
-3. Add the `firstName` and `lastName` Global Variables to the flow.
+    1. Navigate to **Contact Center** → **Flows** and click **Create Flow**.
+    2. Give the flow a name: <copy>`Dummy_Lab1_Validation`</copy>
+    3. Select **Start from Scratch** and click **Create**.
+    4. Open the **Flow Properties** panel and add `firstName` and `lastName` as **Global Variables** — this is required so the Lab 2 flow can map values into this flow.
 
-[![Dummy Flow](assets/image9.png)](assets/image9.png)
+    <figure markdown>
+    ![Dummy flow — Global Variables](assets/image10.png)
+    </figure>
 
-4. Add a **Play Message** node and configure a Text-to-Speech message:
+    5. Drag a **Play Message** node onto the canvas and connect it to the **Start** node.
+    6. In the node properties, enable **Text-to-Speech** and enter the following message:
 
-    ```
-    Congratulations, you have completed Lab 1.
-    ```
+        ```text
+        Congratulations, you have completed Lab 1.
+        ```
 
-5. **Save** and **Publish** the flow.
+    7. Connect the **Play Message** node to the **Disconnect Contact** node.
+    8. Click **Validate**, then **Save and Publish** the flow.
 
-[![Publish Dummy Flow](assets/image10.png)](assets/image10.png)
+    <figure markdown>
+    ![Dummy flow — Play Message and Publish](assets/image11.png)
+    </figure>
 
 ---
 
 ## Lab 1.3 - Create the Outbound Campaign Flow
 
-The outbound campaign flow is the core of the Lab 1 configuration. This flow handles the lifecycle of the outbound call and routes answered calls to the appropriate destination based on the call result.
+The outbound campaign flow is the core of the Lab 1 WxCC configuration. It handles the lifecycle of each dialled call and routes answered calls to the correct destination based on the call result.
 
-### Main Flow Configuration
+### Main Flow
 
-1. Navigate to **Contact Center** > **Flows** and click **Create Flow**.
-2. Give it a name (e.g. `Outbound_DebtCollection`).
-3. Add the `firstName` and `lastName` **Global Variables** to the flow configuration.
+???+ webex "Create the Outbound Campaign Flow"
 
-[![Outbound Flow - Global Variables](assets/image11.png)](assets/image11.png)
+    1. Navigate to **Contact Center** → **Flows** and click **Create Flow**.
+    2. Name the flow: <copy>`Outbound_DebtCollection`</copy>
+    3. Select **Start from Scratch** and click **Create**.
+    4. Open **Flow Properties** and add `firstName` and `lastName` as **Global Variables** — these will be populated by the campaign and passed downstream.
 
-### Event Flows Configuration
+    <figure markdown>
+    ![Outbound flow — Global Variables](assets/image12.png)
+    </figure>
 
-The outbound campaign flow uses **Event Flows** to handle different call outcomes. Click on the **Event Flows** tab and configure the following events.
+### Event Flows
 
-[![Event Flows](assets/image12.png)](assets/image12.png)
+The outbound campaign uses **Event Flows** to handle three different call lifecycle events. Click the **Event Flows** tab at the top of the flow editor to access them.
+
+<figure markdown>
+![Event Flows tab](assets/image13.png)
+</figure>
 
 #### OutboundCampaignCallResult Event
 
-This event handles the result of each dialled call attempt. You will focus on two key events.
+This event fires when the dialler receives a result for each call attempt. You will use a **Case** node to branch the logic based on the CPA (Call Progress Analysis) result.
 
-[![OutboundCampaignCallResult](assets/image13.png)](assets/image13.png)
+???+ webex "Configure the OutboundCampaignCallResult Event"
 
-**Step 1: Add a Case Node**
+    1. In the **Event Flows** tab, select the **OutboundCampaignCallResult** event.
 
-Connect the `OutboundCampaignCallResult` event to a **Case** node. Create **3 outputs** and map the `CPA` variable (Call Progress Analysis) from the previous node:
+    <figure markdown>
+    ![OutboundCampaignCallResult event](assets/image14.png)
+    </figure>
 
-| Case Output | Value |
-|---|---|
-| `AMD` | Answer Machine Detection |
-| `Abandoned` | Call was abandoned |
-| `Live_Voice_IVR_CAM` | Live voice detected |
+    2. Drag a **Case** node onto the canvas and connect the event trigger to it.
+    3. In the Case node configuration, set the **Variable** to the `CPA` output from the preceding node.
+    4. Create **three output branches**:
 
-[![Case Node - AMD](assets/image14.png)](assets/image14.png)
+        | Branch Name | Condition |
+        | :--- | :--- |
+        | `AMD` | Answer Machine Detection |
+        | `Abandoned` | Call was abandoned |
+        | `Live_Voice_IVR_CAM` | Live voice detected |
 
-[![Case Node - Live Voice](assets/image15.png)](assets/image15.png)
+    <figure markdown>
+    ![Case node — branch configuration](assets/image15.png)
+    </figure>
 
-**Step 2: Handle AMD and Abandoned Outcomes**
+    <figure markdown>
+    ![Case node — branch outputs](assets/image16.png)
+    </figure>
 
-Connect the `AMD` and `Abandoned` outputs to a **Play Message** node configured with Text-to-Speech:
+    **Handle AMD and Abandoned:**
 
-```
-Goodbye.
-```
+    5. Drag two **Play Message** nodes onto the canvas.
+    6. Connect the `AMD` output of the Case node to the first Play Message node, and `Abandoned` to the second.
+    7. Configure each with Text-to-Speech set to:
 
-[![AMD Play Message](assets/image18.png)](assets/image18.png)
+        ```text
+        Goodbye.
+        ```
 
-[![Abandoned Play Message](assets/image19.png)](assets/image19.png)
+    <figure markdown>
+    ![AMD — Play Message node](assets/image19.png)
+    </figure>
 
-**Step 3: Handle Live Voice**
+    <figure markdown>
+    ![Abandoned — Play Message node](assets/image20.png)
+    </figure>
 
-Connect the `Live_Voice_IVR_CAM` output to a **Go To** node. This node will trigger the destination flow.
+    **Handle Live Voice:**
 
-At this point, you haven't configured the AI Agent yet, so point the **Go To** node to the **dummy flow** you created in Lab 1.2.
+    8. Drag a **Go To** node onto the canvas and connect the `Live_Voice_IVR_CAM` output of the Case node to it.
+    9. In the **Go To** node, set the destination to the `Dummy_Lab1_Validation` flow you created in Lab 1.2.
 
-???+ warning
-    Make sure you **map the Global Variables** (`firstName`, `lastName`) from the current flow to the destination flow. This is required for Lab 2.
+    ???+ warning
+        You must **map the Global Variables** (`firstName`, `lastName`) from the current flow to the destination flow in the Go To node. This mapping is mandatory for Lab 2 — without it, the AI Agent will not receive customer name data.
 
-[![Go To Node - Variable Mapping](assets/image22.png)](assets/image22.png)
-
-[![Go To Node - Destination](assets/image23.png)](assets/image23.png)
+    <figure markdown>
+    ![Go To node — variable mapping and destination](assets/image23.png)
+    </figure>
 
 #### AgentAnswered Event
 
-The AgentAnswered event is used to start AI Assistant features as part of the use case.
+This event fires when an agent answers an escalated call. Configuring it now ensures the AI Assistant media streaming features used in Lab 2 and Lab 3 are ready.
 
-1. Connect the `AgentAnswered` event to a **StartMediaStream** node.
+???+ webex "Configure the AgentAnswered Event"
 
-[![AgentAnswered - StartMediaStream](assets/image26.png)](assets/image26.png)
+    1. In the **Event Flows** tab, select the **AgentAnswered** event.
+    2. Drag a **StartMediaStream** node onto the canvas and connect the event trigger to it.
+    3. Leave the default configuration and connect the node to an **End** node.
+
+    <figure markdown>
+    ![AgentAnswered — StartMediaStream node](assets/image24.png)
+    </figure>
+
+4. Click **Validate**, then **Save and Publish** the flow.
 
 ---
 
@@ -203,301 +303,468 @@ The AgentAnswered event is used to start AI Assistant features as part of the us
 
 ### Create the Entry Point (Channel)
 
-The Entry Point (Channel) is where you specify the type of channel and associate the flow and queue.
+The Entry Point — also called a Channel — is the outbound dialling gateway. It ties together the telephony type, the flow, and the queue into a single callable resource that the Campaign Manager will use.
 
-1. Navigate to **Contact Center** > **Channels** and click **Create Channel**.
-2. Fill in the following details:
+???+ webex "Create the Entry Point"
 
-| Parameter | Value |
-|---|---|
-| **Channel Type** | `Outbound Telephony` |
-| **Flow** | Select the `Outbound_DebtCollection` flow |
-| **Outbound Queue** | Select the out-dial queue created previously |
+    1. In Control Hub, navigate to **Contact Center** → **Channels**.
+    2. Click **Create Channel**.
+    3. Fill in the following details:
 
-[![Entry Point Configuration](assets/image27.png)](assets/image27.png)
+        | Parameter | Value |
+        | :--- | :--- |
+        | **Name** | `OutDial_DebtCollection_EP` |
+        | **Channel Type** | `Outbound Telephony` |
+        | **Flow** | Select `Outbound_DebtCollection` |
+        | **Outbound Queue** | Select the out-dial queue created in Lab 1.1 |
 
-### Configure Outdial ANI
+    4. Click **Save**.
 
-The campaign needs a PSTN number to display for outbound calls. Configure an **Outdial ANI** in Control Hub.
+    <figure markdown>
+    ![Entry Point configuration](assets/image25.png)
+    </figure>
 
-1. Navigate to **Contact Center** > **Outdial ANI**.
-2. Create a new ANI entry with a valid PSTN number.
+### Configure the Outdial ANI
 
-[![Outdial ANI](assets/image29.png)](assets/image29.png)
+The Outdial ANI is the PSTN number displayed to customers when the campaign dials them. Without it, outbound calls will show as unknown or be blocked by mobile carriers.
+
+???+ webex "Configure Outdial ANI"
+
+    1. In Control Hub, navigate to **Contact Center** → **Outdial ANI**.
+    2. Click **Create Outdial ANI**.
+    3. Enter a valid PSTN number in E.164 format (e.g. `+12025551234`).
+    4. Give it a descriptive name and click **Save**.
+
+    <figure markdown>
+    ![Outdial ANI configuration](assets/image27.png)
+    </figure>
 
 ---
 
 ## Lab 1.5 - Configure Business Hours
 
-Campaign Manager takes the Business Hours configuration from WxCC. You can only enable or disable individual days within Campaign Manager.
+Campaign Manager reads Business Hours directly from Webex Control Hub. You can only enable or disable individual days within Campaign Manager itself — the schedule structure is always defined in Control Hub first.
 
-1. Navigate to **Control Hub** > **Contact Center** > **Business Hours**.
-2. Create a Business Hours schedule.
+???+ webex "Create Business Hours"
 
-[![Business Hours](assets/image30.png)](assets/image30.png)
+    1. In Control Hub, navigate to **Contact Center** → **Business Hours**.
+    2. Click **Create Business Hours** and give it a name (e.g. `DebtCollection_Hours`).
+    3. Configure the schedule as shown below — typical business hours Monday to Friday.
 
-[![Business Hours Configuration](assets/image31.png)](assets/image31.png)
+    <figure markdown>
+    ![Business Hours — schedule type](assets/image28.png)
+    </figure>
 
-???+ info
-    For simplification purposes we won't configure any Holidays or Overrides.
+    <figure markdown>
+    ![Business Hours — day configuration](assets/image29.png)
+    </figure>
+
+    ???+ info
+        For simplification purposes we will not configure any Holidays or Overrides. In a production deployment, you would add public holidays here to ensure the campaign automatically pauses on those days.
 
 ---
 
 ## Lab 1.6 - Configure Campaign Manager Pre-requisites
 
-Before creating the campaign, you need to configure several pre-requisite resources in the **Webex Campaign Management** portal.
+Before creating the campaign itself, Campaign Manager requires several configuration objects to be in place. Navigate to the **Webex Campaign Management** portal — accessible from Control Hub under **Contact Center** → **Campaign Manager**.
 
-[![Campaign Manager Overview](assets/image32.png)](assets/image32.png)
+<figure markdown>
+![Campaign Manager — overview](assets/image30.png)
+</figure>
 
 ### Business Days
 
-Business Days come from Control Hub (configured in Lab 1.5). In Campaign Manager you can only enable or disable them.
+Campaign Manager receives Business Hours from Control Hub. Within Campaign Manager you can only enable or disable individual days — the schedule itself is controlled by Control Hub.
 
-1. In Campaign Manager, navigate to **Business Days**.
-2. Enable **Monday to Friday**.
+???+ webex "Enable Business Days"
 
-[![Business Days](assets/image33.png)](assets/image33.png)
+    1. In Campaign Manager, navigate to **Administration** → **Business Days**.
+    2. Enable **Monday through Friday**. Leave Saturday and Sunday disabled.
+
+    <figure markdown>
+    ![Business Days — enabled Mon–Fri](assets/image31.png)
+    </figure>
 
 ### Contact Modes
 
-Contact Modes allow you to define the type of phone number in your contact list (e.g. Home, Office).
+Contact Modes define the type of phone number in your contact list — for example, Home, Mobile, or Office. Campaign Manager uses this to label each number and apply the correct dialling schedule. Since the lab contact list has a single phone number column, you only need one contact mode.
 
-#### Create Contact Mode
+???+ webex "Create a Contact Mode"
 
-Follow these steps to create a contact mode:
+    1. Navigate to **Voice Campaigns** → **Contact Modes** and click **Create contact mode**.
+    2. Fill in the following fields:
 
-1. Navigate to **Voice Campaigns** > **Contact Modes** and click **Create contact mode**.
-2. Enter the following details:
+        | Field | Value |
+        | :--- | :--- |
+        | **Contact mode name** | `Mobile` (or any meaningful name) |
+        | **Description** | `Customer mobile number` |
+        | **Minimum length** | Keep default |
+        | **Maximum length** | Keep default |
 
-| Parameter | Value |
-|---|---|
-| **Contact mode name** | A meaningful name (e.g. `Mobile`) |
-| **Description** | Enter a meaningful description |
-| **Minimum length** | Keep the default value |
-| **Maximum length** | Keep the default value |
+    3. Click **Save**. You can keep all default values.
 
-[![Contact Mode](assets/image34.png)](assets/image34.png)
+    <figure markdown>
+    ![Contact Mode configuration](assets/image32.png)
+    </figure>
 
 ### DNC Lists
 
-Webex Campaign Management allows you to create and manage multiple DNC (Do Not Contact) lists. Contacts in DNC lists are excluded from Target Groups before a campaign is deployed.
+Webex Campaign Management supports multiple Do Not Contact (DNC) lists. Contacts on DNC lists are excluded from all Target Groups before a campaign is deployed, ensuring compliance with telecom regulations.
+
+???+ info "DNC Lists"
+    For the purpose of this lab, we will **not** configure any DNC lists. In a production deployment, you would import numbers registered with national DNC registries here.
+
+### Global Variables in Campaign Manager
+
+Campaign Manager reads global variables from Webex Control Hub. These are the same `firstName` and `lastName` variables you created in Lab 1.1. They appear here so you can map them to columns in your contact list during Field Mapping.
+
+<figure markdown>
+![Global Variables in Campaign Manager](assets/image33.png)
+</figure>
 
 ???+ info
-    For the purpose of this lab, we won't be configuring any DNC lists.
-
-### Global Variables
-
-Global variables refer to the attribute values that identify a customer during calls. Webex Campaign receives these variables from Control Hub.
-
-[![Campaign Global Variables](assets/image35.png)](assets/image35.png)
-
-???+ info
-    When a new tenant is created, you must designate global variables as **customer-unique-identifier** and **account-unique-identifier** to enable compliance with call attempt regulations. For this lab, since we are not using a unique identifier, we will not configure it.
+    When a new tenant is created, you must also designate variables as `customer-unique-identifier` and `account-unique-identifier` to enable call attempt compliance. For this lab, since we are not using unique identifiers, we will skip this step.
 
 ### Field Mappings
 
-Field Mappings define the structure of the contact list file. You map the headers of your CSV file to the fields of the dialler system.
+Field Mappings define the structure of the contact list CSV file and tell Campaign Manager how to interpret each column — which is the phone number, which columns map to global variables, what the data types are, and so on.
 
-**Step 1:** Create a Contact List CSV file with the following structure:
+**Before creating the Field Mapping, create your CSV contact list file** with the following column structure:
 
-[![CSV Structure](assets/image36.png)](assets/image36.png)
+<figure markdown>
+![CSV contact list structure](assets/image34.png)
+</figure>
 
-**Step 2: Upload sample file**
+The CSV must have at minimum: a phone number column, and columns for `firstName` and `lastName` that match the Global Variables you created.
 
-1. Navigate to **Field Mappings** and click **Create field mapping**.
-2. Click **Choose file** and select your CSV file.
-3. Once uploaded, the screen will display the list of headers and the field separator.
+???+ webex "Create Field Mapping"
 
-[![Upload Sample File](assets/image37.png)](assets/image37.png)
+    Navigate to **Administration** → **Field Mappings** and click **Create field mapping**, then follow the wizard:
 
-**Step 3: Map contact modes**
+    **Step 1 — Upload sample file**
 
-Select the appropriate contact mode from the drop-down for each header. This ensures the correct number is dialled based on the schedule.
+    1. Click **Choose file** and select your CSV contact list.
+    2. Once uploaded, the system displays the list of headers detected in the file.
+    3. Keep the **File charset** at its default value.
 
-[![Map Contact Modes](assets/image38.png)](assets/image38.png)
+    <figure markdown>
+    ![Field Mapping — Step 1: Upload](assets/image35.png)
+    </figure>
 
-**Step 4: Specify country and phone number format**
+    **Step 2 — Map contact modes**
 
-Select the country and the phone number format. Use the format with `+`.
+    4. For each header row, use the drop-down to assign the Contact Mode you created (`Mobile`). This ensures the correct number type is dialled on schedule.
 
-[![Phone Number Format](assets/image39.png)](assets/image39.png)
+    <figure markdown>
+    ![Field Mapping — Step 2: Map contact modes](assets/image36.png)
+    </figure>
 
-**Step 5: Map source of timezones**
+    **Step 3 — Specify country and phone number format**
 
-Keep the default configuration.
+    5. Select the **Country** for which the field mapping is created.
+    6. Select the phone number format — use the format **with `+`** (E.164 international format).
 
-**Step 6: Map Global Variables**
+    <figure markdown>
+    ![Field Mapping — Step 3: Phone number format](assets/image37.png)
+    </figure>
 
-Select the appropriate CSV header from the drop-down to map it with the respective Global Variables created in Control Hub (`firstName`, `lastName`).
+    **Step 4 — Map source of timezones**
 
-[![Map Global Variables](assets/image40.png)](assets/image40.png)
+    7. Keep the default timezone configuration.
 
-**Step 7: Specify file header data types**
+    **Step 5 — Map Global Variables**
 
-The system auto-populates the data types based on your file. Leave all headers as `String` (default).
+    8. Use the drop-downs to map the `firstName` and `lastName` CSV columns to the corresponding Global Variables.
 
-[![Data Types](assets/image41.png)](assets/image41.png)
+    <figure markdown>
+    ![Field Mapping — Step 5: Map global variables](assets/image38.png)
+    </figure>
+
+    **Step 6 — Specify data types**
+
+    9. The system auto-populates data types based on the file content. Leave all columns as `String` (the default).
+
+    <figure markdown>
+    ![Field Mapping — Step 6: Data types](assets/image39.png)
+    </figure>
+
+    10. Click **Save** to create the Field Mapping.
 
 ### Org Exclusion Dates
 
-Organization-level exclusion dates prevent campaigns from running on specific days such as national holidays. These apply to all campaigns.
+Organisation-level exclusion dates prevent any campaign from running on specific calendar dates — national holidays, for example. These apply globally to all campaigns in the tenant.
 
-1. Navigate to **Org Exclusion** and add an exclusion date.
-2. Use `31/12/2026` as the exclusion date for this lab.
+???+ webex "Create Org Exclusion Date"
 
-During exclusion dates, running campaigns change their status to **Pending** and execution stops. Once the exclusion date expires, the campaign automatically resumes its **Running** status.
+    1. Navigate to **Administration** → **Org Exclusion**.
+    2. Click **Add Exclusion Date**.
+    3. Set the date to `31/12/2026` as the exclusion date for this lab.
+    4. Click **Save**.
 
-[![Org Exclusion](assets/image42.png)](assets/image42.png)
+    <figure markdown>
+    ![Org Exclusion Date configuration](assets/image40.png)
+    </figure>
+
+    ???+ info
+        During an exclusion date, all running campaigns automatically change status to **Pending** and stop dialling. Once the exclusion date passes, they automatically resume **Running** status.
 
 ### Purpose Meta-tags
 
-Purpose meta-tags allow you to categorize campaigns by business type. During campaign activation, you tag the campaign with one or more purposes.
+Purpose meta-tags categorise campaigns by business intent. During campaign activation, you must tag the campaign with at least one purpose — it is mandatory to activate but optional to create.
 
-???+ warning
-    Purpose meta-tags are **not mandatory** to create a campaign, but they are **mandatory** to activate one.
+???+ webex "Create Purpose Meta-tag"
 
-1. Navigate to **Purpose Meta-tags** and click **Create**.
-2. Create a tag called `debt`.
+    1. Navigate to **Administration** → **Purpose Meta-tags** and click **Create**.
+    2. Create a meta-tag with the name: <copy>`debt`</copy>
+    3. Click **Save**.
 
-[![Purpose Meta-tags](assets/image43.png)](assets/image43.png)
+    <figure markdown>
+    ![Purpose Meta-tag — debt](assets/image41.png)
+    </figure>
+
+    ???+ warning
+        Purpose meta-tags are **not mandatory** to create a campaign, but they are **mandatory to activate** one. Make sure this is created before you reach the activation step.
 
 ### P&L Meta-tags
 
-P&L (Profit and Loss) tags allow a business to assign a campaign to different divisions, cost centers, or products.
+P&L (Profit and Loss) meta-tags assign campaigns to business divisions, cost centres, or product lines. Like Purpose meta-tags, they are required at activation.
 
-???+ warning
-    P&L meta-tags are **not mandatory** to create a campaign, but they are **mandatory** to activate one.
+???+ webex "Create P&L Meta-tag"
 
-1. Navigate to **P&L Meta-tags** and click **Create**.
-2. Create a tag called `debt`.
+    1. Navigate to **Administration** → **P&L Meta-tags** and click **Create**.
+    2. Create a meta-tag with the name: <copy>`debt`</copy>
+    3. Click **Save**.
 
-[![P&L Meta-tags](assets/image44.png)](assets/image44.png)
+    <figure markdown>
+    ![P&L Meta-tag — debt](assets/image42.png)
+    </figure>
+
+    ???+ warning
+        P&L meta-tags are **not mandatory** to create a campaign, but they are **mandatory to activate** one.
 
 ### Suppression Rules
 
-Suppression rules ensure compliance with regulations by defining when calls should not be attempted. We will configure a rule to prevent campaigns from running overnight.
+Suppression Rules enforce compliance and calling-hours regulations by defining conditions under which a call attempt to a contact should be skipped. You will create a rule that prevents the campaign from running overnight.
 
-1. Navigate to **Suppression Rules** and click **Create**.
+A Suppression Rule has two parts: a **Rule Set** (the container) and one or more **Rules** within it.
 
-[![Suppression Rules - Step 1](assets/image45.png)](assets/image45.png)
+???+ webex "Create Suppression Rule Set and Rule"
 
-[![Suppression Rules - Step 2](assets/image46.png)](assets/image46.png)
+    **Step 1 — Create the Rule Set:**
 
-[![Suppression Rules - Step 3](assets/image47.png)](assets/image47.png)
+    1. Navigate to **Administration** → **Suppression Rules** and click **Create Rule Set**.
+    2. Give it a meaningful name (e.g. `No_Overnight_Calls`) and click **Save**.
 
-### Telephony Outcome
+    <figure markdown>
+    ![Suppression Rule Set](assets/image43.png)
+    </figure>
 
-A telephony outcome set is a collection of possible call results from the dialler (connected, rejected, busy, failed, etc.).
+    **Step 2 — Create the Rule within the Set:**
 
-1. Navigate to **Telephony Outcomes**.
-2. **Duplicate** the default outcome set created by the system and leave the default values for each outcome.
+    3. Open the Rule Set you just created and click **Create Rule**.
+    4. Configure the rule to block calls during overnight hours (e.g. 22:00 to 08:00).
+    5. Click **Save**.
 
-[![Telephony Outcome - Step 1](assets/image48.png)](assets/image48.png)
+    <figure markdown>
+    ![Suppression Rule — configuration](assets/image44.png)
+    </figure>
 
-[![Telephony Outcome - Step 2](assets/image49.png)](assets/image49.png)
+    <figure markdown>
+    ![Suppression Rule — time window](assets/image46.png)
+    </figure>
 
-[![Telephony Outcome - Step 3](assets/image50.png)](assets/image50.png)
+### Telephony Outcomes
 
-[![Telephony Outcome - Step 4](assets/image51.png)](assets/image51.png)
+A Telephony Outcome Set defines the possible call results reported by the dialler — connected, busy, rejected, no answer, failed, etc. You cannot use the system default directly; you must duplicate it and work with your own copy.
+
+???+ webex "Duplicate the Telephony Outcome Set"
+
+    1. Navigate to **Administration** → **Telephony Outcomes**.
+    2. You will see the system-created default outcome set.
+
+    <figure markdown>
+    ![Telephony Outcomes — system default](assets/image47.png)
+    </figure>
+
+    3. Click the **Duplicate** action on the system outcome set.
+    4. Give your copy a name (e.g. `DebtCollection_Outcomes`) and save it.
+
+    <figure markdown>
+    ![Telephony Outcomes — duplicate](assets/image49.png)
+    </figure>
+
+    <figure markdown>
+    ![Telephony Outcomes — duplicated set listed](assets/image50.png)
+    </figure>
+
+    5. Open your duplicated set. You will see the individual outcome codes. For this lab, leave all values at their defaults.
+
+    <figure markdown>
+    ![Telephony Outcomes — outcome codes](assets/image52.png)
+    </figure>
 
 ### UI Users
 
-Users are created and managed in Webex Control Hub. A user created in Control Hub with appropriate permissions will be able to access Webex Campaign.
+Webex Campaign Management does **not** synchronise users automatically from Control Hub. User accounts are provisioned on first login — the application performs a just-in-time (JIT) sync to create the profile in Campaign Manager based on the role assigned in Control Hub.
 
-???+ info
-    Webex Campaign Management does not perform automatic user synchronization from Webex Control Hub. User accounts are provisioned dynamically at runtime — specifically, when a user attempts to log in. The application performs a just-in-time (JIT) sync to create the user profile within Webex Campaign Management as per the role available in Webex Control Hub.
+???+ info "UI Users"
+    As long as your user has the correct Contact Center role in Control Hub, they will be automatically provisioned in Campaign Manager on their first login. No manual action is required here.
 
-    For more information refer to [https://docs-campaign-for-contact-centers.webexcampaign.com/docs/ui-users](https://docs-campaign-for-contact-centers.webexcampaign.com/docs/ui-users)
+    For more information refer to: [https://docs-campaign-for-contact-centers.webexcampaign.com/docs/ui-users](https://docs-campaign-for-contact-centers.webexcampaign.com/docs/ui-users)
 
-[![UI Users](assets/image52.png)](assets/image52.png)
+<figure markdown>
+![UI Users — provisioning info](assets/image53.png)
+</figure>
 
 ### Wrap-up Code Sets
 
-Wrap-up codes are tags applied by agents after a call to categorize and record the outcome of each customer interaction. These codes are defined and managed in Control Hub.
+Wrap-up codes are the tags agents apply after a call to classify the interaction outcome. They are defined in Control Hub and synchronised into Campaign Manager. Campaign Manager uses them to determine whether a contact should be queued for a future retry attempt.
 
-???+ info
-    Although you can periodically fetch and update wrap-up codes in Webex Campaign, new codes cannot be created directly within Webex Campaign. Any changes made to a wrap-up code within Webex Campaign will not be overwritten during subsequent synchronizations with Control Hub.
+???+ webex "Configure Wrap-up Code Set"
 
-    For more information refer to: [https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets](https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets)
+    1. Navigate to **Administration** → **Wrap-up Code Sets**.
+    2. Fetch the latest codes from Control Hub using the **Sync** option.
+    3. Locate the `debt` wrap-up code you created in Lab 1.1 and confirm it appears in the list.
+    4. Optionally, configure the `debt` code to determine retry behaviour — for this lab, leave the default setting.
 
-For this lab, configure only one wrap-up code called `debt`.
+    ???+ info
+        Any changes you make to a wrap-up code's configuration within Campaign Manager will not be overwritten by future syncs with Control Hub. This lets you control retry logic independently of the code's name or description.
 
-[![Wrap-up Code Sets](assets/image53.png)](assets/image53.png)
+        For more information refer to: [https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets](https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets)
+
+    <figure markdown>
+    ![Wrap-up Code Sets](assets/image54.png)
+    </figure>
 
 ---
 
 ## Lab 1.7 - Create and Configure the Campaign
 
-A campaign group must be created first — it acts as a "wrapper" within which campaigns are created. A single campaign group can contain multiple campaigns.
+A **Campaign Group** is the container that holds campaigns. You must create one before you can create a campaign inside it. A single group can contain multiple campaigns.
 
 ### Create a Campaign Group
 
-1. Navigate to **Campaign Management** and click **Create Campaign Group**.
+???+ webex "Create Campaign Group"
 
-[![Create Campaign Group](assets/image54.png)](assets/image54.png)
+    1. In Campaign Manager, navigate to **Voice Campaigns** → **Manage Campaigns**.
+    2. Click **Create Campaign Group**.
 
-2. The only mandatory field is the **Group Name**. Fill it in and click **Save**.
+    <figure markdown>
+    ![Create Campaign Group](assets/image55.png)
+    </figure>
 
-[![Campaign Group Name](assets/image55.png)](assets/image55.png)
+    3. Enter a **Group Name** — this is the only mandatory field. Use something descriptive like `Debt_Collection_2026`.
+    4. Click **Save**.
 
-3. Once created, the group will be listed in the Campaign Management section.
+    <figure markdown>
+    ![Campaign Group — name](assets/image56.png)
+    </figure>
 
-[![Campaign Group Listed](assets/image56.png)](assets/image56.png)
+    5. The group will now be listed in the campaign management view.
+
+    <figure markdown>
+    ![Campaign Group — listed](assets/image57.png)
+    </figure>
 
 ### Configure the Campaign
 
-Click on the new campaign group to access the campaign configuration wizard.
+Click on the campaign group you just created to enter the campaign configuration wizard. The wizard is structured as a series of nodes — work through each one in order.
 
-#### Node 1: Dialer Configuration
+#### Node 1 — Dialer Configuration
 
-Select the **Entry Point** and **Outdial ANI** created previously in Control Hub.
+???+ webex "Configure Dialer"
 
-- **Campaign Type**: `Progressive IVR`
-- **CPA Parameters**: Leave enabled (default)
+    1. In the **Dialer Configuration** node, fill in the following:
 
-[![Dialer Configuration](assets/image57.png)](assets/image57.png)
+        | Parameter | Value |
+        | :--- | :--- |
+        | **Entry Point** | Select `OutDial_DebtCollection_EP` created in Lab 1.4 |
+        | **Outdial ANI** | Select the Outdial ANI configured in Lab 1.4 |
+        | **Campaign Type** | `Progressive IVR` |
+        | **CPA (Call Progress Analysis)** | Leave **enabled** (default) |
 
-#### Node 2: Contact List Source
+    <figure markdown>
+    ![Dialer Configuration node](assets/image58.png)
+    </figure>
 
-Select **Manual Upload** as the source and associate the **Field Mapping** created earlier.
+    <figure markdown>
+    ![Dialer Configuration — CPA settings](assets/image60.png)
+    </figure>
 
-[![Contact List Source](assets/image59.png)](assets/image59.png)
+#### Node 2 — Contact List Source
 
-#### Node 3: Daily Schedule
+???+ webex "Configure Contact List Source"
 
-Configure the daily schedule for the campaign. Use the values shown below and make sure to use your own **Time Zone**.
+    1. Set the **Source Type** to **Manual Upload** — you will upload the CSV file after the campaign is activated.
+    2. Select the **Field Mapping** you created in Lab 1.6.
 
-[![Daily Schedule](assets/image61.png)](assets/image61.png)
+    ???+ info
+        Contact lists can also be imported automatically from an SFTP location or via the Campaign Manager API. For this lab, manual upload is sufficient.
 
-#### Schedule Exclusion Dates
+#### Node 3 — Daily Schedule
 
-Select the **exclusion date** configured previously (`31/12/2026`).
+???+ webex "Configure Daily Schedule"
 
-[![Exclusion Dates](assets/image63.png)](assets/image63.png)
+    1. Configure the daily calling schedule. Use the values shown in the screenshot below.
+    2. Make sure to set the **Time Zone** to your own local time zone.
 
-#### Node 4: Contact Attempt Strategy
+    <figure markdown>
+    ![Daily Schedule configuration](assets/image62.png)
+    </figure>
 
-Configure the contact attempt strategy as shown below.
+    3. Under **Schedule Exclusion Dates**, select the `31/12/2026` exclusion date created in Lab 1.6.
 
-[![Contact Attempt Strategy](assets/image64.png)](assets/image64.png)
+    <figure markdown>
+    ![Schedule Exclusion Dates](assets/image64.png)
+    </figure>
 
-Add the **wrap-up code set** and select the **telephony outcome set** configured earlier. The contact modes are pre-populated based on the field mapping selected.
+#### Node 4 — Contact Attempt Strategy
 
-Configure the max attempts and sequential dialling settings as shown below. For this lab, **disable** the sequential dialling option.
+???+ webex "Configure Contact Attempt Strategy"
 
-[![Contact Attempt - Full Configuration](assets/image66.png)](assets/image66.png)
+    1. Click into the **Contact Attempt Strategy** node.
 
-#### Node 5: Suppression Rules
+    <figure markdown>
+    ![Contact Attempt Strategy node](assets/image65.png)
+    </figure>
 
-Add the suppression rule created previously. Then **save the campaign**.
+    2. Fill in the following:
 
-[![Suppression Rules](assets/image68.png)](assets/image68.png)
+        - **Wrap-up Code Set**: Select the `debt` wrap-up code set.
+        - **Telephony Outcome Set**: Select the duplicated outcome set you created in Lab 1.6.
+        - **Contact Modes**: The system pre-populates this based on your Field Mapping. Leave the single `Mobile` contact mode.
+        - **Max Attempts**: Configure as shown in the screenshot below.
+        - **Sequential Dialling**: **Disable** this option — the lab uses a single contact mode.
 
-#### Final Configuration: Name and Meta-tags
+    <figure markdown>
+    ![Contact Attempt Strategy — full configuration](assets/image67.png)
+    </figure>
 
-Before saving, configure the final campaign name and associate the **P&L** and **Purpose** meta-tags created previously.
+#### Node 5 — Suppression Rules
 
-[![Campaign Name and Meta-tags](assets/image70.png)](assets/image70.png)
+???+ webex "Add Suppression Rule"
+
+    1. In the **Suppression Rules** node, click **Add Rule Set**.
+    2. Select the `No_Overnight_Calls` suppression rule set created in Lab 1.6.
+    3. Click **Save** — this saves the full campaign configuration up to this point.
+
+    <figure markdown>
+    ![Suppression Rules node](assets/image69.png)
+    </figure>
+
+#### Final Step — Campaign Name and Meta-tags
+
+???+ webex "Name the Campaign and Assign Meta-tags"
+
+    1. When prompted to save the campaign, enter a **Campaign Name** (e.g. `DebtCollection_Campaign_2026`).
+    2. Assign both meta-tags you created in Lab 1.6:
+        - **Purpose**: `debt`
+        - **P&L**: `debt`
+    3. Click **Save Campaign**.
+
+    <figure markdown>
+    ![Campaign Name and Meta-tags](assets/image71.png)
+    </figure>
 
 ---
 
@@ -505,54 +772,90 @@ Before saving, configure the final campaign name and associate the **P&L** and *
 
 ### Activate the Campaign
 
-Once all nodes are configured, activate the campaign.
+With all nodes configured and meta-tags assigned, you are ready to activate the campaign.
 
-[![Activate Campaign - Step 1](assets/image72.png)](assets/image72.png)
+???+ webex "Activate the Campaign"
 
-[![Activate Campaign - Step 2](assets/image73.png)](assets/image73.png)
+    1. Open the campaign you just created.
+    2. Click **Activate Campaign**.
 
-[![Activate Campaign - Running](assets/image76.png)](assets/image76.png)
+    <figure markdown>
+    ![Activate Campaign — step 1](assets/image73.png)
+    </figure>
 
-[![Activate Campaign - Confirmed](assets/image77.png)](assets/image77.png)
+    <figure markdown>
+    ![Activate Campaign — confirmation](assets/image74.png)
+    </figure>
+
+    3. The campaign status will change to **Running**.
+
+    <figure markdown>
+    ![Campaign status — Running](assets/image77.png)
+    </figure>
+
+    <figure markdown>
+    ![Campaign — activated view](assets/image78.png)
+    </figure>
 
 ### Upload the Contact List
 
-Once the campaign is active, upload your contact list.
+Once the campaign is active, upload your contact list to begin dialling.
 
-???+ info
-    Contact lists can also be uploaded using APIs. For more information, refer to the Webex Campaign API documentation.
+???+ webex "Upload the Contact List"
 
-1. Navigate to the campaign's **Contact Lists** section and click **Upload**.
-2. Select the CSV file created earlier. All other configurations remain as default.
+    ???+ info
+        Contact lists can also be uploaded programmatically via the Campaign Manager API. For more information, refer to the [Webex Campaign API documentation](https://docs-campaign-for-contact-centers.webexcampaign.com).
 
-[![Upload Contact List](assets/image80.png)](assets/image80.png)
+    1. In the active campaign view, navigate to the **Contact Lists** section.
+    2. Click **Upload Contact List**.
+    3. Select the CSV file you created in Lab 1.6. Leave all other configuration at its defaults.
 
-3. The initial status will show as **Uploading**.
+    <figure markdown>
+    ![Upload Contact List](assets/image81.png)
+    </figure>
 
-[![Uploading Status](assets/image82.png)](assets/image82.png)
+    4. The initial status will show as **Uploading**.
 
-4. If your file is valid, it will be processed and shown as **Valid**. The campaign will then initiate calls within **2 to 5 minutes**.
+    <figure markdown>
+    ![Contact List status — Uploading](assets/image83.png)
+    </figure>
 
-[![Valid Status](assets/image83.png)](assets/image83.png)
+    5. If your file is valid, it will be processed and the status will change to **Valid**. The campaign will then begin dialling within **2 to 5 minutes**.
 
-???+ warning
-    If the file cannot be uploaded, it is likely a formatting issue with the CSV. Check the file structure against the field mapping configuration.
+    <figure markdown>
+    ![Contact List status — Valid](assets/image84.png)
+    </figure>
+
+    ???+ warning
+        If the file fails to upload, the most common cause is a formatting issue with the CSV — mismatched headers, incorrect delimiters, or extra whitespace. Check the file structure against the Field Mapping configuration and try again.
 
 ---
 
 ## Testing 🧪
 
-### Validation Steps
+???+ webex "Validate the End-to-End Flow"
 
-1. **Trigger the campaign**: Upload a valid contact list with at least one entry containing your test phone number.
-2. **Wait for the call**: The campaign will dial your number within 2 to 5 minutes of the contact list being validated.
-3. **Confirm the result**: Answer the call. You should hear the Text-to-Speech message:
+    1. **Wait for the call**: With the contact list uploaded and validated, the campaign will dial your test phone number within 2–5 minutes.
+    2. **Answer the call**: Pick up the call on the number listed in your contact list.
+    3. **Listen for the confirmation**: You should hear the Text-to-Speech message from the dummy flow:
 
-    ```
-    Congratulations, you have completed Lab 1.
-    ```
+        ```text
+        Congratulations, you have completed Lab 1.
+        ```
 
-4. **Check campaign status**: Navigate to the Campaign Manager portal and verify the campaign status and call attempt results.
+    4. **Check campaign results**: In the Campaign Manager portal, navigate to the campaign's **Reports** or **History** tab and verify that:
+        - The call attempt shows as **Connected**
+        - The contact list entry shows as **Processed**
+
+    ???+ bug "Troubleshooting"
+        If you do not receive a call within 5 minutes, check the following:
+
+        - The campaign status is **Running** (not Paused or Pending)
+        - The contact list status is **Valid** (not Uploading or Failed)
+        - The phone number in the CSV is in the correct format (E.164 with `+`)
+        - The **Outdial ANI** is correctly associated with the Entry Point
+        - The **Business Hours** schedule covers the current time in your time zone
+        - The **Suppression Rule** is not blocking calls at the current time
 
 ---
 
@@ -560,12 +863,12 @@ Once the campaign is active, upload your contact list.
 
 At this point, you have successfully:
 
-* Configured **Agents, Teams, Out-Dial Queues, and Global Variables** in Webex Control Hub.
-* Created a **dummy validation flow** and an **outbound campaign flow** with event handling for AMD, Abandoned, and Live Voice outcomes.
-* Configured an **Entry Point** and **Outdial ANI** for the outbound campaign.
-* Set up all **Campaign Manager pre-requisites**: business days, contact modes, field mappings, org exclusions, meta-tags, suppression rules, telephony outcomes, and wrap-up code sets.
-* Created, activated, and tested a **Progressive IVR outbound campaign**.
+- [x] Created a licensed agent user, team, out-dial queue, and global variables in **Control Hub**
+- [x] Built a **dummy validation flow** and an **outbound campaign flow** with AMD, Abandoned, and Live Voice event handling
+- [x] Configured an **Entry Point** and **Outdial ANI** for outbound telephony
+- [x] Set up all **Campaign Manager pre-requisites**: business days, contact modes, field mappings, org exclusions, purpose and P&L meta-tags, suppression rules, telephony outcomes, and wrap-up code sets
+- [x] Created, activated, and validated a **Progressive IVR outbound campaign**
 
-**Congratulations!** You now have a fully operational proactive outbound reach capability in place. You are now ready to move on to the next lab, where you will add an AI Agent to handle the outbound calls.
+**Congratulations!** You now have a fully operational proactive outbound reach capability. The infrastructure you built here is the foundation that the AI Agent in Lab 2 will use to handle every live call.
 
-[Next Lab: Lab 2 - Automated Debt Collection](../lab2_debt_ai_agent/index.md)
+[Next Lab: Lab 2 - Automated Debt Collection](lab2_debt_ai_agent.md){ .md-button .md-button--primary }
