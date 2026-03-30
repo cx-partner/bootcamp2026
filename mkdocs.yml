@@ -108,6 +108,7 @@ nav:
   - Readme:
       - 2026 WxCC Bootcamp: overview.md
   - Pre-requisites: 
+    - Partner Tenant capabilities: pre_req_wxcc.md
     - Email Digital Channel: pre_req_email_channel.md
     - Airtable Base: pre_req_airtable.md
   - Labs:
