@@ -1,4 +1,4 @@
-# Email Digital Channel
+# Email
 
 ## Introduction
 
