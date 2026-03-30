@@ -64,7 +64,7 @@ To ensure a smooth experience during the bootcamp, the following must be pre-con
 
 Additionally, you will leverage the **NovaPay mock-payment service** built for the purpose of this Bootcamp. The NovaPay service provides a mockpayment frontend web site that mimics a typical payment user interface and a web service that exposes an API to create payment sessions, accept payments and check the payment status. Should you want to replicate the Novapay services for your demos, the [Extra Lab](lab_novapay.md) in this Bootcamp provides you a **step-by-step guide** to do so.
 
-Detailed setup instructions are provided in the [Pre-requisites](pre_req_email_channel.md) section of the lab guides.
+Detailed setup instructions are provided in the [Pre-requisites](pre_req_wxcc.md) section of the lab guides.
 
 ---
 ## Disclaimers
@@ -95,10 +95,5 @@ During the bootcamp, you will actively use the following platforms and tools:
 ## Proctors and Support
 Our proctors are available throughout the bootcamp to support you during the labs. Please reach out at any time if you need assistance.
 
-AMER: Juan, Stephanie, Luis.
-
-EMEA: Juan, David, Christian, Juliet, Sebastian, Asmesh, Adam, Pankaj.
-
-APJ: Juan.
 
 
