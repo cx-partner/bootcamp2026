@@ -81,7 +81,7 @@ After assigning the licence, configure the Contact Center-specific settings for 
 
     1. Select the user (**Agent 1**) and navigate to the **Contact Center** settings section.
     2. Toggle the **Contact Centre** switch to **Active**.
-    3. Set the **User Profile** to `Premium Agent User Profile` (or the appropriate profile for your tenant).
+    3. Set the **User Profile** to `Premium or Standard Agent User Profile` (or the appropriate profile for your tenant).
     4. Under **Agent settings**, select:
         - **Site**: `Site-1`
         - **Teams**: `Bootcamp_Team`
@@ -968,7 +968,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     The campaign status will change to **Running**.
 
     <figure markdown>
-    ![Activate campaign](./assets/lab1_p31_img1.jpeg)
+    ![Activate campaign](./assets/lab1_p31_img1.png)
     </figure>
 
 ---
