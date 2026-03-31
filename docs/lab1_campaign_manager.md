@@ -887,7 +887,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     4. Click **Save changes**.
 
     <figure markdown>
-    ![Schedule exclusion dates](./assets/lab1_p28_img2.png)
+    ![Schedule exclusion dates](./assets/lab1_p28_img2.jpeg)
     </figure>
 
 **Node 5 — Contact attempts strategy:**
@@ -938,7 +938,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     3. Click **Save changes**.
 
     <figure markdown>
-    ![Suppression rule sets in campaign](./assets/lab1_p30_img1.jpeg)
+    ![Suppression rule sets in campaign](./assets/lab1_p30_img1.png)
     </figure>
 
 ### Save and Activate the Campaign
@@ -954,7 +954,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     3. Click **Save**.
 
     <figure markdown>
-    ![Save campaign dialog](./assets/lab1_p30_img2.png)
+    ![Save campaign dialog](./assets/lab1_p30_img2.jpeg)
     </figure>
 
 
