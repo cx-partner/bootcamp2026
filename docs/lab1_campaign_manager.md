@@ -1011,11 +1011,11 @@ After uploading, the contact list will show a status of **Uploading**, then tran
 
 
 
-    <figure markdown>
+<figure markdown>
     ![Contact list uploading status](./assets/lab1_p32_img1.png)
     </figure>
 
-    <figure markdown>
+<figure markdown>
     ![Contact list Active status](./assets/lab1_p33_img1.png)
     </figure>
 
