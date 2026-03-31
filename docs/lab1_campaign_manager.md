@@ -1012,12 +1012,12 @@ After uploading, the contact list will show a status of **Uploading**, then tran
 
 
 <figure markdown>
-    ![Contact list uploading status](./assets/lab1_p32_img1.png)
-    </figure>
+![Contact list uploading status](./assets/lab1_p32_img1.png)
+</figure>
 
 <figure markdown>
-    ![Contact list Active status](./assets/lab1_p33_img1.png)
-    </figure>
+![Contact list Active status](./assets/lab1_p33_img1.png)
+</figure>
 
 !!! warning
     If your contact list fails to upload, the most likely cause is a **formatting issue** with the CSV file. Check that:
