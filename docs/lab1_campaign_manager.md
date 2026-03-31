@@ -810,6 +810,10 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     <figcaption>Campaign groups list showing the Bootcamp2026 group created</figcaption>
     </figure>
 
+        <figure markdown>
+    ![Campaign group detail view](./assets/lab1_p25_img2.png)
+    </figure>
+
 ### Create and Configure the Campaign
 
 ???+ webex "Create Campaign"
@@ -819,8 +823,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     3. An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.
 
     <figure markdown>
-    ![Campaign group detail view](./assets/lab1_p25_img2.png)
-    <figcaption>Bootcamp2026 campaign group showing the Create campaign button</figcaption>
+    ![Campaign group detail view](./assets/lab1_p26_img1.png)
     </figure>
 
 **Node 1 — Dialer configuration:**
@@ -840,8 +843,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     Click **Save changes**.
 
     <figure markdown>
-    ![Dialer configuration](./assets/lab1_p26_img1.png)
-    <figcaption>Dialer configuration showing Campaign_EP, PSTN outdial ANI, Progressive IVR mode, and CPA parameters enabled</figcaption>
+    ![Dialer configuration](./assets/lab1_p26_img2.png)
     </figure>
 
 **Node 2 — Contact list source:**
@@ -857,8 +859,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
         The actual contact list file will be uploaded after the campaign is activated. For now, just associate the field mapping.
 
     <figure markdown>
-    ![Contact list source configuration](./assets/lab1_p26_img2.png)
-    <figcaption>Contact list source set to Manual file upload with Bootcamp_field_mapping selected</figcaption>
+    ![Contact list source configuration](./assets/lab1_p26_img3.png)
     </figure>
 
 **Node 3 — Daily schedule:**
@@ -873,8 +874,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     4. Click **Save changes**.
 
     <figure markdown>
-    ![Campaign daily schedule](./assets/lab1_p26_img3.png)
-    <figcaption>Daily schedule configuration — use your own timezone</figcaption>
+    ![Campaign daily schedule](./assets/lab1_p28_img1.png)
     </figure>
 
 **Node 4 — Schedule exclusion dates:**
@@ -887,8 +887,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     4. Click **Save changes**.
 
     <figure markdown>
-    ![Schedule exclusion dates](./assets/lab1_p28_img1.png)
-    <figcaption>Schedule exclusion dates showing the Dec 31, 2026 org-level exclusion date applied to the campaign</figcaption>
+    ![Schedule exclusion dates](./assets/lab1_p28_img2.png)
     </figure>
 
 **Node 5 — Contact attempts strategy:**
@@ -921,13 +920,11 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     Disable sequential dialling and set the amount of contact to `10`.
 
     <figure markdown>
-    ![Contact attempts strategy](./assets/lab1_p28_img2.jpeg)
-    <figcaption>Contact attempts strategy showing wrap-up code set, telephony outcome set, Phone contact mode, and max call attempt limits</figcaption>
+    ![Contact attempts strategy](./assets/lab1_p28_img3.jpeg)
     </figure>
 
     <figure markdown>
-    ![Contact attempts strategy full view](./assets/lab1_p28_img3.jpeg)
-    <figcaption>Full contact attempts strategy configuration</figcaption>
+    ![Contact attempts strategy full view](./assets/lab1_p29_img1.jpeg)
     </figure>
 
     3. Click **Save**.
@@ -941,8 +938,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     3. Click **Save changes**.
 
     <figure markdown>
-    ![Suppression rule sets in campaign](./assets/lab1_p29_img1.jpeg)
-    <figcaption>Suppression rule sets panel showing Bootcamp_rule selected with Bootcamp_rule1 as the active rule</figcaption>
+    ![Suppression rule sets in campaign](./assets/lab1_p30_img1.jpeg)
     </figure>
 
 ### Save and Activate the Campaign
@@ -958,9 +954,10 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     3. Click **Save**.
 
     <figure markdown>
-    ![Save campaign dialog](./assets/lab1_p30_img1.png)
-    <figcaption>Save campaign dialog showing Bootcamp_campaign name with debt P&L and Purpose meta-tags</figcaption>
+    ![Save campaign dialog](./assets/lab1_p30_img2.png)
     </figure>
+
+
 
 ???+ webex "Activate Campaign"
 
@@ -971,8 +968,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     The campaign status will change to **Running**.
 
     <figure markdown>
-    ![Activate campaign](./assets/lab1_p30_img2.jpeg)
-    <figcaption>Campaign activation confirmation — once confirmed, the campaign transitions from Draft to Running</figcaption>
+    ![Activate campaign](./assets/lab1_p31_img1.jpeg)
     </figure>
 
 ---
@@ -997,17 +993,15 @@ Now that the campaign is active, upload your contact list CSV to trigger the out
     4. Click **Save and proceed**.
 
     <figure markdown>
-    ![Manage contact lists panel](./assets/lab1_p31_img1.png)
-    <figcaption>Manage contact lists panel showing the Upload file to create contact list button and existing contact lists</figcaption>
+    ![Manage contact lists panel](./assets/lab1_p31_img3.png)
     </figure>
 
     <figure markdown>
-    ![Contact list upload dialog](./assets/lab1_p31_img2.png)
-    <figcaption>Campaign status showing Running with the Manage contact lists option available</figcaption>
+    ![Contact list upload dialog](./assets/lab1_p31_img4.png)
     </figure>
 
     <figure markdown>
-    ![Contact list file upload form](./assets/lab1_p31_img3.png)
+    ![Contact list file upload form](./assets/lab1_p32_img2.png)
     <figcaption>Contact list upload form showing field mapping, file selection, and activation settings</figcaption>
     </figure>
 
@@ -1015,20 +1009,15 @@ Now that the campaign is active, upload your contact list CSV to trigger the out
 
 After uploading, the contact list will show a status of **Uploading**, then transition to **Active** once processed.
 
-<figure markdown>
-![Contact list upload status](./assets/lab1_p31_img4.png)
-<figcaption>Contact lists view showing multiple uploaded lists with Active and Upload Failed statuses</figcaption>
-</figure>
 
-<figure markdown>
-![Contact list uploading status](./assets/lab1_p32_img1.png)
-<figcaption>Newly uploaded contact list showing "Uploading" status — this will change to Active once processed</figcaption>
-</figure>
 
-<figure markdown>
-![Contact list Active status](./assets/lab1_p32_img2.png)
-<figcaption>Contact list successfully processed and showing Active status — the campaign will begin dialling within 2–5 minutes</figcaption>
-</figure>
+    <figure markdown>
+    ![Contact list uploading status](./assets/lab1_p32_img1.png)
+    </figure>
+
+    <figure markdown>
+    ![Contact list Active status](./assets/lab1_p33_img1.png)
+    </figure>
 
 !!! warning
     If your contact list fails to upload, the most likely cause is a **formatting issue** with the CSV file. Check that:
