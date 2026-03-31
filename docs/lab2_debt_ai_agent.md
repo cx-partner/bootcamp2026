@@ -146,7 +146,7 @@ In this first step, you will define the "brain" and personality of your AI Agent
         Stay within Webex Financial Group’s banking services.
         Never disclose personal customer data or security information like the PIN number.
         ```
-        
+
     4. Click on **[Save changes]**
 
         ???+ tip "Writing Prompts for Autonomous AI Agents"
@@ -1615,7 +1615,7 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
 
     1. Go to Control Hub -> Contact Center -> Flows
     2. Open your flow **AI_Agent_DebtCollection**
-    3. Delete the **Play Message** node
+    3. Delete the *EndOfLab1* **Play Message** node
     4. From the *Activities Library* drag and drop a **Virtual Agent V2** to the right of the **Start Node**. 
     5. Connect the **Start Node** to the new node.
     6. Click on the **Virtual Agent V2** node and configure the settings below in the *Activity Settings* panel on the right side of the canvas. 
@@ -1646,7 +1646,7 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
             ![AI Agent node](./assets/AI_Agent%20flow%202.png)
             </figure> 
 
-    7. Connect the *Handled* outcome outlet of the **Virtual Agent** node to the **Disconnect Contact** node.
+    7. Connect the *Handled* outcome outlet of the **Virtual Agent** node to the **End Flow** node.
     8. The *Escalated* outcome will be covered in Lab 3, where we will connect the AI Agent to a queue that routes the call to a human agent. For now, to allow you to test the end-to-end scenario, we will simply play a message: 
 
         ???+ inline end "Play Temporary message"
