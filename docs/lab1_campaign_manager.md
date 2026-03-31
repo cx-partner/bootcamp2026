@@ -804,10 +804,6 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
         - *(All other fields are optional)*
     3. Click **Save & proceed**.
 
-    <figure markdown>
-    ![Create campaign group](./assets/lab1_p24_img1.png)
-    <figcaption>Create campaign group dialog — only the group name is mandatory</figcaption>
-    </figure>
 
     <figure markdown>
     ![Campaign groups list](./assets/lab1_p25_img1.jpeg)
