@@ -186,6 +186,6 @@ The following tenant-level settings must be verified and enabled:
 
         `Navigate to: Control Hub → Contact Center → Tenant Settigs -> Desktop → Voice Features -> Enable End Call → Save`
 
-### Auxiliary Applications
+## Auxiliary Applications
 
 The Bootcamp use case relies on **Airtable** as its customer data backend — storing customer profiles, transaction history, and investment portfolio data that the AI Agent queries in real time during calls. Before starting the labs, you will need to set up your own Airtable base and populate it with the required table structure. Full setup instructions, field definitions, and sample data guidelines are provided in the [Airtable Database Setup](pre_req_airtable.md) section of this documentation.
