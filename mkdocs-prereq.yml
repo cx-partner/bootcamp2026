@@ -49,10 +49,12 @@ plugins:
   - search
   - exclude:
       glob:
-        - "*"             # Exclude all files in the root
-        - "docs/*"        # Exclude all files in the docs folder
+        - "lab*.md"             # Exclude all files in the root
+        - "overview.md"        # Exclude all files in the docs folder
+        - "conclusion.md"
       ignore:
-        - "pre_req_wxcc.md"    # EXCEPT the pre-req page (Whitelist)
+        - "index.md"      # EXCEPT the pre-req page (Whitelist)
+        - "pre_req_wxcc.md"    
         - "pre_req_email_channel.md"
         - "pre_req_airtable.md"
   
