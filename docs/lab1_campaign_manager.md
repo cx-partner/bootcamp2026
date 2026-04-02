@@ -236,7 +236,7 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
         - Enable **Text-to-Speech**
         - **Connector**: `Cisco Cloud Text-to-Speech`
         - **Text-to-Speech Message**: `Congratulations, You have completed lab 1`
-    6. Connect the **Play Message** node to a **Disconnect Contact** node.
+    6. Connect the **Play Message** node to a **End Flow** node.
     7. Click **Save** and then **Publish** the flow (select **Latest** as the version label).
 
     <figure markdown>
@@ -245,7 +245,7 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
     </figure>
 
     <figure markdown>
-    ![Play Message TTS configuration](./assets/lab1_p7_img1.jpeg)
+    ![Play Message TTS configuration](./assets/lab1_p7_img1.png)
     <figcaption>Play Message node configured with Cisco Cloud Text-to-Speech playing "Congratulations, You have completed lab 1"</figcaption>
     </figure>
 
