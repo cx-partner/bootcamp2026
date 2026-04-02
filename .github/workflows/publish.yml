@@ -32,7 +32,7 @@ jobs:
       # 1. Build the Full Site (Audience A) into the root of the 'site' folder
       # Accessible at: https://cx-partner.github.io/bootcamp2026/
       - name: Build Full Site
-        run: mkdocs build -f mkdocs.yml -d site/
+        run: mkdocs build -f mkdocs.yml -d site/labs
 
       # 2. Build the Limited Site (Audience B) into a subfolder named 'pre-req'
       # Accessible at: https://cx-partner.github.io/bootcamp2026/pre-req/
