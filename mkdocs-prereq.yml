@@ -2,6 +2,7 @@
 site_name: "2026 Webex Contact Center Partner Bootcamp - Partner Pre-requisites" 
 site_description: "Proactive Debt Collection and Contention resolution"
 site_author: Luis Garcia Delgado, Juan Corral, Sebastian Hernandez, Stephanie Ross
+site_url: https://cx-partner.github.io/bootcamp2026/pre-req/
 copyright: Copyright &copy; 2026 Cisco
 theme:
   name: material
