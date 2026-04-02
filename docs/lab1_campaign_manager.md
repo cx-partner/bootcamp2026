@@ -45,7 +45,7 @@ The diagram below illustrates the high-level architecture and the sequence of co
 
 In this lab you will perform the following tasks:
 
-1. Configure Agents and Teams
+1. Configure a team
 2. Create an Outdial Queue
 3. Configure Global Variables and Wrap-up Codes
 4. Build the Outbound Campaign Flow (Main + Event flows)
@@ -56,43 +56,10 @@ In this lab you will perform the following tasks:
 
 ---
 
-## Lab 1.1 - Configure Agents and Teams
-
-### Create a User and Assign a Contact Center Licence
-
-The first step is to ensure your agent user exists in Control Hub and has a Contact Center licence assigned.
-
-???+ webex "Create User"
-
-    1. Navigate to [Control Hub](https://admin.webex.com) and go to **Users**.
-    2. Click **Add users** and create a new user (or select an existing one).
-    3. On the user profile, go to the **Licences** tab and assign a **Contact Centre** licence — either **Standard Agent** or **Premium Agent** depending on your tenant entitlements.
-
-    <figure markdown>
-    ![Users list in Control Hub](./assets/lab1_p2_img2.png)
-    <figcaption>Users list showing admin and Agent 1 with Contact Centre licence assigned</figcaption>
-    </figure>
-
-### Enable Contact Center and Configure the User
-
-After assigning the licence, configure the Contact Center-specific settings for the agent.
-
-???+ webex "Configure Agent"
-
-    1. Select the user (**Agent 1**) and navigate to the **Contact Center** settings section.
-    2. Toggle the **Contact Centre** switch to **Active**.
-    3. Set the **User Profile** to `Premium or Standard Agent User Profile` (or the appropriate profile for your tenant).
-    4. Under **Agent settings**, select:
-        - **Site**: `Site-1`
-        - **Teams**: `Bootcamp_Team`
-    5. Click **Save**.
-
-    <figure markdown>
-    ![Agent 1 Contact Center configuration](./assets/lab1_p3_img1.png)
-    <figcaption>Agent 1 profile showing Contact Centre licence (Premium Agent) enabled</figcaption>
-    </figure>
+## Lab 1.1 - Configure a Team
 
 ### Create a Team
+Even we won't use any agent to run the IVR campaign, the creation of a **team or agent** to assign to an **outdial queue** is mandatory. The **Entry Point** need to have that queue associated.
 
 ???+ webex "Create Team"
 
@@ -136,11 +103,6 @@ The outdial queue is what connects your outbound campaign to the agent pool. It 
 
     3. Under **Call distribution**, click **Create a group**, expand it, and select `Bootcamp_Team`.
     4. Click **Create**.
-
-    <figure markdown>
-    ![Agent Contact Center user configuration](./assets/lab1_p4_img1.png)
-    <figcaption>Agent 1 Contact Center settings showing site and team assignment</figcaption>
-    </figure>
 
     <figure markdown>
     ![Create Outdial Queue](./assets/lab1_p4_img2.png)
