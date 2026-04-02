@@ -179,16 +179,16 @@ A wrap-up code is required by Campaign Manager when configuring the contact atte
 
 ## Lab 1.4 - Build the Flows
 
-### Create the "Lab1_completed" Dummy Test Flow
+### Create the "Lab2" Dummy Test Flow
 
-Before building the full outbound campaign flow, create a simple **dummy flow** to validate the end-to-end campaign configuration. This same flow will be used as the starting point for **Lab 2**. 
+Before building the full outbound campaign flow, create a simple **dummy flow** to validate the end-to-end campaign configuration. This same flow will be used as the starting point for **Lab 2** so name it as **AI_Agent_DebtCollection**
 
 The flow plays a congratulatory TTS message when a live voice contact is detected, confirming Lab 1 is fully operational.
 
-???+ webex "Create Lab1_completed Flow"
+???+ webex "Create Lab2 dummy flow"
 
     1. In Control Hub, navigate to **Contact Center** → **Flows**.
-    2. Click **Create flow** and name it `Lab1_completed`.
+    2. Click **Create flow** and name it `AI_Agent_DebtCollection`.
     3. In the **Global Flow Properties** panel on the right:
         - Under **Global Variables**, click **Add global variables** and add both `firstName` and `lastName`.
     4. From the **Activities Library**, drag a **Play Message** node onto the canvas and connect it to the **NewPhoneContact** Start node.
@@ -198,7 +198,7 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
         - **Connector**: `Cisco Cloud Text-to-Speech`
         - **Text-to-Speech Message**: `Congratulations, You have completed lab 1`
     6. Connect the **Play Message** node to a **End Flow** node.
-    7. Click **Save** and then **Publish** the flow (select **Latest** as the version label).
+    7. **Publish** the flow (select **Latest** as the version label).
 
     <figure markdown>
     ![Lab1_completed flow with TTS message](./assets/lab1_p6_img2.png)
