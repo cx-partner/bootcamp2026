@@ -74,8 +74,7 @@ Even we won't use any agent to run the IVR campaign, the creation of a **team or
         | **Multimedia profile** | `Default_Multimedia_Profile` |
         | **Desktop layout** | `Global Layout` |
 
-    3. Under **Agents**, type and select **Agent 1**.
-    4. Click **Create**.
+    3. Click **Create**.
 
     <figure markdown>
     ![Create Team dialog](./assets/lab1_p3_img2.png)
