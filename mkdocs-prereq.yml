@@ -52,11 +52,8 @@ plugins:
         - "lab*.md"             # Exclude all files in the root
         - "overview.md"        # Exclude all files in the docs folder
         - "conclusion.md"
-      ignore:
-        - "index.md"      # EXCEPT the pre-req page (Whitelist)
-        - "pre_req_wxcc.md"    
-        - "pre_req_email_channel.md"
-        - "pre_req_airtable.md"
+        - "how*.md"
+        - "Webex*.md"
   
   # - with-pdf:
   #     cover_title: LABXXX-1234
