@@ -292,7 +292,7 @@ This event fires when the dialler receives a CPA result for an outbound call att
     3. Configure the **Go To** node:
         - **Activity Label**: `GoTo_AIAgent`
         - **Flow type**: `Static Flow`
-        - **Flow**: `Lab1_completed` *(this will be updated to point to the AI Agent flow in Lab 2)*
+        - **Flow**: `AI_Agent_DebtCollection` *(this will be used in Lab 2)*
         - **Version Label**: `Latest`
     4. Under **Flow Variable Mapping**, map the global variables from the current flow to the destination flow:
 
@@ -306,7 +306,7 @@ This event fires when the dialler receives a CPA result for an outbound call att
 
     <figure markdown>
     ![GoTo AIAgent node configuration](./assets/lab1_p10_img1.png)
-    <figcaption>Go To node pointing to the Lab1_completed flow with firstName and lastName mapped across flows</figcaption>
+    <figcaption>Go To node pointing to the AI_Agent_DebtCollection flow with firstName and lastName mapped across flows</figcaption>
     </figure>
 
 **Event 2: AgentAnswered**
