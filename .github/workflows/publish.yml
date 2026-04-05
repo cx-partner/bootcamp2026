@@ -30,7 +30,7 @@ jobs:
 # --- NEW LOGIC STARTS HERE ---
 
       # 1. Build the Full Site (Audience A) into the root of the 'site' folder
-      # Accessible at: https://cx-partner.github.io/bootcamp2026/
+      # Accessible at: https://cx-partner.github.io/bootcamp2026/labs
       - name: Build Full Site
         run: mkdocs build -f mkdocs.yml -d site/labs
 
