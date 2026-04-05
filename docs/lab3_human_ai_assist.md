@@ -166,6 +166,15 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
             <figure markdown>
             ![After - Flow View](./assets/lab3_after_flow.png)
             </figure>
+        
+        ???+ tip "Understanding the JSON Path"
+            The path `$.actions.fraud_transfer[0].input.ivr_verified` tells the Parse node to navigate the MetaData JSON structure as follows:
+            
+            - `$.actions` → The collection of all actions executed during the AI Agent session.
+            - `.fraud_transfer[0]` → The first instance of the `fraud_transfer` action.
+            - `.input.ivr_verified` → The value of the `ivr_verified` entity that was passed into that action.
+            
+            This structure is consistent across all Webex AI Agent transfer actions.
 
     16. Add a **Queue Contact** node for the custom **fraud_transfer** and rename it <copy>`Fraud_Queue`</copy>. 
     17. Connect the **Parse** node output to the **Fraud_Queue** node. Connect the **Fraud_Queue** node output to the **End Flow** node.
@@ -181,7 +190,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
 
 ???+ webex "Configure Real-Time Transcription"
     Real-Time Transcription(RTT) provides a live text feed of the conversation to the agent. This is essential for the fraud specialist, as it allows them to review what was said even if the audio quality is poor or the customer speaks quickly.
-    In order to configure RTT, we will need to both enable the AI Assistant configuration in Control Hub and setup the flow to stream the media to the transcription service. In this section, we will focus on the flow configuration. 
+    In order to configure RTT, we will need to both enable the AI Assistant configuration in Control Hub and setup the flow to stream the media to the transcription service. In this section, we will focus on the flow configuration.
 
     1. In your flow, move from the **Main Flow** tab to the **Event Flows** tab. 
     2. Drag and drop the **Start Media Stream** node to the canvas. 
@@ -190,7 +199,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     5. Click **Validate**, then **Save and Publish** the flow.
     !!! info "RTT Conditional Enablement"
         In this lab we are enabling RTT for all the queue or agents involved in this flow, but you can also add a condition to control which queues within a flow get access to the RTT feature. You can find a step by step guide [HERE](https://help.webex.com/en-us/article/n5jhgdi/Enabling-media-streaming-for-specific-queues).
-    ???+ gif "Extract AI Agent Context"
+    ???+ gif "Configure RTT in Event Flows"
         <figure markdown>
         ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
         <figcaption>Mapping AI Agent output to flow variables</figcaption>
@@ -198,13 +207,16 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
 
 ## Lab 3.3 Control Hub Configuration of Contact Center AI Assistant and Desktop Layout Requirements
  There are several features associated with the Contact Center AI Assistant (AutoCSAT, Summarization, Agent Wellness, Real-Time Transcription, Real-Time Assist and Topic Analytics), and all of these features can easily be enabled from Control Hub. 
- In this lab, we will focus on the  Summarization, Real-Time Transcript and  Real-Time Assist configuration. 
+ In this lab, we will focus on the **Summarization**, **Real-Time Transcript** and  **Real-Time Assist** configuration. 
 
 ???+ webex "AI Assistant Configuration"
     1. Open **Control Hub** and navigate to Contact Center > AI Assistant. 
     2. The first 2 options in this page will be for **Agent Wellbeing** and **AutoCSAT**, but this are not relevant for this lab. 
     3. Enable the **Generated Summaries**  toggle and select the check box for all of the different summarization types. 
-    4. Summarization is enabled at the queue level, for the purpose of this lab, you can either select the **All queues** option or specify the **Individual queue** you will be using in this lab. 
+    4. Summarization is enabled at the queue level, for the purpose of this lab, you can either select the **All queues** option or specify the **Individual queue** you will be using in this lab.
+
+        ???+ tip "Summarization Scope"
+            Selecting **All queues** is the quickest option for a lab environment. In a production deployment, you would typically scope summarization to specific queues to control costs and ensure relevance.
     5. Enable the Real-Time Transcription and the Real-Time Assist toggles. 
     6. Before we can **Assign AI Assistant skills** to a queue, we need to create the skill in the AI Agent studio. We will cover this topic in lab 3.4. 
     ???+ gif "Extract AI Agent Context"
@@ -304,34 +316,211 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
 Now that the AI Assistant features are enabled we can proceed with the configuration of Real-Time Assist (RTA). This feature monitors the live transcription of the call and, when specific keywords or intents are detected, it presents the agent with suggestions from a KB or triggers automated actions. 
 During this lab section we will focus on how to effectively setup an AI Assistant Skill, including how to define the prompt and how to setup actions.
 
+???+ webex "Configure Knowledge Base for Real-Time Assist"
+    Before creating the AI Assistant skill, you need a Knowledge Base that contains the fraud-handling policies and procedures that the skill will reference when providing guidance to the agent.
+
+    1. In the **AI Agent Studio**, click on the **Knowledge** icon in the left navigation panel.
+    2. Click on **+ Create knowledge base** in the upper-right corner.
+    3. Enter a name for your KB: <copy>`FraudKB`</copy>, and enter a description: <copy>`Knowledge base for fraud handling policies and dispute resolution procedures.`</copy>
+    4. Click on **Create**
+    5. Add the relevant source(s) for your fraud handling documentation. You can use **Files** (upload a document with your fraud policies) or **Articles** (create content directly in the studio).
+
+        ???+ tip "What to include in your Fraud KB"
+            Your Knowledge Base should include information such as:
+            
+            - Fraud dispute procedures and timelines
+            - Card locking and replacement policies
+            - Customer communication guidelines during fraud scenarios
+            - Escalation paths for high-value fraud cases
+            - Regulatory requirements for fraud reporting
+
+    6. Wait for the source to reach the **Processed** state before proceeding.
+
+    ???+ gif "Configure Fraud Knowledge Base"
+        <figure markdown>
+        ![Fraud KB](./assets/lab3_fraud_kb.gif)
+        <figcaption>Creating a Knowledge Base for fraud handling policies</figcaption>
+        </figure>
+
+???+ webex "Configure Fullfilment actions for Real-Time Assist"
+    ???+ gif "Extract AI Agent Context"
+        <figure markdown>
+        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
+        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        </figure>
+
 ???+ webex "Configure Real-Time Assist"
+    This feature is what makes our WxCC AI Assistant an Agentic AI solution, this is why you will find it very similar to our Webex AI Agents. The configuration is done in the same portal, our AI Agent Studio, and most of the settings are the same. However, the way to write the prompts between an AI Agent and 
+    an AI Assistant is very different. On the AI Agent side you have to ask tell it how to reply to a customer, in the AI Assistant you have to tell it how to guide the agent. This is a key difference to keep in mind as you are building your instructions. Let's start the configuration: 
 
+    1. From [Control Hub](https://admin.webex.com) navigate to **[Contact Center]** and under **Quick Links** click on the **Webex AI Agent** link. The Webex AI Agent studio will open in a new window. 
+    2. On the left navigation menu, the name of each option shows up when you hover over the icons, select the AI Assistant Skill icon. 
+    3. Click the option **+ Create Skill**. Select the option **Start from scratch** and click **Next**. 
+    4. Enter the **Skill name** <copy>`Counter_Fraud_Assistant`</copy> and enter the following in the **Goal** section: 
+        <copy>`You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.`</copy>
+    5. The main configuration page for the AI Assistant skill comes up, add the following prompt to the **Instructions** section: 
+    ```
+    # AI Assistant Action Orchestration
 
+    Before asking the AGENT to collect any data from the CUSTOMER, check the conversation history. If the data was already provided, reuse it instead of asking again.
+    If the AGENT has acknowledged the CUSTOMER's intent but has not yet asked for the specific required data, do not repeat or pre-empt the suggestion. Allow the conversation to progress.
+    When calling tools: Use ONLY values the customer explicitly provided. NEVER infer, construct, extract digits from other fields, use example values, add UNKNOWN or use default/placeholder values (like "00:00", "0", etc.). Missing required parameter = ASK user. Missing optional parameter = OMIT it entirely. NO exceptions.
+
+    ## Collect Recent Transactions
+
+    1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call, then you have to use the [fetch_transactions] action to get the recent transactions. 
+    2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
+       - Transaction Amount
+       - Transaction Vendor
+       - Transaction City
+       - Transaction Date
+    3. **Error Handling**: If there are no transactions available, instruct the AGENT to check the banking system manually. If the banking system is unresponsive, advise the agent to escalate the issue.
+
+    ## Identify Fraudulent Transaction
+
+    1. **Guide the AGENT**: Confirm if the transaction identified as suspicious could have been made by someone else with access to the account or if the CUSTOMER recognizes the amount but not the vendor. Prompt the agent to ask the customer if they have any recent transactions that they do recognize.
+    2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened. 
+    3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, ask them to provide a reason and look for alternative options. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
+    4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID. Ensure the agent communicates the case ID to the customer and explains its significance.
+
+    ### Additional Considerations
+
+    - **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
+    ```
+    6. Go to the **Knowledge** tab and select the **FraudKB** you created. 
+    7. Navigate to the **[Actions]** tab and click on **[Create new]** and select **Fulfillment**
+    8. Fill in the **General information** of your action
+        - **Action name**: <copy>*fetch_transactions*</copy>
+        - **Action description**: copy and paste the following description.
+        ```
+        Use this action to get recent transactions on the account by providing the CustomerID. 
+        ```
+    9. Under **Slot filling** click on **[New input entity]**
+    10. In the **Add a new input entity** dialogue window, populate: 
+
+        | Entity Name | Type | Description | Example | Required | Agent Review | Display Name |
+        | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`CustomerID`</copy> | `String` | <copy>CustomerID provided by the customer or agent.</copy> | <copy>`101010`</copy> |`Required` | `Yes`| <copy>`Customer ID`</copy> |
+        ???+ info "Agent Review"
+            Setting **Agent Review** to `Yes` means the AI Assistant will present the value to the human agent for confirmation before executing the action. This is a critical safety mechanism—it ensures the agent can verify the Customer ID before a database query is made, preventing accidental lookups on the wrong account.
+    11. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
+        - Select the Webex Connect Service `Webex Finance Bootcamp`
+        - Select the flow `fetch_transactions`
+    12. Click on **Save**
+    13. Select the **[Create new]** option and select **Fulfillment**
+    13. Fill in the **General information** of your action
+        - **Action name**: <copy>*open_case*</copy>
+        - **Action description**: copy and paste the following description.
+        ```
+        Opens a fraud case, locks the customer card and ships a new card.
+        ```
+    14. Under **Slot filling** click on **[New input entity]**
+    15. In the **Add a new input entity** dialogue window, populate: 
+
+        | Entity Name | Type | Description | Example | Required | Agent Review |
+        | :--- | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`CustomerID`</copy> | `String` | <copy>`CustomerID provided by the customer or agent.`</copy> | <copy>`101010`</copy> |`Not Required` | `No`|
+        | <copy>`TransactionID`</copy> | `String` | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`101010`</copy> |`Not Required` | `No`|
+        ???+ warning "TransactionID Entity Description"
+            Pay close attention to the description of the `TransactionID` entity. The instruction **"Do not request this value from the Agent or Customer"** is a guardrail embedded directly into the entity definition. This tells the LLM to extract the TransactionID from the output of the previous `fetch_transactions` action rather than asking the human agent to provide it manually. This reduces friction and prevents errors.
+    16. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
+        - Select the Webex Connect Service `Webex Finance Bootcamp`
+        - Select the flow `open_case`
+    17. Click on **Save**
+    ???+ gif "Extract AI Agent Context"
+        <figure markdown>
+        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
+        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        </figure>
+
+???+ webex "Assign AI Assistant Skill to a Queue"
+    With the skill created, you need to assign it to the queue that your fraud specialists are monitoring.
+
+    1. Go back to **Control Hub** > **Contact Center** > **AI Assistant**.
+    2. Scroll down to the **Real-Time Assist** section.
+    3. Click on **Assign AI Assistant Skills**.
+    4. From the available skills, select **Counter_Fraud_Assistant**.
+    4. Select the queue you are using for fraud escalation (e.g., `Fraud_Queue`).
+    5. 
+    6. Click **[Save]**.
+
+    ???+ info "Skill-to-Queue Mapping"
+        AI Assistant skills are assigned at the **queue level**, not at the agent level. This means any agent who receives a call from the assigned queue will automatically have the RTA skill active during that interaction. If an agent handles calls from multiple queues, different skills can be applied depending on which queue the call originated from.
+
+    ???+ gif "Assign Skill to Queue"
+        <figure markdown>
+        ![Assign Skill](./assets/lab3_assign_skill.gif)
+        <figcaption>Assigning the Counter Fraud Assistant skill to the Fraud Queue</figcaption>
+        </figure>
 
 ## Testing :test_tube:
 
-[Explain how the user can verify their work is correct.]
+???+ webex "Preparation"
+    Before testing, ensure the following:
 
-???+ webex "Validation Steps"
-    1. **Trigger the event**: [Describe how to trigger it, e.g., "Place a call to..."]
-    2. **Observe the result**: [Describe what should happen, e.g., "You should see a pop-up..."]
-    3. **Check logs**: Navigate to the **Logs** tab and verify the status is `200 OK`.
+    * [x] Your **AI Agent** (Alex) has been published with the `fraud_transfer` action (Lab 3.1).
+    * [x] Your **flow** has been published with the escalation path, context parsing, and RTT enabled (Lab 3.2).
+    * [x] The **AI Assistant** features (Summarization, RTT, RTA) are enabled in Control Hub (Lab 3.3).
+    * [x] Your **Desktop Layout** includes the AI Assistant and RTT components (Lab 3.3).
+    * [x] The **Counter_Fraud_Assistant** skill is assigned to the correct queue (Lab 3.4).
+    * [x] A fraud specialist agent is **logged into the Agent Desktop** and is in an **Available** state.
+    * [x] Your **Airtable** has a test customer with transaction data.
 
+???+ webex "Execute the Test"
+
+    1. **Initiate the Call**: Trigger an outbound call via the Campaign Manager, or call directly into your entry point to reach Alex.
+    2. **Authenticate with Alex**: Go through the standard name verification and PIN authentication flow.
+    3. **Trigger the Fraud Scenario**: Once authenticated, ask Alex about your recent transactions. When Alex presents them, say something like:
+        
+        <copy>"I don't recognize that transaction. I think my card has been stolen."</copy>
+
+    4. **Observe Alex's Behavior**: Alex should:
+        - Acknowledge the concern.
+        - Collect the suspicious transaction details (amount, vendor, date).
+        - Execute the `fraud_transfer` action, passing all collected entities.
+        - Inform the customer that they are being transferred to a specialist.
+
+    5. **Accept the Call as the Fraud Specialist**: Switch to your Agent Desktop.
+        - **VA Transfer Summary**: Check the AI Assistant widget for the Virtual Agent conversation summary. This gives you the full history of what Alex discussed with the customer.
+        - **Real-Time Transcription**: As you speak with the customer, verify that the live transcript appears in the transcript tab.
+        - **Real-Time Assist**: During the conversation, when fraud-related topics come up, observe the AI Assistant widget for guidance cards from the `Counter_Fraud_Assistant` skill.
+
+    6. **Follow the RTA Guidance**: The AI Assistant should prompt you to:
+        - Fetch the customer's recent transactions (triggering the `fetch_transactions` action).
+        - Confirm the fraudulent transaction with the customer.
+        - Open a fraud case (triggering the `open_case` action).
+        - Communicate the Case ID to the customer.
+
+    7. **Wrap Up**: End the call and check the **Conversation Summary** in the wrap-up panel.
+
+???+ webex "Validation Checklist"
+
+    | Step | Expected Result | Status |
+    | :--- | :--- | :--- |
+    | Alex collects fraud details | Entities are populated with transaction info | ☐ |
+    | Alex triggers `fraud_transfer` | Call is escalated to the Fraud Queue | ☐ |
+    | VA Transfer Summary displayed | Full AI Agent conversation history visible | ☐ |
+    | RTT active during human call | Live transcript visible in the Transcript tab | ☐ |
+    | RTA skill provides guidance | Counter Fraud Assistant suggests next steps | ☐ |
+    | `fetch_transactions` action executes | Agent sees recent transactions in the RTA widget | ☐ |
+    | `open_case` action executes | Case ID is returned and communicated to customer | ☐ |
+    | Conversation Summary generated | Accurate summary appears at wrap-up | ☐ |
 ---
 
 ## Lab Completion ✅
 
 At this point, you have successfully:
 
-- [x] [Goal 1]
+- [x] Configured a contextual transfer action in Alex with fraud-specific entities.
+- [x] Built an escalation flow that extracts AI Agent MetaData and routes based on the transfer type.
+- [x] Enabled Real-Time Transcription (RTT) in both the flow and Control Hub.
+- [x] Configured Summarization and Real-Time Assist in Control Hub.
+- [x] Verified the Agent Desktop Layout includes the AI Assistant and RTT components.
+- [x] Created a Real-Time Assist skill (`Counter_Fraud_Assistant`) with fraud-handling instructions, a Knowledge Base, and fulfillment actions.
+- [x] Assigned the AI Assistant skill to the appropriate queue.
+- [x] Tested the complete end-to-end scenario from AI Agent escalation to human-assisted fraud resolution.
 
-- [x] [Goal 2]
-
-- [x] [Goal 3]
-
-- [x] ...
-
-**Congratulations!** You have successfully completed Lab X.X. You are now ready to move on to the next section.
+**Congratulations!** You have successfully completed Lab 3 You are now ready to move on to the next section.
 
 
 [Next Lab: Lab 4 - Cross-skill multi-agent orchestration](./lab4_ai_agent_transfer.md){ .md-button .md-button--primary }
