@@ -53,7 +53,32 @@ To verify availability:
 
     All partners with a registered **Gold Tenant** must complete the transition to the NFR Demo/Lab. The detailed instructions to complete this transition are provided in the [NFR Demo/Lab General Information](https://cisco.sharepoint.com/sites/WxCCPartnerEnablement/SitePages/NFR-Demo-Lab-Main.aspx) site.
 
-    **For the purpose of the Bootcamp, if the AI capabilities are missing in your tenant contact us as per the instructions above to provide a temporary enablement of the required features.**  
+    **For the purposes of this Bootcamp, completion of the NFR transition is not mandatory. If AI capabilities are not enabled in your tenant, please contact us using the instructions above to request temporary access to the necessary features.** 
+
+    *Following the Bootcamp, if you have not yet completed the NFR transition in your Gold tenant, please ensure it is finalized to secure permanent access to the AI features.* 
+
+### MCP fulfillment
+
+The autonomous AI agents now support Model Context Protocol (MCP) fulfillment actions. This allows AI agents to function as MCP clients that connect directly to remote MCP servers, thus eliminating the need for complex, custom-built API integrations.
+
+???+ webex "Verify MCP availability in your tenant"
+
+    ???+ inline end "MCP actions"
+
+        <figure markdown>
+        ![MCP actions](./assets/MCP%20actions.jpg)
+        </figure>
+
+    1. To verify that MCP actions is active in your tenant, log in to the **Webex AI Agent Studio** platform.
+
+    2. Choose an **autonomous** AI agent in your dashboard. (If you don´t have any, you can create a new dummy one).
+
+    3. Navigate to the Actions tab and click **[+Add actions]**.
+
+    4. In the Add actions pop-up, under Browse actions you should see the option  **Select available** (see picture).
+
+    **If you do not see this option in the **Actions** menu, please contact us using the instructions above.**
+
 
 ### Campaign Manager
 
@@ -72,7 +97,7 @@ Lab 1 requires the **Webex Campaign Management** add-on module to be enabled in 
     Org Name: <your-org-name>
     ```
 
-    If you have received this email, your Campaign Manager module is active. Navigate to the URL provided to confirm access.
+    If you have received this email, your Campaign Manager module is active. Navigate to the URL provided to confirm access. You should be able to access with your Control Hub admin credentials. 
 
 For partners attending the Bootcamp that have not the Native Campaign Manager feature enabled, we have requested the provisioning of the feature in their Gold Tenant. We provided the email of one of the attendees to the Bootcamp. To verify availability, check whether you received the activation email above, and confirm you can log in to the Campaign Manager portal. If you cannot access Campaign Manager from the provided URL contact us following the instructions above. 
 

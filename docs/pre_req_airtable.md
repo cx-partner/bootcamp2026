@@ -28,16 +28,17 @@ The following sections will guide you through constructing your Airtable base an
 
 The **Webex Bank** Airtable base is the data backbone for the CX Bootcamp 2026 use cases. It stores all customer, financial transaction, and investment portfolio data required to build the use case.
 
-The base consists of **four tables** with two primary relationship chains. 
+The base consists of **five tables** with two primary relationship chains. 
 
 - **Customers**: For identity verification, profile management and debt status.
 - **Transactions**: For retrieving recent account activity and resolving disputes.
 - **Investment**: For providing real-time portfolio updates and financial advice.
 - **Positions**: For investment positions containing the individual stock positions.
+- **FraudCases**: For logging fraud cases and its status.
 
 The relationships are the following: 
 
-- **Customers ↔ Transactions** — a one-to-many relationship tracking account activity.
+- **Customers ↔ Transactions ↔ FraudCases** — a one-to-many relationship tracking account activity and fraudulent transacions.
 - **Customers ↔ Investment ↔ Positions** — a two-level hierarchy linking customers to their investment accounts and individual stock positions.
 
 ---
@@ -75,6 +76,16 @@ erDiagram
         date    Date                "Date"
     }
 
+    FRAUDCASES {
+        string  CaseID          PK "Single Line Text"
+        string  CustomerID      FK "Link → Customers"
+        string  TransactionID   FK "Link → Transactions"
+        number  Amount              "Lookup → Transactions.Amount"
+        string  Vendor              "Lookup → Transactions.Vendor"
+        string  City                "Lookup → Transactions.City"
+        string  Status              "Single Select: New | To do | In progress | Done |"
+    }
+
     INVESTMENT {
         string  Investment_Acct PK "Long Text"
         string  CustomerID      FK "Link → Customers"
@@ -82,7 +93,7 @@ erDiagram
         string  LastName            "Lookup → Customers.LastName"
         number  Total_Investment_Balance "Rollup → SUM(Positions.PositionValue)"
         string  Risk_Tolerance      "Single Select: Low | Medium | High"
-        string  Preferred_Sector    "Long Text"
+        string  Preferred_Sector    "Single Select: Tech | Finance | Retail | Enterteinment"
     }
 
     POSITIONS {
@@ -96,6 +107,8 @@ erDiagram
     }
 
     CUSTOMERS ||--o{ TRANSACTIONS : "has many"
+    CUSTOMER ||--o{ FRAUDCASES : "may have many"
+    TRANSACTIONS ||--o{ FRAUDCASES : "may have one"
     CUSTOMERS ||--o{ INVESTMENT   : "has many"
     INVESTMENT ||--o{ POSITIONS   : "contains"
 ```
@@ -110,16 +123,21 @@ flowchart TD
 
     T["💳 TRANSACTIONS\n─────────────────\nTransactionID 🔑\nCustomerID 🔗\nFirstName · LastName ⬡\nAmount · Vendor\nCity · Date"]
 
+    F["🚨 FRAUDCASES\n─────────────────\nCaseID 🔑\nCustomerID 🔗\TransactionID 🔗\nAmount · Vendor · City ⬡\nStatus"]
+
     I["📈 INVESTMENT\n─────────────────\nInvestment_Acct 🔑\nCustomerID 🔗\nFirstName · LastName ⬡\nTotal_Investment_Balance Σ\nRisk_Tolerance\nPreferred_Sector"]
 
     P["📊 POSITIONS\n─────────────────\nPosition_ID 🔑\nInvestment_Acct 🔗\nStock_Ticker · Quantity\nPurchase_Price\nCurrent_Price\nPosition_Value = Current_Price × Quantity"]
 
     C -- "1 : N\n(Transactions link)" --> T
+    T -- "1 : 1\n(FraudCases link)" --> F
+    C -- "1 : N\n(FraudCases link)" --> F
     C -- "1 : N\n(Investment link)" --> I
     I -- "1 : N\n(Positions link)\nRollup → Total_Investment_Balance" --> P
 
     style C fill:#164D90,color:#fff,stroke:#0A58CA
     style T fill:#198754,color:#fff,stroke:#146C43
+    style F fill:#BF792C,color:#fff,stroke:#4E8400
     style I fill:#7030A0,color:#fff,stroke:#59359A
     style P fill:#BF005F,color:#000,stroke:#DC6A0D
 ```
@@ -149,6 +167,7 @@ flowchart TD
     | `RewardsTier` | Single Select | Rewards programme tier: **Basic**, **Standard**, or **Elite**. |
     | `CreditCard` | Single Select | Card type held by the customer: **Travel Rewards**, **Standard Cashback**, or **Platinum**. |
     | `Transactions` | Link | Linked records in the **Transactions** table. One customer → many transactions. |
+    | `FraudCases` | Link | Linked records in the **FraudCases** table. One customer → many fraud cases. |
     | `Investment` | Link | Linked records in the **Investment** table. One customer → many investment accounts. |
 
 ---
@@ -167,7 +186,23 @@ flowchart TD
     | `Vendor` | Single Line Text | Merchant or vendor name (e.g. `Amazon`, `Shell`, `Tesco`). |
     | `City` | Single Line Text | City where the transaction occurred. |
     | `Date` | Date | Date of the transaction. |
+    | `FraudCases` | Link | Linked records in the **FraudCases** table. One transaction → one fraud cases. |
 
+---
+
+???+ info "FraudCases"
+
+    Records logged fraud casess for contested card transactions associated with a customer account. 
+
+    | Field | Type | Description |
+    | :--- | :--- | :--- |
+    | `CaseID` | Single Line Text | **Primary key.** Unique identifier for each fraud case. |
+    | `CustomerID` | Link → Customers | **Foreign key.** Links this fraud case to the parent customer record. |
+    | `TransactionID` | Link → Transactions | **Foreign key.** Links this fraud case to the contested transaction. |
+    | `Amount` | Lookup → Transactions | Pulled automatically from the linked Transaction record. Read-only in this table. |
+    | `Vendor` | Lookup → Transactions | Pulled automatically from the linked Transaction record. Read-only in this table. |
+    | `City` | Lookup → Transactions | Pulled automatically from the linked Transaction record. Read-only in this table. |
+    | `Status` | Single Select | Case status: **New**, **To do**, **In Progress** or **Done**.|
 
 ---
 
@@ -183,7 +218,7 @@ flowchart TD
     | `LastName` | Lookup → Customers | Pulled automatically from the linked Customers record. |
     | `Total_Investment_Balance` | Rollup | **Computed field.** Aggregates `Position_Value` across all linked Positions records using `SUM(values)`. Updates automatically when any linked position changes. |
     | `Risk_Tolerance` | Single Select | Investment risk profile: **Low**, **Medium**, or **High**. Used to tailor investment-related conversations. |
-    | `Preferred_Sector` | Long Text | Customer's preferred investment sectors (e.g. `Technology, Healthcare`). Free text. |
+    | `Preferred_Sector` | Single Select | Customer's preferred investment sectors: **Tech**, **Finance**, **Retail**, **Enterteinment**  |
     | `Positions` | Link | Linked records in the **Positions** table. One investment account → many positions. |
 
 ---
@@ -408,6 +443,51 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
 
     Your **Transactions** table is now ready.
 
+### Create the **FraudCases** table
+
+???+ Webex "***FraudCases*** table"
+
+    !!! download "FraudCases Table"
+        Download the csv file for the [Transactions Table](./bcamp_files/airtable_FraudCases.csv).
+
+    Now proceed as in previous table to import the csv file of the **Transactions** table.
+    
+    1. Once you have downloaded your .csv file, click on **+ Add or import** and select **CSV file**. Drop or select your `airtable_FraudCases.csv` file and click **[Upload 1 file]**
+
+    2. In the **Import your file** dialogue, select *+ Create a new table* and click **[Next]** and adjust the field types for the following fields: 
+
+    |   Field   | Type       |
+    | :----     | :----     |
+    | CaseID      | `Single Line Text`  |
+    | Status       |   `Single Select`  |
+
+    
+    Click **[Import]**
+    
+    3. Change the name of the Imported table to **FraudCases**: Click on the chevron besides the table name *Imported table* and select *Rename table*. Type **FraudCases** and click **[Save]**
+    
+    We still need to adjust a few fields: 
+
+    - In the **CustomerID** field, click the chevron, select **Edit field** and change the type to *Link to another record*. From the existing tables list, select **Customers** and click **[Save]**.
+        - In the next dialogue window, click **[Skip]**. We are not importing any field from the Customer table in this one. 
+
+    - In the **TransactionID** field, click the chevron, select **Edit field** and change the type to *Link to another record*. From the existing tables list, select **Transactions** and click **[Save]**.
+        - In the next dialogue window, select the fields we want to import from the **Transactions** table: **Amount**, **Vendor** and **City**. Click **[Add 3 fields]**. This will create thre new columns in your table.
+    
+    This will keep the tables connected and consistent. You will see in your Customers and Transactions tables a new field called **FraudCases**. it will contain links to all the fraud cases associated to the customer and its transactions. 
+    
+    ???+ example "Example population" 
+    
+        To complete the example population, add the customer and the transaction to the fraud case: 
+
+        In the **Customers** table, click the `+`symbol in the *FraudCases* empty cell of the customer record and add the *TRAN-001* to the customer record. 
+
+        Proceed the same in the **Transactions** table. 
+        
+        If you come back to the **FraudCases** table, you will see the CustomerID, the TransactionID and the imported Ammount, Vendor and City values populated in the fraud case record. 
+
+    Your **FraudCase** table is now ready.
+
 ### Create the **Investment** table
 
 ???+ Webex "***Investment*** table"
@@ -425,6 +505,7 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
          |   Field   | Type       |
         | :----     | :----     |
         | Risk_Tolerance      | `Single select`  |
+        | Preferred_Sector    | `Single select`  |
 
     3. Click **[Import]**
 
@@ -445,7 +526,16 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
             
         Select *Medium* as the **Default** value and click **[Save]**
     
-    
+    7. In the **Preferred_Sector** field, click the chevron to edit the field and then click **+ Add option** to add the following options: 
+            
+                
+        <br><copy>Tech</copy>
+        <br><copy>Finance</copy>
+        <br><copy>Retail</copy>
+        <br><copy>Enterteinment</copy>
+            
+        Select *Tech* as the **Default** value and click **[Save]**
+
     The Investment table is not yet fully configured. You will need to return to it later to set the **Total_Investment_Balance** with the correct data type.
 
     However, since the field value depends on the **Positions** table content, you must first create the **Positions** table before completing this configuration.
