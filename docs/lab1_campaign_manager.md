@@ -738,23 +738,23 @@ Wrap-up codes defined in Control Hub are synced to Campaign Manager. You can con
 
     1. Navigate to **Voice campaigns administration** → **Wrap-up code sets**. Create a new set.
 
-    <figure markdown>
-    ![Wrap-up code set - debt](./assets/wuset_create.png)
-    </figure>
+        <figure markdown>
+        ![Wrap-up code set - debt](./assets/wuset_create.png)
+        </figure>
 
-    <figure markdown>
-    ![Wrap-up code set 2 - debt](./assets/wuset_create2.png)
-    </figure>
+        <figure markdown>
+        ![Wrap-up code set 2 - debt](./assets/wuset_create2.png)
+        </figure>
 
     2. Click on the new set and then **Add wrap-up codes** Locate the wrap-up codes synced from Control Hub. The `debt` wrap-up code created earlier should appear, select it.
     
-    <figure markdown>
-    ![Wrap-up code 1 - debt](./assets/wucode_create.png)
-    </figure>
+        <figure markdown>
+        ![Wrap-up code 1 - debt](./assets/wucode_create.png)
+        </figure>
 
-    <figure markdown>
-    ![Wrap-up code 2 - debt](./assets/wucode_create2.png)
-    </figure>
+        <figure markdown>
+        ![Wrap-up code 2 - debt](./assets/wucode_create2.png)
+        </figure>
 
 
     For more information, refer to the [Wrap-up code sets documentation](https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets).
