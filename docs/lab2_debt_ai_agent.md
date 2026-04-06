@@ -224,7 +224,7 @@ In this lab, we will use *Files* and *Websites* ingestion. This might be a commo
 
     Website extraction uses automated crawling techniques to browse the internet to find and download the relevant content from web pages and transform it into knowledge that your AI agents can access. Crawling begins with the starting URL that you provide. Based on the depth and the page limits that you specify, the crawler application navigates from the home page, visits the websites, and fetches the required content based on the URL patterns and sub-domain definitions.
 
-    For the sake of the Bootcamp, we have created a simple content and pushed it to a website that you can access through the   Bootcamp Web Lab documentation at [Webex Bank Rewards Program](https://cx-partner.github.io/bootcamp2026/bcamp_files/Webex_Bank_Rewards_Program/) tab. Let's configure the Knowledge Base for Alex. 
+    For the sake of the Bootcamp, we have created a simple content and pushed it to a website that you can access through the   Bootcamp Web Lab documentation at [Webex Bank Rewards Program](https://cx-partner.github.io/bootcamp2026/labs/bcamp_files/Webex_Bank_Rewards_Program/) tab. Let's configure the Knowledge Base for Alex. 
 
     1. In your AI agent Studio, click on **[Knowledge]** icon in the left navigation panel.
     2. Click on **[+ Create knowledge base]** button in the upper-right corner. 
@@ -238,7 +238,7 @@ In this lab, we will use *Files* and *Websites* ingestion. This might be a commo
 
     8. Under **Source configuration**, populate
 
-        - under **Starting URL** the URL <copy>`https://cx-partner.github.io/bootcamp2026/bcamp_files/Webex_Bank_Rewards_Program/`</copy>
+        - under **Starting URL** the URL <copy>`https://cx-partner.github.io/bootcamp2026/labs/bcamp_files/Webex_Bank_Rewards_Program/`</copy>
             
             Note that after entering the URL, the system completes a site verification.
 
