@@ -57,7 +57,28 @@ To verify availability:
 
     *Following the Bootcamp, if you have not yet completed the NFR transition in your Gold tenant, please ensure it is finalized to secure permanent access to the AI features.* 
 
-### MCP fulfillment
+#### URL crawling for Knowledge Base
+
+We will leverage an upcoming enhancement to the Webex AI Agent Knowledge Base! Administrators will have the ability to add web URLs as knowledge base sources, making it easier than ever to incorporate website content.
+
+???+ webex "Verify website content for Knowledge Base"
+
+    ???+ inline end "URL Crawling for KB"
+
+        <figure markdown>
+        ![URL based Knowledge Base](./assets/prereq_URL_KB.png)
+        </figure>
+
+    This feature has been enabled for all the partners. 
+
+    1. To verify this feature in your tenant, navigate to the **Webex AI Agent Studio**. 
+    2. In the left navigation panel, go to **Knowledge**.
+    3. Click on **[+ Create knowledge Base]** and give a dummy name to the KB. Click **[Create]**
+    4. In the next window, you should see an option **Extract websites** to add web URLs as a source.
+
+
+
+#### MCP fulfillment
 
 The autonomous AI agents now support Model Context Protocol (MCP) fulfillment actions. This allows AI agents to function as MCP clients that connect directly to remote MCP servers, thus eliminating the need for complex, custom-built API integrations.
 
