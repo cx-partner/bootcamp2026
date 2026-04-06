@@ -1885,8 +1885,7 @@
 <h2 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h2>
 <p>In order to be able to complete this lab, you must: </p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have your <strong>Airtable repositories</strong> completed for the <em>Customer</em> and <em>Transactions</em> data</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have an <strong>email digital channel</strong> available in your tenant</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have your <strong>Airtable repositories</strong> completed for the <em>Customer</em> and <em>Transactions</em> data.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have completed <a href="../lab2_debt_ai_agent/">Lab 2 - Automating Debt Collection</a></li>
 </ul>
 <hr>
@@ -1906,18 +1905,17 @@
 <details class="webex" open="open">
 <summary>Alex Setup</summary>
 <ol>
-<li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>[Contact Center]</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link. The Webex AI Agent studio will open in a new window. </li>
+<li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>Contact Center</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link. The Webex AI Agent studio will open in a new window. </li>
 <li>In the <strong>AI Agent Studio</strong>, select your <em>Finance Debt Collection Agent</em></li>
-<li>Click on <strong>Actions</strong></li>
-<li>Click on <strong>Create new</strong> and select <strong>Transfer</strong></li>
+<li>Click on <strong>+ Add Actions</strong> and select <strong>Transfer</strong></li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy>fraud_transfer</copy></li>
-<li><strong>Action description</strong>: <copy>Action to transfer the call to a human agent when fraud is suspected</copy></li>
-<li><strong>Transfer visibility</strong>: You can either enable or disable the <strong>Announce transfer</strong> toggle</li>
+<li><strong>Action description</strong>: <copy>Action to transfer the call to a fraud specialist when a customer has concerns about a suspicious transaction</copy>
+<!-- - **Transfer visibility**: You can either enable or disable the **Announce transfer** toggle. --></li>
 </ul>
 </li>
 <li>
-<p>Select the <strong>Add new entity</strong> option, fill out the entity details with this information: </p>
+<p>Select the <strong>+New input entity</strong> option, fill out the entity details with this information: </p>
 <table>
 <thead>
 <tr>
@@ -1993,7 +1991,7 @@
 <li>Go to <strong>Control Hub</strong> -&gt; <strong>Contact Center</strong> -&gt; <strong>Flows</strong></li>
 <li>Open your flow <strong>AI_Agent_DebtCollection</strong></li>
 <li>First, we need to create the flow variables that will hold the context from Alex. Click on the <strong>Global Flow Properties</strong> panel (the gear icon in the top-right of the flow editor).</li>
-<li>Under <strong>Custom Flow Variables</strong>, create the following variables:</li>
+<li>Under <strong>Custom Flow Variables</strong>, click the option <strong>Create flow variable</strong> and create the following variables:</li>
 </ol>
 <table>
 <thead>
@@ -2001,6 +1999,8 @@
 <th style="text-align: left;">Variable Name</th>
 <th style="text-align: left;">Type</th>
 <th style="text-align: left;">Default Value</th>
+<th style="text-align: left;">Agent Viewable</th>
+<th style="text-align: left;">Desktop Label</th>
 </tr>
 </thead>
 <tbody>
@@ -2008,42 +2008,54 @@
 <td style="text-align: left;"><copy><code>transfer_type</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>agent_transfer</code></copy></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">N/A</td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>ivr_verified</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>False</code></copy></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><copy><code>IVR Verified</code></copy></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>debt_balance</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>0</code></copy></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><copy><code>Debt Balance</code></copy></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>susp_trans</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>0</code></copy></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><copy><code>Transaction Amount</code></copy></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>susp_vendor</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>Unknown</code></copy></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><copy><code>Transaction Vendor</code></copy></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>susp_date</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>N/A</code></copy></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><copy><code>Transaction Date</code></copy></td>
 </tr>
 </tbody>
 </table>
 <ol>
-<li>Click <strong>[Save]</strong></li>
+<li>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </li>
 </ol>
 <details class="gif" open="open">
 <summary>Create Flow Variables</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_flow_variable.gif" data-title="Create Flow Variables" data-desc-position="top"><img alt="Create Flow Variables" src="../assets/lab3_flow_variable.gif"></a>
+<figcaption>Creating flow variables</figcaption>
 </figure><p></p>
 </details>
 </details>
@@ -2054,9 +2066,9 @@
 <li>
 <p>In your flow, click on the <strong>Virtual Agent V2</strong> node (named <code>DebtCollectionAgent</code>).</p>
 <details class="inline end" open="open">
-<summary>Before - Flow View</summary>
+<summary>Initial - Flow View</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_before_flow.png" data-title="Before - Flow View" data-desc-position="top"><img alt="Before - Flow View" src="../assets/lab3_before_flow.png"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_before_flow.png" data-title="Initial - Flow View" data-desc-position="top"><img alt="Initial - Flow View" src="../assets/lab3_before_flow.png"></a>
 </figure><p></p>
 </details>
 </li>
@@ -2088,17 +2100,18 @@ transfer action used. In the previous step, we are collecting this value to deci
 </ul>
 <div class="admonition info">
 <p class="admonition-title">Queue Setup</p>
-<p>In the next steps you wil be adding Queue Contact nodes to your flow, the queue you select is not important, as we simply need the call to be routed to an agent account that is available to receive your call. In addition,
-make sure the agent is configured to use the Desktop Layout available here. </p>
+<p>In the next steps you will be adding <strong>Queue Contact</strong> nodes to your flow. The queue you select is not critical for this lab, we simply need the call to be routed to an agent that can receive your call.</p>
 </div>
 </li>
 <li>Add a <strong>Queue Contact</strong> node for the standard agent_transfer and rename it <copy><code>Generic_Queue</code></copy>. </li>
 <li>Connect the <strong>agent_transfer</strong> path from the <strong>Case</strong> node to the <strong>Generic_Queue</strong> node. </li>
+<li>Click the <strong>Generic_Queue</strong> node and select any Queue in your tenant that routes to the agents you want to use for this lab. </li>
 <li>Connect the <strong>Generic_Queue</strong> node output to the <strong>End Flow</strong> node. </li>
 <li>Drag and drop a <strong>Parse</strong> node onto the canvas.</li>
-<li>Connect the <em>fraud_transfer</em> path of the <strong>Case</strong> node to the new <strong>Parse</strong> node.</li>
+<li>Connect the <em>fraud_transfer</em> path of the <strong>Case</strong> node to the new <strong>Parse</strong> node. </li>
 <li>Click the <strong>Parse</strong> node and rename it to <copy><code>Fraud_Context</code></copy> </li>
 <li>
+<p>Map your custom variables to a JSON path location from the Virtual Agent MetaData, you need to add a new variable and path expression for each one:</p>
 <ul>
 <li>Input Variable = DebtCollection_Agent.MetaData</li>
 <li>Content Type = JSON</li>
@@ -2114,12 +2127,11 @@ make sure the agent is configured to use the Desktop Layout available here. </p>
 <li>Path Expression = <copy><code>$.actions.fraud_transfer[0].input.susp_date</code></copy></li>
 </ul>
 <details class="inline end" open="open">
-<summary>After - Flow View</summary>
+<summary>Final - Flow View</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_after_flow.png" data-title="After - Flow View" data-desc-position="top"><img alt="After - Flow View" src="../assets/lab3_after_flow.png"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_after_flow.png" data-title="Final - Flow View" data-desc-position="top"><img alt="Final - Flow View" src="../assets/lab3_after_flow.png"></a>
 </figure><p></p>
 </details>
-<p>Map your custom variables to a JSON path location from the Virtual Agent MetaData, you need to add a new variable and path expression for each one:</p>
 <details class="tip" open="open">
 <summary>Understanding the JSON Path</summary>
 <p>The path <code>$.actions.fraud_transfer[0].input.ivr_verified</code> tells the Parse node to navigate the MetaData JSON structure as follows:</p>
@@ -2135,13 +2147,15 @@ make sure the agent is configured to use the Desktop Layout available here. </p>
 <p>Add a <strong>Queue Contact</strong> node for the custom <strong>fraud_transfer</strong> and rename it <copy><code>Fraud_Queue</code></copy>. </p>
 </li>
 <li>Connect the <strong>Parse</strong> node output to the <strong>Fraud_Queue</strong> node. Connect the <strong>Fraud_Queue</strong> node output to the <strong>End Flow</strong> node.</li>
-<li>Click <strong>Validate</strong>, then <strong>Save and Publish</strong> the flow.</li>
+<li>Click the <strong>Fraud_Queue</strong> node and select any Queue in your tenant that routes to the agents you want to use for this lab.</li>
+<li>Connect the <em>Default</em> path of the <strong>Case</strong> node to the new <strong>End Flow</strong> node.</li>
+<li>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </li>
 </ol>
 <details class="gif" open="open">
 <summary>Extract AI Agent Context</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_ai_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="../assets/lab3_ai_context.gif"></a>
+<figcaption>Extract AI Agent Context</figcaption>
 </figure><p></p>
 </details>
 </details>
@@ -2154,7 +2168,7 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <li>Drag and drop the <strong>Start Media Stream</strong> node to the canvas. </li>
 <li>Connect the <strong>AgentAnswered</strong> event node to the <strong>Start Media Stream</strong> node. </li>
 <li>Drag and drop an <strong>End Flow</strong> node to the canvas and connect it to the output path of the <strong>Start Media Stream</strong> node.</li>
-<li>Click <strong>Validate</strong>, then <strong>Save and Publish</strong> the flow.</li>
+<li>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </li>
 </ol>
 <div class="admonition info">
 <p class="admonition-title">RTT Conditional Enablement</p>
@@ -2163,8 +2177,8 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <details class="gif" open="open">
 <summary>Configure RTT in Event Flows</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_flow_RTT.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="../assets/lab3_flow_RTT.gif"></a>
+<figcaption>Real-Time Trancript Flow Configuration</figcaption>
 </figure><p></p>
 </details>
 </details>
@@ -2172,7 +2186,7 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <p>There are several features associated with the Contact Center AI Assistant (AutoCSAT, Summarization, Agent Wellness, Real-Time Transcription, Real-Time Assist and Topic Analytics), and all of these features can easily be enabled from Control Hub. 
  In this lab, we will focus on the <strong>Summarization</strong>, <strong>Real-Time Transcript</strong> and  <strong>Real-Time Assist</strong> configuration. </p>
 <details class="webex" open="open">
-<summary>AI Assistant Configuration</summary>
+<summary>WxCC AI Assistant Configuration</summary>
 <ol>
 <li>Open <strong>Control Hub</strong> and navigate to Contact Center &gt; AI Assistant. </li>
 <li>The first 2 options in this page will be for <strong>Agent Wellbeing</strong> and <strong>AutoCSAT</strong>, but this are not relevant for this lab. </li>
@@ -2190,20 +2204,20 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <li>Before we can <strong>Assign AI Assistant skills</strong> to a queue, we need to create the skill in the AI Agent studio. We will cover this topic in lab 3.4. </li>
 </ol>
 <details class="gif" open="open">
-<summary>Extract AI Agent Context</summary>
+<summary>AI Assistant Configuration in Control Hub</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_ai_assistant_config.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="../assets/lab3_ai_assistant_config.gif"></a>
+<figcaption>Enabling Summarization, RTT, and RTA in Control Hub</figcaption>
 </figure><p></p>
 </details>
 </details>
 <details class="webex" open="open">
-<summary>AI Assistant Configuration</summary>
+<summary>Desktop Layout Setup</summary>
 <p>The AI Assistant is part of the default Desktop layout, however we understand that you might have your own layout that has been previously customized to include other widgets. 
 We will review the steps to make the necessary changes to a Desktop layout for the AI Assistant and the Real-Time Transcription window to show up on the Agent Desktop. </p>
 <div class="admonition download">
 <p class="admonition-title">Knowledge base document</p>
-<p>If you don't need to update your own Desktop Layout, download a template <a href="../bcamp_files/Webex_Financial_Group_KB.docx">HERE</a> and ignore the next steps. </p>
+<p>If you don't need to update your own Desktop Layout, download a template <a href="./bcamp_files/Finance_Desktop.json" download="Finance_Desktop.json">HERE</a> and ignore the next steps. </p>
 </div>
 <ol>
 <li>Open your JSON layout file using a text editor (Sublime, Notepad++, etc) or IDE (VS Code, etc). </li>
@@ -2284,13 +2298,6 @@ We will review the steps to make the necessary changes to a Desktop layout for t
 <p>Assign the Desktop Layout to the Team of the agent you will be using to receive the call. </p>
 </li>
 </ol>
-<details class="gif" open="open">
-<summary>Extract AI Agent Context</summary>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
-</figure><p></p>
-</details>
 </details>
 <h2 id="lab-34-setup-an-ai-assistant-skill-for-real-time-assist">Lab 3.4 Setup an AI Assistant skill for Real-Time Assist.<a class="headerlink" href="#lab-34-setup-an-ai-assistant-skill-for-real-time-assist" title="Permanent link">¶</a></h2>
 <p>Now that the AI Assistant features are enabled we can proceed with the configuration of Real-Time Assist (RTA). This feature monitors the live transcription of the call and, when specific keywords or intents are detected, it presents the agent with suggestions from a KB or triggers automated actions. 
@@ -2298,23 +2305,30 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 <details class="webex" open="open">
 <summary>Configure Knowledge Base for Real-Time Assist</summary>
 <p>Before creating the AI Assistant skill, you need a Knowledge Base that contains the fraud-handling policies and procedures that the skill will reference when providing guidance to the agent.</p>
+<div class="admonition download">
+<p class="admonition-title">Knowledge base document</p>
+<p>Download the Knowledge Base file from <a href="../bcamp_files/Fraud_KB.docx">HERE</a>.</p>
+</div>
 <ol>
 <li>In the <strong>AI Agent Studio</strong>, click on the <strong>Knowledge</strong> icon in the left navigation panel.</li>
-<li>Click on <strong>+ Create knowledge base</strong> in the upper-right corner.</li>
-<li>Enter a name for your KB: <copy><code>FraudKB</code></copy>, and enter a description: <copy><code>Knowledge base for fraud handling policies and dispute resolution procedures.</code></copy></li>
-<li>Click on <strong>Create</strong></li>
+<li>Click the <strong>+ Create Knowledge base</strong> option on the top right corner. </li>
+<li>Enter the name <copy><code>Fraud_KB</code></copy> and a brief description. </li>
+<li>Click on <strong>Add source</strong> in the top-right and select <strong>Files</strong></li>
+<li>Drag and drop or use the <strong>Add File</strong> option to upload the <code>Fraud_KB.docx</code> document.</li>
+<li>Click on <strong>Process Files</strong></li>
 <li>
-<p>Add the relevant source(s) for your fraud handling documentation. You can use <strong>Files</strong> (upload a document with your fraud policies) or <strong>Articles</strong> (create content directly in the studio).</p>
+<p>The system will take some minutes to process the file. Once completed, you can see your KB file under the <strong>Processed files</strong> section in the next window. Meanwhile, click on <strong>Close and keep processing</strong> to return to your Knowledge Base configuration page. </p>
 <details class="tip" open="open">
-<summary>What to include in your Fraud KB</summary>
-<p>Your Knowledge Base should include information such as:</p>
+<summary>What to include in a Fraud KB</summary>
+<p>The Knowledge Base should include information such as:</p>
 <ul>
-<li>Fraud dispute procedures and timelines</li>
-<li>Card locking and replacement policies</li>
-<li>Customer communication guidelines during fraud scenarios</li>
-<li>Escalation paths for high-value fraud cases</li>
-<li>Regulatory requirements for fraud reporting</li>
+<li>Fraud dispute procedures and timelines.</li>
+<li>Card locking and replacement policies.</li>
+<li>Customer communication guidelines during fraud scenarios.</li>
+<li>Escalation paths for high-value fraud cases.</li>
+<li>Regulatory requirements for fraud reporting.</li>
 </ul>
+<p>Consider this if you want to create your own Fraud KB. </p>
 </details>
 </li>
 <li>
@@ -2324,18 +2338,239 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 <details class="gif" open="open">
 <summary>Configure Fraud Knowledge Base</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_fraud_kb.gif" data-title="Fraud KB" data-desc-position="top"><img alt="Fraud KB" src="./assets/lab3_fraud_kb.gif"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_ai_assistant_kb.gif" data-title="Fraud KB" data-desc-position="top"><img alt="Fraud KB" src="../assets/lab3_ai_assistant_kb.gif"></a>
 <figcaption>Creating a Knowledge Base for fraud handling policies</figcaption>
 </figure><p></p>
 </details>
 </details>
 <details class="webex" open="open">
-<summary>Configure Fullfilment actions for Real-Time Assist</summary>
-<details class="gif" open="open">
-<summary>Extract AI Agent Context</summary>
+<summary>Configure Fulfillment Actions for Real-Time Assist</summary>
+<p>In this section, you will build the Webex Connect flow that the AI Assistant's <code>open_case</code> action will trigger. This flow receives the Customer ID and Transaction ID from the AI Assistant, generates a unique Case ID, and creates a new fraud case record in your Airtable base.</p>
+<ol>
+<li>Go to your <em>Webex Finance Bootcamp</em> Service in Webex Connect</li>
+<li>
+<p>Click on <strong>Flows</strong> to create your new flow</p>
+<ul>
+<li>Click on <strong>Create Flow</strong></li>
+<li>Give your flow a name <copy><code>open_case</code></copy></li>
+<li>Select <strong>New Flow</strong> under <strong>Method</strong></li>
+<li>Select <strong>Start from Scratch</strong></li>
+<li>Click on <strong>Create</strong></li>
+</ul>
+</li>
+<li>
+<p>Configure the <strong>Start Node</strong> to trigger the flow from the AI Agent</p>
+<ul>
+<li>Select the <strong>AI Agent Event</strong></li>
+<li>Set the <strong>SAMPLE JSON</strong> to the below one
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">"CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CUST-001"</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">"TransactionID"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
+</span></code></pre></div></li>
+</ul>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>The variable names in the JSON sample must match the corresponding entity names in the AI Assistant skill action (<code>CustomerID</code> and <code>TransactionID</code>).</p>
+</details>
+<ul>
+<li>Click on <strong>[Parse]</strong></li>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow</li>
+</ul>
+</li>
+<li>
+<p>Next, we need to generate a unique Case ID for the fraud case. We will use an <strong>Evaluate</strong> node.</p>
+<ul>
+<li>Drag and drop an <strong>Evaluate</strong> node to the canvas beside the <strong>Start Node</strong></li>
+<li>Connect the green outlet of the <strong>Start Node</strong> to the new <strong>Evaluate</strong> node.</li>
+<li>Double click on the <strong>Evaluate</strong> node</li>
+<li>Rename the node to <copy><code>Generate Case ID</code></copy></li>
+<li>
+<p>Copy the below JavaScript code in the code editor of the node:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">randomId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="mf">100000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">900000</span><span class="p">);</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">// This variable can be used in subsequent nodes</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nx">caseID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">randomId</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="mf">1</span><span class="p">;</span>
+</span></code></pre></div>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>This code generates a random 6-digit number between 100000 and 999999 and converts it to a string. The resulting <code>caseID</code> variable will be passed to the Airtable API in the next step to create the fraud case record.</p>
+</details>
+</li>
+<li>
+<p>Set the <strong>Script Output</strong> value to <code>1</code></p>
+</li>
+<li>Set the <strong>Branch Name</strong> value to <copy><code>Success</code></copy></li>
+<li>Click on <strong>[Save]</strong></li>
+<li>Save the flow</li>
+</ul>
+</li>
+<li>
+<p>Now we will create the fraud case record in your Airtable base using an <strong>HTTP Request</strong> node.</p>
+<details class="important" open="open">
+<summary>Important</summary>
+<p>This step uses the Airtable API to create a new record in a <strong>FraudCases</strong> table. Before proceeding, ensure you have:</p>
+<ul>
+<li>A <strong>FraudCases</strong> table created in your Airtable base with the following fields: <code>CaseID</code> (Single line text), <code>Status</code> (Single line text), <code>CustomerID</code> (Link to Customers table), and <code>TransactionID</code> (Link to Transactions table).</li>
+<li>Your <a href="https://airtable.com/developers/web/api/introduction">Airtable API</a> base ID handy.</li>
+<li>Your <a href="https://airtable.com/create/tokens">Personal Access Token</a> created with write permissions.</li>
+</ul>
+</details>
+<ul>
+<li>Drag and drop an <strong>HTTP Request</strong> node to the canvas beside the <strong>Evaluate</strong> node</li>
+<li>Connect the green outlet of the <strong>Evaluate</strong> node to the new <strong>HTTP Request</strong> node.</li>
+<li>Double click on the <strong>HTTP Request</strong> node</li>
+<li>Rename the node to <copy><code>Create Fraud Case</code></copy></li>
+<li>
+<p>Fill in the parameters as follows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Endpoint URL</strong></td>
+<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/FraudCases</code></copy></td>
+<td style="text-align: left;">Replace <code>&lt;yourBaseID&gt;</code> with the value of your Airtable Base</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Header</strong></td>
+<td style="text-align: left;"><copy><code>Authorization</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Value</strong></td>
+<td style="text-align: left;"><code>Bearer &lt;yourPersonalToken&gt;</code></td>
+<td style="text-align: left;">Enter <code>yourPersonalToken</code> from <a href="https://airtable.com/create/tokens">Airtable</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Header</strong></td>
+<td style="text-align: left;"><copy><code>Content-Type</code></copy></td>
+<td style="text-align: left;">Click <strong>+ Add Another Header</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Value</strong></td>
+<td style="text-align: left;"><copy><code>application/json</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Body</strong></td>
+<td style="text-align: left;">See below</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Connection Timeout</strong></td>
+<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Request Timeout</strong></td>
+<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Copy the following into the <strong>Body</strong> field:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">"CaseID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$(caseID)"</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New"</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">"CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="s2">"$(n2.aiAgent.CustomerID)"</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="p">],</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="nt">"TransactionID"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="s2">"$(n2.aiAgent.TransactionID)"</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">  </span><span class="nt">"typecast"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Make sure the variables <code>$(n2.aiAgent.CustomerID)</code>, and <code>$(n2.aiAgent.TransactionID)</code> correspond to the correct node numbers in your flow. You can verify them by selecting the variables from the <strong>Input Variables</strong> right panel:</p>
+<ul>
+<li><code>$(n2.aiAgent.CustomerID)</code> → from the <strong>Start</strong> node</li>
+<li><code>$(n2.aiAgent.TransactionID)</code> → from the <strong>Start</strong> node</li>
+</ul>
+</details>
+<details class="info" open="open">
+<summary>Why <code>typecast: true</code>?</summary>
+<p>The <code>typecast</code> parameter tells the Airtable API to automatically convert the input values to match the field types in your table. This is particularly important for the <code>CustomerID</code> and <code>TransactionID</code> fields, which are <strong>Link to another record</strong> fields in Airtable. By passing them as arrays and enabling typecast, Airtable will correctly resolve the record links.</p>
+</details>
+</li>
+<li>
+<p>Click on <strong>[Save]</strong></p>
+</li>
+<li>
+<p>To complete the node, click on the green outlet at the right and drag it to the canvas. Release it to open the <strong>End</strong> dialogue:</p>
+<ul>
+<li>Set the <strong>Node Event</strong> value to <code>onSuccess</code></li>
+<li>Set the <strong>Flow Result</strong> value to <code>101 - Successfully completed flow [Success]</code></li>
+<li>Click on <strong>[Save]</strong></li>
+</ul>
+</li>
+<li>
+<p>Save the flow!</p>
+</li>
+</ul>
+</li>
+<li>
+<p>To finish the flow, pass the Case ID back to the AI Assistant through the <strong>Flow Outcomes</strong>.</p>
+<details class="inline end" open="open">
+<summary>Final - Flow View</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_open_case_view.png" data-title="Final - Flow View" data-desc-position="top"><img alt="Final - Flow View" src="../assets/lab3_open_case_view.png"></a>
+</figure><p></p>
+</details>
+<ul>
+<li>Click on the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M195.1 9.5c3-14.8 16.1-25.5 31.3-25.5h59.8c15.2 0 28.3 10.7 31.3 25.5l14.5 70c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9L477 417.9c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5h-59.8c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8l-68.1 22.5c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7l-53.4-47.5C.9 175.7-1.7 159 5.8 145.9l29.9-51.8c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8zM256.3 336a80 80 0 1 0-.6-160 80 80 0 1 0 .6 160"></path></svg></span> button at the top right of the flow editor.</li>
+<li>Click on the <strong>Flow Outcomes</strong> tab</li>
+<li>Open the <code>Last Execution Status</code> Outcome. The <code>Notify AI Agent</code> radio button is enabled by default for the start node with <code>AI Agent</code> as the trigger.</li>
+<li>
+<p>Click on <strong>+ Add New</strong> to add the Case ID variable:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><copy><code>Response</code></copy></td>
+<td style="text-align: left;"><copy><code>$(n4.http.responseBody)</code></copy></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Click on <strong>[Save]</strong></p>
+</li>
+<li>Save the flow!!</li>
+</ul>
+</li>
+</ol>
+<p>Your <strong>open_case</strong> flow is now completed.
+Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow, otherwise it will not be visible to the AI Agent Studio.</p>
+<details class="gif" open="open">
+<summary>Complete open_case Flow</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_open_case_action.gif" data-title="Complete Flow" data-desc-position="top"><img alt="Complete Flow" src="../assets/lab3_open_case_action.gif"></a>
+<figcaption>The completed open_case fulfillment flow</figcaption>
 </figure><p></p>
 </details>
 </details>
@@ -2350,39 +2585,39 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Enter the <strong>Skill name</strong> <copy><code>Counter_Fraud_Assistant</code></copy> and enter the following in the <strong>Goal</strong> section: 
     <copy><code>You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.</code></copy></li>
 <li>The main configuration page for the AI Assistant skill comes up, add the following prompt to the <strong>Instructions</strong> section: 
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># AI Assistant Action Orchestration
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Before asking the AGENT to collect any data from the CUSTOMER, check the conversation history. If the data was already provided, reuse it instead of asking again.
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>If the AGENT has acknowledged the CUSTOMER's intent but has not yet asked for the specific required data, do not repeat or pre-empt the suggestion. Allow the conversation to progress.
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>When calling tools: Use ONLY values the customer explicitly provided. NEVER infer, construct, extract digits from other fields, use example values, add UNKNOWN or use default/placeholder values (like "00:00", "0", etc.). Missing required parameter = ASK user. Missing optional parameter = OMIT it entirely. NO exceptions.
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>## Collect Recent Transactions
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call, then you have to use the [fetch_transactions] action to get the recent transactions. 
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>   - Transaction Amount
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>   - Transaction Vendor
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>   - Transaction City
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>   - Transaction Date
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>3. **Error Handling**: If there are no transactions available, instruct the AGENT to check the banking system manually. If the banking system is unresponsive, advise the agent to escalate the issue.
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>## Identify Fraudulent Transaction
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>1. **Guide the AGENT**: Confirm if the transaction identified as suspicious could have been made by someone else with access to the account or if the CUSTOMER recognizes the amount but not the vendor. Prompt the agent to ask the customer if they have any recent transactions that they do recognize.
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened. 
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, ask them to provide a reason and look for alternative options. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID. Ensure the agent communicates the case ID to the customer and explains its significance.
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>### Additional Considerations
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>
-</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>- **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># AI Assistant Action Orchestration
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Before asking the AGENT to collect any data from the CUSTOMER, check the conversation history. If the data was already provided, reuse it instead of asking again.
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>If the AGENT has acknowledged the CUSTOMER's intent but has not yet asked for the specific required data, do not repeat or pre-empt the suggestion. Allow the conversation to progress.
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>When calling tools: Use ONLY values the customer explicitly provided. NEVER infer, construct, extract digits from other fields, use example values, add UNKNOWN or use default/placeholder values (like "00:00", "0", etc.). Missing required parameter = ASK user. Missing optional parameter = OMIT it entirely. NO exceptions.
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>## Collect Recent Transactions
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call, then you have to use the [fetch_transactions] action to get the recent transactions. 
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>   - Transaction Amount
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>   - Transaction Vendor
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>   - Transaction City
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>   - Transaction Date
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>3. **Error Handling**: If there are no transactions available, instruct the AGENT to check the banking system manually. If the banking system is unresponsive, advise the agent to escalate the issue.
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>## Identify Fraudulent Transaction
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>1. **Guide the AGENT**: Confirm if the transaction identified as suspicious could have been made by someone else with access to the account or if the CUSTOMER recognizes the amount but not the vendor. Prompt the agent to ask the customer if they have any recent transactions that they do recognize.
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened. 
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, ask them to provide a reason and look for alternative options. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID. Ensure the agent communicates the case ID to the customer and explains its significance.
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>### Additional Considerations
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>- **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
 </span></code></pre></div></li>
 <li>Go to the <strong>Knowledge</strong> tab and select the <strong>FraudKB</strong> you created. </li>
 <li>Navigate to the <strong>[Actions]</strong> tab and click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy><em>fetch_transactions</em></copy></li>
 <li><strong>Action description</strong>: copy and paste the following description.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Use this action to get recent transactions on the account by providing the CustomerID. 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Use this action to get recent transactions on the account by providing the CustomerID. 
 </span></code></pre></div></li>
 </ul>
 </li>
@@ -2430,7 +2665,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy><em>open_case</em></copy></li>
 <li><strong>Action description</strong>: copy and paste the following description.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Opens a fraud case, locks the customer card and ships a new card.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Opens a fraud case, locks the customer card and ships a new card.
 </span></code></pre></div></li>
 </ul>
 </li>
@@ -2498,7 +2733,6 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Click on <strong>Assign AI Assistant Skills</strong>.</li>
 <li>From the available skills, select <strong>Counter_Fraud_Assistant</strong>.</li>
 <li>Select the queue you are using for fraud escalation (e.g., <code>Fraud_Queue</code>).</li>
-<li></li>
 <li>Click <strong>[Save]</strong>.</li>
 </ol>
 <details class="info" open="open">
@@ -2508,7 +2742,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <details class="gif" open="open">
 <summary>Assign Skill to Queue</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_assign_skill.gif" data-title="Assign Skill" data-desc-position="top"><img alt="Assign Skill" src="./assets/lab3_assign_skill.gif"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_assistant_skill_queue.gif" data-title="Assign Skill" data-desc-position="top"><img alt="Assign Skill" src="../assets/lab3_assistant_skill_queue.gif"></a>
 <figcaption>Assigning the Counter Fraud Assistant skill to the Fraud Queue</figcaption>
 </figure><p></p>
 </details>
