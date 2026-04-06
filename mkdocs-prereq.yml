@@ -112,7 +112,7 @@ markdown_extensions:
   
 
 nav:
-  - Home: index.md
+#  - Home: index.md
 #  - Readme:
 #      - 2026 WxCC Bootcamp: overview.md
   - Pre-requisites: 
