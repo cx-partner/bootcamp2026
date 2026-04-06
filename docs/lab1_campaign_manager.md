@@ -101,6 +101,12 @@ The outdial queue is what connects your outbound campaign to the agent pool. It 
         | **Agent assignment** | `Teams` → select `Bootcamp_Team` |
 
     3. Under **Call distribution**, click **Create a group**, expand it, and select `Bootcamp_Team`.
+    4. Fill in the mandatory **Advanced settings**:
+
+        - **Service level threshold**: *200*
+        - **Maximum time in queue**: *120*
+        - **Default music in queue**: *defaultmusic_on_hold.wav*
+
     4. Click **Create**.
 
     <figure markdown>
@@ -111,12 +117,6 @@ The outdial queue is what connects your outbound campaign to the agent pool. It 
     !!! note
         The **Contact direction** and **Channel type** fields cannot be changed after the queue is created. Double-check these values before clicking Create.
 
-    After saving, add the call distribution group:
-
-    <figure markdown>
-    ![Queue call distribution group](./assets/lab1_p5_img1.png)
-    <figcaption>Call distribution group showing Bootcamp_Team assigned</figcaption>
-    </figure>
 
 ---
 
@@ -188,7 +188,9 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
 ???+ webex "Create Lab2 dummy flow"
 
     1. In Control Hub, navigate to **Contact Center** → **Flows**.
-    2. Click **Create flow** and name it `AI_Agent_DebtCollection`.
+    2. Click **Manage Flows -> Create Flows** 
+    3. Select **Flow** and **Start from scratch** and click **Next**
+    4. Name the flow <copy>`AI_Agent_DebtCollection`</copy>.
     3. In the **Global Flow Properties** panel on the right:
         - Under **Global Variables**, click **Add global variables** and add both `firstName` and `lastName`.
     4. From the **Activities Library**, drag a **Play Message** node onto the canvas and connect it to the **NewPhoneContact** Start node.
@@ -196,9 +198,10 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
         - **Activity Label**: `EndOfLab1`
         - Enable **Text-to-Speech**
         - **Connector**: `Cisco Cloud Text-to-Speech`
-        - **Text-to-Speech Message**: `Congratulations, You have completed lab 1`
-    6. Connect the **Play Message** node to a **End Flow** node.
-    7. **Publish** the flow (select **Latest** as the version label).
+        - Add **Text-to-Speech Message**: <copy>`Congratulations, You have completed lab 1`</copy>
+        - Remove the **Audio file** field.
+    6. Drag and drop an **End Flow** node and connect the **Play Message** node to it.
+    7. Enable the **Validation** slider at the bottom-right of the editor to validate the flow and then click **Publish Flow** (select **Latest** as the version label).
 
     <figure markdown>
     ![Lab1_completed flow with TTS message](./assets/lab1_p6_img2.png)
@@ -217,7 +220,8 @@ Now create the main outbound campaign flow. This flow handles the outbound diall
 ???+ webex "Create Outbound_DebtCollection Flow"
 
     1. In Control Hub, navigate to **Contact Center** → **Flows**.
-    2. Click **Create flow** and name it `Outbound_DebtCollection`.
+    2. Click **Manage Flows -> Create Flows** and select **Flow** and **Start from scratch** in the next window. Click **Next**
+    3. Name it <copy>`Outbound_DebtCollection`</copy>.
     3. In the **Global Flow Properties** panel:
         - Under **Global Variables**, add both `firstName` and `lastName`.
     4. The Main flow canvas starts with a **NewPhoneContact** Start node. Connect it to an **End Flow** node as a placeholder — the actual logic is handled in Event flows.
@@ -229,37 +233,33 @@ Now create the main outbound campaign flow. This flow handles the outbound diall
 
 #### Configure Event Flows
 
-The campaign logic is driven by **Event flows**. Click on **Event flows** at the top of the flow builder to switch to the event flow canvas. You will configure two key events.
+The campaign logic is driven by **Event flows**. Click on **Event flows** at the top of the flow builder to switch to the event flow canvas. You will configure one key event:
 
-**Event 1: OutboundCampaignCallResult**
+**OutboundCampaignCallResult**
 
-This event fires when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live person.
+This event fires when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live conversation.
 
 ???+ webex "Configure OutboundCampaignCallResult Event"
 
     1. On the Event flows canvas, locate the **OutboundCampaignCallResult** event handler node.
     2. Drag a **Case** node onto the canvas and connect the **OutboundCampaignCallResult** event handler to it.
     3. Configure the **Case** node:
-        - **Activity Label**: `Campaign_Results`
+        - **Activity Label**: <copy>`Campaign_Results`</copy>
         - **Case variable**: `OutboundCampaignCallResult.CPAResult`
         - Add the following case outputs:
 
             | Case | Value |
             |---|---|
-            | **AMD** | `AMD` |
-            | **ABANDONED** | `ABANDONED` |
-            | **LIVE_VOICE_IVR_CAM** | `LIVE_VOICE_IVR_CAM` |
+            | **AMD** | <copy>`AMD`</copy> |
+            | **ABANDONED** | <copy>`ABANDONED`</copy> |
+            | **LIVE_VOICE_IVR_CAM** | <copy>`LIVE_VOICE_IVR_CAM`</copy> |
             | **Default** | (default fallthrough) |
 
-    <figure markdown>
-    ![Event flows overview](./assets/lab1_p8_img1.jpeg)
-    <figcaption>Event flows canvas showing all event handlers including OutboundCampaignCallResult, AgentOffered, PreDial, AgentAnswered, PhoneContactEnded, and AgentDisconnected</figcaption>
-    </figure>
-
-    <figure markdown>
-    ![OutboundCampaignCallResult case node](./assets/lab1_p8_img2.jpeg)
+    <figure markdown style="width: 70%;">
+    ![Event flows overview](./assets/lab1_p8_img1.png)
     <figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE_IVR_CAM outputs</figcaption>
     </figure>
+
 
 **Handling AMD and Abandoned outcomes:**
 
@@ -271,12 +271,7 @@ This event fires when the dialler receives a CPA result for an outbound call att
         - Enable **Text-to-Speech**
         - **Connector**: `Cisco Cloud Text-to-Speech`
         - **Text-to-Speech Message**: `Goodbye`
-    4. Connect the Play Message node to an **End Flow** node.
-
-    <figure markdown>
-    ![AMD Abandoned play message routing](./assets/lab1_p9_img1.png)
-    <figcaption>Campaign_Results Case node showing AMD and ABANDONED routed to a Play Message node, with the Case node variable mapped to OutboundCampaignCallResult.CPAResult</figcaption>
-    </figure>
+    4. Drag and **End Flow** message to the canvas and connect the **Play Message** node to an **End Flow** node.
 
     <figure markdown>
     ![Play Message Goodbye configuration](./assets/lab1_p9_img2.png)
@@ -288,9 +283,11 @@ This event fires when the dialler receives a CPA result for an outbound call att
 ???+ webex "Configure Live Voice Routing"
 
     1. Drag a **Go To** node onto the canvas.
-    2. Connect the **LIVE_VOICE_IVR_CAM** output of the Case node to the Go To node.
+    2. Connect the **LIVE_VOICE_IVR_CAM** output of the **Case** node to the **Go To** node.
+    3. Connect also the **Default** output of the **Case** node to the **Go To** node.
     3. Configure the **Go To** node:
         - **Activity Label**: `GoTo_AIAgent`
+        - **Destination type**: `Flow`
         - **Flow type**: `Static Flow`
         - **Flow**: `AI_Agent_DebtCollection` *(this will be used in Lab 2)*
         - **Version Label**: `Latest`
@@ -301,30 +298,25 @@ This event fires when the dialler receives a CPA result for an outbound call att
         | `firstName` | `firstName` |
         | `lastName` | `lastName` |
 
-    !!! important
-        The **Flow Variable Mapping** is critical for Lab 2. This ensures that the customer's first and last name (loaded from the campaign contact list) are passed to the destination flow where the AI Agent will use them.
+    5. Connect the **Undefined Errors** outlet of the **GoTo** node to the **End Flow** node.
 
-    <figure markdown>
-    ![GoTo AIAgent node configuration](./assets/lab1_p10_img1.png)
-    <figcaption>Go To node pointing to the AI_Agent_DebtCollection flow with firstName and lastName mapped across flows</figcaption>
-    </figure>
+        !!! important
+            The **Flow Variable Mapping** is critical for Lab 2. This ensures that the customer's first and last name (loaded from the campaign contact list) are passed to the destination flow where the AI Agent will use them.
 
-**Event 2: AgentAnswered**
+        <figure markdown>
+            <figure markdown style="width: 80%;" >
+            ![GoTo AIAgent node configuration](./assets/lab1_p10_img1.png)
+            <figure markdown style="width: 30%;" >
+            ![GoTo AIAgent flow variable mapping](./assets/lab1_p10_img2.png)
+            <figcaption>Go To node pointing to the AI_Agent_DebtCollection flow with firstName and lastName mapped across flows</figcaption>
+        </figure>
 
-This event is used to enable AI Assistant features (Agent Answers, Drop Summary) for human-assisted calls.
 
-???+ webex "Configure AgentAnswered Event"
+    6. Connect the **Undefined Errors** output of the **Case** node to the **End Flow** node.
 
-    1. On the Event flows canvas, locate the **AgentAnswered** event handler.
-    2. Drag a **Start Media Stream** node onto the canvas and connect it to the **AgentAnswered** event handler.
-    3. Connect the **Start Media Stream** node to an **End Flow** node.
+    7. Enable the **Validation** slider to validate the flow and once validated, click **Publish Flow** to publish it. 
 
-    <figure markdown>
-    ![AgentAnswered StartMediaStream event](./assets/lab1_p10_img2.png)
-    <figcaption>AgentAnswered event handler connected to a StartMediaStream node, enabling AI assistant features</figcaption>
-    </figure>
-
-4. Click **Save** and then **Publish** the `Outbound_DebtCollection` flow.
+    Your **Outbound DebtCollection** flow is ready.  
 
 ---
 
@@ -417,7 +409,7 @@ Business hours are defined in Control Hub and consumed by Campaign Manager to en
 
 Open the **Webex Campaign Management** portal. On first login, you will see the welcome screen outlining all the administration areas to configure before launching campaigns.
 
-<figure markdown>
+<figure markdown style="width: 70%;">
 ![Campaign Manager welcome screen](./assets/lab1_p13_img1.png)
 <figcaption>Welcome to Webex Campaign Management — administration checklist</figcaption>
 </figure>
@@ -430,11 +422,11 @@ Business days are synced from Control Hub. In Campaign Manager, you can only tog
 
 ???+ webex "Configure Business Days"
 
-    1. In Campaign Manager, navigate to **Voice campaigns administration** → **Business days**.
+    1. In Campaign Manager left navigation panel, navigate to **Voice campaigns administration** → **Business days**.
     2. Enable **Monday** through **Friday** by toggling each day to **Business day**.
     3. Leave **Saturday** and **Sunday** as **Non-business day**.
 
-    <figure markdown>
+    <figure markdown style="width: 75%;">
     ![Business days configuration](./assets/lab1_p14_img1.png)
     <figcaption>Business days showing Monday–Friday enabled as Business day, Saturday and Sunday as Non-business day</figcaption>
     </figure>
@@ -458,7 +450,7 @@ Contact modes define the type of phone number in your contact list (e.g. Home, O
 
     3. Click **Create contact mode**.
 
-    <figure markdown>
+    <figure markdown style="width: 60%;">
     ![Create contact mode](./assets/lab1_p15_img1.png)
     <figcaption>Creating the phone contact mode with Voice type and default length constraints</figcaption>
     </figure>
@@ -479,6 +471,8 @@ Global variables are synced from Control Hub. They appear here for informational
     1. Navigate to **Voice campaigns administration** → **Global variables**.
     2. Verify that `firstName` and `lastName` are listed with **Status: Active** and **Agent view: Yes**.
 
+        If you don´t see the variables, click *Refresh from Control Hub* at the top-right of the page
+
     !!! important
         Before you can use Global Variables in Campaign Manager, you must designate a **customer-unique-identifier** and **account-unique-identifier** for compliance with call attempt regulations. For this lab, since we are not configuring unique identifiers, this step is skipped.
 
@@ -497,7 +491,7 @@ Before creating the field mapping, create your contact list file.
 
 ???+ webex "Create Contact List CSV"
 
-    Create a CSV file named `contact_list_bootcamp.csv` with the following header structure:
+    Create or [download](./bcamp_files/contact_list_bootcamp.csv) a CSV file named `contact_list_bootcamp.csv` with the following header structure:
 
     ```csv
     firstName,lastName,phoneNumber
@@ -536,7 +530,7 @@ Before creating the field mapping, create your contact list file.
 
     In the **Map contact modes** section, map the `phoneNumber` column to the `Phone` contact mode you created earlier. Leave `firstName` and `lastName` as **Unmapped** at this stage.
 
-    <figure markdown>
+    <figure markdown style="width: 60%;">
     ![Map contact modes](./assets/lab1_p17_img2.png)
     <figcaption>Contact mode mapping showing phoneNumber mapped to the Phone contact mode</figcaption>
     </figure>
@@ -546,8 +540,8 @@ Before creating the field mapping, create your contact list file.
     Select **United Kingdom +44** (or the appropriate country for your numbers) and set the format to:
     `Prefixed with + sign and country code i.e. '+<country code><phone number>'`
 
-    <figure markdown>
-    ![Country and phone number format](./assets/lab1_p18_img1.jpeg)
+    <figure markdown style="width: 80%;">
+    ![Country and phone number format](./assets/lab1_p18_img1.png)
     <figcaption>Phone number format set to E.164 with + prefix and country code</figcaption>
     </figure>
 
@@ -557,7 +551,7 @@ Before creating the field mapping, create your contact list file.
 
     **Step 5 — Map global variables:**
 
-    Map each CSV column to the corresponding Global Variable:
+    Map each column in the CSV file to the corresponding Global Variable:
 
     | File header | Global variable | Data type |
     |---|---|---|
@@ -567,7 +561,7 @@ Before creating the field mapping, create your contact list file.
 
     <figure markdown>
     ![Global variable mapping](./assets/lab1_p18_img2.png)
-    <figcaption>Global variable mapping showing firstName→firstName and lastName→lastName</figcaption>
+    <figcaption>Global variable mapping</figcaption>
     </figure>
 
     **Step 6 — Specify file header data types:**
@@ -610,13 +604,13 @@ Purpose meta-tags allow you to categorise campaigns by business function. They a
 
 ???+ webex "Create Purpose Meta-tag"
 
-    1. Navigate to **Voice campaigns administration** → **P-tags** (Purpose meta-tags).
+    1. Navigate to **Voice campaigns administration** → **Purpose meta-tags**.
     2. Click **Create purpose meta-tag** and configure:
         - **Purpose meta-tag**: `debt`
         - **Purpose meta-tag group**: `DEFAULT`
     3. Click **Update purpose meta-tag**.
 
-    <figure markdown>
+    <figure markdown style="width: 70%;">
     ![Purpose meta-tag creation](./assets/lab1_p19_img2.png)
     <figcaption>Creating the "debt" purpose meta-tag under the DEFAULT group</figcaption>
     </figure>
@@ -715,7 +709,9 @@ The system provides a **primary (read-only) outcome set**. You must **duplicate*
     The duplicated set will appear in your list. You can click on it to view all 20 telephony outcomes. For this bootcamp, **leave all outcome values at their defaults**.
 
     <figure markdown>
-    ![Telephony outcomes list](./assets/lab1_p22_img2.jpeg)
+    ![Telephony outcomes](./assets/lab1_p22_img2.jpeg)
+
+    ![Telephony outcomes list](./assets/lab1_p23_img1.png)
     <figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE_IVR_CAM, BUSY, INVALID_NUMBER, and others</figcaption>
     </figure>
 
@@ -724,7 +720,7 @@ The system provides a **primary (read-only) outcome set**. You must **duplicate*
 Webex Campaign Management uses **just-in-time (JIT) provisioning** — user accounts are created automatically the first time a user logs in, based on their role in Control Hub. No manual user creation is required in Campaign Manager.
 
 <figure markdown>
-![UI Users](./assets/lab1_p23_img1.png)
+![UI Users](./assets/lab1_p23_img2.png)
 <figcaption>UI Users list showing the admin account provisioned via JIT sync from Control Hub</figcaption>
 </figure>
 
@@ -742,7 +738,7 @@ Wrap-up codes defined in Control Hub are synced to Campaign Manager. You can con
         ![Wrap-up code set - debt](./assets/wuset_create.png)
         </figure>
 
-        <figure markdown>
+        <figure markdown style="width: 60%;">
         ![Wrap-up code set 2 - debt](./assets/wuset_create2.png)
         </figure>
 
@@ -752,7 +748,7 @@ Wrap-up codes defined in Control Hub are synced to Campaign Manager. You can con
         ![Wrap-up code 1 - debt](./assets/wucode_create.png)
         </figure>
 
-        <figure markdown>
+        <figure markdown style="width: 70%;">
         ![Wrap-up code 2 - debt](./assets/wucode_create2.png)
         </figure>
 
@@ -771,7 +767,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
 ???+ webex "Create Campaign Group"
 
-    1. In Campaign Manager, navigate to **Campaign management** → **Campaign groups**.
+    1. In Campaign Manager's left navigation panel, navigate to **Campaign management** → **Campaign groups**.
     2. Click **Create campaign group** and enter:
         - **Campaign group name**: `Bootcamp2026`
         - *(All other fields are optional)*
@@ -779,12 +775,12 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
 
     <figure markdown>
-    ![Campaign groups list](./assets/lab1_p25_img1.jpeg)
-    <figcaption>Campaign groups list showing the Bootcamp2026 group created</figcaption>
+        ![Campaign groups list](./assets/lab1_p25_img1.jpeg)
+        <figcaption>Campaign groups list</figcaption>
     </figure>
 
-        <figure markdown>
-    ![Campaign group detail view](./assets/lab1_p25_img2.png)
+    <figure markdown style="width: 80%;">
+        ![Campaign group detail view](./assets/lab1_p25_img2.png)
     </figure>
 
 ### Create and Configure the Campaign
@@ -793,11 +789,12 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
     1. Click on the **Bootcamp2026** campaign group.
     2. Click **Create campaign** in the top-right corner.
-    3. An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.
 
-    <figure markdown>
-    ![Campaign group detail view](./assets/lab1_p26_img1.png)
-    </figure>
+        <figure markdown>
+        ![Campaign group detail view](./assets/lab1_p26_img1.png)
+        </figure>
+
+    3. An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.
 
 **Node 1 — Dialer configuration:**
 
@@ -826,6 +823,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     1. Click the **Contact list source** node.
     2. Set **Select contact list source** to `Manual file upload`.
     3. Set **Select field mapping** to `Bootcamp_field_mapping`.
+    4. Set the contact expiration to 10 days.
     4. Click **Save changes**.
 
     !!! note
@@ -868,6 +866,11 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 ???+ webex "Configure Contact Attempt Strategy"
 
     1. Click the **Contact attempts strategy** node, then click **Configure**.
+
+        <figure markdown>
+        ![Contact attempts strategy](./assets/lab1_p28_img3.jpeg)
+        </figure>
+
     2. Configure the following sections:
 
     **Section 1 — Call outcome sets:**
@@ -876,6 +879,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     |---|---|
     | **Wrap-up code set** | `Finance` (with 1 wrap-up code) |
     | **Telephony outcome set** | `Bootcamp_Primary_telephony_outcome_set` |
+
 
     **Section 2 — Contact mode priority:**
 
@@ -892,15 +896,14 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
     Disable sequential dialling and set the amount of contact to `10`.
 
-    <figure markdown>
-    ![Contact attempts strategy](./assets/lab1_p28_img3.jpeg)
-    </figure>
 
-    <figure markdown>
+    Click **Save**.
+
+    <figure markdown style="width: 60%;">
     ![Contact attempts strategy full view](./assets/lab1_p29_img1.jpeg)
     </figure>
 
-    3. Click **Save**.
+    Back to the campaign flow canvas, click **Save changes** in the right panel. 
 
 **Node 6 — Suppression rule sets:**
 
@@ -918,7 +921,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
 ???+ webex "Save Campaign"
 
-    1. Click **Save & exit** (top right of the campaign canvas).
+    1. Click **Save & exit** (top right of the campaign flow canvas).
     2. In the **Save campaign** dialog, fill in:
         - **Campaign name**: `Bootcamp_campaign`
         - **P&L meta-tag**: `debt`
@@ -938,11 +941,14 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     2. Click the **⋮ Actions** menu and select **Activate**.
     3. In the confirmation dialog, click **Confirm**.
 
-    The campaign status will change to **Running**.
+    The campaign status will change to **Pending** and then **Running**.
 
     <figure markdown>
     ![Activate campaign](./assets/lab1_p31_img1.png)
     </figure>
+
+    ???+ tip 
+        Campaign status is not refreshed in real time, so make sure you click on the **Refresh** button to get the updated status of the campaign.
 
 ---
 
@@ -955,7 +961,17 @@ Now that the campaign is active, upload your contact list CSV to trigger the out
 ???+ webex "Upload Contact List"
 
     1. In the campaign list, click the **⋮ Actions** menu on **Bootcamp_campaign** and select **Manage contact lists**.
+        
+        <figure markdown>
+        ![Manage contact lists panel](./assets/lab1_p31_img3.png)
+        </figure>
+
     2. Click **Upload file to create contact list**.
+
+         <figure markdown>
+        ![Contact list upload dialog](./assets/lab1_p31_img4.png)
+        </figure>
+
     3. In the **Contact list from file upload** dialog:
         - **Supported channels**: Voice (pre-selected)
         - **Contact list type**: Static
@@ -965,22 +981,18 @@ Now that the campaign is active, upload your contact list CSV to trigger the out
         - **In case of record issues**: Skip the particular record
     4. Click **Save and proceed**.
 
-    <figure markdown>
-    ![Manage contact lists panel](./assets/lab1_p31_img3.png)
-    </figure>
 
-    <figure markdown>
-    ![Contact list upload dialog](./assets/lab1_p31_img4.png)
-    </figure>
+        <figure markdown style="width: 70%;">
+        ![Contact list file upload form](./assets/lab1_p32_img2.png)
+        <figcaption>Contact list upload form showing field mapping, file selection, and activation settings</figcaption>
+        </figure>
 
-    <figure markdown>
-    ![Contact list file upload form](./assets/lab1_p32_img2.png)
-    <figcaption>Contact list upload form showing field mapping, file selection, and activation settings</figcaption>
-    </figure>
+
+
 
 ### Monitor Upload Status
 
-After uploading, the contact list will show a status of **Uploading**, then transition to **Active** once processed.
+After uploading, the contact list will show a status of **Uploading**, then transition to **Active** once processed. You can see the processing going through different status: *Processed, Valid, Eligible...*. Make sure you click **Refresh** to see the latest status.
 
 
 
@@ -1024,7 +1036,7 @@ At this point, you have successfully:
 
 - [x] Configured an agent, team, and outdial queue in Webex Contact Center
 - [x] Created `firstName` and `lastName` Global Variables for customer data propagation
-- [x] Built the `Lab1_completed` test flow with a congratulatory TTS message
+- [x] Built the `AI_Agent_DebtCollection` test flow with a congratulatory TTS message
 - [x] Built the `Outbound_DebtCollection` campaign flow with CPA-based routing (AMD, Abandoned, Live Voice)
 - [x] Configured the outdial Entry Point (Channel) and Outdial ANI
 - [x] Set up Business Hours in Control Hub
