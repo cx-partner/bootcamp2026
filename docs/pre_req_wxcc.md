@@ -76,6 +76,7 @@ We will leverage an upcoming enhancement to the Webex AI Agent Knowledge Base! A
     3. Click on **[+ Create knowledge Base]** and give a dummy name to the KB. Click **[Create]**
     4. In the next window, you should see an option **Extract websites** to add web URLs as a source.
 
+     **If you do not see this option in the Knowledge Base Sources menu, please contact us using the instructions above.**
 
 
 #### MCP fulfillment
