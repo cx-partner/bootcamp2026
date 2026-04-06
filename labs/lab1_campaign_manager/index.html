@@ -1990,7 +1990,17 @@
 <li>
 <p>Under <strong>Call distribution</strong>, click <strong>Create a group</strong>, expand it, and select <code>Bootcamp_Team</code>.</p>
 </li>
-<li>Click <strong>Create</strong>.</li>
+<li>
+<p>Fill in the mandatory <strong>Advanced settings</strong>:</p>
+<ul>
+<li><strong>Service level threshold</strong>: <em>200</em></li>
+<li><strong>Maximum time in queue</strong>: <em>120</em></li>
+<li><strong>Default music in queue</strong>: <em>defaultmusic_on_hold.wav</em></li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
 </ol>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p4_img2.png" data-title="Create Outdial Queue" data-desc-position="top"><img alt="Create Outdial Queue" src="../assets/lab1_p4_img2.png"></a>
@@ -2000,11 +2010,6 @@
 <p class="admonition-title">Note</p>
 <p>The <strong>Contact direction</strong> and <strong>Channel type</strong> fields cannot be changed after the queue is created. Double-check these values before clicking Create.</p>
 </div>
-<p>After saving, add the call distribution group:</p>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p5_img1.png" data-title="Queue call distribution group" data-desc-position="top"><img alt="Queue call distribution group" src="../assets/lab1_p5_img1.png"></a>
-<figcaption>Call distribution group showing Bootcamp_Team assigned</figcaption>
-</figure><p></p>
 </details>
 <hr>
 <h2 id="lab-13-configure-global-variables-and-wrap-up-codes">Lab 1.3 - Configure Global Variables and Wrap-up Codes<a class="headerlink" href="#lab-13-configure-global-variables-and-wrap-up-codes" title="Permanent link">¶</a></h2>
@@ -2122,7 +2127,9 @@
 <summary>Create Lab2 dummy flow</summary>
 <ol>
 <li>In Control Hub, navigate to <strong>Contact Center</strong> → <strong>Flows</strong>.</li>
-<li>Click <strong>Create flow</strong> and name it <code>AI_Agent_DebtCollection</code>.</li>
+<li>Click <strong>Manage Flows -&gt; Create Flows</strong> </li>
+<li>Select <strong>Flow</strong> and <strong>Start from scratch</strong> and click <strong>Next</strong></li>
+<li>Name the flow <copy><code>AI_Agent_DebtCollection</code></copy>.</li>
 <li>In the <strong>Global Flow Properties</strong> panel on the right:<ul>
 <li>Under <strong>Global Variables</strong>, click <strong>Add global variables</strong> and add both <code>firstName</code> and <code>lastName</code>.</li>
 </ul>
@@ -2132,11 +2139,12 @@
 <li><strong>Activity Label</strong>: <code>EndOfLab1</code></li>
 <li>Enable <strong>Text-to-Speech</strong></li>
 <li><strong>Connector</strong>: <code>Cisco Cloud Text-to-Speech</code></li>
-<li><strong>Text-to-Speech Message</strong>: <code>Congratulations, You have completed lab 1</code></li>
+<li>Add <strong>Text-to-Speech Message</strong>: <copy><code>Congratulations, You have completed lab 1</code></copy></li>
+<li>Remove the <strong>Audio file</strong> field.</li>
 </ul>
 </li>
-<li>Connect the <strong>Play Message</strong> node to a <strong>End Flow</strong> node.</li>
-<li><strong>Publish</strong> the flow (select <strong>Latest</strong> as the version label).</li>
+<li>Drag and drop an <strong>End Flow</strong> node and connect the <strong>Play Message</strong> node to it.</li>
+<li>Enable the <strong>Validation</strong> slider at the bottom-right of the editor to validate the flow and then click <strong>Publish Flow</strong> (select <strong>Latest</strong> as the version label).</li>
 </ol>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p6_img2.png" data-title="Lab1_completed flow with TTS message" data-desc-position="top"><img alt="Lab1_completed flow with TTS message" src="../assets/lab1_p6_img2.png"></a>
@@ -2153,7 +2161,8 @@
 <summary>Create Outbound_DebtCollection Flow</summary>
 <ol>
 <li>In Control Hub, navigate to <strong>Contact Center</strong> → <strong>Flows</strong>.</li>
-<li>Click <strong>Create flow</strong> and name it <code>Outbound_DebtCollection</code>.</li>
+<li>Click <strong>Manage Flows -&gt; Create Flows</strong> and select <strong>Flow</strong> and <strong>Start from scratch</strong> in the next window. Click <strong>Next</strong></li>
+<li>Name it <copy><code>Outbound_DebtCollection</code></copy>.</li>
 <li>In the <strong>Global Flow Properties</strong> panel:<ul>
 <li>Under <strong>Global Variables</strong>, add both <code>firstName</code> and <code>lastName</code>.</li>
 </ul>
@@ -2166,16 +2175,16 @@
 </figure><p></p>
 </details>
 <h4 id="configure-event-flows">Configure Event Flows<a class="headerlink" href="#configure-event-flows" title="Permanent link">¶</a></h4>
-<p>The campaign logic is driven by <strong>Event flows</strong>. Click on <strong>Event flows</strong> at the top of the flow builder to switch to the event flow canvas. You will configure two key events.</p>
-<p><strong>Event 1: OutboundCampaignCallResult</strong></p>
-<p>This event fires when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live person.</p>
+<p>The campaign logic is driven by <strong>Event flows</strong>. Click on <strong>Event flows</strong> at the top of the flow builder to switch to the event flow canvas. You will configure one key event:</p>
+<p><strong>OutboundCampaignCallResult</strong></p>
+<p>This event fires when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live conversation.</p>
 <details class="webex" open="open">
 <summary>Configure OutboundCampaignCallResult Event</summary>
 <ol>
 <li>On the Event flows canvas, locate the <strong>OutboundCampaignCallResult</strong> event handler node.</li>
 <li>Drag a <strong>Case</strong> node onto the canvas and connect the <strong>OutboundCampaignCallResult</strong> event handler to it.</li>
 <li>Configure the <strong>Case</strong> node:<ul>
-<li><strong>Activity Label</strong>: <code>Campaign_Results</code></li>
+<li><strong>Activity Label</strong>: <copy><code>Campaign_Results</code></copy></li>
 <li><strong>Case variable</strong>: <code>OutboundCampaignCallResult.CPAResult</code></li>
 <li>
 <p>Add the following case outputs:</p>
@@ -2189,15 +2198,15 @@
 <tbody>
 <tr>
 <td><strong>AMD</strong></td>
-<td><code>AMD</code></td>
+<td><copy><code>AMD</code></copy></td>
 </tr>
 <tr>
 <td><strong>ABANDONED</strong></td>
-<td><code>ABANDONED</code></td>
+<td><copy><code>ABANDONED</code></copy></td>
 </tr>
 <tr>
 <td><strong>LIVE_VOICE_IVR_CAM</strong></td>
-<td><code>LIVE_VOICE_IVR_CAM</code></td>
+<td><copy><code>LIVE_VOICE_IVR_CAM</code></copy></td>
 </tr>
 <tr>
 <td><strong>Default</strong></td>
@@ -2209,12 +2218,8 @@
 </ul>
 </li>
 </ol>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p8_img1.jpeg" data-title="Event flows overview" data-desc-position="top"><img alt="Event flows overview" src="../assets/lab1_p8_img1.jpeg"></a>
-<figcaption>Event flows canvas showing all event handlers including OutboundCampaignCallResult, AgentOffered, PreDial, AgentAnswered, PhoneContactEnded, and AgentDisconnected</figcaption>
-</figure><p></p>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p8_img2.jpeg" data-title="OutboundCampaignCallResult case node" data-desc-position="top"><img alt="OutboundCampaignCallResult case node" src="../assets/lab1_p8_img2.jpeg"></a>
+<p></p><figure markdown="" style="width: 70%;">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p8_img1.png" data-title="Event flows overview" data-desc-position="top"><img alt="Event flows overview" src="../assets/lab1_p8_img1.png"></a>
 <figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE_IVR_CAM outputs</figcaption>
 </figure><p></p>
 </details>
@@ -2230,12 +2235,8 @@
 <li><strong>Text-to-Speech Message</strong>: <code>Goodbye</code></li>
 </ul>
 </li>
-<li>Connect the Play Message node to an <strong>End Flow</strong> node.</li>
+<li>Drag and <strong>End Flow</strong> message to the canvas and connect the <strong>Play Message</strong> node to an <strong>End Flow</strong> node.</li>
 </ol>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p9_img1.png" data-title="AMD Abandoned play message routing" data-desc-position="top"><img alt="AMD Abandoned play message routing" src="../assets/lab1_p9_img1.png"></a>
-<figcaption>Campaign_Results Case node showing AMD and ABANDONED routed to a Play Message node, with the Case node variable mapped to OutboundCampaignCallResult.CPAResult</figcaption>
-</figure><p></p>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p9_img2.png" data-title="Play Message Goodbye configuration" data-desc-position="top"><img alt="Play Message Goodbye configuration" src="../assets/lab1_p9_img2.png"></a>
 <figcaption>Play Message node configured with TTS "Goodbye" for AMD and Abandoned call outcomes</figcaption>
@@ -2246,9 +2247,11 @@
 <summary>Configure Live Voice Routing</summary>
 <ol>
 <li>Drag a <strong>Go To</strong> node onto the canvas.</li>
-<li>Connect the <strong>LIVE_VOICE_IVR_CAM</strong> output of the Case node to the Go To node.</li>
+<li>Connect the <strong>LIVE_VOICE_IVR_CAM</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
+<li>Connect also the <strong>Default</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
 <li>Configure the <strong>Go To</strong> node:<ul>
 <li><strong>Activity Label</strong>: <code>GoTo_AIAgent</code></li>
+<li><strong>Destination type</strong>: <code>Flow</code></li>
 <li><strong>Flow type</strong>: <code>Static Flow</code></li>
 <li><strong>Flow</strong>: <code>AI_Agent_DebtCollection</code> <em>(this will be used in Lab 2)</em></li>
 <li><strong>Version Label</strong>: <code>Latest</code></li>
@@ -2275,33 +2278,29 @@
 </tbody>
 </table>
 </li>
-</ol>
+<li>
+<p>Connect the <strong>Undefined Errors</strong> outlet of the <strong>GoTo</strong> node to the <strong>End Flow</strong> node.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <strong>Flow Variable Mapping</strong> is critical for Lab 2. This ensures that the customer's first and last name (loaded from the campaign contact list) are passed to the destination flow where the AI Agent will use them.</p>
 </div>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p10_img1.png" data-title="GoTo AIAgent node configuration" data-desc-position="top"><img alt="GoTo AIAgent node configuration" src="../assets/lab1_p10_img1.png"></a>
-<figcaption>Go To node pointing to the AI_Agent_DebtCollection flow with firstName and lastName mapped across flows</figcaption>
+    <figure markdown="" style="width: 80%;">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p10_img1.png" data-title="GoTo AIAgent node configuration" data-desc-position="top"><img alt="GoTo AIAgent node configuration" src="../assets/lab1_p10_img1.png"></a>
+    <figure markdown="" style="width: 30%;">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p10_img2.png" data-title="GoTo AIAgent flow variable mapping" data-desc-position="top"><img alt="GoTo AIAgent flow variable mapping" src="../assets/lab1_p10_img2.png"></a>
+    <figcaption>Go To node pointing to the AI_Agent_DebtCollection flow with firstName and lastName mapped across flows</figcaption>
 </figure><p></p>
-</details>
-<p><strong>Event 2: AgentAnswered</strong></p>
-<p>This event is used to enable AI Assistant features (Agent Answers, Drop Summary) for human-assisted calls.</p>
-<details class="webex" open="open">
-<summary>Configure AgentAnswered Event</summary>
-<ol>
-<li>On the Event flows canvas, locate the <strong>AgentAnswered</strong> event handler.</li>
-<li>Drag a <strong>Start Media Stream</strong> node onto the canvas and connect it to the <strong>AgentAnswered</strong> event handler.</li>
-<li>Connect the <strong>Start Media Stream</strong> node to an <strong>End Flow</strong> node.</li>
+</figure></figure></li>
+<li>
+<p>Connect the <strong>Undefined Errors</strong> output of the <strong>Case</strong> node to the <strong>End Flow</strong> node.</p>
+</li>
+<li>
+<p>Enable the <strong>Validation</strong> slider to validate the flow and once validated, click <strong>Publish Flow</strong> to publish it. </p>
+</li>
 </ol>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p10_img2.png" data-title="AgentAnswered StartMediaStream event" data-desc-position="top"><img alt="AgentAnswered StartMediaStream event" src="../assets/lab1_p10_img2.png"></a>
-<figcaption>AgentAnswered event handler connected to a StartMediaStream node, enabling AI assistant features</figcaption>
-</figure><p></p>
+<p>Your <strong>Outbound DebtCollection</strong> flow is ready.  </p>
 </details>
-<ol>
-<li>Click <strong>Save</strong> and then <strong>Publish</strong> the <code>Outbound_DebtCollection</code> flow.</li>
-</ol>
 <hr>
 <h2 id="lab-15-create-the-outdial-entry-point-channel-and-outdial-ani">Lab 1.5 - Create the Outdial Entry Point (Channel) and Outdial ANI<a class="headerlink" href="#lab-15-create-the-outdial-entry-point-channel-and-outdial-ani" title="Permanent link">¶</a></h2>
 <h3 id="create-the-outdial-entry-point">Create the Outdial Entry Point<a class="headerlink" href="#create-the-outdial-entry-point" title="Permanent link">¶</a></h3>
@@ -2443,7 +2442,7 @@
 <hr>
 <h2 id="lab-17-campaign-manager-configuration">Lab 1.7 - Campaign Manager Configuration<a class="headerlink" href="#lab-17-campaign-manager-configuration" title="Permanent link">¶</a></h2>
 <p>Open the <strong>Webex Campaign Management</strong> portal. On first login, you will see the welcome screen outlining all the administration areas to configure before launching campaigns.</p>
-<figure>
+<figure style="width: 70%;">
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p13_img1.png" data-title="Campaign Manager welcome screen" data-desc-position="top"><img alt="Campaign Manager welcome screen" src="../assets/lab1_p13_img1.png"></a></p>
 <figcaption>Welcome to Webex Campaign Management — administration checklist</figcaption>
 </figure>
@@ -2453,11 +2452,11 @@
 <details class="webex" open="open">
 <summary>Configure Business Days</summary>
 <ol>
-<li>In Campaign Manager, navigate to <strong>Voice campaigns administration</strong> → <strong>Business days</strong>.</li>
+<li>In Campaign Manager left navigation panel, navigate to <strong>Voice campaigns administration</strong> → <strong>Business days</strong>.</li>
 <li>Enable <strong>Monday</strong> through <strong>Friday</strong> by toggling each day to <strong>Business day</strong>.</li>
 <li>Leave <strong>Saturday</strong> and <strong>Sunday</strong> as <strong>Non-business day</strong>.</li>
 </ol>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 75%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p14_img1.png" data-title="Business days configuration" data-desc-position="top"><img alt="Business days configuration" src="../assets/lab1_p14_img1.png"></a>
 <figcaption>Business days showing Monday–Friday enabled as Business day, Saturday and Sunday as Non-business day</figcaption>
 </figure><p></p>
@@ -2505,7 +2504,7 @@
 <p>Click <strong>Create contact mode</strong>.</p>
 </li>
 </ol>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 60%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p15_img1.png" data-title="Create contact mode" data-desc-position="top"><img alt="Create contact mode" src="../assets/lab1_p15_img1.png"></a>
 <figcaption>Creating the phone contact mode with Voice type and default length constraints</figcaption>
 </figure><p></p>
@@ -2522,7 +2521,10 @@
 <summary>Verify Global Variables</summary>
 <ol>
 <li>Navigate to <strong>Voice campaigns administration</strong> → <strong>Global variables</strong>.</li>
-<li>Verify that <code>firstName</code> and <code>lastName</code> are listed with <strong>Status: Active</strong> and <strong>Agent view: Yes</strong>.</li>
+<li>
+<p>Verify that <code>firstName</code> and <code>lastName</code> are listed with <strong>Status: Active</strong> and <strong>Agent view: Yes</strong>.</p>
+<p>If you don´t see the variables, click <em>Refresh from Control Hub</em> at the top-right of the page</p>
+</li>
 </ol>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -2539,7 +2541,7 @@
 <p>Before creating the field mapping, create your contact list file.</p>
 <details class="webex" open="open">
 <summary>Create Contact List CSV</summary>
-<p>Create a CSV file named <code>contact_list_bootcamp.csv</code> with the following header structure:</p>
+<p>Create or <a href="../bcamp_files/contact_list_bootcamp.csv">download</a> a CSV file named <code>contact_list_bootcamp.csv</code> with the following header structure:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>firstName,lastName,phoneNumber
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>John,Smith,+442012345678
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Jane,Doe,+442087654321
@@ -2573,21 +2575,21 @@
 </figure><p></p>
 <p><strong>Step 2 — Map contact modes:</strong></p>
 <p>In the <strong>Map contact modes</strong> section, map the <code>phoneNumber</code> column to the <code>Phone</code> contact mode you created earlier. Leave <code>firstName</code> and <code>lastName</code> as <strong>Unmapped</strong> at this stage.</p>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 60%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p17_img2.png" data-title="Map contact modes" data-desc-position="top"><img alt="Map contact modes" src="../assets/lab1_p17_img2.png"></a>
 <figcaption>Contact mode mapping showing phoneNumber mapped to the Phone contact mode</figcaption>
 </figure><p></p>
 <p><strong>Step 3 — Specify country of all phone numbers:</strong></p>
 <p>Select <strong>United Kingdom +44</strong> (or the appropriate country for your numbers) and set the format to:
 <code>Prefixed with + sign and country code i.e. '+&lt;country code&gt;&lt;phone number&gt;'</code></p>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p18_img1.jpeg" data-title="Country and phone number format" data-desc-position="top"><img alt="Country and phone number format" src="../assets/lab1_p18_img1.jpeg"></a>
+<p></p><figure markdown="" style="width: 80%;">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p18_img1.png" data-title="Country and phone number format" data-desc-position="top"><img alt="Country and phone number format" src="../assets/lab1_p18_img1.png"></a>
 <figcaption>Phone number format set to E.164 with + prefix and country code</figcaption>
 </figure><p></p>
 <p><strong>Step 4 — Map source of timezones:</strong></p>
 <p>Keep the default configuration.</p>
 <p><strong>Step 5 — Map global variables:</strong></p>
-<p>Map each CSV column to the corresponding Global Variable:</p>
+<p>Map each column in the CSV file to the corresponding Global Variable:</p>
 <table>
 <thead>
 <tr>
@@ -2616,7 +2618,7 @@
 </table>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p18_img2.png" data-title="Global variable mapping" data-desc-position="top"><img alt="Global variable mapping" src="../assets/lab1_p18_img2.png"></a>
-<figcaption>Global variable mapping showing firstName→firstName and lastName→lastName</figcaption>
+<figcaption>Global variable mapping</figcaption>
 </figure><p></p>
 <p><strong>Step 6 — Specify file header data types:</strong></p>
 <p>Leave all columns as <strong>String</strong> data type. Enable <strong>PII protection</strong> for <code>phoneNumber</code> if required by your organisation's data handling policies.</p>
@@ -2667,7 +2669,7 @@
 <details class="webex" open="open">
 <summary>Create Purpose Meta-tag</summary>
 <ol>
-<li>Navigate to <strong>Voice campaigns administration</strong> → <strong>P-tags</strong> (Purpose meta-tags).</li>
+<li>Navigate to <strong>Voice campaigns administration</strong> → <strong>Purpose meta-tags</strong>.</li>
 <li>Click <strong>Create purpose meta-tag</strong> and configure:<ul>
 <li><strong>Purpose meta-tag</strong>: <code>debt</code></li>
 <li><strong>Purpose meta-tag group</strong>: <code>DEFAULT</code></li>
@@ -2675,7 +2677,7 @@
 </li>
 <li>Click <strong>Update purpose meta-tag</strong>.</li>
 </ol>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 70%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p19_img2.png" data-title="Purpose meta-tag creation" data-desc-position="top"><img alt="Purpose meta-tag creation" src="../assets/lab1_p19_img2.png"></a>
 <figcaption>Creating the "debt" purpose meta-tag under the DEFAULT group</figcaption>
 </figure><p></p>
@@ -2791,14 +2793,15 @@
 </figure><p></p>
 <p>The duplicated set will appear in your list. You can click on it to view all 20 telephony outcomes. For this bootcamp, <strong>leave all outcome values at their defaults</strong>.</p>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p22_img2.jpeg" data-title="Telephony outcomes list" data-desc-position="top"><img alt="Telephony outcomes list" src="../assets/lab1_p22_img2.jpeg"></a>
-<figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE_IVR_CAM, BUSY, INVALID_NUMBER, and others</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p22_img2.jpeg" data-title="Telephony outcomes" data-desc-position="top"><img alt="Telephony outcomes" src="../assets/lab1_p22_img2.jpeg"></a><p></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p23_img1.png" data-title="Telephony outcomes list" data-desc-position="top"><img alt="Telephony outcomes list" src="../assets/lab1_p23_img1.png"></a>
+</p><figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE_IVR_CAM, BUSY, INVALID_NUMBER, and others</figcaption>
 </figure><p></p>
 </details>
 <h3 id="ui-users">UI Users<a class="headerlink" href="#ui-users" title="Permanent link">¶</a></h3>
 <p>Webex Campaign Management uses <strong>just-in-time (JIT) provisioning</strong> — user accounts are created automatically the first time a user logs in, based on their role in Control Hub. No manual user creation is required in Campaign Manager.</p>
 <figure>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p23_img1.png" data-title="UI Users" data-desc-position="top"><img alt="UI Users" src="../assets/lab1_p23_img1.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p23_img2.png" data-title="UI Users" data-desc-position="top"><img alt="UI Users" src="../assets/lab1_p23_img2.png"></a></p>
 <figcaption>UI Users list showing the admin account provisioned via JIT sync from Control Hub</figcaption>
 </figure>
 <p>For more information, refer to the <a href="https://docs-campaign-for-contact-centers.webexcampaign.com/docs/ui-users">Campaign Management UI Users documentation</a>.</p>
@@ -2812,7 +2815,7 @@
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/wuset_create.png" data-title="Wrap-up code set - debt" data-desc-position="top"><img alt="Wrap-up code set - debt" src="../assets/wuset_create.png"></a>
 </figure><p></p>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 60%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/wuset_create2.png" data-title="Wrap-up code set 2 - debt" data-desc-position="top"><img alt="Wrap-up code set 2 - debt" src="../assets/wuset_create2.png"></a>
 </figure><p></p>
 </li>
@@ -2821,7 +2824,7 @@
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/wucode_create.png" data-title="Wrap-up code 1 - debt" data-desc-position="top"><img alt="Wrap-up code 1 - debt" src="../assets/wucode_create.png"></a>
 </figure><p></p>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 70%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/wucode_create2.png" data-title="Wrap-up code 2 - debt" data-desc-position="top"><img alt="Wrap-up code 2 - debt" src="../assets/wucode_create2.png"></a>
 </figure><p></p>
 </li>
@@ -2836,7 +2839,7 @@
 <details class="webex" open="open">
 <summary>Create Campaign Group</summary>
 <ol>
-<li>In Campaign Manager, navigate to <strong>Campaign management</strong> → <strong>Campaign groups</strong>.</li>
+<li>In Campaign Manager's left navigation panel, navigate to <strong>Campaign management</strong> → <strong>Campaign groups</strong>.</li>
 <li>Click <strong>Create campaign group</strong> and enter:<ul>
 <li><strong>Campaign group name</strong>: <code>Bootcamp2026</code></li>
 <li><em>(All other fields are optional)</em></li>
@@ -2845,25 +2848,28 @@
 <li>Click <strong>Save &amp; proceed</strong>.</li>
 </ol>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p25_img1.jpeg" data-title="Campaign groups list" data-desc-position="top"><img alt="Campaign groups list" src="../assets/lab1_p25_img1.jpeg"></a>
-<figcaption>Campaign groups list showing the Bootcamp2026 group created</figcaption>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p25_img1.jpeg" data-title="Campaign groups list" data-desc-position="top"><img alt="Campaign groups list" src="../assets/lab1_p25_img1.jpeg"></a>
+    <figcaption>Campaign groups list</figcaption>
 </figure><p></p>
-<div class="language-text highlight"><pre><span></span><code>&lt;figure markdown&gt;
-</code></pre></div>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p25_img2.png" data-title="Campaign group detail view" data-desc-position="top"><img alt="Campaign group detail view" src="../assets/lab1_p25_img2.png"></a>
-</p>
+<p></p><figure markdown="" style="width: 80%;">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p25_img2.png" data-title="Campaign group detail view" data-desc-position="top"><img alt="Campaign group detail view" src="../assets/lab1_p25_img2.png"></a>
+</figure><p></p>
 </details>
 <h3 id="create-and-configure-the-campaign">Create and Configure the Campaign<a class="headerlink" href="#create-and-configure-the-campaign" title="Permanent link">¶</a></h3>
 <details class="webex" open="open">
 <summary>Create Campaign</summary>
 <ol>
 <li>Click on the <strong>Bootcamp2026</strong> campaign group.</li>
-<li>Click <strong>Create campaign</strong> in the top-right corner.</li>
-<li>An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.</li>
-</ol>
+<li>
+<p>Click <strong>Create campaign</strong> in the top-right corner.</p>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p26_img1.png" data-title="Campaign group detail view" data-desc-position="top"><img alt="Campaign group detail view" src="../assets/lab1_p26_img1.png"></a>
 </figure><p></p>
+</li>
+<li>
+<p>An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.</p>
+</li>
+</ol>
 </details>
 <p><strong>Node 1 — Dialer configuration:</strong></p>
 <details class="webex" open="open">
@@ -2911,6 +2917,7 @@
 <li>Click the <strong>Contact list source</strong> node.</li>
 <li>Set <strong>Select contact list source</strong> to <code>Manual file upload</code>.</li>
 <li>Set <strong>Select field mapping</strong> to <code>Bootcamp_field_mapping</code>.</li>
+<li>Set the contact expiration to 10 days.</li>
 <li>Click <strong>Save changes</strong>.</li>
 </ol>
 <div class="admonition note">
@@ -2955,8 +2962,15 @@
 <details class="webex" open="open">
 <summary>Configure Contact Attempt Strategy</summary>
 <ol>
-<li>Click the <strong>Contact attempts strategy</strong> node, then click <strong>Configure</strong>.</li>
-<li>Configure the following sections:</li>
+<li>
+<p>Click the <strong>Contact attempts strategy</strong> node, then click <strong>Configure</strong>.</p>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p28_img3.jpeg" data-title="Contact attempts strategy" data-desc-position="top"><img alt="Contact attempts strategy" src="../assets/lab1_p28_img3.jpeg"></a>
+</figure><p></p>
+</li>
+<li>
+<p>Configure the following sections:</p>
+</li>
 </ol>
 <p><strong>Section 1 — Call outcome sets:</strong></p>
 <table>
@@ -3000,15 +3014,11 @@
 </table>
 <p><strong>Section 4 — Sequential dialling:</strong></p>
 <p>Disable sequential dialling and set the amount of contact to <code>10</code>.</p>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p28_img3.jpeg" data-title="Contact attempts strategy" data-desc-position="top"><img alt="Contact attempts strategy" src="../assets/lab1_p28_img3.jpeg"></a>
-</figure><p></p>
-<p></p><figure markdown="">
+<p>Click <strong>Save</strong>.</p>
+<p></p><figure markdown="" style="width: 60%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p29_img1.jpeg" data-title="Contact attempts strategy full view" data-desc-position="top"><img alt="Contact attempts strategy full view" src="../assets/lab1_p29_img1.jpeg"></a>
 </figure><p></p>
-<ol>
-<li>Click <strong>Save</strong>.</li>
-</ol>
+<p>Back to the campaign flow canvas, click <strong>Save changes</strong> in the right panel. </p>
 </details>
 <p><strong>Node 6 — Suppression rule sets:</strong></p>
 <details class="webex" open="open">
@@ -3026,7 +3036,7 @@
 <details class="webex" open="open">
 <summary>Save Campaign</summary>
 <ol>
-<li>Click <strong>Save &amp; exit</strong> (top right of the campaign canvas).</li>
+<li>Click <strong>Save &amp; exit</strong> (top right of the campaign flow canvas).</li>
 <li>In the <strong>Save campaign</strong> dialog, fill in:<ul>
 <li><strong>Campaign name</strong>: <code>Bootcamp_campaign</code></li>
 <li><strong>P&amp;L meta-tag</strong>: <code>debt</code></li>
@@ -3047,10 +3057,14 @@
 <li>Click the <strong>⋮ Actions</strong> menu and select <strong>Activate</strong>.</li>
 <li>In the confirmation dialog, click <strong>Confirm</strong>.</li>
 </ol>
-<p>The campaign status will change to <strong>Running</strong>.</p>
+<p>The campaign status will change to <strong>Pending</strong> and then <strong>Running</strong>.</p>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p31_img1.png" data-title="Activate campaign" data-desc-position="top"><img alt="Activate campaign" src="../assets/lab1_p31_img1.png"></a>
 </figure><p></p>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Campaign status is not refreshed in real time, so make sure you click on the <strong>Refresh</strong> button to get the updated status of the campaign.</p>
+</details>
 </details>
 <hr>
 <h2 id="lab-19-upload-contact-list-and-test">Lab 1.9 - Upload Contact List and Test<a class="headerlink" href="#lab-19-upload-contact-list-and-test" title="Permanent link">¶</a></h2>
@@ -3059,9 +3073,21 @@
 <details class="webex" open="open">
 <summary>Upload Contact List</summary>
 <ol>
-<li>In the campaign list, click the <strong>⋮ Actions</strong> menu on <strong>Bootcamp_campaign</strong> and select <strong>Manage contact lists</strong>.</li>
-<li>Click <strong>Upload file to create contact list</strong>.</li>
-<li>In the <strong>Contact list from file upload</strong> dialog:<ul>
+<li>
+<p>In the campaign list, click the <strong>⋮ Actions</strong> menu on <strong>Bootcamp_campaign</strong> and select <strong>Manage contact lists</strong>.</p>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p31_img3.png" data-title="Manage contact lists panel" data-desc-position="top"><img alt="Manage contact lists panel" src="../assets/lab1_p31_img3.png"></a>
+</figure><p></p>
+</li>
+<li>
+<p>Click <strong>Upload file to create contact list</strong>.</p>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p31_img4.png" data-title="Contact list upload dialog" data-desc-position="top"><img alt="Contact list upload dialog" src="../assets/lab1_p31_img4.png"></a>
+</figure><p></p>
+</li>
+<li>
+<p>In the <strong>Contact list from file upload</strong> dialog:</p>
+<ul>
 <li><strong>Supported channels</strong>: Voice (pre-selected)</li>
 <li><strong>Contact list type</strong>: Static</li>
 <li><strong>Field mapping</strong>: <code>Bootcamp_field_mapping</code> (pre-selected)</li>
@@ -3070,21 +3096,17 @@
 <li><strong>In case of record issues</strong>: Skip the particular record</li>
 </ul>
 </li>
-<li>Click <strong>Save and proceed</strong>.</li>
-</ol>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p31_img3.png" data-title="Manage contact lists panel" data-desc-position="top"><img alt="Manage contact lists panel" src="../assets/lab1_p31_img3.png"></a>
-</figure><p></p>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p31_img4.png" data-title="Contact list upload dialog" data-desc-position="top"><img alt="Contact list upload dialog" src="../assets/lab1_p31_img4.png"></a>
-</figure><p></p>
-<p></p><figure markdown="">
+<li>
+<p>Click <strong>Save and proceed</strong>.</p>
+<p></p><figure markdown="" style="width: 70%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p32_img2.png" data-title="Contact list file upload form" data-desc-position="top"><img alt="Contact list file upload form" src="../assets/lab1_p32_img2.png"></a>
 <figcaption>Contact list upload form showing field mapping, file selection, and activation settings</figcaption>
 </figure><p></p>
+</li>
+</ol>
 </details>
 <h3 id="monitor-upload-status">Monitor Upload Status<a class="headerlink" href="#monitor-upload-status" title="Permanent link">¶</a></h3>
-<p>After uploading, the contact list will show a status of <strong>Uploading</strong>, then transition to <strong>Active</strong> once processed.</p>
+<p>After uploading, the contact list will show a status of <strong>Uploading</strong>, then transition to <strong>Active</strong> once processed. You can see the processing going through different status: <em>Processed, Valid, Eligible...</em>. Make sure you click <strong>Refresh</strong> to see the latest status.</p>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p32_img1.png" data-title="Contact list uploading status" data-desc-position="top"><img alt="Contact list uploading status" src="../assets/lab1_p32_img1.png"></a></p>
 </figure>
@@ -3119,7 +3141,7 @@
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configured an agent, team, and outdial queue in Webex Contact Center</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Created <code>firstName</code> and <code>lastName</code> Global Variables for customer data propagation</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Built the <code>Lab1_completed</code> test flow with a congratulatory TTS message</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Built the <code>AI_Agent_DebtCollection</code> test flow with a congratulatory TTS message</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Built the <code>Outbound_DebtCollection</code> campaign flow with CPA-based routing (AMD, Abandoned, Live Voice)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configured the outdial Entry Point (Channel) and Outdial ANI</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Set up Business Hours in Control Hub</li>
