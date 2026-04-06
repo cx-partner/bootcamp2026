@@ -28,8 +28,7 @@ In this lab we will focus on the transition from the Webex AI Agent to a fraud s
 
 In order to be able to complete this lab, you must: 
 
-* [x] Have your **Airtable repositories** completed for the *Customer* and *Transactions* data
-* [x] Have an **email digital channel** available in your tenant
+* [x] Have your **Airtable repositories** completed for the *Customer* and *Transactions* data.
 * [x] Have completed [Lab 2 - Automating Debt Collection](lab2_debt_ai_agent.md)
 
 --- 
@@ -52,15 +51,14 @@ In this lab you will perform the following tasks:
 Our AI Agent for debt collection (Alex) can perform multiple tasks (check balance, authentication, check recent transaction, etc), when transferring to a human agent, its essential to make sure the data collected by Alex is not lost during the transfer. We will setup a custom transfer action and pass data in the form of entities into the flow. 
 
 ???+ webex "Alex Setup"
-    1. From [Control Hub](https://admin.webex.com) navigate to **[Contact Center]** and under **Quick Links** click on the **Webex AI Agent** link. The Webex AI Agent studio will open in a new window. 
+    1. From [Control Hub](https://admin.webex.com) navigate to **Contact Center** and under **Quick Links** click on the **Webex AI Agent** link. The Webex AI Agent studio will open in a new window. 
     2. In the **AI Agent Studio**, select your *Finance Debt Collection Agent*
-    3. Click on **Actions**
-    4. Click on **Create new** and select **Transfer**
+    3. Click on **+ Add Actions** and select **Transfer**
     5. Fill in the **General information** of your action
         - **Action name**: <copy>fraud_transfer</copy>
-        - **Action description**: <copy>Action to transfer the call to a human agent when fraud is suspected</copy>
-        - **Transfer visibility**: You can either enable or disable the **Announce transfer** toggle
-    6. Select the **Add new entity** option, fill out the entity details with this information: 
+        - **Action description**: <copy>Action to transfer the call to a fraud specialist when a customer has concerns about a suspicious transaction</copy>
+        <!-- - **Transfer visibility**: You can either enable or disable the **Announce transfer** toggle. -->
+    6. Select the **+New input entity** option, fill out the entity details with this information: 
         
         | Entity Name | Type | Description | Example | Required |
         | :----- | :--- | :--- | :--- | :--- |
@@ -93,23 +91,23 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     1. Go to **Control Hub** -> **Contact Center** -> **Flows**
     2. Open your flow **AI_Agent_DebtCollection**
     3. First, we need to create the flow variables that will hold the context from Alex. Click on the **Global Flow Properties** panel (the gear icon in the top-right of the flow editor).
-    4. Under **Custom Flow Variables**, create the following variables:
+    4. Under **Custom Flow Variables**, click the option **Create flow variable** and create the following variables:
 
-    | Variable Name | Type | Default Value |
-    | :--- | :--- | :--- |
-    | <copy>`transfer_type`</copy> | `String` | <copy>`agent_transfer`</copy> |
-    | <copy>`ivr_verified`</copy> | `String` | <copy>`False`</copy> |
-    | <copy>`debt_balance`</copy> | `String` | <copy>`0`</copy> |
-    | <copy>`susp_trans`</copy> | `String` | <copy>`0`</copy> |
-    | <copy>`susp_vendor`</copy> | `String` | <copy>`Unknown`</copy> |
-    | <copy>`susp_date`</copy> | `String` | <copy>`N/A`</copy> |
+    | Variable Name | Type | Default Value | Agent Viewable | Desktop Label |
+    | :--- | :--- | :--- | :--- | :--- |
+    | <copy>`transfer_type`</copy> | `String` | <copy>`agent_transfer`</copy> | No | N/A |
+    | <copy>`ivr_verified`</copy> | `String` | <copy>`False`</copy> | Yes | <copy>`IVR Verified`</copy> | 
+    | <copy>`debt_balance`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Debt Balance`</copy> |
+    | <copy>`susp_trans`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Transaction Amount`</copy> | 
+    | <copy>`susp_vendor`</copy> | `String` | <copy>`Unknown`</copy> | Yes | <copy>`Transaction Vendor`</copy> |
+    | <copy>`susp_date`</copy> | `String` | <copy>`N/A`</copy> | Yes | <copy>`Transaction Date`</copy> |
 
-    5. Click **[Save]**
+    5. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
 
     ???+ gif "Create Flow Variables"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        ![Create Flow Variables](./assets/lab3_flow_variable.gif)
+        <figcaption>Creating flow variables</figcaption>
         </figure>
 
 ???+ webex "Extract AI Agent Context"
@@ -117,9 +115,9 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
 
     1. In your flow, click on the **Virtual Agent V2** node (named `DebtCollectionAgent`).
 
-        ???+ inline end "Before - Flow View"
+        ???+ inline end "Initial - Flow View"
             <figure markdown>
-            ![Before - Flow View](./assets/lab3_before_flow.png)
+            ![Initial - Flow View](./assets/lab3_before_flow.png)
             </figure>
     2. In the **Activity Settings** panel on the right, scroll down to the **Output Variables** section. You will see the variables that the AI Agent passes back upon escalation, the MetaData variable contains the transfer action details. 
     3. Delete the temporary **Play Message** node connected to the *Escalated* outlet.
@@ -141,15 +139,16 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
         * Case 1 = <copy>`agent_transfer`</copy>
         * Case 2 = <copy>`fraud_transfer`</copy>
         !!! info "Queue Setup"
-            In the next steps you wil be adding Queue Contact nodes to your flow, the queue you select is not important, as we simply need the call to be routed to an agent account that is available to receive your call. In addition,
-            make sure the agent is configured to use the Desktop Layout available here. 
+            In the next steps you will be adding **Queue Contact** nodes to your flow. The queue you select is not critical for this lab, we simply need the call to be routed to an agent that can receive your call.
     10. Add a **Queue Contact** node for the standard agent_transfer and rename it <copy>`Generic_Queue`</copy>. 
     11. Connect the **agent_transfer** path from the **Case** node to the **Generic_Queue** node. 
+    12. Click the **Generic_Queue** node and select any Queue in your tenant that routes to the agents you want to use for this lab. 
     12. Connect the **Generic_Queue** node output to the **End Flow** node. 
     12. Drag and drop a **Parse** node onto the canvas.
-    13. Connect the *fraud_transfer* path of the **Case** node to the new **Parse** node.
+    13. Connect the *fraud_transfer* path of the **Case** node to the new **Parse** node. 
     14. Click the **Parse** node and rename it to <copy>`Fraud_Context`</copy> 
     15. Map your custom variables to a JSON path location from the Virtual Agent MetaData, you need to add a new variable and path expression for each one:
+        
         * Input Variable = DebtCollection_Agent.MetaData
         * Content Type = JSON
         * Output Variable = ivr_verified
@@ -162,9 +161,9 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
         * Path Expression = <copy>`$.actions.fraud_transfer[0].input.susp_vendor`</copy>
         * Output Variable = susp_date
         * Path Expression = <copy>`$.actions.fraud_transfer[0].input.susp_date`</copy>
-        ???+ inline end "After - Flow View"
+        ???+ inline end "Final - Flow View"
             <figure markdown>
-            ![After - Flow View](./assets/lab3_after_flow.png)
+            ![Final - Flow View](./assets/lab3_after_flow.png)
             </figure>
         
         ???+ tip "Understanding the JSON Path"
@@ -178,11 +177,13 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
 
     16. Add a **Queue Contact** node for the custom **fraud_transfer** and rename it <copy>`Fraud_Queue`</copy>. 
     17. Connect the **Parse** node output to the **Fraud_Queue** node. Connect the **Fraud_Queue** node output to the **End Flow** node.
-    18. Click **Validate**, then **Save and Publish** the flow.
+    18. Click the **Fraud_Queue** node and select any Queue in your tenant that routes to the agents you want to use for this lab.
+    19. Connect the *Default* path of the **Case** node to the new **End Flow** node.
+    19. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
     ???+ gif "Extract AI Agent Context"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        ![Set Escalation Context](./assets/lab3_ai_context.gif)
+        <figcaption>Extract AI Agent Context</figcaption>
         </figure>
 
 
@@ -196,20 +197,20 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     2. Drag and drop the **Start Media Stream** node to the canvas. 
     3. Connect the **AgentAnswered** event node to the **Start Media Stream** node. 
     4. Drag and drop an **End Flow** node to the canvas and connect it to the output path of the **Start Media Stream** node.
-    5. Click **Validate**, then **Save and Publish** the flow.
+    5. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
     !!! info "RTT Conditional Enablement"
         In this lab we are enabling RTT for all the queue or agents involved in this flow, but you can also add a condition to control which queues within a flow get access to the RTT feature. You can find a step by step guide [HERE](https://help.webex.com/en-us/article/n5jhgdi/Enabling-media-streaming-for-specific-queues).
     ???+ gif "Configure RTT in Event Flows"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        ![Set Escalation Context](./assets/lab3_flow_RTT.gif)
+        <figcaption>Real-Time Trancript Flow Configuration</figcaption>
         </figure>
 
 ## Lab 3.3 Control Hub Configuration of Contact Center AI Assistant and Desktop Layout Requirements
  There are several features associated with the Contact Center AI Assistant (AutoCSAT, Summarization, Agent Wellness, Real-Time Transcription, Real-Time Assist and Topic Analytics), and all of these features can easily be enabled from Control Hub. 
  In this lab, we will focus on the **Summarization**, **Real-Time Transcript** and  **Real-Time Assist** configuration. 
 
-???+ webex "AI Assistant Configuration"
+???+ webex "WxCC AI Assistant Configuration"
     1. Open **Control Hub** and navigate to Contact Center > AI Assistant. 
     2. The first 2 options in this page will be for **Agent Wellbeing** and **AutoCSAT**, but this are not relevant for this lab. 
     3. Enable the **Generated Summaries**  toggle and select the check box for all of the different summarization types. 
@@ -219,17 +220,17 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
             Selecting **All queues** is the quickest option for a lab environment. In a production deployment, you would typically scope summarization to specific queues to control costs and ensure relevance.
     5. Enable the Real-Time Transcription and the Real-Time Assist toggles. 
     6. Before we can **Assign AI Assistant skills** to a queue, we need to create the skill in the AI Agent studio. We will cover this topic in lab 3.4. 
-    ???+ gif "Extract AI Agent Context"
+    ???+ gif "AI Assistant Configuration in Control Hub"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        ![Set Escalation Context](./assets/lab3_ai_assistant_config.gif)
+        <figcaption>Enabling Summarization, RTT, and RTA in Control Hub</figcaption>
         </figure>
 
-???+ webex "AI Assistant Configuration"
+???+ webex "Desktop Layout Setup"
     The AI Assistant is part of the default Desktop layout, however we understand that you might have your own layout that has been previously customized to include other widgets. 
     We will review the steps to make the necessary changes to a Desktop layout for the AI Assistant and the Real-Time Transcription window to show up on the Agent Desktop. 
     !!! download "Knowledge base document"
-        If you don't need to update your own Desktop Layout, download a template [HERE](./bcamp_files/Webex_Financial_Group_KB.docx) and ignore the next steps. 
+        If you don't need to update your own Desktop Layout, download a template <a href="./bcamp_files/Finance_Desktop.json" download="Finance_Desktop.json">HERE</a> and ignore the next steps. 
     
     1. Open your JSON layout file using a text editor (Sublime, Notepad++, etc) or IDE (VS Code, etc). 
     2. Find the area section for each relevant persona (agent, supervisor, agent-supervisor). Inside the area section, locate the advancedHeader array.
@@ -305,12 +306,6 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
               },
         ```
     6. Assign the Desktop Layout to the Team of the agent you will be using to receive the call. 
-    ???+ gif "Extract AI Agent Context"
-        <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
-        </figure>
-
 
 ## Lab 3.4 Setup an AI Assistant skill for Real-Time Assist.
 Now that the AI Assistant features are enabled we can proceed with the configuration of Real-Time Assist (RTA). This feature monitors the live transcription of the call and, when specific keywords or intents are detected, it presents the agent with suggestions from a KB or triggers automated actions. 
@@ -319,34 +314,182 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 ???+ webex "Configure Knowledge Base for Real-Time Assist"
     Before creating the AI Assistant skill, you need a Knowledge Base that contains the fraud-handling policies and procedures that the skill will reference when providing guidance to the agent.
 
-    1. In the **AI Agent Studio**, click on the **Knowledge** icon in the left navigation panel.
-    2. Click on **+ Create knowledge base** in the upper-right corner.
-    3. Enter a name for your KB: <copy>`FraudKB`</copy>, and enter a description: <copy>`Knowledge base for fraud handling policies and dispute resolution procedures.`</copy>
-    4. Click on **Create**
-    5. Add the relevant source(s) for your fraud handling documentation. You can use **Files** (upload a document with your fraud policies) or **Articles** (create content directly in the studio).
+    !!! download "Knowledge base document"
+        Download the Knowledge Base file from [HERE](./bcamp_files/Fraud_KB.docx).
 
-        ???+ tip "What to include in your Fraud KB"
-            Your Knowledge Base should include information such as:
+    1. In the **AI Agent Studio**, click on the **Knowledge** icon in the left navigation panel.
+    2. Click the **+ Create Knowledge base** option on the top right corner. 
+    3. Enter the name <copy>`Fraud_KB`</copy> and a brief description. 
+    2. Click on **Add source** in the top-right and select **Files**
+    3. Drag and drop or use the **Add File** option to upload the `Fraud_KB.docx` document.
+    4. Click on **Process Files**
+    5. The system will take some minutes to process the file. Once completed, you can see your KB file under the **Processed files** section in the next window. Meanwhile, click on **Close and keep processing** to return to your Knowledge Base configuration page. 
+
+        ???+ tip "What to include in a Fraud KB"
+            The Knowledge Base should include information such as:
             
-            - Fraud dispute procedures and timelines
-            - Card locking and replacement policies
-            - Customer communication guidelines during fraud scenarios
-            - Escalation paths for high-value fraud cases
-            - Regulatory requirements for fraud reporting
+            - Fraud dispute procedures and timelines.
+            - Card locking and replacement policies.
+            - Customer communication guidelines during fraud scenarios.
+            - Escalation paths for high-value fraud cases.
+            - Regulatory requirements for fraud reporting.
+
+            Consider this if you want to create your own Fraud KB. 
 
     6. Wait for the source to reach the **Processed** state before proceeding.
 
     ???+ gif "Configure Fraud Knowledge Base"
         <figure markdown>
-        ![Fraud KB](./assets/lab3_fraud_kb.gif)
+        ![Fraud KB](./assets/lab3_ai_assistant_kb.gif)
         <figcaption>Creating a Knowledge Base for fraud handling policies</figcaption>
         </figure>
 
-???+ webex "Configure Fullfilment actions for Real-Time Assist"
-    ???+ gif "Extract AI Agent Context"
+???+ webex "Configure Fulfillment Actions for Real-Time Assist"
+
+    In this section, you will build the Webex Connect flow that the AI Assistant's `open_case` action will trigger. This flow receives the Customer ID and Transaction ID from the AI Assistant, generates a unique Case ID, and creates a new fraud case record in your Airtable base.
+
+    1. Go to your *Webex Finance Bootcamp* Service in Webex Connect
+    2. Click on **Flows** to create your new flow
+        - Click on **Create Flow**
+        - Give your flow a name <copy>`open_case`</copy>
+        - Select **New Flow** under **Method**
+        - Select **Start from Scratch**
+        - Click on **Create**
+
+    3. Configure the **Start Node** to trigger the flow from the AI Agent
+
+        - Select the **AI Agent Event**
+        - Set the **SAMPLE JSON** to the below one
+            ```json
+            {
+                "CustomerID": "CUST-001",
+                "TransactionID": ""
+            }
+            ```
+
+        ???+ info
+            The variable names in the JSON sample must match the corresponding entity names in the AI Assistant skill action (`CustomerID` and `TransactionID`).
+
+        - Click on **[Parse]**
+        - Click on **[Save]**
+        - Save the flow
+
+    4. Next, we need to generate a unique Case ID for the fraud case. We will use an **Evaluate** node.
+
+        - Drag and drop an **Evaluate** node to the canvas beside the **Start Node**
+        - Connect the green outlet of the **Start Node** to the new **Evaluate** node.
+        - Double click on the **Evaluate** node
+        - Rename the node to <copy>`Generate Case ID`</copy>
+        - Copy the below JavaScript code in the code editor of the node:
+
+            ```javascript
+            var randomId = Math.floor(100000 + Math.random() * 900000);
+
+            // This variable can be used in subsequent nodes
+            caseID = randomId.toString();
+
+            1;
+            ```
+
+            ???+ info
+                This code generates a random 6-digit number between 100000 and 999999 and converts it to a string. The resulting `caseID` variable will be passed to the Airtable API in the next step to create the fraud case record.
+
+        - Set the **Script Output** value to `1`
+        - Set the **Branch Name** value to <copy>`Success`</copy>
+        - Click on **[Save]**
+        - Save the flow
+
+
+    5. Now we will create the fraud case record in your Airtable base using an **HTTP Request** node.
+
+        ???+ Important
+            This step uses the Airtable API to create a new record in a **FraudCases** table. Before proceeding, ensure you have:
+
+            - A **FraudCases** table created in your Airtable base with the following fields: `CaseID` (Single line text), `Status` (Single line text), `CustomerID` (Link to Customers table), and `TransactionID` (Link to Transactions table).
+            - Your [Airtable API](https://airtable.com/developers/web/api/introduction) base ID handy.
+            - Your [Personal Access Token](https://airtable.com/create/tokens) created with write permissions.
+
+        - Drag and drop an **HTTP Request** node to the canvas beside the **Evaluate** node
+        - Connect the green outlet of the **Evaluate** node to the new **HTTP Request** node.
+        - Double click on the **HTTP Request** node
+        - Rename the node to <copy>`Create Fraud Case`</copy>
+        - Fill in the parameters as follows:
+
+            | Parameter | Value | Notes |
+            | :--- | :--- | :--- |
+            | **Method** | `POST` | |
+            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/<yourBaseID>/FraudCases`</copy> | Replace `<yourBaseID>` with the value of your Airtable Base |
+            | **Header** | <copy>`Authorization`</copy> | |
+            | **Value** | `Bearer <yourPersonalToken>` | Enter `yourPersonalToken` from [Airtable](https://airtable.com/create/tokens) |
+            | **Header** | <copy>`Content-Type`</copy> | Click **+ Add Another Header** |
+            | **Value** | <copy>`application/json`</copy> | |
+            | **Body** | See below | |
+            | **Connection Timeout** | <copy>`10000`</copy> | |
+            | **Request Timeout** | <copy>`10000`</copy> | |
+
+        - Copy the following into the **Body** field:
+
+            ```json
+            {
+              "fields": {
+                "CaseID": "$(caseID)",
+                "Status": "New",
+                "CustomerID": [
+                  "$(n2.aiAgent.CustomerID)"
+                ],
+                "TransactionID": [
+                  "$(n2.aiAgent.TransactionID)"
+                ]
+              },
+              "typecast": true
+            }
+            ```
+
+            ???+ warning
+                Make sure the variables `$(n2.aiAgent.CustomerID)`, and `$(n2.aiAgent.TransactionID)` correspond to the correct node numbers in your flow. You can verify them by selecting the variables from the **Input Variables** right panel:
+                
+                - `$(n2.aiAgent.CustomerID)` → from the **Start** node
+                - `$(n2.aiAgent.TransactionID)` → from the **Start** node
+
+            ???+ info "Why `typecast: true`?"
+                The `typecast` parameter tells the Airtable API to automatically convert the input values to match the field types in your table. This is particularly important for the `CustomerID` and `TransactionID` fields, which are **Link to another record** fields in Airtable. By passing them as arrays and enabling typecast, Airtable will correctly resolve the record links.
+
+        - Click on **[Save]**
+
+        - To complete the node, click on the green outlet at the right and drag it to the canvas. Release it to open the **End** dialogue:
+
+            - Set the **Node Event** value to `onSuccess`
+            - Set the **Flow Result** value to `101 - Successfully completed flow [Success]`
+            - Click on **[Save]**
+
+        - Save the flow!
+
+    6. To finish the flow, pass the Case ID back to the AI Assistant through the **Flow Outcomes**.
+
+        ???+ inline end "Final - Flow View"
+            <figure markdown>
+            ![Final - Flow View](./assets/lab3_open_case_view.png)
+            </figure>
+
+        - Click on the :fontawesome-solid-gear: button at the top right of the flow editor.
+        - Click on the **Flow Outcomes** tab
+        - Open the `Last Execution Status` Outcome. The `Notify AI Agent` radio button is enabled by default for the start node with `AI Agent` as the trigger.
+        - Click on **+ Add New** to add the Case ID variable:
+
+            | Key | Value |
+            | :--- | :--- |
+            | <copy>`Response`</copy> | <copy>`$(n4.http.responseBody)`</copy> |
+
+        - Click on **[Save]**
+        - Save the flow!!
+
+    Your **open_case** flow is now completed.
+    Before leaving the flow editor, make sure you **[Make Live]** the flow, otherwise it will not be visible to the AI Agent Studio.
+
+    ???+ gif "Complete open_case Flow"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        ![Complete Flow](./assets/lab3_open_case_action.gif)
+        <figcaption>The completed open_case fulfillment flow</figcaption>
         </figure>
 
 ???+ webex "Configure Real-Time Assist"
@@ -440,8 +583,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     2. Scroll down to the **Real-Time Assist** section.
     3. Click on **Assign AI Assistant Skills**.
     4. From the available skills, select **Counter_Fraud_Assistant**.
-    4. Select the queue you are using for fraud escalation (e.g., `Fraud_Queue`).
-    5. 
+    5. Select the queue you are using for fraud escalation (e.g., `Fraud_Queue`).
     6. Click **[Save]**.
 
     ???+ info "Skill-to-Queue Mapping"
@@ -449,7 +591,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 
     ???+ gif "Assign Skill to Queue"
         <figure markdown>
-        ![Assign Skill](./assets/lab3_assign_skill.gif)
+        ![Assign Skill](./assets/lab3_assistant_skill_queue.gif)
         <figcaption>Assigning the Counter Fraud Assistant skill to the Fraud Queue</figcaption>
         </figure>
 

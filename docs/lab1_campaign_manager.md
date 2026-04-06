@@ -292,7 +292,7 @@ This event fires when the dialler receives a CPA result for an outbound call att
     3. Configure the **Go To** node:
         - **Activity Label**: `GoTo_AIAgent`
         - **Flow type**: `Static Flow`
-        - **Flow**: `Lab1_completed` *(this will be updated to point to the AI Agent flow in Lab 2)*
+        - **Flow**: `AI_Agent_DebtCollection` *(this will be used in Lab 2)*
         - **Version Label**: `Latest`
     4. Under **Flow Variable Mapping**, map the global variables from the current flow to the destination flow:
 
@@ -306,7 +306,7 @@ This event fires when the dialler receives a CPA result for an outbound call att
 
     <figure markdown>
     ![GoTo AIAgent node configuration](./assets/lab1_p10_img1.png)
-    <figcaption>Go To node pointing to the Lab1_completed flow with firstName and lastName mapped across flows</figcaption>
+    <figcaption>Go To node pointing to the AI_Agent_DebtCollection flow with firstName and lastName mapped across flows</figcaption>
     </figure>
 
 **Event 2: AgentAnswered**
@@ -736,14 +736,26 @@ Wrap-up codes defined in Control Hub are synced to Campaign Manager. You can con
 
 ???+ webex "Configure Wrap-up Code Set"
 
-    1. Navigate to **Voice campaigns administration** → **Wrap-up code sets**.
-    2. Locate the wrap-up codes synced from Control Hub. The `debt` wrap-up code created earlier should appear.
-    3. For this lab, **keep the default configuration** for the `debt` wrap-up code.
+    1. Navigate to **Voice campaigns administration** → **Wrap-up code sets**. Create a new set.
 
-    <figure markdown>
-    ![Wrap-up code set - debt](./assets/lab1_p23_img2.png)
-    <figcaption>Wrap-up code sets section showing the synced debt wrap-up code from Control Hub</figcaption>
-    </figure>
+        <figure markdown>
+        ![Wrap-up code set - debt](./assets/wuset_create.png)
+        </figure>
+
+        <figure markdown>
+        ![Wrap-up code set 2 - debt](./assets/wuset_create2.png)
+        </figure>
+
+    2. Click on the new set and then **Add wrap-up codes** Locate the wrap-up codes synced from Control Hub. The `debt` wrap-up code created earlier should appear, select it.
+    
+        <figure markdown>
+        ![Wrap-up code 1 - debt](./assets/wucode_create.png)
+        </figure>
+
+        <figure markdown>
+        ![Wrap-up code 2 - debt](./assets/wucode_create2.png)
+        </figure>
+
 
     For more information, refer to the [Wrap-up code sets documentation](https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets).
 
