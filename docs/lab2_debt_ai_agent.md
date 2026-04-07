@@ -1803,7 +1803,7 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
         - In the *Virtual Agent* drop down menu, select your AI Agent (Alex). 
         - In the *State Event* section, we will make sure the required data points are passed on to the AI Agent. Copy the below json structure in the *Event Data* field:
 
-            ```jason
+            ```json
             {
                 "phoneNumber": '{{NewPhoneContact.DNIS}}', 
                 "firstName":'{{firstName}}', 
