@@ -509,9 +509,11 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     If the AGENT has acknowledged the CUSTOMER's intent but has not yet asked for the specific required data, do not repeat or pre-empt the suggestion. Allow the conversation to progress.
     When calling tools: Use ONLY values the customer explicitly provided. NEVER infer, construct, extract digits from other fields, use example values, add UNKNOWN or use default/placeholder values (like "00:00", "0", etc.). Missing required parameter = ASK user. Missing optional parameter = OMIT it entirely. NO exceptions.
 
+    The CustomerID format is CUST-001, agent only needs to collect the last 3 digits. 
+
     ## Collect Recent Transactions
 
-    1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call, then you have to use the [fetch_transactions] action to get the recent transactions. 
+    1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call. Use the CUSTOMER ID  to execute [fetch_transactions] action to get the recent transactions. 
     2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
        - Transaction Amount
        - Transaction Vendor
@@ -522,9 +524,9 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     ## Identify Fraudulent Transaction
 
     1. **Guide the AGENT**: Confirm if the transaction identified as suspicious could have been made by someone else with access to the account or if the CUSTOMER recognizes the amount but not the vendor. Prompt the agent to ask the customer if they have any recent transactions that they do recognize.
-    2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened. 
-    3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, ask them to provide a reason and look for alternative options. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
-    4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID. Ensure the agent communicates the case ID to the customer and explains its significance.
+    2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Guide the agent to inform the customer that opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened.
+    3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, guide the agent to ask them to provide a reason and look for alternative options.. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
+    4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID that is returned by the action. Guide the agent to share the case ID to the customer and explain its important to keep track of their dispute.
 
     ### Additional Considerations
 
@@ -541,9 +543,9 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     9. Under **Slot filling** click on **[New input entity]**
     10. In the **Add a new input entity** dialogue window, populate: 
 
-        | Entity Name | Type | Description | Example | Required | Agent Review | Display Name |
-        | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-        | <copy>`CustomerID`</copy> | `String` | <copy>CustomerID provided by the customer or agent.</copy> | <copy>`101010`</copy> |`Required` | `Yes`| <copy>`Customer ID`</copy> |
+        | Entity Name | Type | Value | Description | Example | Display Name | Required | Agent Review | 
+        | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`CustomerID`</copy> | `regex` | <copy>`CUST-\d{3}`</copy> | <copy>CustomerID provided by the customer or agent during the call. Always starts with "CUST-", only need to collect the last 3 digits.</copy> | <copy>`CUST-001`</copy> | Customer ID | `Yes` | `Yes` |
         ???+ info "Agent Review"
             Setting **Agent Review** to `Yes` means the AI Assistant will present the value to the human agent for confirmation before executing the action. This is a critical safety mechanism—it ensures the agent can verify the Customer ID before a database query is made, preventing accidental lookups on the wrong account.
     11. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
@@ -560,20 +562,20 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     14. Under **Slot filling** click on **[New input entity]**
     15. In the **Add a new input entity** dialogue window, populate: 
 
-        | Entity Name | Type | Description | Example | Required | Agent Review |
-        | :--- | :--- | :--- | :--- | :--- | :--- |
-        | <copy>`CustomerID`</copy> | `String` | <copy>`CustomerID provided by the customer or agent.`</copy> | <copy>`101010`</copy> |`Not Required` | `No`|
-        | <copy>`TransactionID`</copy> | `String` | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`101010`</copy> |`Not Required` | `No`|
+        | Entity Name | Type | Value | Description | Example | Required | Agent Review |
+        | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`CustomerID`</copy> | `regex` | <copy>`CUST-\d{3}`</copy> | <copy>`CustomerID provided by the customer or agent.`</copy> | <copy>`CUST-020`</copy> |`Yes` | `No`|
+        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`101010`</copy> | `Yes` | `No`|
         ???+ warning "TransactionID Entity Description"
             Pay close attention to the description of the `TransactionID` entity. The instruction **"Do not request this value from the Agent or Customer"** is a guardrail embedded directly into the entity definition. This tells the LLM to extract the TransactionID from the output of the previous `fetch_transactions` action rather than asking the human agent to provide it manually. This reduces friction and prevents errors.
     16. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
         - Select the Webex Connect Service `Webex Finance Bootcamp`
         - Select the flow `open_case`
     17. Click on **Save**
-    ???+ gif "Extract AI Agent Context"
+    ???+ gif "AI Assistant Skill Configuration"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_set_escalation_context.gif)
-        <figcaption>Mapping AI Agent output to flow variables</figcaption>
+        ![Set Escalation Context](./assets/lab3_ai_assistant_skill.gif)
+        <figcaption>AI Assistant Skill Configuration</figcaption>
         </figure>
 
 ???+ webex "Assign AI Assistant Skill to a Queue"
@@ -614,7 +616,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     2. **Authenticate with Alex**: Go through the standard name verification and PIN authentication flow.
     3. **Trigger the Fraud Scenario**: Once authenticated, ask Alex about your recent transactions. When Alex presents them, say something like:
         
-        <copy>"I don't recognize that transaction. I think my card has been stolen."</copy>
+        <copy>"I don't recognize that transaction."</copy>
 
     4. **Observe Alex's Behavior**: Alex should:
         - Acknowledge the concern.
