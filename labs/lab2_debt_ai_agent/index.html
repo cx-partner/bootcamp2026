@@ -4040,11 +4040,11 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <li>In the <em>Virtual Agent</em> drop down menu, select your AI Agent (Alex). </li>
 <li>
 <p>In the <em>State Event</em> section, we will make sure the required data points are passed on to the AI Agent. Copy the below json structure in the <em>Event Data</em> field:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>{
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    "phoneNumber": '{{NewPhoneContact.DNIS}}', 
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    "firstName":'{{firstName}}', 
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>    "lastName":'{{lastName}}'
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>}
+<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="nt">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="p">{{</span><span class="err">NewPho</span><span class="kc">ne</span><span class="err">Co</span><span class="kc">nta</span><span class="err">c</span><span class="kc">t</span><span class="err">.DNIS</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="err">las</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">}</span>
 </span></code></pre></div>
 </li>
 </ul>

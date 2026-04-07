@@ -2220,26 +2220,28 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>If the AGENT has acknowledged the CUSTOMER's intent but has not yet asked for the specific required data, do not repeat or pre-empt the suggestion. Allow the conversation to progress.
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>When calling tools: Use ONLY values the customer explicitly provided. NEVER infer, construct, extract digits from other fields, use example values, add UNKNOWN or use default/placeholder values (like "00:00", "0", etc.). Missing required parameter = ASK user. Missing optional parameter = OMIT it entirely. NO exceptions.
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>## Collect Recent Transactions
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>The CustomerID format is CUST-001, agent only needs to collect the last 3 digits. 
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call, then you have to use the [fetch_transactions] action to get the recent transactions. 
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>   - Transaction Amount
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>   - Transaction Vendor
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>   - Transaction City
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>   - Transaction Date
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>3. **Error Handling**: If there are no transactions available, instruct the AGENT to check the banking system manually. If the banking system is unresponsive, advise the agent to escalate the issue.
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>## Identify Fraudulent Transaction
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>## Collect Recent Transactions
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call. Use the CUSTOMER ID  to execute [fetch_transactions] action to get the recent transactions. 
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>   - Transaction Amount
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>   - Transaction Vendor
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>   - Transaction City
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>   - Transaction Date
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>3. **Error Handling**: If there are no transactions available, instruct the AGENT to check the banking system manually. If the banking system is unresponsive, advise the agent to escalate the issue.
 </span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>1. **Guide the AGENT**: Confirm if the transaction identified as suspicious could have been made by someone else with access to the account or if the CUSTOMER recognizes the amount but not the vendor. Prompt the agent to ask the customer if they have any recent transactions that they do recognize.
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened. 
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, ask them to provide a reason and look for alternative options. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
-</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID. Ensure the agent communicates the case ID to the customer and explains its significance.
-</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
-</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>### Additional Considerations
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>## Identify Fraudulent Transaction
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>1. **Guide the AGENT**: Confirm if the transaction identified as suspicious could have been made by someone else with access to the account or if the CUSTOMER recognizes the amount but not the vendor. Prompt the agent to ask the customer if they have any recent transactions that they do recognize.
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>2. **CUSTOMER confirms the transaction is fraudulent**: Explain to the AGENT that they need to open a dispute case to investigate the transaction. Guide the agent to inform the customer that opening the case will automatically lock the CUSTOMER's credit card and ship a new one to the address on file. The AGENT needs to get confirmation from the CUSTOMER before the case is opened.
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>3. **Once the CUSTOMER confirms**: Execute the [open_case] action. **If the CUSTOMER declines**: If the CUSTOMER has a reason to decline their card getting locked, guide the agent to ask them to provide a reason and look for alternative options.. Shipment of the credit card can be expedited from 5 days to 2 days in case of travel or other time sensitive activities.
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>4. **Provide Case ID**: Once the case is opened, provide the AGENT with the case ID that is returned by the action. Guide the agent to share the case ID to the customer and explain its important to keep track of their dispute.
 </span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
-</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>- **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>### Additional Considerations
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>- **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
 </span></code></pre></div></li>
 <li>Go to the <strong>Knowledge</strong> tab and select the <strong>FraudKB</strong> you created. </li>
 <li>Navigate to the <strong>[Actions]</strong> tab and click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
@@ -2258,22 +2260,24 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <tr>
 <th style="text-align: left;">Entity Name</th>
 <th style="text-align: left;">Type</th>
+<th style="text-align: left;">Value</th>
 <th style="text-align: left;">Description</th>
 <th style="text-align: left;">Example</th>
+<th style="text-align: left;">Display Name</th>
 <th style="text-align: left;">Required</th>
 <th style="text-align: left;">Agent Review</th>
-<th style="text-align: left;">Display Name</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><copy><code>CustomerID</code></copy></td>
-<td style="text-align: left;"><code>String</code></td>
-<td style="text-align: left;"><copy>CustomerID provided by the customer or agent.</copy></td>
-<td style="text-align: left;"><copy><code>101010</code></copy></td>
-<td style="text-align: left;"><code>Required</code></td>
+<td style="text-align: left;"><code>regex</code></td>
+<td style="text-align: left;"><copy><code>CUST-\d{3}</code></copy></td>
+<td style="text-align: left;"><copy>CustomerID provided by the customer or agent during the call. Always starts with "CUST-", only need to collect the last 3 digits.</copy></td>
+<td style="text-align: left;"><copy><code>CUST-001</code></copy></td>
+<td style="text-align: left;">Customer ID</td>
 <td style="text-align: left;"><code>Yes</code></td>
-<td style="text-align: left;"><copy><code>Customer ID</code></copy></td>
+<td style="text-align: left;"><code>Yes</code></td>
 </tr>
 </tbody>
 </table>
@@ -2306,6 +2310,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <tr>
 <th style="text-align: left;">Entity Name</th>
 <th style="text-align: left;">Type</th>
+<th style="text-align: left;">Value</th>
 <th style="text-align: left;">Description</th>
 <th style="text-align: left;">Example</th>
 <th style="text-align: left;">Required</th>
@@ -2315,18 +2320,20 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <tbody>
 <tr>
 <td style="text-align: left;"><copy><code>CustomerID</code></copy></td>
-<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><code>regex</code></td>
+<td style="text-align: left;"><copy><code>CUST-\d{3}</code></copy></td>
 <td style="text-align: left;"><copy><code>CustomerID provided by the customer or agent.</code></copy></td>
-<td style="text-align: left;"><copy><code>101010</code></copy></td>
-<td style="text-align: left;"><code>Not Required</code></td>
+<td style="text-align: left;"><copy><code>CUST-020</code></copy></td>
+<td style="text-align: left;"><code>Yes</code></td>
 <td style="text-align: left;"><code>No</code></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>TransactionID</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;">NA</td>
 <td style="text-align: left;"><copy><code>**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.</code></copy></td>
 <td style="text-align: left;"><copy><code>101010</code></copy></td>
-<td style="text-align: left;"><code>Not Required</code></td>
+<td style="text-align: left;"><code>Yes</code></td>
 <td style="text-align: left;"><code>No</code></td>
 </tr>
 </tbody>
@@ -2346,10 +2353,10 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Click on <strong>Save</strong></li>
 </ol>
 <details class="gif" open="open">
-<summary>Extract AI Agent Context</summary>
+<summary>AI Assistant Skill Configuration</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab3_set_escalation_context.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="./assets/lab3_set_escalation_context.gif"></a>
-<figcaption>Mapping AI Agent output to flow variables</figcaption>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_ai_assistant_skill.gif" data-title="Set Escalation Context" data-desc-position="top"><img alt="Set Escalation Context" src="../assets/lab3_ai_assistant_skill.gif"></a>
+<figcaption>AI Assistant Skill Configuration</figcaption>
 </figure><p></p>
 </details>
 </details>
@@ -2397,7 +2404,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li><strong>Authenticate with Alex</strong>: Go through the standard name verification and PIN authentication flow.</li>
 <li>
 <p><strong>Trigger the Fraud Scenario</strong>: Once authenticated, ask Alex about your recent transactions. When Alex presents them, say something like:</p>
-<p><copy>"I don't recognize that transaction. I think my card has been stolen."</copy></p>
+<p><copy>"I don't recognize that transaction."</copy></p>
 </li>
 <li>
 <p><strong>Observe Alex's Behavior</strong>: Alex should:</p>
