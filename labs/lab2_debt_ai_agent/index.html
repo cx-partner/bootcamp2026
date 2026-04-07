@@ -1591,8 +1591,8 @@
 <li><strong>Secure Verification:</strong> Confirming the identity of the recipient and obtaining consent for an authentication check.</li>
 <li><strong>Debt Resolution:</strong> Informing customers of their balance and maturity dates, then negotiating total or partial payments.</li>
 <li><strong>Financial Execution:</strong> Creating real-time payment sessions via <strong>NovaPay</strong> and confirming completion to update the Debt Database.</li>
-<li><strong>Account Support:</strong> Providing 7-day transaction histories and general account details (Balance, Rewards, etc.) upon request.</li>
-<li><strong>Fraud Safeguarding:</strong> Automatically detecting disputes or suspicious activity and escalating the call to a Human Specialist while recording critical data points (Transaction ID, Vendor, Amount).</li>
+<li><strong>Account Support:</strong> Providing transaction histories and general account details (Balance, Rewards, etc.) upon request.</li>
+<li><strong>Fraud Safeguarding:</strong> Automatically detecting disputes or suspicious activity and escalating the call to a Human Specialist (this will be done in Lab3) while recording critical data points (Transaction ID, Vendor, Amount).</li>
 </ol>
 </details>
 <details class="tool" open="open">
@@ -1767,20 +1767,33 @@
 <p>To transform a technical interaction into a natural dialogue, you must fine-tune how Alex speaks and listens. Under the <strong>Conversation</strong> tab, you have four primary levers to control the "human" feel of your debt collection agent:</p>
 <ol>
 <li>
-<p>Persona and Presence (Voice &amp; Style)
-The <em>Response Style</em> dictates the agent's "thinking" behavior. Choosing Active ensures the agent provides immediate verbal cues like "I understand" or "Got it," which is essential in debt collection to reassure the customer they are being heard. Pairing this with <em>Disfluencies</em> (fillers like "um") and a calibrated Speaking Rate (0.7 to 1.2) creates a relatable, less robotic persona.</p>
+<p>Language</p>
+<p>Language support depends upon the selected AI Engine. An AI Engine brings together speech technology (ASR/TTS), Large Language Models (LLMs), intelligent guardrails, and expertly crafted system prompts. </p>
+<p>Autonomous AI agent currently offers two AI engine selection options:</p>
+<ul>
+<li>Webex AI Pro 1.0: Ideal for most contact center use cases with global language support and human-like interactions. To view the list of supported languages and voices, see the <a href="https://help.webex.com/en-us/article/pdef2d/Supported-languages-for-Scripted-AI-Agents">Supported languages and voices</a> article. </li>
+</ul>
+<p><strong>Note that as of today, only English is GA, while there other 50+ languages currently in beta.</strong> </p>
+<ul>
+<li>Webex AI Pro-US 1.0: Perfect for scenarios requiring an enhanced human-like conversational experience, available in English only.</li>
+</ul>
+<p>Considering all the labs have been built in english, we recommend you to use English as a Language and select an <em><code>en-xxx</code></em> voice. A recommended homework is to enhanced the use case to handle other languages. </p>
 </li>
 <li>
-<p>Recognition Precision (Custom <em>Vocabulary</em>)
-Technical jargon or specific brand names like "NovaPay" or "QDF" can sometimes trip up standard AI. Use the Custom <em>Vocabulary</em> field to program up to 100 industry-specific terms, ensuring the agent correctly identifies intent even when customers use niche terminology.</p>
+<p>Persona and Presence (Voice &amp; Style)</p>
+<p>The <em>Response Style</em> dictates the agent's "thinking" behavior. Choosing Active ensures the agent provides immediate verbal cues like "I understand" or "Got it," which is essential in debt collection to reassure the customer they are being heard. Pairing this with <em>Disfluencies</em> (fillers like "um") and a calibrated Speaking Rate (0.7 to 1.2) creates a relatable, less robotic persona.</p>
 </li>
 <li>
-<p>Fluidity and Patience (<em>Delays &amp; Interruptions</em>)
-Managing the "silence" is critical. The <em>End of Speech Sensitivity</em> slider determines how quickly Alex responds once a customer stops talking. For high-stress calls, a Relaxed setting (closer to 2000 ms) prevents the agent from cutting the customer off. The <em>Caller turn timeout</em> defines the specific time the system waits before checking if the customer has finished speaking. This setting helps to prevent the agent from "clipping" the caller. In a debt collection scenario, customers often pause to look up credit card details or account numbers; a slightly higher timeout (closer to 3000 ms) ensures Alex doesn't interrupt them while they are searching for information. Additionally, enabling <em>Allow customer to interrupt</em> is vital for empathy, allowing Alex to stop speaking the moment the customer voice-activates.</p>
+<p>Recognition Precision (Custom <em>Vocabulary</em>)</p>
+<p>Technical jargon or specific brand names like "NovaPay" or "QDF" can sometimes trip up standard AI. Use the Custom <em>Vocabulary</em> field to program up to 100 industry-specific terms, ensuring the agent correctly identifies intent even when customers use niche terminology.</p>
 </li>
 <li>
-<p>Technical Guardrails (Timeouts &amp; <em>DTMF</em>)
-Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> ensures the agent re-engages if a customer goes silent, while <em>DTMF</em> settings provide a fallback for secure data entry, allowing customers to use their keypad to signal the end of a digit string (e.g., using #) during the authentication phase. </p>
+<p>Fluidity and Patience (<em>Delays &amp; Interruptions</em>)</p>
+<p>Managing the "silence" is critical. The <em>End of Speech Sensitivity</em> slider determines how quickly Alex responds once a customer stops talking. For high-stress calls, a Relaxed setting (closer to 2000 ms) prevents the agent from cutting the customer off. The <em>Caller turn timeout</em> defines the specific time the system waits before checking if the customer has finished speaking. This setting helps to prevent the agent from "clipping" the caller. In a debt collection scenario, customers often pause to look up credit card details or account numbers; a slightly higher timeout (closer to 3000 ms) ensures Alex doesn't interrupt them while they are searching for information. Additionally, enabling <em>Allow customer to interrupt</em> is vital for empathy, allowing Alex to stop speaking the moment the customer voice-activates.</p>
+</li>
+<li>
+<p>Technical Guardrails (Timeouts &amp; <em>DTMF</em>)</p>
+<p>Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> ensures the agent re-engages if a customer goes silent, while <em>DTMF</em> settings provide a fallback for secure data entry, allowing customers to use their keypad to signal the end of a digit string (e.g., using #) during the authentication phase. </p>
 </li>
 </ol>
 <p>In this lab we are not prescripting the conversational parameters to use. We leave you to play with them and evaluate the conversational effect they produce. </p>
@@ -1796,7 +1809,7 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <li><em>Articles</em>: editable documents in the AI Agent Studio</li>
 <li><em>Websites</em>: website content using web URLs</li>
 </ul>
-<p>In this lab, we will use <em>Files</em> and <em>Websites</em> ingestion. This might be a common situation when, for instance, we need to feed the AI Agent with specific information and FAQ material (this would be via an ad-hoc file) and also provide him with customer facing information available through a web site (in our case, <strong>the Webex Bank Rewards Program</strong>)</p>
+<p>In this lab, we will use <em>Files</em> and <em>Websites</em> ingestion. This might be a common situation when, for instance, we need to feed the AI Agent with specific information and FAQ material (this would be via an ad-hoc file) and also provide him with customer facing information available through a web site (in our case, the <a href="https://cx-partner.github.io/bootcamp2026/labs/bcamp_files/Webex_Bank_Rewards_Program/">Webex Bank Rewards Program</a>.</p>
 <details class="webex" open="open">
 <summary>Web ingestion for the Knowledge-Base Configuration</summary>
 <p>Website extraction uses automated crawling techniques to browse the internet to find and download the relevant content from web pages and transform it into knowledge that your AI agents can access. Crawling begins with the starting URL that you provide. Based on the depth and the page limits that you specify, the crawler application navigates from the home page, visits the websites, and fetches the required content based on the URL patterns and sub-domain definitions.</p>
@@ -1810,8 +1823,8 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <li>
 <p>In the next page, under <strong>Source details</strong> enter:</p>
 <ul>
-<li>a <strong>Source name</strong>: <copy> <code>Webex Bank Rewards Program</code></copy>, and </li>
-<li>a <strong>Description</strong>: <copy> <code>Web based Rewards Program T&amp;C</code> </copy></li>
+<li>a <strong>Source name</strong>: <copy><code>Webex Bank Rewards Program</code></copy>, and </li>
+<li>a <strong>Description</strong>: <copy><code>Web based Rewards Program T&amp;C</code></copy></li>
 </ul>
 </li>
 <li>
@@ -1850,13 +1863,17 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <li>In the Knowledge Base configuration page you left in the previous step, click on <strong>[Add source]</strong> in the top-right and select <strong>Files</strong></li>
 <li>Drag and drop or <strong>[Add]</strong> the <code>Webex_Financial_Group_KB.docx</code> you downloaded above.</li>
 <li>Click on <strong>[Process Files]</strong></li>
-<li>The system will take some minutes to process the file. Once completed, you can see your KB file under the <strong>Processed files</strong> section in the next window. Meanwhile, click on **[Close and keep processing] to return to your Knowledge Base configuration page. </li>
+<li>The system will take some minutes to process the file. Once completed, you can see your KB file under the <strong>Processed files</strong> section in the next window. Meanwhile, click on <strong>[Close and keep processing]</strong> to return to your Knowledge Base configuration page. </li>
 <li>You will now see the two sources listed in your Knowledge Base and the process status for each of them. </li>
 </ol>
 </details>
 <details class="webex" open="open">
 <summary>Associate the Knowledge Base to Alex</summary>
 <p>The last step is to link the Knowledge Base to your AI Agent.</p>
+<details class="note" open="open">
+<summary>Note</summary>
+<p>This step is only required if you created the Knowledge Base from the <strong>Knowledge</strong> option in the left navigation panel. If you started from the AI Agent configuration page and used the <strong>Knowledge</strong> tab to create your KB, this step is not required. </p>
+</details>
 <ol>
 <li>Get back to your AI Agent configuration page.</li>
 <li>Click <strong>[Knowledge]</strong></li>
@@ -1881,7 +1898,7 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 </ul>
 <details class="info" open="open">
 <summary>AI Agent handover to Human Agents</summary>
-<p>Note the <strong>Agent handover</strong> action shows enabled by default, allowing the AI agent to escalate the conversation to a human agent. It is always displayed in the Actions page of the AI agent configuration, where it can be enabled or disabled using the toggle option.</p>
+<p>Note the <strong>Agent handover</strong> action shows enabled by default, allowing the AI agent to escalate the conversation to a human agent. It is always displayed in the Actions page of the AI agent configuration, where it can be enabled or disabled using the toggle option. In Lab3, you will create a specific action to handover the conversation to a human agent.</p>
 </details>
 <h3 id="fetch_balance-action"><strong>[fetch_balance]</strong> Action<a class="headerlink" href="#fetch_balance-action" title="Permanent link">¶</a></h3>
 <p>The <em>fetch_balance</em> action will provide the AI Agent with all the necessary customer data to handle debt collection and to resolve customer queries. It will basically use the Airtable API to fetch the required information from your Customer table. </p>
@@ -1936,8 +1953,10 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <li>Click on <strong>[Parse]</strong></li>
 <li>Click on <strong>[Save]</strong></li>
 </ul>
-<p>???+ info 
-    Flows do not autosave, so make sure you save your flow whenever you make edits.</p>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Flows do not autosave, so make sure you save your flow whenever you make edits.</p>
+</details>
 <details class="gif" open="open">
 <summary>Create the fulfillment flow</summary>
 <p></p><figure markdown="">
@@ -1951,7 +1970,7 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <li>Drag and drop an <strong>Evaluate</strong> node to the canvas besides the <strong>Start Node</strong></li>
 <li>Connect the green outlet of the <strong>Start Node</strong> to the new <strong>Evaluate</strong> node.</li>
 <li>Double click on the <strong>Evaluate</strong> node</li>
-<li>Rename the node to <copy><code>Normalize Phone Number</code></copy></li>
+<li>Rename the node to <copy><code>Normalize Phone Number</code> (Click on the node title, then on the pencil to edit. Paste the new title and click on the tick to save the change).</copy></li>
 <li>
 <p>Copy the below javascript code in the code editor of the node
     </p><div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">phone_Number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.PhoneNumber)"</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\+/g</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span>
@@ -2027,7 +2046,7 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Endpoint URL</strong></td>
-<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/Customers?filterByFormula=$(formula)</code> </copy></td>
+<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/Customers?filterByFormula=$(formula)</code></copy></td>
 <td style="text-align: left;">Replace <code>yourBaseID</code> with the value of your Airtable Base</td>
 </tr>
 <tr>
@@ -2076,33 +2095,32 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recl7Sgmtz9kEFCI2"</span><span class="p">,</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">            </span><span class="nt">"createdTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-03-06T13:33:30.000Z"</span><span class="p">,</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">            </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                </span><span class="nt">"﻿CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recZkHsiTTGUvCfhj"</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                </span><span class="nt">"CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CUST-001"</span><span class="p">,</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">                </span><span class="nt">"FirstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">                </span><span class="nt">"LastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">                </span><span class="nt">"DOB"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-07-15"</span><span class="p">,</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">                </span><span class="nt">"SocialSecurity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-45-6789"</span><span class="p">,</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">                </span><span class="nt">"PhoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34626996219"</span><span class="p">,</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">                </span><span class="nt">"Balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">4000</span><span class="p">,</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">                </span><span class="nt">"CashbackBalance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$120.00"</span><span class="p">,</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">                </span><span class="nt">"Address"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">                    </span><span class="s2">"2020 Main ST"</span><span class="p">,</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">                    </span><span class="s2">"Holly Springs"</span><span class="p">,</span>
-</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">                    </span><span class="s2">"NC 28598"</span>
-</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">                </span><span class="p">],</span>
-</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">                </span><span class="nt">"RewardsTier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basic"</span><span class="p">,</span>
-</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">                </span><span class="nt">"CreditCard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Travel Rewards Card"</span><span class="p">,</span>
-</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">                </span><span class="nt">"PendingTransactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">                    </span><span class="s2">"rec0Spe40hczvsDQJ"</span><span class="p">,</span>
-</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">                    </span><span class="s2">"recrXg2EAtdDtB5qw"</span><span class="p">,</span>
-</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">                    </span><span class="s2">"rec6nO5V9JNDvp3Ek"</span>
-</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">                </span><span class="p">],</span>
-</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">                </span><span class="nt">"PIN"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9643"</span><span class="p">,</span>
-</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">                </span><span class="nt">"Email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jdoe@cisco.com"</span><span class="p">,</span>
-</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">                </span><span class="nt">"MaturityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-04-28"</span>
-</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">            </span><span class="p">}</span>
-</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="p">]</span>
-</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="p">}</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">                </span><span class="nt">"PhoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12109444550"</span><span class="p">,</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">                </span><span class="nt">"Balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">3500</span><span class="p">,</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">                </span><span class="nt">"CashbackBalance"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">                </span><span class="nt">"Address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020 Main ST, Holly Springs, NC 28598"</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">                </span><span class="nt">"RewardsTier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basic"</span><span class="p">,</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">                </span><span class="nt">"CreditCard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Travel Rewards Card"</span><span class="p">,</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">                </span><span class="nt">"PIN"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9643"</span><span class="p">,</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">                </span><span class="nt">"Email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jdoe@domain.com"</span><span class="p">,</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">                </span><span class="nt">"MaturityDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-04-28"</span><span class="p">,</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">                </span><span class="nt">"Transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">                    </span><span class="s2">"rec0Spe40hczvsDQJ"</span><span class="p">,</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">                    </span><span class="s2">"recrXg2EAtdDtB5qw"</span><span class="p">,</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">                    </span><span class="s2">"rec6nO5V9JNDvp3Ek"</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">                </span><span class="p">],</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">                </span><span class="nt">"InvestmentAccount"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">                    </span><span class="s2">"recMohR8tVnUdQkT2"</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">                </span><span class="p">]</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
 <li>Click on <strong>[Parse]</strong></li>
@@ -2110,9 +2128,9 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <p>Scroll down and select the following parameters to be extracted. </p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$.records[0].id 
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$.records[0].fields.Email 
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>$.records[0].fields.CustomerID 
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>$.records[0].fields.RewardsTier 
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>$.records[0].fields.FirstName
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>$.records[0].fields.RewardsTier 
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>$.records[0].fields.FirstName
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>$.records[0].fields.CustomerID 
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>$.records[0].fields.MaturityDate
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>$.records[0].fields.CreditCard 
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>$.records[0].fields.CashbackBalance 
@@ -2144,16 +2162,16 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <td>$.records[0].fields.Email</td>
 </tr>
 <tr>
-<td><copy>CustomerID</copy></td>
-<td>$.records[0].fields.﻿CustomerID</td>
-</tr>
-<tr>
 <td><copy>RewardsTier</copy></td>
 <td>$.records[0].fields.RewardsTier</td>
 </tr>
 <tr>
 <td><copy>FirstName</copy></td>
 <td>$.records[0].fields.FirstName</td>
+</tr>
+<tr>
+<td><copy>CustomerID</copy></td>
+<td>$.records[0].fields.CustomerID</td>
 </tr>
 <tr>
 <td><copy>MaturityDate</copy></td>
@@ -2219,7 +2237,7 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <ul>
 <li>Click on the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M195.1 9.5c3-14.8 16.1-25.5 31.3-25.5h59.8c15.2 0 28.3 10.7 31.3 25.5l14.5 70c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9L477 417.9c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5h-59.8c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8l-68.1 22.5c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7l-53.4-47.5C.9 175.7-1.7 159 5.8 145.9l29.9-51.8c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8zM256.3 336a80 80 0 1 0-.6-160 80 80 0 1 0 .6 160"></path></svg></span> button at the top right of the flow editor. </li>
 <li>Click on the <strong>Flow Outcomes</strong> tab</li>
-<li>Open the ‘Last Execution Status’ Outcome. The ‘Notify AI Agent’ radio button is enabled by default for the start node with 'AI Agent’ as the trigger.</li>
+<li>Open the ‘Last Execution Status’ Outcome. The <em>Notify AI Agent</em> radio button is enabled by default for the start node with 'AI Agent’ as the trigger.</li>
 <li>
 <p>To return all the values fetched from the Airtable Customers repository, we need to add the Key and Value of every Output Variable we stored in the HTTP Request node. Click on <strong>+ Add New</strong> for every parameter in the list below. Fetch the <strong>Value</strong> variables from the <strong>Input Variables</strong> right panel, under the <strong>HTTP Request</strong> section.</p>
 <table>
@@ -2251,6 +2269,10 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <td>$(n3.FirstName)</td>
 </tr>
 <tr>
+<td><copy>MaturityDate</copy></td>
+<td>$(n3.MaturityDate)</td>
+</tr>
+<tr>
 <td><copy>CreditCard</copy></td>
 <td>$(n3.CreditCard)</td>
 </tr>
@@ -2273,10 +2295,6 @@ Finally, use Timeouts to manage the "dead air." The <em>No-input timeout</em> en
 <tr>
 <td><copy>balance</copy></td>
 <td>$(n3.Balance)</td>
-</tr>
-<tr>
-<td><copy>MaturityDate</copy></td>
-<td>$(n3.MaturityDate)</td>
 </tr>
 </tbody>
 </table>
@@ -2348,16 +2366,18 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </tr>
 </tbody>
 </table>
+<p>And then click <strong>[Add]</strong> </p>
 <details class="info" open="open">
 <summary>Info</summary>
 <p>The entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.</p>
 </details>
 </li>
 <li>
-<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Webex Connect Flow Builder Fulfillment</strong> section</p>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Fulfillment</strong> section</p>
 <ul>
-<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
-<li>Select the flow `fetch_balance``</li>
+<li>Select <em>Use Webex Connect Flow Builder</em> </li>
+<li>Select the Webex Connect Service <em>Webex Finance Bootcamp</em></li>
+<li>Select the flow <em>fetch_balance</em></li>
 </ul>
 </li>
 <li>Click on <strong>[-&gt; Add]</strong></li>
@@ -2433,7 +2453,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
 </span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
 </span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1">// Convert to string just in case it's a number</span>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="kd">var</span><span class="w"> </span><span class="nx">pinStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$(n2.PIN)"</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="kd">var</span><span class="w"> </span><span class="nx">pinStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.PIN)"</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
 </span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
 </span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="c1">// Extract digits (Position 1 is Index 0, Position 2 is Index 1, etc.)</span>
 </span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="kd">var</span><span class="w"> </span><span class="nx">digit1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">pinStr</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">position1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
@@ -2443,7 +2463,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </span></code></pre></div><p></p>
 <details class="warning" open="open">
 <summary>Warning</summary>
-<p>Make sure the $(n2.PIN) variable corresponds to your PIN variable in the Start Node. You can pick it up by selecting it from the <strong>Input Variables</strong> right panel, under the <strong>Start</strong> section. </p>
+<p>Make sure the $(n2.aiAgent.PIN) variable corresponds to your PIN variable in the Start Node. You can pick it up by selecting it from the <strong>Input Variables</strong> right panel, under the <strong>Start</strong> section. </p>
 </details>
 <details class="info" open="open">
 <summary>Info</summary>
@@ -2479,7 +2499,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <ul>
 <li>Click on the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M195.1 9.5c3-14.8 16.1-25.5 31.3-25.5h59.8c15.2 0 28.3 10.7 31.3 25.5l14.5 70c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9L477 417.9c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5h-59.8c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8l-68.1 22.5c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7l-53.4-47.5C.9 175.7-1.7 159 5.8 145.9l29.9-51.8c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8zM256.3 336a80 80 0 1 0-.6-160 80 80 0 1 0 .6 160"></path></svg></span> button at the top right of the flow editor. </li>
 <li>Click on the <strong>Flow Outcomes</strong> tab</li>
-<li>Open the ‘Last Execution Status’ Outcome. The ‘Notify AI Agent’ radio button is enabled by default for the start node with 'AI Agent’ as the trigger.</li>
+<li>Open the <em>Last Execution Status</em> Outcome. The <em>Notify AI Agent</em> radio button is enabled by default for the start node with 'AI Agent’ as the trigger.</li>
 <li>
 <p>You need to return the outcome of the <strong>Evaluate</strong> node, namely the gerated positions and the PIN digits matching those positions. You need to add the Key and Value for each of those values. Here we will use the notation <code>$(variable)</code>to refer to the variables in the <strong>Evaluate</strong> node.</p>
 <table>
@@ -2491,20 +2511,20 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </thead>
 <tbody>
 <tr>
-<td><copy>  position1   </copy></td>
-<td><copy> $(position1) </copy></td>
+<td><copy>position1</copy></td>
+<td><copy>$(position1)</copy></td>
 </tr>
 <tr>
-<td><copy>  position2   </copy></td>
-<td><copy> $(position2) </copy></td>
+<td><copy>position2</copy></td>
+<td><copy>$(position2)</copy></td>
 </tr>
 <tr>
-<td><copy>  digit1  </copy></td>
-<td><copy> $(digit1)    </copy></td>
+<td><copy>digit1</copy></td>
+<td><copy>$(digit1)</copy></td>
 </tr>
 <tr>
-<td><copy>  digit2  </copy></td>
-<td><copy> $(digit2)    </copy></td>
+<td><copy>digit2</copy></td>
+<td><copy>$(digit2)</copy></td>
 </tr>
 </tbody>
 </table>
@@ -2530,7 +2550,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <p>Let´s get back to the AI Agent Studio now to build the action.</p>
 <ol>
 <li>From your AI Agent configuration page, click on <strong>[Actions]</strong></li>
-<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Click on <strong>[+ Add actions]</strong> and select <strong>Fulfillment</strong></li>
 <li>
 <p>Fill in the General information of your action</p>
 <ul>
@@ -2542,9 +2562,8 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </ul>
 </li>
 <li>
-<p><del><strong>Action scope</strong>: select <em>Slot filling and fulfillment</em></del> This option has been removed</p>
+<p>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></p>
 </li>
-<li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
 <li>
 <p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
 <table>
@@ -2567,16 +2586,18 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </tr>
 </tbody>
 </table>
+<p>Click <strong>[Add]</strong></p>
 <details class="info" open="open">
 <summary>Info</summary>
 <p>The entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.</p>
 </details>
 </li>
 <li>
-<p>Now go to the <strong>Webex Connect Flow Builder Fulfillment</strong> section to associate the fulfillment flow in Webex Connect with the action. </p>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Fulfillment</strong> section</p>
 <ul>
-<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
-<li>Select the flow <code>authenticate_user</code></li>
+<li>Select <em>Use Webex Connect Flow Builder</em> </li>
+<li>Select the Webex Connect Service <em>Webex Finance Bootcamp</em></li>
+<li>Select the flow <em>authenticate_user</em></li>
 </ul>
 </li>
 <li>Click on <strong>[-&gt; Add]</strong></li>
@@ -2600,13 +2621,35 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 <p>Testing Procedure</p>
 <ol>
 <li>Launch the Preview widget: In the AI Agent Studio, click the [Preview] button at the top right of the configuration page.</li>
-<li>You can do a preview chat conversation or a preview voice conversation. Initiate Session: Start a live chat or voice call with Alex.</li>
+<li>
+<p>You can do a preview chat conversation or a preview voice conversation. Initiate Session: Start a live chat or voice call with Alex.</p>
+<ul>
+<li>As the AI Agent is not being triggered from the Outbound flow, the firstName and lastName values are not available to him. Start by introducing yourself with the name populated in your Airtable Customers table. </li>
+<li>Similarly, the phoneNumber is not known to the AI Agent, so it will be queried. Provide the number you have populated in your Airtable so that the fecht action retrieves the customer data.</li>
+</ul>
+</li>
 <li>
 <p>Verification Checklist: Confirm the Agent successfully executes the following logic:</p>
 <ul>
-<li>Authentication: Does the Agent retrieve customer data and correctly challenge you for two random digits of your PIN.</li>
-<li>Account Management: Does it provide an accurate account balance and present options for both total and partial payments.</li>
-<li>Knowledge &amp; Context: Does it accurately resolve queries using the integrated Knowledge Base or specific customer data points? </li>
+<li>
+<p>Authentication: Does the Agent retrieve customer data and correctly challenge you for two random digits of your PIN.</p>
+<p><code>For authentication, please provide the 1st and 3rd digits of your 4-digit PIN. Once you reply, I’ll verify your identity and continue with your account details.</code></p>
+</li>
+<li>
+<p>Account Management: Does it provide an accurate account balance and present options for both total and partial payments.</p>
+<p><code>Thank you for providing the correct digits. You are now authenticated.
+Your current balance is $4,650, and your debt matures on April 28, 2026. Would you like to make a total payment or a partial payment today?</code></p>
+</li>
+<li>
+<p>Knowledge &amp; Context: Does it accurately resolve queries using the integrated Knowledge Base or specific customer data points? </p>
+<p><code>Here’s how the rewards program works for your Travel Rewards Card:
+Earn 2 miles per dollar on travel and dining, and 1 mile per dollar on all other purchases.
+Redeem miles for flights, hotels, or cashback through the Webex Bank Rewards Portal.
+Sign-up bonus: Earn 50,000 miles after spending $3,000 in the first 3 months.
+Airline partner perks: • Delta: 10% discount on tickets booked with rewards • United: Free checked bag and priority boarding • American: Earn 25% more miles on AA purchases
+Annual fee: $95
+Your rewards tier is Basic. If you spend more, you can unlock higher tiers for even better benefits.</code></p>
+</li>
 </ul>
 </li>
 </ol>
@@ -2692,9 +2735,9 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 <li>Select the <strong>AI Agent Event</strong></li>
 <li>Set the <strong>SAMPLE JSON</strong> to the below one 
     <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">"agentSessionID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxxxxx"</span><span class="p">,</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">"debt_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2000</span><span class="p">,</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name@domain.com"</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">"debt_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2500</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jdoe@domain.com"</span><span class="p">,</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nt">"SessionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent123"</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
 </span></code></pre></div></li>
 <li>Click on <strong>[Parse]</strong></li>
@@ -2764,7 +2807,7 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Body</strong></td>
-<td style="text-align: left;"><copy> {<br>"amount": $(n2.aiAgent.debt_amount),<br>"customerEmail": "$(n2.aiAgent.email)",<br>"agentId": "$(n2.aiAgent.agentSessionID)"<br>}  </copy></td>
+<td style="text-align: left;"><copy><code>{</code><br><code>"amount": $(n2.aiAgent.debt_amount),</code><br><code>"customerEmail": "$(n2.aiAgent.email)",</code> <br> <code>"agentId": "$(n2.aiAgent.SessionId)"</code><br><code>}</code></copy></td>
 <td style="text-align: left;">Make sure the referred variables correspond to the input variables defined in your <strong>Start Node</strong></td>
 </tr>
 <tr>
@@ -2830,12 +2873,76 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 </details>
 </li>
 <li>
+<p>Before sending the email to the customer, we will make sure the result of the operation with the NovaPay API has been succesfull.</p>
+<details class="inline end" open="open">
+<summary>Screenshot Branch Node</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%205.png" data-title="Branch Node" data-desc-position="top"><img alt="Branch Node" src="../assets/payment_session%20flow%205.png"></a>
+</figure><p></p>
+</details>
+<ul>
+<li>Drag and drop a <strong>Branch</strong> node to the canvas</li>
+<li>Connect the <strong>HTTP Request</strong> node to the new node</li>
+<li>Double click on the <strong>Branch</strong> node</li>
+<li>Rename the node to <copy><code>Check Session Status</code></copy></li>
+<li>Rename the <em>Branch 1</em> to <copy><code>Payment Session ok</code></copy></li>
+<li>
+<p>Fill the condition as below: </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Condition</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>$(n3.http.statusCode)</code></td>
+<td style="text-align: left;"><code>Equals</code></td>
+<td style="text-align: left;"><code>200</code></td>
+</tr>
+</tbody>
+</table>
+<p>Make sure the statusCode variable correspond to the ouput of your <strong>HTTP Request</strong> node.</p>
+</li>
+<li>
+<p>Click <strong>[Save]</strong></p>
+</li>
+</ul>
+<details class="inline end" open="open">
+<summary>Screenshot Branch Node - End</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%206.png" data-title="Branch Node" data-desc-position="top"><img alt="Branch Node" src="../assets/payment_session%20flow%206.png"></a>
+</figure><p></p>
+</details>
+<ul>
+<li>
+<p>Back to the canvas, click on the green outlet and drag it on the canvas. </p>
+<p>In the <strong>End</strong> configuration window: </p>
+<ul>
+<li>Select <em><code>None of the Above</code></em> in the <strong>Node Event</strong></li>
+<li>Select <em><code>102 - Flow completed with an error [Error]</code></em> in the <strong>Flow Result</strong></li>
+<li>Click <strong>[Save]</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
 <p>To complete the action, we will now send out the email with the payment URL to the customer. </p>
 <ul>
 <li>Drag and drop an <strong>Email</strong> node to the canvas</li>
-<li>Connect the <strong>HTTP Request</strong> node to the new <strong>Email</strong> node</li>
-<li>Double click on the <strong>HTTP Request</strong> node</li>
+<li>Connect the <strong>Branch</strong> node to the new <strong>Email</strong> node. That should be the <code>Payment Session OK</code> branch of the node.</li>
+<li>Double click on the <strong>Email</strong> node</li>
 <li>Rename the node to <copy><code>Email Payment URL</code></copy></li>
+</ul>
+<details class="inline end" open="open">
+<summary>Screenshot Send email</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%203.png" data-title="Email Payment URL" data-desc-position="top"><img alt="Email Payment URL" src="../assets/payment_session%20flow%203.png"></a>
+</figure><p></p>
+</details>
+<ul>
 <li>
 <p>Fill in the parameters as below: </p>
 <table>
@@ -2869,7 +2976,7 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Subject</strong></td>
-<td style="text-align: left;"><copy> <code>Secure Payment Link: Your Account with Webex Financial Group</code> </copy></td>
+<td style="text-align: left;"><copy><code>Secure Payment Link: Your Account with Webex Financial Group</code> </copy></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr>
@@ -2895,12 +3002,6 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 <p>Save the flow!</p>
 </li>
 </ul>
-<details class="gif" open="open">
-<summary>Sending Payment URL email</summary>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%203.gif" data-title="Email Payment URL" data-desc-position="top"><img alt="Email Payment URL" src="../assets/payment_session%20flow%203.gif"></a>
-</figure><p></p>
-</details>
 </li>
 <li>
 <p>To complete the flow, map the output variables that will be sent back to your AI Agent via the <strong>Flow Outcomes</strong> section. </p>
@@ -2924,25 +3025,31 @@ Before starting, make sure your <strong>Airtable Customer</strong> table contain
 </ol>
 <p>Your <strong>payment_session</strong> flow is now completed. 
 Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow to make it visible to the AI Agent Studio. In the Make Live dialogue, select the email application that you will use to deliver the email to the user. </p>
+<details open="open">
+<summary>payment_session Flow"</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_session%20flow%207.png" data-title="payment_session flow" data-desc-position="top"><img alt="payment_session flow" src="../assets/payment_session%20flow%207.png"></a>
+</figure><p></p>
+</details>
 </details>
 <details class="webex" open="open">
 <summary>AI Agent action definition</summary>
 <p>Go back to the AI Agent Studio to configure the new action.</p>
 <ol>
 <li>From the AI Agent configuration page, click on <strong>[Actions]</strong></li>
-<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Click on <strong>[+ Add actions]</strong> and select <strong>Fulfillment</strong></li>
 <li>
 <p>Fill in the General information of your action</p>
 <ul>
 <li><strong>Action name</strong>: <copy><em>payment_session</em></copy></li>
 <li>
 <p><strong>Action description</strong>: copy and paste the following description.</p>
-<p><copy> Generates a NovaPay payment session for the amount selected by the customer. The payment session URL is sent to the customer via email.</copy></p>
+<p><copy>Generates a NovaPay payment session for the amount selected by the customer. The payment session URL is sent to the customer via email.</copy></p>
 </li>
 </ul>
 </li>
 <li>
-<p>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></p>
+<p>Under <strong>Slot filling</strong> click on <strong>[+ New input entity]</strong></p>
 </li>
 <li>
 <p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
@@ -2984,7 +3091,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </table>
 </li>
 <li>
-<p>repeat the action for the next two variables: </p>
+<p>repeat the <strong>[+ New input entity]</strong> for the next two variables: </p>
 <table>
 <thead>
 <tr>
@@ -3063,10 +3170,11 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </details>
 </li>
 <li>
-<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Webex Connect Flow Builder Fulfillment</strong> section</p>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Fulfillment</strong> section</p>
 <ul>
-<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
-<li>Select the flow <code>payment_session</code></li>
+<li>Select <em>Use Webex Connect Flow Builder</em></li>
+<li>Select the Webex Connect Service <em>Webex Finance Bootcamp</em></li>
+<li>Select the flow <em>payment_session</em></li>
 </ul>
 </li>
 <li>Click on <strong>[-&gt; Add]</strong></li>
@@ -3223,10 +3331,10 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <li>Click on <strong>[Parse]</strong></li>
 <li>
 <p>Scroll down and select the below parameters:</p>
-<p>$.last4
-$.confirmationCode
-$.amount
-$.status</p>
+<p><br><code>$.last4</code>
+<br><code>$.confirmationCode</code>
+<br><code>$.amount</code>
+<br><code>$.status</code></p>
 </li>
 <li>
 <p>Click on <strong>[Import]</strong></p>
@@ -3242,19 +3350,19 @@ $.status</p>
 </thead>
 <tbody>
 <tr>
-<td><copy>  cardLast4   </copy></td>
+<td><copy>cardLast4</copy></td>
 <td>$.last4</td>
 </tr>
 <tr>
-<td><copy>  confirmationCode    </copy></td>
+<td><copy>confirmationCode</copy></td>
 <td>$.confirmationCode</td>
 </tr>
 <tr>
-<td><copy>  amountPayed </copy></td>
+<td><copy>amountPayed</copy></td>
 <td>$.amount</td>
 </tr>
 <tr>
-<td><copy>  paymentStatus   </copy></td>
+<td><copy>paymentStatus</copy></td>
 <td>$.status</td>
 </tr>
 </tbody>
@@ -3296,14 +3404,14 @@ $.status</p>
 <tr>
 <td><code>$(n3.paymentStatus)</code></td>
 <td><em>Equals ignore case</em></td>
-<td><copy> completed </copy></td>
+<td><copy>completed</copy></td>
 </tr>
 </tbody>
 </table>
 <p>Make sure the <em>$(n3.paymentStatus)</em> matches the output variable of the <strong>HTPP Request</strong> node.</p>
 </li>
 <li>
-<p>Set the <em>None of the above</em> branch to <copy> Transaction not Completed </copy></p>
+<p>Set the <em>None of the above</em> branch to <copy>Transaction not Completed</copy></p>
 </li>
 </ul>
 </li>
@@ -3321,7 +3429,7 @@ $.status</p>
 <li>
 <p>To complete the node, click on the green outlet at the right of the <strong>Email</strong> node and drag it to the canvas. Release it to open the <strong>End</strong> dialogue. Let´s set the <em>Transaction not Complete</em> option</p>
 <ul>
-<li>Set the <strong>Node Event</strong> value to <code>Transaction not Complete</code></li>
+<li>Set the <strong>Node Event</strong> value to <code>Transaction not Completed</code></li>
 <li>Set the <strong>Flow Result</strong> value to <code>102 - Flow completed with an error [Error]</code></li>
 <li>Click on <strong>[Save]</strong></li>
 </ul>
@@ -3396,7 +3504,7 @@ $.status</p>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Endpoint URL</strong></td>
-<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/appcyTYF3nQqgReHR/Customers/$(n2.aiAgent.RecordID)</code> </copy></td>
+<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/appcyTYF3nQqgReHR/Customers/$(n2.aiAgent.RecordID)</code></copy></td>
 <td style="text-align: left;">Make sure the RecordID value corresponds to the variable in your <strong>Start Node</strong></td>
 </tr>
 <tr>
@@ -3421,7 +3529,7 @@ $.status</p>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Body</strong></td>
-<td style="text-align: left;"><copy> {<br> "fields": { <br>"Balance": $(newBalance)<br>}<br>}  </copy></td>
+<td style="text-align: left;"><copy>{<br> "fields": { <br>"Balance": $(newBalance)<br>}<br>}</copy></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr>
@@ -3452,8 +3560,11 @@ $.status</p>
 </figure><p></p>
 </details>
 <ul>
-<li>In the <strong>End</strong> pop up window, select the <em>onSuccess</em> value in the <strong>Node Event</strong> field and the <em>101 - Succesfully completed flow [success]</em> in the <strong>Flow Result</strong> field. </li>
 <li>
+<p>In the <strong>End</strong> pop up window, select the <em>onSuccess</em> value in the <strong>Node Event</strong> field and the <em>101 - Succesfully completed flow [success]</em> in the <strong>Flow Result</strong> field. </p>
+</li>
+<li>
+<p>Click on <strong>Transition Actions</strong> at the top</p>
 <ul>
 <li>Click <strong>+ Add Action</strong></li>
 <li>
@@ -3466,9 +3577,6 @@ $.status</p>
 <li>Click <strong>Save</strong></li>
 </ul>
 </li>
-</ul>
-<p>Click on <strong>Transition Actions</strong> at the top</p>
-<ul>
 <li>
 <p>Back in the <strong>End</strong> dialgue, Populate this values: </p>
 <table>
@@ -3536,24 +3644,24 @@ $.status</p>
 </thead>
 <tbody>
 <tr>
-<td><copy>  cardLast4   </copy></td>
-<td><copy> $(n3.cardLast4)  </copy></td>
+<td><copy>cardLast4</copy></td>
+<td><copy>$(n3.cardLast4)</copy></td>
 </tr>
 <tr>
-<td><copy>  confirmationCode    </copy></td>
-<td><copy> $(n3.confirmationCode)   </copy></td>
+<td><copy>confirmationCode</copy></td>
+<td><copy>$(n3.confirmationCode)</copy></td>
 </tr>
 <tr>
-<td><copy>  amountPayed </copy></td>
-<td><copy> $(n3.amountPayed)    </copy></td>
+<td><copy>amountPayed</copy></td>
+<td><copy>$(n3.amountPayed)</copy></td>
 </tr>
 <tr>
-<td><copy>  paymentStatus   </copy></td>
-<td><copy> $(n3.paymentStatus)  </copy></td>
+<td><copy>paymentStatus</copy></td>
+<td><copy>$(n3.paymentStatus)</copy></td>
 </tr>
 <tr>
-<td><copy>  balanceUpdate   </copy></td>
-<td><copy> $(balanceUpdate) </copy></td>
+<td><copy>balanceUpdate</copy></td>
+<td><copy>$(balanceUpdate)</copy></td>
 </tr>
 </tbody>
 </table>
@@ -3571,6 +3679,12 @@ $.status</p>
 </ol>
 <p>Your <strong>confirm_payment</strong> flow is now completed. 
 Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow to make it visible to the AI Agent Studio. </p>
+<details open="open">
+<summary>confirm_payment Flow"</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/confirm_payment%20flow%2010.png" data-title="confirm_payment flow" data-desc-position="top"><img alt="confirm_payment flow" src="../assets/confirm_payment%20flow%2010.png"></a>
+</figure><p></p>
+</details>
 </details>
 <details class="webex" open="open">
 <summary>AI Agent action definition</summary>
@@ -3582,21 +3696,21 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </details>
 <ol>
 <li>Click on <strong>[Actions]</strong></li>
-<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Click on <strong>[+ Add actions]</strong> and select <strong>Fulfillment</strong></li>
 <li>
 <p>Fill in the General information of your action</p>
 <ul>
-<li><strong>Action name</strong>: <em>confirm_payment</em></li>
+<li><strong>Action name</strong>: <copy><em>confirm_payment</em></copy></li>
 <li>
 <p><strong>Action description</strong>: copy and paste the following description.</p>
 <p><copy>
-Confirms payment with NovaPay service once the customer confirms completion of the transaction, and updates the remaining balance in the customer DB. The action returns payment details: amount payed, the last 4 digits of the card and the Novapay confirmation code. The result of the operation is determined by the correlation of the {{paymentStatus}} and the {{balaceUpdate}} values.
+<code>Confirms payment with NovaPay service once the customer confirms completion of the transaction, and updates the remaining balance in the customer DB. The action returns payment details: amount payed, the last 4 digits of the card and the Novapay confirmation code. The result of the operation is determined by the correlation of the {{paymentStatus}} and the {{balaceUpdate}} values.</code>
 </copy></p>
 </li>
 </ul>
 </li>
 <li>
-<p>Under Slot filling click on [New input entity] </p>
+<p>Under Slot filling click on <strong>[+ New input entity]</strong></p>
 </li>
 <li>
 <p>In the <strong>Add a new input entity</strong> dialogue window, populate: </p>
@@ -3638,7 +3752,7 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 </table>
 </li>
 <li>
-<p>Repeate the action for the following entities</p>
+<p>Repeate the <strong>[+ New input entity]</strong> action for the following entities</p>
 <table>
 <thead>
 <tr>
@@ -3665,7 +3779,7 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Entity examples</strong></td>
-<td style="text-align: left;"><copy>recl7Sgmtz9kEFCI2</copy></td>
+<td style="text-align: left;"><copy><code>CUST-001</code></copy></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr>
@@ -3717,10 +3831,11 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 </details>
 </li>
 <li>
-<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Webex Connect Flow Builder Fulfillment</strong> section</p>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Fulfillment</strong> section</p>
 <ul>
-<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
-<li>Select the flow <code>confirm_payment</code></li>
+<li>Select <em>Use Webex Connect Flow Builder</em></li>
+<li>Select the Webex Connect Service <em>Webex Finance Bootcamp</em></li>
+<li>Select the flow <em>confirm_payment</em></li>
 </ul>
 </li>
 <li>Click on <strong>[-&gt; Add]</strong></li>
@@ -3759,7 +3874,7 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 <li>Select the <strong>AI Agent Event</strong></li>
 <li>Set the <strong>SAMPLE JSON</strong> to the below one 
     <div class="language-json highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="nt">"CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recZkHsiTTGUvCfhj"</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="nt">"CustomerID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CUST-001"</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="p">}</span>
 </span></code></pre></div></li>
 </ul>
@@ -3774,7 +3889,7 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 </li>
 <li>
 <p>The communicatioh with Airtable requires a perfectly formatted request. In this step, you will use an <strong>Evaluate</strong> Node to act as the "URL Builder" for the [fetch_transactions] action.</p>
-<p>The purpose of this node is to take the raw *<em>CustomerID</em> and combine it with the necessary API parameters—such as filtering logic, sorting by date, and record limits—into a single, continuous string. By centralizing this logic in an Evaluate Node, you ensure that the complex syntax required by Airtable (like the filterByFormula and sort directions) is pre-processed and ready to be injected into the API call. This prevents errors during the live conversation and ensures Alex always retrieves the 5 most recent transactions in the correct chronological order. </p>
+<p>The purpose of this node is to take the raw <strong>CustomerID</strong> and combine it with the necessary API parameters—such as filtering logic, sorting by date, and record limits—into a single, continuous string. By centralizing this logic in an Evaluate Node, you ensure that the complex syntax required by Airtable (like the filterByFormula and sort directions) is pre-processed and ready to be injected into the API call. This prevents errors during the live conversation and ensures Alex always retrieves the 5 most recent transactions in the correct chronological order. </p>
 <details class="inline end" open="open">
 <summary>Screenshot - Set the Evaluate Node</summary>
 <p></p><figure markdown="">
@@ -3859,7 +3974,7 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Endpoint URL</strong></td>
-<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/Transactions$(formula)</code> </copy></td>
+<td style="text-align: left;"><copy><code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/Transactions$(formula)</code></copy></td>
 <td style="text-align: left;">Replace <code>yourBaseID</code> with the value of your Airtable Base</td>
 </tr>
 <tr>
@@ -3871,6 +3986,11 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 <td style="text-align: left;"><strong>Value</strong></td>
 <td style="text-align: left;"><code>Bearer &lt;yourPersonalToken&gt;</code></td>
 <td style="text-align: left;">Enter <code>yourPersonalToken</code>from <a href="https://airtable.com/create/tokens">Airtable</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Header</strong></td>
+<td style="text-align: left;"><copy><code>Content-Type</code></copy></td>
+<td style="text-align: left;">click <strong>+ Add Another Header</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Value</strong></td>
@@ -3947,6 +4067,12 @@ Confirms payment with NovaPay service once the customer confirms completion of t
 </ol>
 <p>Your <strong>fetch_transactions</strong> flow is now completed. 
 Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the flow, otherwise, it will not be visible to the AI Agent Studio. </p>
+<details open="open">
+<summary>fetch_transaction Flow"</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/fetch_transactions%20flow%205.png" data-title="fetch_transaction flow" data-desc-position="top"><img alt="fetch_transaction flow" src="../assets/fetch_transactions%20flow%205.png"></a>
+</figure><p></p>
+</details>
 </details>
 <details class="webex" open="open">
 <summary>AI Agent action definition</summary>
@@ -3961,7 +4087,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <ol>
 <li>In the <strong>AI Agent Studio</strong>, select your <em>Finance Debt Collection Agent</em></li>
 <li>Click on <strong>[Actions]</strong></li>
-<li>Click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Click on <strong>[+ Add actions]</strong> and select <strong>Fulfillment</strong></li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy><em>fetch_transactions</em></copy></li>
 <li><strong>Action description</strong>: copy and paste the following description.
@@ -3986,22 +4112,24 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <tr>
 <td style="text-align: left;"><copy><code>CustomerID</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
-<td style="text-align: left;"><copy>The {{CustomerID}} value retrieved by the [fetch_balance] action. </copy></td>
-<td style="text-align: left;"><copy><code>recZkHsiTTGUvCfhj</code></copy></td>
+<td style="text-align: left;"><copy>The {{CustomerID}} value retrieved by the [fetch_balance] action.</copy></td>
+<td style="text-align: left;"><copy><code>CUST-001</code></copy></td>
 <td style="text-align: left;"><code>Required</code></td>
 </tr>
 </tbody>
 </table>
+<p>Click <strong>[Add]</strong></p>
 <details class="info" open="open">
 <summary>Info</summary>
 <p>The entity name must match the parameter name defined in the Agent start node JSON input within the fulfillment flow.</p>
 </details>
 </li>
 <li>
-<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Webex Connect Flow Builder Fulfillment</strong> section</p>
+<p>The last step to complete the action is to associate the fulfillment flow in Webex Connect with the action. This is done in the <strong>Fulfillment</strong> section</p>
 <ul>
-<li>Select the Webex Connect Service <code>Webex Finance Bootcamp</code></li>
-<li>Select the flow <code>fetch_transactions</code></li>
+<li>Select <em>Use Webex Connect Flow Builder</em> </li>
+<li>Select the Webex Connect Service <em>Webex Finance Bootcamp</em></li>
+<li>Select the flow <em>fetch_transactions</em></li>
 </ul>
 </li>
 <li>Click on <strong>[-&gt; Add]</strong></li>
@@ -4012,7 +4140,75 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <h2 id="lab-24-test-the-ai-agent">Lab 2.4 - Test the AI Agent<a class="headerlink" href="#lab-24-test-the-ai-agent" title="Permanent link">¶</a></h2>
 <p>Before going live, it is essential to validate that Alex follows the programmed logic and security guardrails. In this section, you will use again the <strong>Preview</strong> tool in the AI Agent Studio to simulate custamer scenarios. You will verify that the agent correctly refuses to disclose debt before authentication, handles partial payment negotiations, automates debt payment, and—most importantly—triggers an immediate escalation to a human specialist when a "suspicious transaction" is mentioned.</p>
 <p>Make sure you have a populated entry in your <strong>Airtable Customers</strong> table with some fake data for your test-customer. The only real data that is required is the phone-number and the email.</p>
+<ul>
+<li>
+<p>Make sure you provide your name and your phone number as populated in your Customers table. You need this at this stage because the AI Agent is not being triggered from the Outbound Debt Collection flow, where those values are passed on to the AI Agent from the campaign. </p>
+</li>
+<li>
+<p>Complete the Authentication. The AI Agent will challenge you with 2 digits of the 4-digit PIN populated in the <strong>Customers</strong> table. </p>
+</li>
+<li>
+<p>Verify you are informed of your current debt and offered to make a payment.</p>
+<p><code>Authentication successful. John, your current account balance is $4,650 and your debt matures on April 28, 2026. Would you like to make a total or partial payment today?</code></p>
+</li>
+<li>
+<p>Confirm that you will make a partial payment and provide the amount. You should receive </p>
+<p><code>A secure NovaPay payment link for $650 has been sent to your email address. Once you complete the payment, please let me know so I can confirm your transaction and update your balance.</code></p>
+</li>
+<li>
+<p>Check your email. It may take some time. I you don't see the email, check the spam folder. The email should look like: </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Dear Customer,
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>Thank you for speaking with me today regarding your outstanding balance with Webex Financial Group.
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>As we discussed, please find the secure link below to process your payment of $650. This link is unique to your account and is powered by our secure payment partner, NovaPay.
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>https://cx-partner.github.io/NovaPay/backend/frontend/index.html?sessionId=c00d3305-8192-402c-8c32-a66e0c326473&amp;amount=650
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>Important Information:
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>Account Status: Completing this payment ensures your account remains in good standing before your maturity date.
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>Confirmation: Once the transaction is complete, I will automatically update your balance in our database.
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>If you have any questions or did not authorize this request, please contact our customer service department immediately.
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>Best regards,
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>Alex
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>Automated Service specialist
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>Webex Financial Group
+</span></code></pre></div>
+</li>
+<li>
+<p>Click on the link and fill in the details in the NovaPay payment interface. Click on <strong>Pay Now</strong> and the NovaPay system will return a confirmation message. </p>
+<p></p><figure markdown="" style="width: 30%;">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/payment_UI.png" data-title="Payment interface" data-desc-position="top"><img alt="Payment interface" src="../assets/payment_UI.png"></a>
+</figure><p></p>
+</li>
+<li>
+<p>Get back to the dialogue with the AI Agent and confirm the payment. The AI Agent will check the payment status with NovaPay and update the balance in the Customer table. verify the balance has been updated in the Customer record in Airtable. </p>
+<p><code>Your payment of $650 was successful. Confirmation code: NP-1EOQTHWK. Your remaining balance is $4,000. Do you need any further assistance?</code></p>
+</li>
+<li>
+<p>Now you can enquire for your transactions. The system will be able to return up to the last 5 transactions. Make sure you have populated transactions in your <strong>Transactions</strong> table in Airtable. You can ask for your last transactions, for the most recent transaction, for a transaction in a specific city... try different queries. </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Here are your last three transactions:
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    - $1,200 at 99 Collectibles in Madrid on February 4, 2026
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    - $900 at 99 Collectibles in New York on February 2, 2026
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    - $2,400 at ACME Tech in Amsterdam on February 1, 2026
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>Would you like to see more transactions or need help with anything else?
+</span></code></pre></div>
+</li>
+</ul>
 <p>Refer to the <a href="#test-your-ai-agent">Test your AI Agent</a> section for details on how to troubleshoot the AI Agent and the Actions in case of error.</p>
+<details class="important" open="open">
+<summary>IMPORTANT!!! -&gt; PUBLISH YOUR AI AGENT</summary>
+<p>Now that you have validated your AI Agent, you can <strong>Publish</strong> it. </p>
+<ul>
+<li>In the <strong>AI AGent configuration</strong> page, click <strong>[Publish]</strong> at the top-right corner. </li>
+<li>Provide a publishing comment in the next dialogue and click <strong>Publish</strong></li>
+</ul>
+<p>Your Agent is now operational. </p>
+</details>
 <h2 id="lab-25-connect-the-ai-agent-to-the-outbound-call">Lab 2.5 - Connect the AI Agent to the Outbound Call<a class="headerlink" href="#lab-25-connect-the-ai-agent-to-the-outbound-call" title="Permanent link">¶</a></h2>
 <p>In the final stage of Lab 2, you will bridge the gap between the Campaign Manager (configured in Lab 1) and your new AI Agent. You will complete the flow in Webex Contact Center to ensure that when a customer answers an outbound call triggered by a debt maturity date, they are immediately greeted by Alex. This completes the end-to-end automation of the proactive debt collection use case.</p>
 <details class="webex" open="open">
@@ -4026,10 +4222,10 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </details>
 <ol>
 <li>Go to Control Hub -&gt; Contact Center -&gt; Flows</li>
-<li>Open your flow <strong>AI_Agent_DebtCollection</strong></li>
-<li>Delete the <em>EndOfLab1</em> <strong>Play Message</strong> node</li>
-<li>From the <em>Activities Library</em> drag and drop a <strong>Virtual Agent V2</strong> to the right of the <strong>Start Node</strong>. </li>
-<li>Connect the <strong>Start Node</strong> to the new node.</li>
+<li>Open your flow <strong>AI_Agent_DebtCollection</strong>. Enable the <strong>Edit</strong> slider at the top of the canvas.</li>
+<li>Delete the <strong>Play Message</strong> node</li>
+<li>From the <em>Activities Library</em> drag and drop a <strong>Virtual Agent V2</strong> to the right of the <strong>NewPhoneContact</strong> event. </li>
+<li>Connect the <strong>NewPhoneContact</strong> node to the new node.</li>
 <li>
 <p>Click on the <strong>Virtual Agent V2</strong> node and configure the settings below in the <em>Activity Settings</em> panel on the right side of the canvas. </p>
 <ul>
@@ -4040,11 +4236,11 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <li>In the <em>Virtual Agent</em> drop down menu, select your AI Agent (Alex). </li>
 <li>
 <p>In the <em>State Event</em> section, we will make sure the required data points are passed on to the AI Agent. Copy the below json structure in the <em>Event Data</em> field:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="nt">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="p">{{</span><span class="err">NewPho</span><span class="kc">ne</span><span class="err">Co</span><span class="kc">nta</span><span class="err">c</span><span class="kc">t</span><span class="err">.DNIS</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="err">las</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">    </span><span class="nt">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="p">{{</span><span class="err">NewPho</span><span class="kc">ne</span><span class="err">Co</span><span class="kc">nta</span><span class="err">c</span><span class="kc">t</span><span class="err">.DNIS</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="err">las</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">}</span>
 </span></code></pre></div>
 </li>
 </ul>
@@ -4085,7 +4281,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </ul>
 </li>
 <li>
-<p>Connect te outlet of the <strong>Play Message</strong> node to the <strong>Disconnect</strong> node. </p>
+<p>Connect te outlet of the <strong>Play Message</strong> node to the <strong>EndFlow</strong> node. </p>
 </li>
 <li>
 <p>To complete the handling of the Virtual Agent outcomes, we will also play an error message in case of error and will leave the call to be escalated to the human agent. </p>
