@@ -208,9 +208,6 @@ The Investment Advisor's tools are hosted on an external MCP Server. To connect 
         - **MCP Server URL**: <copy>`https://mcp.cx-tme.com/investment/mcp`</copy>
 
     6. Under **Authentication**, select **API Key** as the authentication method.
-    7. Enter the API Key:
-
-        <copy>`wxfg_mcp_a3f7b2c91d4e8f0a6b5c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2`</copy>
 
         ???+ warning "API Key Security"
             This API key is shared across all bootcamp participants for lab purposes only. In a production environment, each application would have its own unique API key. Never share API keys in public repositories or documentation.
@@ -243,7 +240,7 @@ After registering the app in the Developer Portal, you need to provision it in *
         - The authentication method should already be set to **API Key** based on your Developer Portal configuration.
         - Enter the API Key:
 
-            <copy>`wxfg_mcp_a3f7b2c91d4e8f0a6b5c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2`</copy>
+            <copy>`wxai_mcp_4c8232360c9d9e159b9018d9140ebbace155afa746703b3bd66261216a73ddad`</copy>
 
     5. In the **Tools** tab:
         - You should see the four tools exposed by the MCP Server:
