@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-x-insert-lab-title-here-emoji" class="md-skip">
+        <a href="#lab-4-cross-skill-and-multi-agent-orchestration" class="md-skip">
           Skip to content
         </a>
       
@@ -1234,10 +1234,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#lab-x1-sub-section-title" class="md-nav__link">
+  <a href="#lab-purpose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab X.1 [Sub-section Title]
+        Lab Purpose
       
     </span>
   </a>
@@ -1245,10 +1245,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lab-x2-configuration-task" class="md-nav__link">
+  <a href="#pre-requisites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab X.2 [Configuration Task]
+        Pre-requisites
       
     </span>
   </a>
@@ -1256,10 +1256,87 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
+  <a href="#lab-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing
+        Lab Overview 📌
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-41-configure-alex-to-transfer-to-the-investment-advisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.1 Configure Alex to Transfer to the Investment Advisor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-42-create-the-investment-advisor-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.2 Create the Investment Advisor AI Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-43-register-the-mcp-server-as-an-agentic-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.3 Register the MCP Server as an Agentic App
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-44-provision-the-agentic-app-in-control-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.4 Provision the Agentic App in Control Hub
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-45-connect-the-mcp-tools-to-the-investment-advisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.5 Connect the MCP Tools to the Investment Advisor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-46-update-the-call-flow-for-agent-to-agent-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.6 Update the Call Flow for Agent-to-Agent Transfer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-47-test-the-complete-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.7 Test the Complete Scenario
       
     </span>
   </a>
@@ -1431,128 +1508,641 @@
 
 
 
-<h1 id="lab-x-insert-lab-title-here-emoji">Lab X - [Insert Lab Title Here] :emoji:<a class="headerlink" href="#lab-x-insert-lab-title-here-emoji" title="Permanent link">¶</a></h1>
-<p>[Provide a high-level summary of what the user will achieve in this lab. Mention the tools involved (e.g., Control Hub, Webex Connect).]</p>
+<h1 id="lab-4-cross-skill-and-multi-agent-orchestration">Lab 4 - Cross-Skill and Multi-Agent Orchestration<a class="headerlink" href="#lab-4-cross-skill-and-multi-agent-orchestration" title="Permanent link">¶</a></h1>
+<h2 id="lab-purpose">Lab Purpose<a class="headerlink" href="#lab-purpose" title="Permanent link">¶</a></h2>
+<p>In <strong>Lab 2</strong>, you built <strong>Alex</strong>, an autonomous AI Agent specialized in debt collection. In <strong>Lab 3</strong>, you configured the escalation path from Alex to a human fraud specialist. In this lab, you will design a <strong>multi-agent architecture</strong> where Alex hands off to a second AI Agent — an <strong>Investment Advisor</strong> — that leverages an external <strong>MCP (Model Context Protocol) Server</strong> to provide real-time stock market data, portfolio management, and order execution.</p>
+<p>This lab introduces the concept of <strong>agent-to-agent transfer</strong>, where one AI Agent recognizes that a customer's intent falls outside its domain and seamlessly transfers the conversation — with full context — to a specialized peer agent. You will also learn how to register and configure an <strong>Agentic App</strong> in the Webex Developer Portal, provision it in Control Hub, and connect it to your AI Agent's actions via MCP.</p>
 <details class="purpose" open="open">
 <summary>Lab Objectives</summary>
+<p>The purpose of this lab is to extend your contact center automation beyond a single AI Agent by implementing a multi-agent orchestration pattern.</p>
+<p>Key objectives include:</p>
 <ul>
-<li>Objective 1: Describe the outcome.</li>
-<li>Objective 2: Describe the technical integration.</li>
+<li><strong>Agent-to-Agent Transfer:</strong> Configuring Alex to recognize investment-related intent and transfer the conversation to a specialized Investment Advisor AI Agent.</li>
+<li><strong>MCP Server Integration:</strong> Connecting the Investment Advisor to an external MCP Server that provides stock market data, portfolio retrieval, and order execution tools.</li>
+<li><strong>Agentic App Registration:</strong> Registering the MCP Server as an Agentic App in the Webex Developer Portal and provisioning it in Control Hub.</li>
+<li><strong>End-to-End Testing:</strong> Validating the complete flow from debt collection through agent transfer to investment advisory with live MCP tool execution.</li>
 </ul>
 </details>
-<details class="warning" open="open">
-<summary>Important Note</summary>
-<p>Insert critical warnings here (e.g., "Do not use your personal email," or "Ensure you are using the VPN").</p>
+<details class="challenge" open="open">
+<summary>Lab Outcome</summary>
+<p>By the end of this lab, you will have:</p>
+<ul>
+<li><strong>A second AI Agent</strong> (Investment Advisor) capable of providing stock recommendations, retrieving customer portfolios, and placing orders.</li>
+<li><strong>A seamless transfer</strong> from Alex to the Investment Advisor with conversation context preserved.</li>
+<li><strong>Live MCP integration</strong> where the Investment Advisor calls external tools hosted on a remote server to fetch real-time data and execute financial transactions.</li>
+<li><strong>A working payment flow</strong> where the customer receives a NovaPay payment link via email to complete a stock purchase.</li>
+</ul>
 </details>
 <hr>
-<h2 id="lab-x1-sub-section-title">Lab X.1 [Sub-section Title]<a class="headerlink" href="#lab-x1-sub-section-title" title="Permanent link">¶</a></h2>
-<p>[Briefly explain the context of this specific task.]</p>
-<details class="webex" open="open">
-<summary>Instructions</summary>
+<h2 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h2>
+<p>In order to be able to complete this lab, you must:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have your <strong>Airtable repositories</strong> completed for the <em>Customer</em>, <em>Investment</em>, and <em>Positions</em> tables</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have an <strong>email digital channel</strong> available in your tenant</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have completed <a href="../lab2_debt_ai_agent/">Lab 2 - Automating Debt Collection</a></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Have completed <a href="../lab3_human_ai_assist/">Lab 3 - Human Escalation and RT Assist</a></li>
+</ul>
+<hr>
+<h2 id="lab-overview">Lab Overview 📌<a class="headerlink" href="#lab-overview" title="Permanent link">¶</a></h2>
+<p>In this lab you will perform the following tasks:</p>
 <ol>
-<li>Navigate to <strong>[Menu Name]</strong> &gt; <strong>[Sub-menu]</strong>.</li>
-<li>Click the <strong>[Button Name]</strong> button.</li>
-<li>Enter the following parameters:<ul>
-<li><strong>Name</strong>: <code>PODXX_Task_Name</code> (Replace XX with your POD ID)</li>
-<li><strong>Type</strong>: Select <code>Option A</code></li>
-<li><strong>Description</strong>: "Test description"</li>
+<li>Configure a transfer action in Alex for investment-related requests.</li>
+<li>Create the Investment Advisor AI Agent.</li>
+<li>Register the MCP Server as an Agentic App in the Webex Developer Portal.</li>
+<li>Provision the Agentic App in Control Hub.</li>
+<li>Connect the MCP tools to the Investment Advisor.</li>
+<li>Update the call flow to handle the agent-to-agent transfer.</li>
+<li>Test the complete multi-agent scenario.</li>
+</ol>
+<hr>
+<h2 id="lab-41-configure-alex-to-transfer-to-the-investment-advisor">Lab 4.1 Configure Alex to Transfer to the Investment Advisor<a class="headerlink" href="#lab-41-configure-alex-to-transfer-to-the-investment-advisor" title="Permanent link">¶</a></h2>
+<p>Just as we configured a <code>fraud_transfer</code> action in Lab 3, we will now create an <code>investment_transfer</code> action that Alex will use when a customer expresses interest in their investment portfolio, stock purchases, or market inquiries.</p>
+<details class="webex" open="open">
+<summary>Create the Transfer Action in Alex</summary>
+<ol>
+<li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>[Contact Center]</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link. The Webex AI Agent studio will open in a new window.</li>
+<li>In the <strong>AI Agent Studio</strong>, select your <em>Finance Debt Collection Agent</em> (Alex)</li>
+<li>Click on <strong>Actions</strong></li>
+<li>Click on <strong>Create new</strong> and select <strong>Transfer</strong></li>
+<li>Fill in the <strong>General information</strong> of your action:<ul>
+<li><strong>Action name</strong>: <copy>investment_transfer</copy></li>
+<li><strong>Action description</strong>: <copy>Action to transfer the call to the Investment Advisor AI Agent when the customer wants to discuss their investment portfolio, buy or sell stocks, or inquire about market data.</copy></li>
+<li><strong>Transfer visibility</strong>: You can either enable or disable the <strong>Announce transfer</strong> toggle</li>
 </ul>
 </li>
-<li>Click <strong>Save</strong>.</li>
-</ol>
-<details class="info" open="open">
-<summary>Visual Reference: [Description] IMG</summary>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/your_image_name.png" data-title="Alt Text" data-desc-position="top"><img alt="Alt Text" src="./assets/your_image_name.png"></a>
-<figcaption>Optional: Description of the screenshot</figcaption>
-</figure><p></p>
-</details>
-<details class="gif" open="open">
-<summary>Enable GitHub Pages</summary>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/your_gif_file.gif" data-title="Alt Text" data-desc-position="top"><img alt="Alt Text" src="./assets/your_gif_file.gif"></a>
-<figcaption>Optional: Description of the gif</figcaption>
-</figure><p></p>
-</details>
-</details>
-<h2 id="lab-x2-configuration-task">Lab X.2 [Configuration Task]<a class="headerlink" href="#lab-x2-configuration-task" title="Permanent link">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Documentation Link</p>
-<p>You can find the official documentation <a href="https://link-to-docs.com">here</a>.</p>
-</div>
-<details class="webex" open="open">
-<summary>Step-by-Step Configuration</summary>
-<ol>
-<li>Open the <strong>[Tool Name]</strong>.</li>
-<li>Locate your resource and update the values as shown in the table below:</li>
-</ol>
+<li>
+<p>Select the <strong>Add new entity</strong> option, fill out the entity details with this information:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Parameter</th>
-<th style="text-align: left;">Value</th>
-<th style="text-align: left;">Notes</th>
+<th style="text-align: left;">Entity Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Required</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Variable A</strong></td>
-<td style="text-align: left;"><code>$(n2.Value)</code></td>
-<td style="text-align: left;">Use the node ID from your flow</td>
+<td style="text-align: left;"><copy><code>customer_id</code></copy></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><copy><code>The customer ID retrieved during authentication</code></copy></td>
+<td style="text-align: left;"><copy><code>CUST-001</code></copy></td>
+<td style="text-align: left;"><code>Yes</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Variable B</strong></td>
-<td style="text-align: left;"><code>67e2e90e...</code></td>
-<td style="text-align: left;">Provided Lab ID</td>
+<td style="text-align: left;"><copy><code>customer_email</code></copy></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><copy><code>The customer email address</code></copy></td>
+<td style="text-align: left;"><copy><code>jdoe@domain.com</code></copy></td>
+<td style="text-align: left;"><code>Yes</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><copy><code>investment_id</code></copy></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><copy><code>The customer investment account ID if available</code></copy></td>
+<td style="text-align: left;"><copy><code>INV-001</code></copy></td>
+<td style="text-align: left;"><code>No</code></td>
 </tr>
 </tbody>
 </table>
-<ol>
-<li>For JSON configurations, use the snippet below:
-<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$(n2.aiAgent.transId)"</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">"pod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XX"</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
+</li>
+<li>
+<p>Click <strong>Add</strong>.</p>
+</li>
+<li>Go back to the <strong>Profile</strong> tab and add the following into the <strong>Instructions</strong>:
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>**Investment Transfer Logic:**
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>If the customer wants to discuss investments, buy or sell stocks, check their portfolio, or inquire about market data, transfer to the Investment Advisor using the **[investment_transfer]** transfer action.
 </span></code></pre></div></li>
+<li>Click <strong>Save Changes</strong> and <strong>Publish</strong>.</li>
 </ol>
-<details class="tip" open="open">
-<summary>Pro-Tip</summary>
-<p>If you encounter an error during validation, ensure there are no trailing spaces in your URL.</p>
+<details class="gif" open="open">
+<summary>Investment Transfer Action Setup</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_investment_transfer_action.gif" data-title="Investment Transfer Action" data-desc-position="top"><img alt="Investment Transfer Action" src="./assets/lab4_investment_transfer_action.gif"></a>
+<figcaption>Configuring the investment transfer action in Alex</figcaption>
+</figure><p></p>
 </details>
 </details>
 <hr>
-<h2 id="testing">Testing <img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f9ea.svg" title=":test_tube:"><a class="headerlink" href="#testing" title="Permanent link">¶</a></h2>
-<p>[Explain how the user can verify their work is correct.]</p>
+<h2 id="lab-42-create-the-investment-advisor-ai-agent">Lab 4.2 Create the Investment Advisor AI Agent<a class="headerlink" href="#lab-42-create-the-investment-advisor-ai-agent" title="Permanent link">¶</a></h2>
+<p>In this section, you will create a second autonomous AI Agent — the <strong>Investment Advisor</strong>. This agent specializes in investment portfolio management, stock market data, and order execution. Unlike Alex, whose actions are fulfilled by Webex Connect flows, the Investment Advisor's actions will be fulfilled by an external <strong>MCP Server</strong>.</p>
 <details class="webex" open="open">
-<summary>Validation Steps</summary>
+<summary>Create the Investment Advisor</summary>
 <ol>
-<li><strong>Trigger the event</strong>: [Describe how to trigger it, e.g., "Place a call to..."]</li>
-<li><strong>Observe the result</strong>: [Describe what should happen, e.g., "You should see a pop-up..."]</li>
-<li><strong>Check logs</strong>: Navigate to the <strong>Logs</strong> tab and verify the status is <code>200 OK</code>.</li>
+<li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>[Contact Center]</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link.</li>
+<li>Click on <strong>[+ Create agent]</strong></li>
+<li>Click on <strong>[Start from scratch]</strong> and then <strong>[-&gt; Next]</strong></li>
+<li>
+<p>Select the <strong>[Autonomous]</strong> option and fill in the <strong>essential details</strong>:</p>
+<ul>
+<li><strong>Agent Name</strong>: <copy><code>Investment Advisor Agent</code></copy></li>
+<li><strong>AI engine</strong>: Select one of the available engines</li>
+<li>
+<p><strong>Agent's goal</strong>: Copy the below content</p>
+<p><copy><code>You are an Investment Advisor for Webex Financial Group. Your mission is to help customers manage their investment portfolio, provide stock market information, and execute buy or sell orders. You use real-time market data and the customer's portfolio to provide informed recommendations. Maintain a professional, knowledgeable, and helpful tone.</code></copy></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click the <strong>[Create]</strong> button.</p>
+</li>
 </ol>
+<details class="gif" open="open">
+<summary>Create Investment Advisor</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_create_investment_advisor.gif" data-title="Create Investment Advisor" data-desc-position="top"><img alt="Create Investment Advisor" src="./assets/lab4_create_investment_advisor.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<details class="webex" open="open">
+<summary>Configure the Investment Advisor Instructions</summary>
+<p>From the AI Agent configuration page:</p>
+<ol>
+<li>Select your <strong>Time zone</strong></li>
+<li>
+<p>Fill in the <strong>Welcome message</strong>:
+    </p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Hello! I'm your Investment Advisor from Webex Financial Group. I can help you check your portfolio, look up stock prices, and place buy or sell orders. How can I assist you today?
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>Copy the below prompt in the <strong>Instructions</strong> field:
+    </p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>1. Identity
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Role Definition: You are an Investment Advisor AI Agent for Webex Financial Group, specializing in portfolio management and stock trading.
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Tone: Professional, knowledgeable, and helpful. Provide clear explanations of market data and investment options.
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>2. Context
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Background: You handle investment-related conversations transferred from the Debt Collection Agent (Alex). The customer has already been authenticated.
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Environment: Voice line with potential background noise. Keep responses clear and concise.
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>3. Task
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Available Actions:
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>[get_stock_price]: Retrieve current market data for a stock ticker.
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>[get_portfolio]: Retrieve the customer's current investment positions.
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>[initiate_order]: Place a buy or sell order and send a payment link to the customer.
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>[confirm_order]: Confirm payment completion and finalize the order in the portfolio.
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>Steps:
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Greeting: Welcome the customer and ask how you can help with their investments.
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>Portfolio Review: If requested, use [get_portfolio] to retrieve and present current positions.
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>Stock Inquiry: If the customer asks about a stock, use [get_stock_price] to provide current market data.
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>Order Placement: If the customer wants to buy or sell:
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    - Confirm the ticker, quantity, and action (BUY or SELL) with the customer.
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>    - Execute [initiate_order] to create a payment session and send the payment link.
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    - Inform the customer that a payment link has been sent to their email.
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    - Once the customer confirms they have completed the payment, execute [confirm_order] to verify and finalize the order.
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>Summary: After each action, provide a clear summary of what was done.
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>4. Available Stocks
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>The following tickers are available for trading:
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>- MOON (MoonShotMeme) - Tech sector
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>- YLO (YOLO-Tech) - Tech sector
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>- DEBT (InfiniteDebtInc) - Finance sector
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>- CATV (CatVideoStreaming) - Entertainment sector
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>- HYPE (HypeTrainHoldings) - Retail sector
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>5. Response Guidelines
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>Formatting: Keep responses short and conversational. When presenting portfolio data, summarize clearly.
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>Language Style: Use clear, direct language. Explain market terms if the customer seems unfamiliar.
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>6. Error Handling
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>Clarification: "I didn't catch that. Could you repeat?"
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>Default Response: "I can help with portfolio reviews, stock prices, and placing orders. What would you like to do?"
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>Action Failures: "I'm experiencing a delay retrieving that information. Please hold while I try again."
+</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>
+</span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>7. User Defined Guardrails
+</span><span id="__span-2-47"><a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>Stay within Webex Financial Group's investment services.
+</span><span id="__span-2-48"><a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>Never provide financial advice or guarantee returns.
+</span><span id="__span-2-49"><a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>Always confirm order details with the customer before executing.
+</span><span id="__span-2-50"><a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>The Airtable Base ID and API Key will be provided as configuration. Use them when calling portfolio and order tools.
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>Click on <strong>[Save changes]</strong></p>
+</li>
+</ol>
+<details class="tip" open="open">
+<summary>Investment Advisor vs. Alex</summary>
+<p>Notice the key difference: Alex is focused on <strong>debt recovery</strong> with strict security protocols and authentication flows. The Investment Advisor assumes the customer has <strong>already been authenticated</strong> by Alex and focuses purely on investment operations. This separation of concerns is a core principle of multi-agent architecture.</p>
+</details>
+<details class="gif" open="open">
+<summary>Investment Advisor Instructions</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_investment_advisor_instructions.gif" data-title="Investment Advisor Instructions" data-desc-position="top"><img alt="Investment Advisor Instructions" src="./assets/lab4_investment_advisor_instructions.gif"></a>
+</figure><p></p>
+</details>
+</details>
+<hr>
+<h2 id="lab-43-register-the-mcp-server-as-an-agentic-app">Lab 4.3 Register the MCP Server as an Agentic App<a class="headerlink" href="#lab-43-register-the-mcp-server-as-an-agentic-app" title="Permanent link">¶</a></h2>
+<p>The Investment Advisor's tools are hosted on an external MCP Server. To connect the AI Agent to this server, you must first register it as an <strong>Agentic App</strong> in the Webex Developer Portal.</p>
+<details class="info" open="open">
+<summary>What is an Agentic App?</summary>
+<p>An Agentic App is a registered external service that exposes capabilities (tools, resources, or prompts) via the MCP protocol. By registering the MCP Server as an Agentic App, you allow Webex AI Agents to discover and call the tools it exposes, with authentication and governance managed centrally.</p>
+</details>
+<details class="webex" open="open">
+<summary>Register the Agentic App in the Developer Portal</summary>
+<ol>
+<li>Navigate to the <a href="https://developer.webex.com">Webex Developer Portal</a>.</li>
+<li>Log in with your Webex credentials.</li>
+<li>Navigate to the <strong>Agentic Apps</strong> section.</li>
+<li>Click <strong>Create New App</strong>.</li>
+<li>
+<p>Fill in the app details:</p>
+<ul>
+<li><strong>App Name</strong>: <copy><code>Webex Finance MCP Server</code></copy></li>
+<li><strong>Description</strong>: <copy><code>MCP Server providing stock market data, portfolio management, and order execution tools for the Webex Financial Group Investment Advisor.</code></copy></li>
+<li><strong>App Type</strong>: Select <strong>MCP Server</strong></li>
+<li><strong>MCP Server URL</strong>: <copy><code>https://mcp.cx-tme.com/investment/mcp</code></copy></li>
+</ul>
+</li>
+<li>
+<p>Under <strong>Authentication</strong>, select <strong>API Key</strong> as the authentication method.</p>
+</li>
+<li>
+<p>Enter the API Key:</p>
+<p><copy><code>wxfg_mcp_a3f7b2c91d4e8f0a6b5c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2</code></copy></p>
+<details class="warning" open="open">
+<summary>API Key Security</summary>
+<p>This API key is shared across all bootcamp participants for lab purposes only. In a production environment, each application would have its own unique API key. Never share API keys in public repositories or documentation.</p>
+</details>
+</li>
+<li>
+<p>Click <strong>Create</strong> (or <strong>Submit</strong>).</p>
+</li>
+</ol>
+<details class="info" open="open">
+<summary>What happens during registration?</summary>
+<p>When you register the Agentic App, the Webex platform connects to your MCP Server URL, authenticates using the API key, and discovers the available tools. It reads the tool names, descriptions, and input schemas that were defined in the MCP Server code. These tools then become available for configuration in Control Hub.</p>
+</details>
+<details class="gif" open="open">
+<summary>Register Agentic App</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_register_agentic_app.gif" data-title="Register Agentic App" data-desc-position="top"><img alt="Register Agentic App" src="./assets/lab4_register_agentic_app.gif"></a>
+<figcaption>Registering the MCP Server in the Webex Developer Portal</figcaption>
+</figure><p></p>
+</details>
+</details>
+<hr>
+<h2 id="lab-44-provision-the-agentic-app-in-control-hub">Lab 4.4 Provision the Agentic App in Control Hub<a class="headerlink" href="#lab-44-provision-the-agentic-app-in-control-hub" title="Permanent link">¶</a></h2>
+<p>After registering the app in the Developer Portal, you need to provision it in <strong>Control Hub</strong> to control access and configure authentication for your organization.</p>
+<details class="webex" open="open">
+<summary>Provision the Agentic App</summary>
+<ol>
+<li>From <a href="https://admin.webex.com">Control Hub</a>, navigate to <strong>Apps</strong> &gt; <strong>Agentic Apps</strong>.</li>
+<li>You should see the <strong>Webex Finance MCP Server</strong> app in the list. Click on it.</li>
+<li>
+<p>In the <strong>General</strong> tab:</p>
+<ul>
+<li>Set the app to <strong>Allowed</strong> for your organization.</li>
+</ul>
+</li>
+<li>
+<p>In the <strong>Authentication</strong> tab:</p>
+<ul>
+<li>The authentication method should already be set to <strong>API Key</strong> based on your Developer Portal configuration.</li>
+<li>
+<p>Enter the API Key:</p>
+<p><copy><code>wxfg_mcp_a3f7b2c91d4e8f0a6b5c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2</code></copy></p>
+</li>
+</ul>
+</li>
+<li>
+<p>In the <strong>Tools</strong> tab:</p>
+<ul>
+<li>
+<p>You should see the four tools exposed by the MCP Server:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tool Name</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>get_stock_price</code></td>
+<td style="text-align: left;">Returns current market data for a given stock ticker</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_portfolio</code></td>
+<td style="text-align: left;">Retrieves investment positions for a given investment account</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>initiate_order</code></td>
+<td style="text-align: left;">Initiates a stock order and sends a payment link via email</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>confirm_order</code></td>
+<td style="text-align: left;">Confirms payment and writes the position to the portfolio</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>Enable</strong> all four tools.</p>
+</li>
+<li>Optionally, toggle <strong>Allow signature change</strong> for each tool if you anticipate the MCP Server tools may be updated during the bootcamp.</li>
+</ul>
+<details class="tip" open="open">
+<summary>Tool Governance</summary>
+<p>The Tools tab in Control Hub is where administrators can control which MCP tools are available to AI Agents in the organization. This is a key governance feature — even if the MCP Server exposes 20 tools, the administrator can choose to enable only the ones relevant to the business use case.</p>
+</details>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<details class="gif" open="open">
+<summary>Provision Agentic App in Control Hub</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_provision_agentic_app.gif" data-title="Provision Agentic App" data-desc-position="top"><img alt="Provision Agentic App" src="./assets/lab4_provision_agentic_app.gif"></a>
+<figcaption>Configuring the Agentic App in Control Hub</figcaption>
+</figure><p></p>
+</details>
+</details>
+<hr>
+<h2 id="lab-45-connect-the-mcp-tools-to-the-investment-advisor">Lab 4.5 Connect the MCP Tools to the Investment Advisor<a class="headerlink" href="#lab-45-connect-the-mcp-tools-to-the-investment-advisor" title="Permanent link">¶</a></h2>
+<p>Now that the Agentic App is provisioned, you need to connect the MCP tools to your Investment Advisor AI Agent as actions.</p>
+<details class="webex" open="open">
+<summary>Add MCP Tools as Actions</summary>
+<ol>
+<li>In the <strong>AI Agent Studio</strong>, select your <em>Investment Advisor Agent</em>.</li>
+<li>Click on <strong>[Actions]</strong>.</li>
+<li>
+<p>Click on <strong>[Create new]</strong> and select <strong>MCP</strong>.</p>
+<details class="info" open="open">
+<summary>MCP Action Type</summary>
+<p>Unlike Lab 2 where you selected <strong>Fulfillment</strong> (backed by Webex Connect flows), here you select <strong>MCP</strong>. This tells the AI Agent that the action is fulfilled by an external MCP Server rather than a Webex Connect flow.</p>
+</details>
+</li>
+<li>
+<p>Select the <strong>Webex Finance MCP Server</strong> Agentic App from the list.</p>
+</li>
+<li>You should see the four available tools. Select <strong>get_stock_price</strong> and click <strong>Add</strong>.</li>
+<li>Review the action configuration:<ul>
+<li><strong>Action name</strong>: <code>get_stock_price</code></li>
+<li>The input schema (the <code>ticker</code> parameter) is automatically populated from the MCP Server's tool definition.</li>
+</ul>
+</li>
+<li>
+<p>Repeat the process for the remaining three tools:</p>
+<ul>
+<li>Select <strong>get_portfolio</strong> and click <strong>Add</strong>.</li>
+<li>Select <strong>initiate_order</strong> and click <strong>Add</strong>.</li>
+<li>Select <strong>confirm_order</strong> and click <strong>Add</strong>.</li>
+</ul>
+</li>
+<li>
+<p>You should now see all four MCP actions in the <strong>Actions</strong> panel of your AI Agent.</p>
+</li>
+</ol>
+<details class="warning" open="open">
+<summary>Airtable Credentials</summary>
+<p>The <code>get_portfolio</code>, <code>initiate_order</code>, and <code>confirm_order</code> tools require your Airtable Base ID and API Key as input parameters. You need to instruct the AI Agent to use these values when calling these tools. Go back to the <strong>Profile</strong> tab and add the following to the <strong>Instructions</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>**Airtable Configuration:**
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>When calling tools that require airtable_base_id and airtable_api_key, use the following values:
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>- airtable_base_id: YOUR_BASE_ID
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>- airtable_api_key: YOUR_API_KEY
+</span></code></pre></div>
+<p>Replace <code>YOUR_BASE_ID</code> and <code>YOUR_API_KEY</code> with your actual Airtable credentials.</p>
+<details class="tip" open="open">
+<summary>Why pass credentials in the instructions?</summary>
+<p>In a production environment, credentials would be managed via secure environment variables or a secrets manager. For this bootcamp, embedding them in the instructions is the simplest approach that allows each partner to use their own Airtable base without modifying the shared MCP Server.</p>
+</details>
+</details>
+<ol>
+<li>Click <strong>[Save changes]</strong> and <strong>Publish</strong> the agent.</li>
+</ol>
+<details class="gif" open="open">
+<summary>Add MCP Actions</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_add_mcp_actions.gif" data-title="Add MCP Actions" data-desc-position="top"><img alt="Add MCP Actions" src="./assets/lab4_add_mcp_actions.gif"></a>
+<figcaption>Connecting MCP tools to the Investment Advisor</figcaption>
+</figure><p></p>
+</details>
+</details>
+<hr>
+<h2 id="lab-46-update-the-call-flow-for-agent-to-agent-transfer">Lab 4.6 Update the Call Flow for Agent-to-Agent Transfer<a class="headerlink" href="#lab-46-update-the-call-flow-for-agent-to-agent-transfer" title="Permanent link">¶</a></h2>
+<p>In Lab 3, you modified the flow to handle the <code>fraud_transfer</code> by routing to a human queue. Now you will add a third path in the <strong>Case</strong> node to handle the <code>investment_transfer</code> by routing to the Investment Advisor AI Agent.</p>
+<details class="webex" open="open">
+<summary>Update the Flow</summary>
+<ol>
+<li>Go to <strong>Control Hub</strong> -&gt; <strong>Contact Center</strong> -&gt; <strong>Flows</strong></li>
+<li>Open your flow <strong>AI_Agent_DebtCollection</strong></li>
+<li>Locate the <strong>Case</strong> node named <code>Transfer_Check</code>.</li>
+<li>
+<p>Add a new case:</p>
+<ul>
+<li><strong>Case 3</strong> = <copy><code>investment_transfer</code></copy></li>
+</ul>
+</li>
+<li>
+<p>Drag and drop a new <strong>Parse</strong> node onto the canvas.</p>
+</li>
+<li>Connect the <em>investment_transfer</em> path of the <strong>Case</strong> node to the new <strong>Parse</strong> node.</li>
+<li>Click the <strong>Parse</strong> node and rename it to <copy><code>Investment_Context</code></copy>.</li>
+<li>In the Description, add: <copy><code>Extracts investment transfer context from AI Agent metadata</code></copy></li>
+<li>
+<ul>
+<li><strong>Input Variable</strong> = <code>DebtCollection_Agent.MetaData</code></li>
+<li><strong>Content Type</strong> = <code>JSON</code></li>
+</ul>
+<p>Map the variables from the Virtual Agent MetaData:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Output Variable</th>
+<th style="text-align: left;">Path Expression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>customer_id</code></td>
+<td style="text-align: left;"><copy><code>$.actions.investment_transfer[0].input.customer_id</code></copy></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>customer_email</code></td>
+<td style="text-align: left;"><copy><code>$.actions.investment_transfer[0].input.customer_email</code></copy></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>investment_id</code></td>
+<td style="text-align: left;"><copy><code>$.actions.investment_transfer[0].input.investment_id</code></copy></td>
+</tr>
+</tbody>
+</table>
+<details class="tip" open="open">
+<summary>Reusing the Pattern from Lab 3</summary>
+<p>This is the exact same pattern you used for the <code>fraud_transfer</code> in Lab 3.2. The only differences are the action name (<code>investment_transfer</code>) and the entity names. The MetaData JSON structure is consistent across all transfer actions.</p>
+</details>
+</li>
+<li>
+<p>Drag and drop a <strong>Virtual Agent V2</strong> node onto the canvas.</p>
+</li>
+<li>Connect the output of the <strong>Investment_Context</strong> Parse node to the new <strong>Virtual Agent V2</strong> node.</li>
+<li>
+<p>Click on the <strong>Virtual Agent V2</strong> node and configure the settings:</p>
+<ul>
+<li><strong>Activity Label</strong>: <copy><code>InvestmentAdvisor</code></copy></li>
+<li>Under <em>Conversational Experience</em>, set the <strong>Static Contact Center AI Config</strong></li>
+<li>In the <em>Contact Center AI Config</em> select <strong>Webex AI Agent (Autonomous)</strong></li>
+<li>In the <em>Virtual Agent</em> drop down menu, select your <strong>Investment Advisor Agent</strong>.</li>
+<li>
+<p>In the <em>State Event</em> section, copy the below JSON in the <em>Event Data</em> field:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nt">"customer_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{customer_id}}"</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{customer_email}}"</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">"investment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{investment_id}}"</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>The variables on the right (<code>{{customer_id}}</code>, <code>{{customer_email}}</code>, <code>{{investment_id}}</code>) must match the flow variable names you defined in the <strong>Parse</strong> node. These are the variables that the Investment Advisor will receive as context from Alex.</p>
+</details>
+</li>
+</ul>
+</li>
+<li>
+<p>Connect the <em>Handled</em> outlet of the <strong>Virtual Agent V2</strong> node to the <strong>End Flow</strong> node.</p>
+</li>
+<li>Connect the <em>Escalated</em> outlet to the <strong>Generic_Queue</strong> node (as a fallback if the Investment Advisor needs to escalate to a human).</li>
+<li>Connect the <em>Errored</em> outlet to the existing error <strong>Play Message</strong> node.</li>
+<li>Click <strong>Validate</strong>, then <strong>Save and Publish</strong> the flow.</li>
+</ol>
+<details class="gif" open="open">
+<summary>Update Flow for Investment Transfer</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./assets/lab4_update_flow.gif" data-title="Update Flow" data-desc-position="top"><img alt="Update Flow" src="./assets/lab4_update_flow.gif"></a>
+<figcaption>Adding the Investment Advisor path to the call flow</figcaption>
+</figure><p></p>
+</details>
+</details>
+<hr>
+<h2 id="lab-47-test-the-complete-scenario">Lab 4.7 Test the Complete Scenario <img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f9ea.svg" title=":test_tube:"><a class="headerlink" href="#lab-47-test-the-complete-scenario" title="Permanent link">¶</a></h2>
+<p>You can now test the full multi-agent flow from debt collection through investment advisory.</p>
+<details class="webex" open="open">
+<summary>Preparation</summary>
+<p>Before testing, ensure the following:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> <strong>Alex</strong> has been published with the <code>investment_transfer</code> action (Lab 4.1).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>Investment Advisor</strong> has been published with the four MCP actions (Lab 4.2 &amp; 4.5).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>Agentic App</strong> is registered and provisioned with all tools enabled (Lab 4.3 &amp; 4.4).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>flow</strong> has been published with the investment transfer path (Lab 4.6).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Your <strong>Airtable</strong> has the Investment and Positions tables populated with test data.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>MCP Server</strong> is running at <code>https://mcp.cx-tme.com/investment/mcp</code>.</li>
+</ul>
+</details>
+<details class="webex" open="open">
+<summary>Execute the Test</summary>
+<ol>
+<li><strong>Initiate the Call</strong>: Trigger an outbound call via the Campaign Manager or call directly into your entry point.</li>
+<li><strong>Authenticate with Alex</strong>: Complete the name verification and PIN authentication.</li>
+<li>
+<p><strong>Trigger the Investment Transfer</strong>: After authentication, say something like:</p>
+<p><copy>"I'd like to check on my investment portfolio"</copy></p>
+<p>or</p>
+<p><copy>"Can I buy some stocks?"</copy></p>
+</li>
+<li>
+<p><strong>Observe Alex's Behavior</strong>: Alex should:</p>
+<ul>
+<li>Recognize the investment intent.</li>
+<li>Execute the <code>investment_transfer</code> action, passing your customer ID, email, and investment ID.</li>
+<li>Inform you that you are being transferred to the Investment Advisor.</li>
+</ul>
+</li>
+<li>
+<p><strong>Interact with the Investment Advisor</strong>: Once transferred, test the following scenarios:</p>
+<p><strong>Scenario A — Check Stock Price:</strong></p>
+<p><copy>"What's the current price of MOON?"</copy></p>
+<p>The advisor should call <code>get_stock_price</code> and return: ticker MOON, price $42.69, sector Tech, volatility Extreme.</p>
+<p><strong>Scenario B — Review Portfolio:</strong></p>
+<p><copy>"Can you show me my current portfolio?"</copy></p>
+<p>The advisor should call <code>get_portfolio</code> and return your positions from Airtable.</p>
+<p><strong>Scenario C — Place an Order:</strong></p>
+<p><copy>"I want to buy 5 shares of CATV"</copy></p>
+<p>The advisor should:
+- Confirm the order details (5 shares of CATV at $15.20 each = $76.00).
+- Call <code>initiate_order</code> to create a NovaPay payment session.
+- Inform you that a payment link has been sent to your email.
+- After you complete the payment, say: <copy>"I've completed the payment"</copy>
+- The advisor should call <code>confirm_order</code> to verify and finalize the order.
+- You should see a new position added to your Airtable Positions table.</p>
+</li>
+</ol>
+</details>
+<details class="webex" open="open">
+<summary>Validation Checklist</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Expected Result</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Alex recognizes investment intent</td>
+<td style="text-align: left;"><code>investment_transfer</code> action triggers</td>
+<td style="text-align: left;">☐</td>
+</tr>
+<tr>
+<td style="text-align: left;">Context passed to Investment Advisor</td>
+<td style="text-align: left;">Customer ID, email, and investment ID available</td>
+<td style="text-align: left;">☐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_stock_price</code> works</td>
+<td style="text-align: left;">Returns correct hardcoded market data</td>
+<td style="text-align: left;">☐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_portfolio</code> works</td>
+<td style="text-align: left;">Returns positions from Airtable</td>
+<td style="text-align: left;">☐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>initiate_order</code> works</td>
+<td style="text-align: left;">NovaPay session created, email sent</td>
+<td style="text-align: left;">☐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>confirm_order</code> works</td>
+<td style="text-align: left;">Payment verified, position added to Airtable</td>
+<td style="text-align: left;">☐</td>
+</tr>
+<tr>
+<td style="text-align: left;">New position visible in Airtable</td>
+<td style="text-align: left;">Positions table has a new row</td>
+<td style="text-align: left;">☐</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="bug" open="open">
+<summary>Troubleshooting</summary>
+<ul>
+<li><strong>Transfer not triggering</strong>: Verify that Alex's instructions include the <code>investment_transfer</code> logic and that the action is published. Check the AI Agent Sessions logs in the AI Agent Studio.</li>
+<li><strong>MCP tools not appearing</strong>: Ensure the Agentic App is set to <strong>Allowed</strong> in Control Hub and all four tools are <strong>Enabled</strong> in the Tools tab.</li>
+<li><strong>Airtable write fails</strong>: Verify your Airtable Base ID and API Key are correct in the AI Agent instructions. Also confirm that the Positions table has the expected field names: <code>Position_ID</code>, <code>Investment_Acct</code>, <code>Stock_Ticker</code>, <code>Quantity</code>, <code>Purchase_Price</code>, <code>Current_Price</code>.</li>
+<li><strong>Payment link not received</strong>: Check that the WEBHOOK_URL in the MCP Server <code>.env</code> file points to a valid Webex Connect webhook that sends emails. Also verify the NovaPay service is responsive.</li>
+<li><strong>Context variables empty after transfer</strong>: Verify the Parse node path expressions match the entity names in the <code>investment_transfer</code> action. Use the flow debugger in Webex Connect to inspect the raw MetaData JSON.</li>
+</ul>
 </details>
 <hr>
 <h2 id="lab-completion">Lab Completion ✅<a class="headerlink" href="#lab-completion" title="Permanent link">¶</a></h2>
 <p>At this point, you have successfully:</p>
 <ul class="task-list">
-<li class="task-list-item">
-<p><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> [Goal 1]</p>
-</li>
-<li class="task-list-item">
-<p><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> [Goal 2]</p>
-</li>
-<li class="task-list-item">
-<p><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> [Goal 3]</p>
-</li>
-<li class="task-list-item">
-<p><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> ...</p>
-</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configured a transfer action in Alex to hand off investment-related conversations.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Created a second AI Agent (Investment Advisor) with a specialized persona and instructions.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Registered and provisioned an external MCP Server as an Agentic App in the Webex ecosystem.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Connected four MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Updated the call flow to route investment transfers to the Investment Advisor AI Agent.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Tested the complete multi-agent scenario from debt collection to investment advisory with live MCP tool execution.</li>
 </ul>
-<p><strong>Congratulations!</strong> You have successfully completed Lab X.X. You are now ready to move on to the next section.</p>
-<p><a class="md-button md-button--primary" href="../lab_novapay/">Next Lab - Optional!!: Lab extra - NovaPay payment service</a></p>
+<p><strong>Congratulations!</strong> You have successfully completed Lab 4 and the entire Bootcamp. You have built a fully operational, multi-agent contact center solution that combines proactive outreach, autonomous AI Agents, human escalation with AI assistance, and cross-skill orchestration with external MCP integrations.</p>
 
 
 

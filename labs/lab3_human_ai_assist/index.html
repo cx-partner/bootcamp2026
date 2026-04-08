@@ -1796,6 +1796,12 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <li>In your flow, move from the <strong>Main Flow</strong> tab to the <strong>Event Flows</strong> tab. </li>
 <li>Drag and drop the <strong>Start Media Stream</strong> node to the canvas. </li>
 <li>Connect the <strong>AgentAnswered</strong> event node to the <strong>Start Media Stream</strong> node. </li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">RTT Conditional Enablement</p>
+<p>Flow Designer is releasing an updated UX among other features, these new UX renamed the <strong>AgentAnswered</strong> event to <strong>AgentAccepted</strong>. Use either one of those events to start the media stream required for RTT. </p>
+</div>
+<ol>
 <li>Drag and drop an <strong>End Flow</strong> node to the canvas and connect it to the output path of the <strong>Start Media Stream</strong> node.</li>
 <li>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </li>
 </ol>
