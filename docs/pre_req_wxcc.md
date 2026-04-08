@@ -44,6 +44,9 @@ To verify availability:
 - **AI Agent Studio**: accessible from Control Hub → Contact Center → Quick Links → **Webex AI Agent**. If the link is absent or access is denied, the AI Agent SKU is not provisioned.
 - **AI Assistant**: accessible from Control Hub → Contact Center → Desktop Experience → AI Assistant settings. If the configuration panel is not available, the AI Assistant SKU is not provisioned.
 
+    ???+ Note
+        In some tenants you might see the old **AI Assistant** option replaced by the new **AI Features**
+
 ???+ tip "How AI SKUs are provisioned on Partner Lab Tenants"
     For existing Webex Contact Center Partners, the legacy Gold Tenant has been replaced by an **NFR Demo/Lab** tenant. The NFR Demo/Lab is provided at a 100% discount and includes the following items: 
 
