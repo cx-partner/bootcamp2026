@@ -196,6 +196,8 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     1. In your flow, move from the **Main Flow** tab to the **Event Flows** tab. 
     2. Drag and drop the **Start Media Stream** node to the canvas. 
     3. Connect the **AgentAnswered** event node to the **Start Media Stream** node. 
+    !!! info "RTT Conditional Enablement"
+        Flow Designer is releasing an updated UX among other features, these new UX renamed the **AgentAnswered** event to **AgentAccepted**. Use either one of those events to start the media stream required for RTT. 
     4. Drag and drop an **End Flow** node to the canvas and connect it to the output path of the **Start Media Stream** node.
     5. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
     !!! info "RTT Conditional Enablement"
