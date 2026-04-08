@@ -1535,8 +1535,8 @@
 <summary>Alex Setup</summary>
 <ol>
 <li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>Contact Center</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link. The Webex AI Agent studio will open in a new window. </li>
-<li>In the <strong>AI Agent Studio</strong>, select your <em>Finance Debt Collection Agent</em></li>
-<li>Click on <strong>+ Add Actions</strong> and select <strong>Transfer</strong></li>
+<li>In the <strong>AI Agent Studio</strong>, select your <em>Finance Debt Collection Agent</em>. </li>
+<li>Go to the <strong>Actions</strong> tab, click on <strong>+ Add Actions</strong> and select <strong>Transfer</strong></li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy>fraud_transfer</copy></li>
 <li><strong>Action description</strong>: <copy>Action to transfer the call to a fraud specialist when a customer has concerns about a suspicious transaction</copy>
@@ -1550,6 +1550,7 @@
 <tr>
 <th style="text-align: left;">Entity Name</th>
 <th style="text-align: left;">Type</th>
+<th style="text-align: left;">Value</th>
 <th style="text-align: left;">Description</th>
 <th style="text-align: left;">Example</th>
 <th style="text-align: left;">Required</th>
@@ -1559,6 +1560,7 @@
 <tr>
 <td style="text-align: left;"><copy><code>ivr_verified</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;"><copy><code>Send a true or false value depending if the user was successfully authenticated before executing this action.</code></copy></td>
 <td style="text-align: left;"><copy><code>True, False</code></copy></td>
 <td style="text-align: left;"><code>Yes</code></td>
@@ -1566,6 +1568,7 @@
 <tr>
 <td style="text-align: left;"><copy><code>debt_balance</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;"><copy><code>User's debt balance</code></copy></td>
 <td style="text-align: left;"><copy><code>10000</code></copy></td>
 <td style="text-align: left;"><code>No</code></td>
@@ -1573,6 +1576,7 @@
 <tr>
 <td style="text-align: left;"><copy><code>susp_trans</code></copy></td>
 <td style="text-align: left;"><code>Number</code></td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;"><copy><code>Amount of the transaction identified as suspicious</code></copy></td>
 <td style="text-align: left;"><copy><code>10000</code></copy></td>
 <td style="text-align: left;"><code>No</code></td>
@@ -1580,6 +1584,7 @@
 <tr>
 <td style="text-align: left;"><copy><code>susp_vendor</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;"><copy><code>Vendor of the transaction identified as suspicious</code></copy></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"><code>No</code></td>
@@ -1587,6 +1592,7 @@
 <tr>
 <td style="text-align: left;"><copy><code>susp_date</code></copy></td>
 <td style="text-align: left;"><code>Date</code></td>
+<td style="text-align: left;"><code>mm/dd/YY</code></td>
 <td style="text-align: left;"><copy><code>Date of the transaction identified as suspicious</code></copy></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"><code>No</code></td>
@@ -1620,8 +1626,8 @@
 <li>Go to <strong>Control Hub</strong> -&gt; <strong>Contact Center</strong> -&gt; <strong>Flows</strong></li>
 <li>Open your flow <strong>AI_Agent_DebtCollection</strong></li>
 <li>First, we need to create the flow variables that will hold the context from Alex. Click on the <strong>Global Flow Properties</strong> panel (the gear icon in the top-right of the flow editor).</li>
-<li>Under <strong>Custom Flow Variables</strong>, click the option <strong>Create flow variable</strong> and create the following variables:</li>
-</ol>
+<li>
+<p>Under <strong>Custom Flow Variables</strong>, click the option <strong>Create flow variable</strong> and create the following variables:</p>
 <table>
 <thead>
 <tr>
@@ -1655,7 +1661,7 @@
 <td style="text-align: left;"><copy><code>Debt Balance</code></copy></td>
 </tr>
 <tr>
-<td style="text-align: left;"><copy><code>susp_trans</code></copy></td>
+<td style="text-align: left;"><copy><code>susp_transaction</code></copy></td>
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;"><copy><code>0</code></copy></td>
 <td style="text-align: left;">Yes</td>
@@ -1677,8 +1683,10 @@
 </tr>
 </tbody>
 </table>
-<ol>
-<li>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </li>
+</li>
+<li>
+<p>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </p>
+</li>
 </ol>
 <details class="gif" open="open">
 <summary>Create Flow Variables</summary>
@@ -1704,7 +1712,7 @@
 <li>
 <p>In the <strong>Activity Settings</strong> panel on the right, scroll down to the <strong>Output Variables</strong> section. You will see the variables that the AI Agent passes back upon escalation, the MetaData variable contains the transfer action details. </p>
 </li>
-<li>Delete the temporary <strong>Play Message</strong> node connected to the <em>Escalated</em> outlet.</li>
+<li>Delete the temporary <strong>Play Message</strong> node connected to the <em>Escalated</em> outlet and connec the <strong>Error Message</strong> node to the <strong>End Flow</strong> node. </li>
 <li>Drag and drop a <strong>Parse</strong> node onto the canvas and connect it to the <em>Escalated</em> path of the VAV2 node.</li>
 <li>Click the <strong>Parse</strong> node and rename it <copy><code>Parse_Transfer</code></copy>. </li>
 <li>In the Description of the node, add the following: <copy><code>Collects the transfer type.</code></copy></li>
@@ -1720,8 +1728,8 @@
 transfer action used. In the previous step, we are collecting this value to decide how the call escalation needs to be routed. </p>
 </div>
 </li>
-<li>Drag and drop a <strong>Case</strong> node in the canvas and rename it <copy><code>Transfer_Check</code></copy></li>
-<li>In the Description of the node, add the following: <copy><code>Checks the transfer_type variable to route accordingly</code></copy></li>
+<li>Drag and drop a <strong>Case</strong> node in the canvas and connect it to the output of the <strong>Parse</strong> node.</li>
+<li>Rename it <copy><code>Transfer_Check</code></copy> and in the Description of the node, add the following: <copy><code>Checks the transfer_type variable to route accordingly</code></copy></li>
 <li>Configure the <strong>Case</strong> node settings:<ul>
 <li>Variable = transfer_type</li>
 <li>Case 1 = <copy><code>agent_transfer</code></copy></li>
@@ -1777,7 +1785,7 @@ transfer action used. In the previous step, we are collecting this value to deci
 </li>
 <li>Connect the <strong>Parse</strong> node output to the <strong>Fraud_Queue</strong> node. Connect the <strong>Fraud_Queue</strong> node output to the <strong>End Flow</strong> node.</li>
 <li>Click the <strong>Fraud_Queue</strong> node and select any Queue in your tenant that routes to the agents you want to use for this lab.</li>
-<li>Connect the <em>Default</em> path of the <strong>Case</strong> node to the new <strong>End Flow</strong> node.</li>
+<li>Connect the <em>Default</em> path of the <strong>Case</strong> node to the <strong>Generic_Queue</strong> node.</li>
 <li>Validate and save the flow, then select the <strong>Publish Flow</strong> option. A window to publish the flow will open up, simply click again on the <strong>Publish Flow</strong> button. </li>
 </ol>
 <details class="gif" open="open">
@@ -1852,7 +1860,7 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 We will review the steps to make the necessary changes to a Desktop layout for the AI Assistant and the Real-Time Transcription window to show up on the Agent Desktop. </p>
 <div class="admonition download">
 <p class="admonition-title">Knowledge base document</p>
-<p>If you don't need to update your own Desktop Layout, download a template <a href="./bcamp_files/Finance_Desktop.json" download="Finance_Desktop.json">HERE</a> and ignore the next steps. </p>
+<p>If you don't need to update your own Desktop Layout, download a template <a download="Finance_Desktop.json" href="../bcamp_files/Finance_Desktop.json">HERE</a> and ignore the next steps. </p>
 </div>
 <ol>
 <li>Open your JSON layout file using a text editor (Sublime, Notepad++, etc) or IDE (VS Code, etc). </li>
@@ -2176,7 +2184,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 <li>Click on the <strong>Flow Outcomes</strong> tab</li>
 <li>Open the <code>Last Execution Status</code> Outcome. The <code>Notify AI Agent</code> radio button is enabled by default for the start node with <code>AI Agent</code> as the trigger.</li>
 <li>
-<p>Click on <strong>+ Add New</strong> to add the Case ID variable:</p>
+<p>Click on <strong>+ Add New</strong> to add another entry, in the Key field type <strong>Response</strong>. Click the Value field and select the <strong>http.responseBody</strong> variable from the HTTP Request section in the Input Variables. </p>
 <table>
 <thead>
 <tr>
@@ -2219,7 +2227,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Click the option <strong>+ Create Skill</strong>. Select the option <strong>Start from scratch</strong> and click <strong>Next</strong>. </li>
 <li>Enter the <strong>Skill name</strong> <copy><code>Counter_Fraud_Assistant</code></copy> and enter the following in the <strong>Goal</strong> section: 
     <copy><code>You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.</code></copy></li>
-<li>The main configuration page for the AI Assistant skill comes up, add the following prompt to the <strong>Instructions</strong> section: 
+<li>Click <strong>Create</strong> and the main configuration page for the AI Assistant skill comes up, add the following prompt to the <strong>Instructions</strong> section: 
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># AI Assistant Action Orchestration
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Before asking the AGENT to collect any data from the CUSTOMER, check the conversation history. If the data was already provided, reuse it instead of asking again.
@@ -2249,13 +2257,14 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>
 </span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>- **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
 </span></code></pre></div></li>
-<li>Go to the <strong>Knowledge</strong> tab and select the <strong>FraudKB</strong> you created. </li>
-<li>Navigate to the <strong>[Actions]</strong> tab and click on <strong>[Create new]</strong> and select <strong>Fulfillment</strong></li>
+<li>Go to the <strong>Knowledge</strong> tab and select the <strong>FraudKB</strong> you created. Click <strong>Save Changes</strong>. </li>
+<li>Navigate to the <strong>Actions</strong> tab and click on <strong>+ New Action</strong>.</li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy><em>fetch_transactions</em></copy></li>
 <li><strong>Action description</strong>: copy and paste the following description.
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Use this action to get recent transactions on the account by providing the CustomerID. 
 </span></code></pre></div></li>
+<li><strong>Action Scope</strong>: Slot filling and fulfillment</li>
 </ul>
 </li>
 <li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
@@ -2299,13 +2308,14 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Select the flow <code>fetch_transactions</code></li>
 </ul>
 </li>
-<li>Click on <strong>Save</strong></li>
-<li>Select the <strong>[Create new]</strong> option and select <strong>Fulfillment</strong></li>
+<li>Click on <strong>Add</strong></li>
+<li>Select the <strong>+ New Action</strong> option.</li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
 <li><strong>Action name</strong>: <copy><em>open_case</em></copy></li>
 <li><strong>Action description</strong>: copy and paste the following description.
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Opens a fraud case, locks the customer card and ships a new card.
 </span></code></pre></div></li>
+<li><strong>Action Scope</strong>: Slot filling and fulfillment</li>
 </ul>
 </li>
 <li>Under <strong>Slot filling</strong> click on <strong>[New input entity]</strong></li>
@@ -2356,7 +2366,8 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Select the flow <code>open_case</code></li>
 </ul>
 </li>
-<li>Click on <strong>Save</strong></li>
+<li>Click on <strong>Add</strong>. </li>
+<li>You are ready to Publish your skill. Select the <strong>Publish</strong> option and enter a comment in the Publish window. Click <strong>Publish</strong> again. </li>
 </ol>
 <details class="gif" open="open">
 <summary>AI Assistant Skill Configuration</summary>
@@ -2374,7 +2385,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Scroll down to the <strong>Real-Time Assist</strong> section.</li>
 <li>Click on <strong>Assign AI Assistant Skills</strong>.</li>
 <li>From the available skills, select <strong>Counter_Fraud_Assistant</strong>.</li>
-<li>Select the queue you are using for fraud escalation (e.g., <code>Fraud_Queue</code>).</li>
+<li>Click <strong>Add queues</strong> and select the queue you are using for fraud escalation (e.g., <code>Fraud_Queue</code>).</li>
 <li>Click <strong>[Save]</strong>.</li>
 </ol>
 <details class="info" open="open">
