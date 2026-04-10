@@ -64,7 +64,7 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
         | :----- | :--- | :--- | :--- | :--- | :--- |
         | <copy>`ivr_verified`</copy>  | `String` | | <copy>`Send a true or false value depending if the user was successfully authenticated before executing this action.`</copy> | <copy>`True, False`</copy> |`Yes` | 
         | <copy>`debt_balance`</copy>  | `String` | | <copy>`User's debt balance`</copy> | <copy>`10000`</copy> |`No` | 
-        | <copy>`susp_trans`</copy>  | `Number` | | <copy>`Amount of the transaction identified as suspicious`</copy> | <copy>`10000`</copy> |`No` | 
+        | <copy>`susp_transaction`</copy>  | `Number` | | <copy>`Amount of the transaction identified as suspicious`</copy> | <copy>`10000`</copy> |`No` | 
         | <copy>`susp_vendor`</copy>  | `String` | | <copy>`Vendor of the transaction identified as suspicious`</copy> |  |`No` |
         | <copy>`susp_date`</copy>  | `Date` | `mm/dd/YY` | <copy>`Date of the transaction identified as suspicious`</copy> |  |`No` |
     7. Click **Add**.
@@ -196,7 +196,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     1. In your flow, move from the **Main Flow** tab to the **Event Flows** tab. 
     2. Drag and drop the **Start Media Stream** node to the canvas. 
     3. Connect the **AgentAnswered** event node to the **Start Media Stream** node. 
-    !!! info "RTT Conditional Enablement"
+    !!! info "Event Flow Nodes"
         Flow Designer is releasing an updated UX among other features, these new UX renamed the **AgentAnswered** event to **AgentAccepted**. Use either one of those events to start the media stream required for RTT. 
     4. Drag and drop an **End Flow** node to the canvas and connect it to the output path of the **Start Media Stream** node.
     5. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
@@ -213,7 +213,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
  In this lab, we will focus on the **Summarization**, **Real-Time Transcript** and  **Real-Time Assist** configuration. 
 
 ???+ webex "WxCC AI Assistant Configuration"
-    1. Open **Control Hub** and navigate to Contact Center > AI Assistant. 
+    1. Open **Control Hub** and navigate to Contact Center > AI Assistant. In some tenants the **AI Assistant** menu card might be renamed to **AI Features**, the following configuration still applies. 
     2. The first 2 options in this page will be for **Agent Wellbeing** and **AutoCSAT**, but this are not relevant for this lab. 
     3. Enable the **Generated Summaries**  toggle and select the check box for all of the different summarization types. 
     4. Summarization is enabled at the queue level, for the purpose of this lab, you can either select the **All queues** option or specify the **Individual queue** you will be using in this lab.
@@ -571,7 +571,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
         | Entity Name | Type | Value | Description | Example | Required | Agent Review |
         | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
         | <copy>`CustomerID`</copy> | `regex` | <copy>`CUST-\d{3}`</copy> | <copy>`CustomerID provided by the customer or agent.`</copy> | <copy>`CUST-020`</copy> |`Yes` | `No`|
-        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`101010`</copy> | `Yes` | `No`|
+        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`TRAN-001`</copy> | `Yes` | `No`|
         ???+ warning "TransactionID Entity Description"
             Pay close attention to the description of the `TransactionID` entity. The instruction **"Do not request this value from the Agent or Customer"** is a guardrail embedded directly into the entity definition. This tells the LLM to extract the TransactionID from the output of the previous `fetch_transactions` action rather than asking the human agent to provide it manually. This reduces friction and prevents errors.
     16. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
