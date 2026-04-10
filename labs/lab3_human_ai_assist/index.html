@@ -1574,7 +1574,7 @@
 <td style="text-align: left;"><code>No</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><copy><code>susp_trans</code></copy></td>
+<td style="text-align: left;"><copy><code>susp_transaction</code></copy></td>
 <td style="text-align: left;"><code>Number</code></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"><copy><code>Amount of the transaction identified as suspicious</code></copy></td>
@@ -1806,7 +1806,7 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <li>Connect the <strong>AgentAnswered</strong> event node to the <strong>Start Media Stream</strong> node. </li>
 </ol>
 <div class="admonition info">
-<p class="admonition-title">RTT Conditional Enablement</p>
+<p class="admonition-title">Event Flow Nodes</p>
 <p>Flow Designer is releasing an updated UX among other features, these new UX renamed the <strong>AgentAnswered</strong> event to <strong>AgentAccepted</strong>. Use either one of those events to start the media stream required for RTT. </p>
 </div>
 <ol>
@@ -1831,7 +1831,7 @@ In order to configure RTT, we will need to both enable the AI Assistant configur
 <details class="webex" open="open">
 <summary>WxCC AI Assistant Configuration</summary>
 <ol>
-<li>Open <strong>Control Hub</strong> and navigate to Contact Center &gt; AI Assistant. </li>
+<li>Open <strong>Control Hub</strong> and navigate to Contact Center &gt; AI Assistant. In some tenants the <strong>AI Assistant</strong> menu card might be renamed to <strong>AI Features</strong>, the following configuration still applies. </li>
 <li>The first 2 options in this page will be for <strong>Agent Wellbeing</strong> and <strong>AutoCSAT</strong>, but this are not relevant for this lab. </li>
 <li>Enable the <strong>Generated Summaries</strong>  toggle and select the check box for all of the different summarization types. </li>
 <li>
@@ -2350,7 +2350,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;"><copy><code>**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.</code></copy></td>
-<td style="text-align: left;"><copy><code>101010</code></copy></td>
+<td style="text-align: left;"><copy><code>TRAN-001</code></copy></td>
 <td style="text-align: left;"><code>Yes</code></td>
 <td style="text-align: left;"><code>No</code></td>
 </tr>
