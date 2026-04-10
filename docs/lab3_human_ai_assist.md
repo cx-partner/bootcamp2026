@@ -52,21 +52,21 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
 
 ???+ webex "Alex Setup"
     1. From [Control Hub](https://admin.webex.com) navigate to **Contact Center** and under **Quick Links** click on the **Webex AI Agent** link. The Webex AI Agent studio will open in a new window. 
-    2. In the **AI Agent Studio**, select your *Finance Debt Collection Agent*
-    3. Click on **+ Add Actions** and select **Transfer**
+    2. In the **AI Agent Studio**, select your *Finance Debt Collection Agent*. 
+    3. Go to the **Actions** tab, click on **+ Add Actions** and select **Transfer**
     5. Fill in the **General information** of your action
         - **Action name**: <copy>fraud_transfer</copy>
         - **Action description**: <copy>Action to transfer the call to a fraud specialist when a customer has concerns about a suspicious transaction</copy>
         <!-- - **Transfer visibility**: You can either enable or disable the **Announce transfer** toggle. -->
     6. Select the **+New input entity** option, fill out the entity details with this information: 
         
-        | Entity Name | Type | Description | Example | Required |
-        | :----- | :--- | :--- | :--- | :--- |
-        | <copy>`ivr_verified`</copy>  | `String` | <copy>`Send a true or false value depending if the user was successfully authenticated before executing this action.`</copy> | <copy>`True, False`</copy> |`Yes` | 
-        | <copy>`debt_balance`</copy>  | `String` | <copy>`User's debt balance`</copy> | <copy>`10000`</copy> |`No` | 
-        | <copy>`susp_trans`</copy>  | `Number` | <copy>`Amount of the transaction identified as suspicious`</copy> | <copy>`10000`</copy> |`No` | 
-        | <copy>`susp_vendor`</copy>  | `String` | <copy>`Vendor of the transaction identified as suspicious`</copy> |  |`No` |
-        | <copy>`susp_date`</copy>  | `Date` | <copy>`Date of the transaction identified as suspicious`</copy> |  |`No` |
+        | Entity Name | Type | Value | Description | Example | Required |
+        | :----- | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`ivr_verified`</copy>  | `String` | | <copy>`Send a true or false value depending if the user was successfully authenticated before executing this action.`</copy> | <copy>`True, False`</copy> |`Yes` | 
+        | <copy>`debt_balance`</copy>  | `String` | | <copy>`User's debt balance`</copy> | <copy>`10000`</copy> |`No` | 
+        | <copy>`susp_transaction`</copy>  | `Number` | | <copy>`Amount of the transaction identified as suspicious`</copy> | <copy>`10000`</copy> |`No` | 
+        | <copy>`susp_vendor`</copy>  | `String` | | <copy>`Vendor of the transaction identified as suspicious`</copy> |  |`No` |
+        | <copy>`susp_date`</copy>  | `Date` | `mm/dd/YY` | <copy>`Date of the transaction identified as suspicious`</copy> |  |`No` |
     7. Click **Add**.
     8. Go back to the **Profile** tab and add the following into the **Instructions**: 
     ```
@@ -93,14 +93,14 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     3. First, we need to create the flow variables that will hold the context from Alex. Click on the **Global Flow Properties** panel (the gear icon in the top-right of the flow editor).
     4. Under **Custom Flow Variables**, click the option **Create flow variable** and create the following variables:
 
-    | Variable Name | Type | Default Value | Agent Viewable | Desktop Label |
-    | :--- | :--- | :--- | :--- | :--- |
-    | <copy>`transfer_type`</copy> | `String` | <copy>`agent_transfer`</copy> | No | N/A |
-    | <copy>`ivr_verified`</copy> | `String` | <copy>`False`</copy> | Yes | <copy>`IVR Verified`</copy> | 
-    | <copy>`debt_balance`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Debt Balance`</copy> |
-    | <copy>`susp_trans`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Transaction Amount`</copy> | 
-    | <copy>`susp_vendor`</copy> | `String` | <copy>`Unknown`</copy> | Yes | <copy>`Transaction Vendor`</copy> |
-    | <copy>`susp_date`</copy> | `String` | <copy>`N/A`</copy> | Yes | <copy>`Transaction Date`</copy> |
+        | Variable Name | Type | Default Value | Agent Viewable | Desktop Label |
+        | :--- | :--- | :--- | :--- | :--- |
+        | <copy>`transfer_type`</copy> | `String` | <copy>`agent_transfer`</copy> | No | N/A |
+        | <copy>`ivr_verified`</copy> | `String` | <copy>`False`</copy> | Yes | <copy>`IVR Verified`</copy> | 
+        | <copy>`debt_balance`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Debt Balance`</copy> |
+        | <copy>`susp_transaction`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Transaction Amount`</copy> | 
+        | <copy>`susp_vendor`</copy> | `String` | <copy>`Unknown`</copy> | Yes | <copy>`Transaction Vendor`</copy> |
+        | <copy>`susp_date`</copy> | `String` | <copy>`N/A`</copy> | Yes | <copy>`Transaction Date`</copy> |
 
     5. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
 
@@ -120,7 +120,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
             ![Initial - Flow View](./assets/lab3_before_flow.png)
             </figure>
     2. In the **Activity Settings** panel on the right, scroll down to the **Output Variables** section. You will see the variables that the AI Agent passes back upon escalation, the MetaData variable contains the transfer action details. 
-    3. Delete the temporary **Play Message** node connected to the *Escalated* outlet.
+    3. Delete the temporary **Play Message** node connected to the *Escalated* outlet and connec the **Error Message** node to the **End Flow** node. 
     4. Drag and drop a **Parse** node onto the canvas and connect it to the *Escalated* path of the VAV2 node.
     5. Click the **Parse** node and rename it <copy>`Parse_Transfer`</copy>. 
     6. In the Description of the node, add the following: <copy>`Collects the transfer type.`</copy>
@@ -132,8 +132,8 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
         !!! info "AI Agent MetaData"
             The AI Agent MetaData variable contains the executed actions and collected variables during a session. When the AI Agent escalates the call, the **escalation_trigger** variable in the metadata will match the name of the
             transfer action used. In the previous step, we are collecting this value to decide how the call escalation needs to be routed. 
-    7. Drag and drop a **Case** node in the canvas and rename it <copy>`Transfer_Check`</copy>
-    8. In the Description of the node, add the following: <copy>`Checks the transfer_type variable to route accordingly`</copy>
+    7. Drag and drop a **Case** node in the canvas and connect it to the output of the **Parse** node.
+    8. Rename it <copy>`Transfer_Check`</copy> and in the Description of the node, add the following: <copy>`Checks the transfer_type variable to route accordingly`</copy>
     9. Configure the **Case** node settings:
         * Variable = transfer_type
         * Case 1 = <copy>`agent_transfer`</copy>
@@ -178,7 +178,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     16. Add a **Queue Contact** node for the custom **fraud_transfer** and rename it <copy>`Fraud_Queue`</copy>. 
     17. Connect the **Parse** node output to the **Fraud_Queue** node. Connect the **Fraud_Queue** node output to the **End Flow** node.
     18. Click the **Fraud_Queue** node and select any Queue in your tenant that routes to the agents you want to use for this lab.
-    19. Connect the *Default* path of the **Case** node to the new **End Flow** node.
+    19. Connect the *Default* path of the **Case** node to the **Generic_Queue** node.
     19. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
     ???+ gif "Extract AI Agent Context"
         <figure markdown>
@@ -196,7 +196,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     1. In your flow, move from the **Main Flow** tab to the **Event Flows** tab. 
     2. Drag and drop the **Start Media Stream** node to the canvas. 
     3. Connect the **AgentAnswered** event node to the **Start Media Stream** node. 
-    !!! info "RTT Conditional Enablement"
+    !!! info "Event Flow Nodes"
         Flow Designer is releasing an updated UX among other features, these new UX renamed the **AgentAnswered** event to **AgentAccepted**. Use either one of those events to start the media stream required for RTT. 
     4. Drag and drop an **End Flow** node to the canvas and connect it to the output path of the **Start Media Stream** node.
     5. Validate and save the flow, then select the **Publish Flow** option. A window to publish the flow will open up, simply click again on the **Publish Flow** button. 
@@ -213,7 +213,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
  In this lab, we will focus on the **Summarization**, **Real-Time Transcript** and  **Real-Time Assist** configuration. 
 
 ???+ webex "WxCC AI Assistant Configuration"
-    1. Open **Control Hub** and navigate to Contact Center > AI Assistant. 
+    1. Open **Control Hub** and navigate to Contact Center > AI Assistant. In some tenants the **AI Assistant** menu card might be renamed to **AI Features**, the following configuration still applies. 
     2. The first 2 options in this page will be for **Agent Wellbeing** and **AutoCSAT**, but this are not relevant for this lab. 
     3. Enable the **Generated Summaries**  toggle and select the check box for all of the different summarization types. 
     4. Summarization is enabled at the queue level, for the purpose of this lab, you can either select the **All queues** option or specify the **Individual queue** you will be using in this lab.
@@ -232,7 +232,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     The AI Assistant is part of the default Desktop layout, however we understand that you might have your own layout that has been previously customized to include other widgets. 
     We will review the steps to make the necessary changes to a Desktop layout for the AI Assistant and the Real-Time Transcription window to show up on the Agent Desktop. 
     !!! download "Knowledge base document"
-        If you don't need to update your own Desktop Layout, download a template <a href="./bcamp_files/Finance_Desktop.json" download="Finance_Desktop.json">HERE</a> and ignore the next steps. 
+        If you don't need to update your own Desktop Layout, download a template [HERE](./bcamp_files/Finance_Desktop.json){:download="Finance_Desktop.json"} and ignore the next steps. 
     
     1. Open your JSON layout file using a text editor (Sublime, Notepad++, etc) or IDE (VS Code, etc). 
     2. Find the area section for each relevant persona (agent, supervisor, agent-supervisor). Inside the area section, locate the advancedHeader array.
@@ -476,7 +476,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
         - Click on the :fontawesome-solid-gear: button at the top right of the flow editor.
         - Click on the **Flow Outcomes** tab
         - Open the `Last Execution Status` Outcome. The `Notify AI Agent` radio button is enabled by default for the start node with `AI Agent` as the trigger.
-        - Click on **+ Add New** to add the Case ID variable:
+        - Click on **+ Add New** to add another entry, in the Key field type **Response**. Click the Value field and select the **http.responseBody** variable from the HTTP Request section in the Input Variables. 
 
             | Key | Value |
             | :--- | :--- |
@@ -503,7 +503,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     3. Click the option **+ Create Skill**. Select the option **Start from scratch** and click **Next**. 
     4. Enter the **Skill name** <copy>`Counter_Fraud_Assistant`</copy> and enter the following in the **Goal** section: 
         <copy>`You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.`</copy>
-    5. The main configuration page for the AI Assistant skill comes up, add the following prompt to the **Instructions** section: 
+    5.  Click **Create** and the main configuration page for the AI Assistant skill comes up, add the following prompt to the **Instructions** section: 
     ```
     # AI Assistant Action Orchestration
 
@@ -514,6 +514,8 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     The CustomerID format is CUST-001, agent only needs to collect the last 3 digits. 
 
     ## Collect Recent Transactions
+
+    **Always follow these instructions before moving to the "Identify Fraudulent Transaction" section.**: 
 
     1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call. Use the CUSTOMER ID  to execute [fetch_transactions] action to get the recent transactions. 
     2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
@@ -534,14 +536,15 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 
     - **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
     ```
-    6. Go to the **Knowledge** tab and select the **FraudKB** you created. 
-    7. Navigate to the **[Actions]** tab and click on **[Create new]** and select **Fulfillment**
+    6. Go to the **Knowledge** tab and select the **FraudKB** you created. Click **Save Changes**. 
+    7. Navigate to the **Actions** tab and click on **+ New Action**.
     8. Fill in the **General information** of your action
         - **Action name**: <copy>*fetch_transactions*</copy>
         - **Action description**: copy and paste the following description.
         ```
         Use this action to get recent transactions on the account by providing the CustomerID. 
         ```
+        - **Action Scope**: Slot filling and fulfillment
     9. Under **Slot filling** click on **[New input entity]**
     10. In the **Add a new input entity** dialogue window, populate: 
 
@@ -553,27 +556,29 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     11. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
         - Select the Webex Connect Service `Webex Finance Bootcamp`
         - Select the flow `fetch_transactions`
-    12. Click on **Save**
-    13. Select the **[Create new]** option and select **Fulfillment**
+    12. Click on **Add**
+    13. Select the **+ New Action** option.
     13. Fill in the **General information** of your action
         - **Action name**: <copy>*open_case*</copy>
         - **Action description**: copy and paste the following description.
         ```
         Opens a fraud case, locks the customer card and ships a new card.
         ```
+        - **Action Scope**: Slot filling and fulfillment
     14. Under **Slot filling** click on **[New input entity]**
     15. In the **Add a new input entity** dialogue window, populate: 
 
         | Entity Name | Type | Value | Description | Example | Required | Agent Review |
         | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
         | <copy>`CustomerID`</copy> | `regex` | <copy>`CUST-\d{3}`</copy> | <copy>`CustomerID provided by the customer or agent.`</copy> | <copy>`CUST-020`</copy> |`Yes` | `No`|
-        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`101010`</copy> | `Yes` | `No`|
+        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`TRAN-001`</copy> | `Yes` | `No`|
         ???+ warning "TransactionID Entity Description"
             Pay close attention to the description of the `TransactionID` entity. The instruction **"Do not request this value from the Agent or Customer"** is a guardrail embedded directly into the entity definition. This tells the LLM to extract the TransactionID from the output of the previous `fetch_transactions` action rather than asking the human agent to provide it manually. This reduces friction and prevents errors.
     16. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
         - Select the Webex Connect Service `Webex Finance Bootcamp`
         - Select the flow `open_case`
-    17. Click on **Save**
+    17. Click on **Add**. 
+    18. You are ready to Publish your skill. Select the **Publish** option and enter a comment in the Publish window. Click **Publish** again. 
     ???+ gif "AI Assistant Skill Configuration"
         <figure markdown>
         ![Set Escalation Context](./assets/lab3_ai_assistant_skill.gif)
@@ -587,7 +592,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     2. Scroll down to the **Real-Time Assist** section.
     3. Click on **Assign AI Assistant Skills**.
     4. From the available skills, select **Counter_Fraud_Assistant**.
-    5. Select the queue you are using for fraud escalation (e.g., `Fraud_Queue`).
+    5. Click **Add queues** and select the queue you are using for fraud escalation (e.g., `Fraud_Queue`).
     6. Click **[Save]**.
 
     ???+ info "Skill-to-Queue Mapping"
