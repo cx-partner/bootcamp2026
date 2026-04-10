@@ -515,6 +515,8 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 
     ## Collect Recent Transactions
 
+    **Always follow these instructions before moving to the "Identify Fraudulent Transaction" section.**: 
+
     1. **Fetch Recent Transactions**: Ask the AGENT to get the CUSTOMER ID at the beginning of the call. Use the CUSTOMER ID  to execute [fetch_transactions] action to get the recent transactions. 
     2. **Provide Transaction Details**: Once transactions are fetched, provide the AGENT with the following details for each transaction:
        - Transaction Amount
