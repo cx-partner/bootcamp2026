@@ -1028,6 +1028,9 @@ If everything is configured correctly, **you will receive a call** on the phone 
 
 This confirms that the full end-to-end flow is working — from Campaign Manager initiating the call, through the CPA detection identifying a live voice, routing through the Go To node, and arriving at the `Lab1_completed` flow which plays the TTS message.
 
+???+ Note
+    Note that the **End Flow** node does not disconnect the call, so you must hang up manually after testing. We have chosen **End Flow** over **Disconnect Contact** because the call will eventually be routed to a queue in future exercises.
+
 ---
 
 ## Lab Completion ✅
