@@ -93,7 +93,7 @@ erDiagram
         string  LastName            "Lookup → Customers.LastName"
         number  Total_Investment_Balance "Rollup → SUM(Positions.PositionValue)"
         string  Risk_Tolerance      "Single Select: Low | Medium | High"
-        string  Preferred_Sector    "Single Select: Tech | Finance | Retail | Enterteinment"
+        string  Preferred_Sector    "Single Select: Tech | Finance | Retail | Entertainment"
     }
 
     POSITIONS {
@@ -218,7 +218,7 @@ flowchart TD
     | `LastName` | Lookup → Customers | Pulled automatically from the linked Customers record. |
     | `Total_Investment_Balance` | Rollup | **Computed field.** Aggregates `Position_Value` across all linked Positions records using `SUM(values)`. Updates automatically when any linked position changes. |
     | `Risk_Tolerance` | Single Select | Investment risk profile: **Low**, **Medium**, or **High**. Used to tailor investment-related conversations. |
-    | `Preferred_Sector` | Single Select | Customer's preferred investment sectors: **Tech**, **Finance**, **Retail**, **Enterteinment**  |
+    | `Preferred_Sector` | Single Select | Customer's preferred investment sectors: **Tech**, **Finance**, **Retail**, **Entertainment**  |
     | `Positions` | Link | Linked records in the **Positions** table. One investment account → many positions. |
 
 ---
@@ -472,9 +472,18 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
         - In the next dialogue window, click **[Skip]**. We are not importing any field from the Customer table in this one. 
 
     - In the **TransactionID** field, click the chevron, select **Edit field** and change the type to *Link to another record*. From the existing tables list, select **Transactions** and click **[Save]**.
-        - In the next dialogue window, select the fields we want to import from the **Transactions** table: **Amount**, **Vendor** and **City**. Click **[Add 3 fields]**. This will create thre new columns in your table.
+        - In the next dialogue window, select the fields we want to import from the **Transactions** table: **Amount**, **Vendor** and **City**. Click **[Add 3 fields]**. This will create three new columns in your table.
     
     This will keep the tables connected and consistent. You will see in your Customers and Transactions tables a new field called **FraudCases**. it will contain links to all the fraud cases associated to the customer and its transactions. 
+
+    - In the **Status** field, click the chevron to edit the field and then click **+ Add option** to add the following options: New, To do, In Progress or Done
+                
+        <br><copy>New</copy>
+        <br><copy>To do</copy>
+        <br><copy>In Progress</copy>
+        <br><copy>Done</copy>
+            
+        Select *New* as the **Default** value and click **[Save]**
     
     ???+ example "Example population" 
     
@@ -513,11 +522,11 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
     
     Now proceed as in the previous tables to adjust the field types for the following fields: 
 
-    5. In the **CustomerID** field, click the chevron, select **Edit field** and change the type to *Link to another record*. From the existing tables list, select **Customers** and click **[Save]**.  
+    - In the **CustomerID** field, click the chevron, select **Edit field** and change the type to *Link to another record*. From the existing tables list, select **Customers** and click **[Save]**.  
         - In the next dialogue window, select the fields we want to import from the **Customers** table: **FirstName** and **LastName**. Click **[Add 2 fields]**. This will create two new columns in your table.
     This will keep both tables connected and consistent. You will see in your Customers table a new field called **Investment** that will contain links to all the investments associated to the customer. 
 
-    6. In the **Risk_Tolerance** field, click the chevron to edit the field and then click **+ Add option** to add the following options: 
+    - In the **Risk_Tolerance** field, click the chevron to edit the field and then click **+ Add option** to add the following options: 
             
                 
         <br><copy>Low</copy>
@@ -526,13 +535,13 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
             
         Select *Medium* as the **Default** value and click **[Save]**
     
-    7. In the **Preferred_Sector** field, click the chevron to edit the field and then click **+ Add option** to add the following options: 
+    - In the **Preferred_Sector** field, click the chevron to edit the field and then click **+ Add option** to add the following options: 
             
                 
         <br><copy>Tech</copy>
         <br><copy>Finance</copy>
         <br><copy>Retail</copy>
-        <br><copy>Enterteinment</copy>
+        <br><copy>Entertainment</copy>
             
         Select *Tech* as the **Default** value and click **[Save]**
 
