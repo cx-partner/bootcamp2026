@@ -952,7 +952,7 @@
         string  LastName            "Lookup → Customers.LastName"
         number  Total_Investment_Balance "Rollup → SUM(Positions.PositionValue)"
         string  Risk_Tolerance      "Single Select: Low | Medium | High"
-        string  Preferred_Sector    "Single Select: Tech | Finance | Retail | Enterteinment"
+        string  Preferred_Sector    "Single Select: Tech | Finance | Retail | Entertainment"
     }
 
     POSITIONS {
@@ -1254,7 +1254,7 @@
 <tr>
 <td style="text-align: left;"><code>Preferred_Sector</code></td>
 <td style="text-align: left;">Single Select</td>
-<td style="text-align: left;">Customer's preferred investment sectors: <strong>Tech</strong>, <strong>Finance</strong>, <strong>Retail</strong>, <strong>Enterteinment</strong></td>
+<td style="text-align: left;">Customer's preferred investment sectors: <strong>Tech</strong>, <strong>Finance</strong>, <strong>Retail</strong>, <strong>Entertainment</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>Positions</code></td>
@@ -1668,11 +1668,21 @@ Then click on <strong>[+ Create]</strong> and in the next dialogue select <stron
 <li>
 <p>In the <strong>TransactionID</strong> field, click the chevron, select <strong>Edit field</strong> and change the type to <em>Link to another record</em>. From the existing tables list, select <strong>Transactions</strong> and click <strong>[Save]</strong>.</p>
 <ul>
-<li>In the next dialogue window, select the fields we want to import from the <strong>Transactions</strong> table: <strong>Amount</strong>, <strong>Vendor</strong> and <strong>City</strong>. Click <strong>[Add 3 fields]</strong>. This will create thre new columns in your table.</li>
+<li>In the next dialogue window, select the fields we want to import from the <strong>Transactions</strong> table: <strong>Amount</strong>, <strong>Vendor</strong> and <strong>City</strong>. Click <strong>[Add 3 fields]</strong>. This will create three new columns in your table.</li>
 </ul>
 </li>
 </ul>
 <p>This will keep the tables connected and consistent. You will see in your Customers and Transactions tables a new field called <strong>FraudCases</strong>. it will contain links to all the fraud cases associated to the customer and its transactions. </p>
+<ul>
+<li>
+<p>In the <strong>Status</strong> field, click the chevron to edit the field and then click <strong>+ Add option</strong> to add the following options: New, To do, In Progress or Done</p>
+<p><br><copy>New</copy>
+<br><copy>To do</copy>
+<br><copy>In Progress</copy>
+<br><copy>Done</copy></p>
+<p>Select <em>New</em> as the <strong>Default</strong> value and click <strong>[Save]</strong></p>
+</li>
+</ul>
 <details class="example" open="open">
 <summary>Example population</summary>
 <p>To complete the example population, add the customer and the transaction to the fraud case: </p>
@@ -1725,7 +1735,7 @@ Then click on <strong>[+ Create]</strong> and in the next dialogue select <stron
 </li>
 </ol>
 <p>Now proceed as in the previous tables to adjust the field types for the following fields: </p>
-<ol>
+<ul>
 <li>
 <p>In the <strong>CustomerID</strong> field, click the chevron, select <strong>Edit field</strong> and change the type to <em>Link to another record</em>. From the existing tables list, select <strong>Customers</strong> and click <strong>[Save]</strong>.  </p>
 <ul>
@@ -1745,10 +1755,10 @@ This will keep both tables connected and consistent. You will see in your Custom
 <p><br><copy>Tech</copy>
 <br><copy>Finance</copy>
 <br><copy>Retail</copy>
-<br><copy>Enterteinment</copy></p>
+<br><copy>Entertainment</copy></p>
 <p>Select <em>Tech</em> as the <strong>Default</strong> value and click <strong>[Save]</strong></p>
 </li>
-</ol>
+</ul>
 <p>The Investment table is not yet fully configured. You will need to return to it later to set the <strong>Total_Investment_Balance</strong> with the correct data type.</p>
 <p>However, since the field value depends on the <strong>Positions</strong> table content, you must first create the <strong>Positions</strong> table before completing this configuration.</p>
 <details class="example" open="open">
