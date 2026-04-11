@@ -1335,315 +1335,204 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet">
 <title>Webex Bank Rewards Portal</title>
 
 <style>
   :root {
-    --navy:        #0b3d91;
-    --navy-dark:   #072d6b;
-    --blue:        #1e90ff;
-    --light-blue:  #e8f0fb;
-    --gold:        #f5a623;
-    --gold-light:  #fdf0d5;
-    --platinum:    #6c7a89;
-    --green:       #27ae60;
-    --white:       #ffffff;
-    --bg:          #f2f6fc;
-    --text:        #1a1a2e;
-    --muted:       #64748b;
-    --card-shadow: 0 4px 20px rgba(11,61,145,0.08);
-    --radius:      16px;
-    --font-display:'Playfair Display', Georgia, 'Times New Roman', serif;
-    --font-body:   'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --navy: #0b3d91;
+    --blue: #1e90ff;
+    --light-blue: #e9effa;
+    --gold: #f5a623;
+    --platinum: #6c7a89;
+    --green: #27ae60;
+    --white: #ffffff;
+    --bg: #f4f7fb;
+    --text: #1a1a1a;
+    --muted: #666;
+    --card-shadow: 0 6px 24px rgba(0,0,0,0.09);
+    --radius: 16px;
   }
 
-  *, *::before, *::after { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    font-family: var(--font-body);
+    font-family: "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── NAVBAR ───────────────────────────────────────────────────────── */
+  /* NAVBAR */
   .navbar {
     position: sticky;
     top: 0;
-    background: rgba(7, 45, 107, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(11, 61, 145, 0.97);
+    backdrop-filter: blur(10px);
     color: white;
-    padding: 0 48px;
+    padding: 15px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
     z-index: 999;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    box-shadow: 0 2px 20px rgba(7,45,107,0.25);
   }
-
-  .navbar .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    color: white;
-    text-decoration: none;
-  }
-
+  .navbar .brand { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
   .navbar a {
-    color: rgba(255,255,255,0.78);
-    margin-left: 26px;
-    text-decoration: none;
-    font-size: 0.88rem;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    transition: color 0.2s;
-  }
-  .navbar a:hover { color: var(--gold); }
-
-  /* ── HERO ──────────────────────────────────────────────────────────── */
-  .hero {
-    background: linear-gradient(135deg, #051f52 0%, #0b3d91 50%, #1565c0 100%);
     color: white;
-    padding: 96px 24px 80px;
+    margin-left: 20px;
+    text-decoration: none;
+    opacity: 0.85;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+  }
+  .navbar a:hover { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0b3d91, #1565c0, #1e90ff);
+    color: white;
+    padding: 90px 20px 70px;
     text-align: center;
-    position: relative;
-    overflow: hidden;
   }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--gold), #ffd166, var(--gold));
-  }
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: 3.1rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    letter-spacing: -0.5px;
-    position: relative;
-  }
-  .hero p {
-    font-size: 1.12rem;
-    opacity: 0.88;
-    margin: 0 auto;
-    max-width: 560px;
-    line-height: 1.75;
-    position: relative;
-  }
+  .hero h1 { font-size: 2.6rem; margin-bottom: 12px; }
+  .hero p { font-size: 1.15rem; opacity: 0.9; margin: 0 auto; max-width: 600px; }
   .hero-badges {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-top: 32px;
+    gap: 14px;
+    margin-top: 28px;
     flex-wrap: wrap;
-    position: relative;
   }
   .hero-badge {
-    background: rgba(255,255,255,0.11);
-    border: 1px solid rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
     border-radius: 30px;
-    padding: 8px 20px;
-    font-size: 0.84rem;
-    font-weight: 500;
-    backdrop-filter: blur(8px);
-    letter-spacing: 0.2px;
+    padding: 8px 18px;
+    font-size: 0.88rem;
+    backdrop-filter: blur(6px);
   }
 
-  /* ── CONTAINER ─────────────────────────────────────────────────────── */
+  /* CONTAINER */
   .container {
-    max-width: 1120px;
+    max-width: 1100px;
     margin: auto;
-    padding: 56px 32px;
+    padding: 40px 30px;
   }
 
-  /* ── SECTION HEADINGS ──────────────────────────────────────────────── */
+  /* SECTION TITLE */
   .section-title {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
+    font-size: 1.55rem;
     font-weight: 700;
-    color: var(--navy-dark);
+    color: var(--navy);
     margin-bottom: 6px;
-    letter-spacing: -0.3px;
   }
   .section-subtitle {
     color: var(--muted);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     font-size: 0.97rem;
-    max-width: 680px;
   }
 
-  /* ── CARD GRID ─────────────────────────────────────────────────────── */
+  /* CARDS GRID */
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
+    gap: 22px;
   }
+
   .card {
     background: white;
-    padding: 30px;
+    padding: 28px;
     border-radius: var(--radius);
     box-shadow: var(--card-shadow);
-    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    transition: transform 0.25s, box-shadow 0.25s;
     display: flex;
     flex-direction: column;
     border-top: 4px solid transparent;
   }
   .card:hover {
-    transform: translateY(-9px);
-    box-shadow: 0 22px 44px rgba(11,61,145,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.14);
   }
   .card.standard { border-top-color: var(--green); }
   .card.travel   { border-top-color: var(--blue);  }
   .card.platinum { border-top-color: var(--gold);  }
 
-  .card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-  .card-icon   { font-size: 2rem; line-height: 1; }
-  .card-title  {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--navy-dark);
-  }
-  .card-tagline { font-size: 0.82rem; color: var(--muted); margin: 3px 0 0; }
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .card-icon { font-size: 2rem; }
+  .card-title { font-size: 1.15rem; font-weight: 700; margin: 0; }
+  .card-tagline { font-size: 0.82rem; color: var(--muted); margin: 0; }
 
   .card-badge {
     display: inline-block;
-    font-size: 0.73rem;
+    font-size: 0.78rem;
     border-radius: 6px;
-    padding: 4px 12px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    padding: 3px 10px;
+    font-weight: 600;
+    margin-bottom: 10px;
   }
-  .badge-free { background: #edfaf4; color: #1e8449; }
-  .badge-mid  { background: #e8f2fd; color: #1255a8; }
-  .badge-prem { background: #fdf7e3; color: #9a6b00; }
+  .badge-free  { background: #eafaf1; color: var(--green); }
+  .badge-mid   { background: #e8f4fd; color: #1565c0; }
+  .badge-prem  { background: #fdf6e3; color: #b7860b; }
 
   .card-stat {
-    background: #f7fafd;
+    background: var(--bg);
     border-radius: 10px;
-    padding: 11px 16px;
-    margin: 6px 0;
+    padding: 10px 14px;
+    margin: 8px 0;
     font-size: 0.9rem;
-    border-left: 3px solid var(--light-blue);
   }
   .card-stat strong { color: var(--navy); }
 
-  .card-divider { border: none; border-top: 1px solid #eef1f6; margin: 16px 0; }
+  .card-divider { border: none; border-top: 1px solid #eee; margin: 14px 0; }
 
   .card-bonus {
-    background: linear-gradient(90deg, #fffcf2, #fff8e1);
+    background: linear-gradient(90deg, #fff8e1, #fff3cd);
     border-left: 3px solid var(--gold);
     border-radius: 8px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-size: 0.88rem;
     margin-top: 10px;
   }
   .card-bonus strong { color: #7d5800; }
 
-  .card-perks { list-style: none; padding: 0; margin: 12px 0 0; }
-  .card-perks li {
-    font-size: 0.88rem;
-    padding: 5px 0;
-    color: #556;
-    display: flex;
-    gap: 9px;
-    align-items: flex-start;
-  }
-  .card-perks li::before {
-    content: "✓";
-    color: var(--green);
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+  .card-perks { list-style: none; padding: 0; margin: 10px 0 0; }
+  .card-perks li { font-size: 0.88rem; padding: 4px 0; color: var(--muted); }
+  .card-perks li::before { content: "✓ "; color: var(--green); font-weight: 700; }
 
-  /* ── RATES ─────────────────────────────────────────────────────────── */
+  /* RATES SECTION */
   .rates-section {
-    margin-top: 52px;
+    margin-top: 40px;
     background: white;
     border-radius: var(--radius);
     box-shadow: var(--card-shadow);
     overflow: hidden;
   }
   .rates-header {
-    background: linear-gradient(90deg, #051f52, #1565c0);
+    background: linear-gradient(90deg, var(--navy), #1565c0);
     color: white;
-    padding: 26px 32px;
-    position: relative;
+    padding: 20px 28px;
   }
-  .rates-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--gold);
-  }
-  .rates-header h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-  }
-  .rates-header p  { margin: 5px 0 0; opacity: 0.8; font-size: 0.9rem; }
+  .rates-header h2 { margin: 0; font-size: 1.2rem; }
+  .rates-header p  { margin: 4px 0 0; opacity: 0.85; font-size: 0.9rem; }
   .rates-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 0;
   }
   .rates-item {
-    padding: 24px 28px;
-    border-right: 1px solid #eef1f6;
-    border-bottom: 1px solid #eef1f6;
+    padding: 20px 24px;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
   }
   .rates-item:last-child { border-right: none; }
-  .rates-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.9px;
-    font-weight: 600;
-  }
-  .rates-value {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--navy-dark);
-    margin-top: 6px;
-    font-family: var(--font-display);
-  }
-  .rates-note { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+  .rates-label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .rates-value { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-top: 4px; }
+  .rates-note  { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
 
-  /* ── TIERS ─────────────────────────────────────────────────────────── */
+  /* TIERS */
   .tiers {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 24px;
+    gap: 22px;
     margin-top: 24px;
   }
   .tier-card {
@@ -1651,211 +1540,177 @@
     border-radius: var(--radius);
     box-shadow: var(--card-shadow);
     overflow: hidden;
-    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    transition: transform 0.25s;
   }
-  .tier-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(11,61,145,0.14);
-  }
+  .tier-card:hover { transform: translateY(-6px); }
+
   .tier-header {
-    padding: 22px 26px;
+    padding: 20px 24px;
     color: white;
     font-weight: 700;
-    font-size: 1.1rem;
-    font-family: var(--font-display);
+    font-size: 1.15rem;
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .tier-basic     .tier-header { background: linear-gradient(90deg, #2c3e50, #4a627a); }
-  .tier-preferred .tier-header { background: linear-gradient(90deg, #1255a8, #1e90ff); }
-  .tier-elite     .tier-header { background: linear-gradient(90deg, #7d5800, #f5a623); }
-  .tier-body { padding: 22px 26px; }
+  .tier-basic    .tier-header { background: linear-gradient(90deg, #2c3e50, #4a627a); }
+  .tier-preferred .tier-header { background: linear-gradient(90deg, #1565c0, #1e90ff); }
+  .tier-elite    .tier-header { background: linear-gradient(90deg, #7d5800, #f5a623); }
+
+  .tier-body { padding: 20px 24px; }
   .tier-qualify {
     font-size: 0.85rem;
     color: var(--muted);
-    background: #f7fafd;
+    background: var(--bg);
     border-radius: 8px;
-    padding: 10px 14px;
-    margin-bottom: 16px;
-    border-left: 3px solid var(--light-blue);
+    padding: 8px 12px;
+    margin-bottom: 14px;
   }
   .tier-qualify strong { color: var(--text); }
   .tier-perks { list-style: none; padding: 0; margin: 0; }
   .tier-perks li {
     font-size: 0.9rem;
-    padding: 7px 0;
-    border-bottom: 1px solid #f0f2f5;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    color: #445;
+    gap: 8px;
   }
   .tier-perks li:last-child { border-bottom: none; }
   .tier-perks .perk-icon { flex-shrink: 0; }
 
-  /* ── AIRLINE PARTNERS ──────────────────────────────────────────────── */
+  /* AIRLINE PARTNERS */
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px;
-    margin-top: 22px;
+    gap: 16px;
+    margin-top: 20px;
   }
   .partner-card {
     background: white;
     border-radius: var(--radius);
-    padding: 22px 26px;
+    padding: 20px 22px;
     box-shadow: var(--card-shadow);
     border-left: 4px solid var(--blue);
-    transition: transform 0.22s ease, border-left-color 0.22s ease;
   }
-  .partner-card:hover { transform: translateY(-5px); border-left-color: var(--gold); }
-  .partner-name    { font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--navy-dark); }
-  .partner-benefit { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+  .partner-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .partner-benefit { font-size: 0.9rem; color: var(--muted); }
 
-  /* ── TABS ──────────────────────────────────────────────────────────── */
+  /* TABS */
   .section-block {
-    margin-top: 52px;
+    margin-top: 40px;
     background: white;
     border-radius: var(--radius);
     box-shadow: var(--card-shadow);
     overflow: hidden;
   }
   .section-block-header {
-    padding: 28px 32px 0;
-    border-bottom: 1px solid #eef1f6;
+    padding: 22px 28px 0;
+    border-bottom: 1px solid #f0f0f0;
   }
-  .section-block-header h2 {
-    margin: 0 0 18px;
-    font-size: 1.3rem;
-    color: var(--navy-dark);
-    font-family: var(--font-display);
-  }
+  .section-block-header h2 { margin: 0 0 16px; font-size: 1.3rem; color: var(--navy); }
+
   .tabs {
     display: flex;
-    gap: 4px;
+    gap: 6px;
     flex-wrap: wrap;
+    padding-bottom: 0;
   }
   .tab {
-    padding: 9px 20px;
+    padding: 9px 18px;
     cursor: pointer;
     background: var(--light-blue);
     border-radius: 8px 8px 0 0;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--navy);
-    transition: background 0.18s, color 0.18s;
+    transition: background 0.2s, color 0.2s;
     border: none;
-    font-family: var(--font-body);
-    letter-spacing: 0.2px;
   }
-  .tab:hover   { background: #cddaf5; }
-  .tab.active  { background: var(--navy-dark); color: white; }
-  .tab-content { display: none; padding: 28px 32px; }
-  .tab-content.active { display: block; }
-  .tab-content p  { line-height: 1.75; color: #445; margin-bottom: 12px; }
-  .tab-content ul { padding-left: 22px; }
-  .tab-content ul li { margin-bottom: 8px; color: #445; line-height: 1.65; }
+  .tab:hover { background: #d0dff7; }
+  .tab.active { background: var(--navy); color: white; }
 
-  /* ── FAQ ───────────────────────────────────────────────────────────── */
-  .faq-list { margin-top: 24px; }
+  .tab-content { display: none; padding: 24px 28px; }
+  .tab-content.active { display: block; }
+  .tab-content p { line-height: 1.65; color: #444; }
+  .tab-content ul { padding-left: 20px; }
+  .tab-content ul li { margin-bottom: 6px; color: #444; line-height: 1.55; }
+
+  /* FAQ */
+  .faq-list { margin-top: 20px; }
   .faq-item {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(11,61,145,0.06);
-    margin-bottom: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    margin-bottom: 12px;
     overflow: hidden;
-    border: 1px solid rgba(11,61,145,0.06);
-    transition: box-shadow 0.2s;
   }
-  .faq-item:hover { box-shadow: 0 4px 18px rgba(11,61,145,0.1); }
   .faq-question {
-    padding: 18px 24px;
+    padding: 16px 22px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--navy-dark);
+    color: var(--navy);
     user-select: none;
-    font-size: 0.95rem;
-    gap: 12px;
   }
   .faq-question:hover { background: var(--light-blue); }
-  .faq-arrow {
-    font-size: 0.85rem;
-    transition: transform 0.25s ease;
-    color: var(--gold);
-    flex-shrink: 0;
-  }
+  .faq-arrow { font-size: 1rem; transition: transform 0.2s; }
   .faq-item.open .faq-arrow { transform: rotate(180deg); }
   .faq-answer {
     display: none;
-    padding: 16px 24px 20px;
-    color: #556;
-    line-height: 1.75;
-    font-size: 0.94rem;
-    border-top: 1px solid #eef1f6;
+    padding: 0 22px 16px;
+    color: #555;
+    line-height: 1.65;
+    font-size: 0.95rem;
   }
   .faq-item.open .faq-answer { display: block; }
 
-  /* ── CONTACT ───────────────────────────────────────────────────────── */
+  /* CONTACT */
   .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 18px;
-    margin-top: 24px;
+    margin-top: 20px;
   }
   .contact-card {
     background: white;
     border-radius: var(--radius);
-    padding: 26px 22px;
+    padding: 22px;
     box-shadow: var(--card-shadow);
     text-align: center;
-    border-bottom: 3px solid var(--light-blue);
-    transition: border-color 0.22s ease, transform 0.22s ease;
   }
-  .contact-card:hover { border-bottom-color: var(--gold); transform: translateY(-5px); }
-  .contact-icon  { font-size: 2.1rem; margin-bottom: 12px; }
-  .contact-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.9px; color: var(--muted); font-weight: 600; }
-  .contact-value { font-weight: 700; font-size: 0.96rem; color: var(--navy-dark); margin-top: 6px; }
-  .contact-note  { font-size: 0.8rem; color: var(--muted); margin-top: 5px; }
+  .contact-icon { font-size: 2rem; margin-bottom: 10px; }
+  .contact-label { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+  .contact-value { font-weight: 700; font-size: 0.97rem; color: var(--navy); margin-top: 4px; }
+  .contact-note  { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
 
-  /* ── FOOTER ─────────────────────────────────────────────────────────── */
   .footer {
-    background: #051f52;
-    color: rgba(255,255,255,0.55);
     text-align: center;
-    padding: 48px 40px 36px;
-    font-size: 0.85rem;
-    margin-top: 72px;
-    border-top: 3px solid var(--gold);
+    padding: 40px;
+    color: #999;
+    font-size: 0.88rem;
+    margin-top: 20px;
   }
-  .footer-brand {
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8rem; }
+    .navbar { padding: 14px 20px; }
+    .container { padding: 30px 16px; }
+  }
+
+  .brand .logo {
+  height: 40px;      /* Adjust this height to match your navbar size */
+  width: auto;       /* Maintains the aspect ratio */
+  display: block;    /* Removes extra whitespace below the image */
+  }
+
+  /* Ensure the brand div centers the logo if needed */
+  .brand {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    color: rgba(255,255,255,0.92);
-    font-weight: 700;
-  }
-  .footer-divider {
-    width: 60px;
-    height: 1px;
-    background: var(--gold);
-    margin: 16px auto;
-    opacity: 0.6;
-  }
-
-  /* ── RESPONSIVE ─────────────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .hero h1       { font-size: 2rem; }
-    .navbar        { padding: 0 20px; height: 62px; }
-    .container     { padding: 32px 18px; }
-    .section-title { font-size: 1.45rem; }
   }
 </style>
 
@@ -1863,18 +1718,10 @@
 
 
 <div class="navbar">
-  <div class="brand"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect width="36" height="36" rx="7" fill="#f5a623"></rect>
-      <rect width="36" height="6" rx="0" fill="#f5a623"></rect>
-      <rect width="36" height="36" rx="7" fill="#0b3d91"></rect>
-      <rect x="0" y="0" width="36" height="7" rx="3" fill="#f5a623"></rect>
-      <polygon points="18,9 30,17 6,17" fill="white" opacity="0.95"></polygon>
-      <rect x="6" y="17" width="24" height="2" fill="#f5a623"></rect>
-      <rect x="8" y="20" width="5" height="11" rx="1.5" fill="white" opacity="0.92"></rect>
-      <rect x="15.5" y="20" width="5" height="11" rx="1.5" fill="white" opacity="0.92"></rect>
-      <rect x="23" y="20" width="5" height="11" rx="1.5" fill="white" opacity="0.92"></rect>
-      <rect x="6" y="31" width="24" height="3" rx="1" fill="#f5a623"></rect>
-    </svg> Webex Bank</div>
+  <div class="brand">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../logo1.png" data-title="Webex Bank" data-desc-position="top"><img src="../logo1.png" alt="Webex Bank" class="logo" height="40"></a>
+    Webex Bank
+  </div>
   <div>
     <a href="#cards">Cards</a>
     <a href="#rates">Rates</a>
@@ -2181,7 +2028,7 @@
         <li>Zero Liability Policy: you are not responsible for unauthorized charges reported within 60 days.</li>
         <li>Cards can be instantly locked via the Webex Bank mobile app or website.</li>
         <li>Fraud disputes are investigated within 7–10 business days. A temporary credit is applied during this period.</li>
-        <li>Report fraud: <strong>555-555-5545</strong> or <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80e6f2e1f5e4c0f7e5e2e5f8e2e1eeebaee3efed">[email&nbsp;protected]</a></strong></li>
+        <li>Report fraud: <strong>555-555-5545</strong> or <strong>fraud@webexbank.com</strong></li>
       </ul>
     </div>
 
@@ -2265,14 +2112,14 @@
       <div class="contact-card">
         <div class="contact-icon">📧</div>
         <div class="contact-label">Email</div>
-        <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1a2a4a1a1bea3a591a6b4b3b4a9b3b0bfbaffb2bebc">[email&nbsp;protected]</a></div>
+        <div class="contact-value">support@webexbank.com</div>
         <div class="contact-note">General inquiries</div>
       </div>
       <div class="contact-card">
         <div class="contact-icon">🚨</div>
         <div class="contact-label">Fraud Hotline</div>
         <div class="contact-value">555-555-5545</div>
-        <div class="contact-note"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78195869283a7908285829f8586898cc984888a">[email&nbsp;protected]</a> · 24/7</div>
+        <div class="contact-note">fraud@webexbank.com · 24/7</div>
       </div>
       <div class="contact-card">
         <div class="contact-icon">💬</div>
@@ -2292,34 +2139,23 @@
 </div><!-- /container -->
 
 <div class="footer">
-  <div class="footer-brand">
-    <svg width="30" height="30" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="36" height="36" rx="7" fill="#0b3d91"></rect>
-      <rect x="0" y="0" width="36" height="7" rx="3" fill="#f5a623"></rect>
-      <polygon points="18,9 30,17 6,17" fill="white" opacity="0.95"></polygon>
-      <rect x="6" y="17" width="24" height="2" fill="#f5a623"></rect>
-      <rect x="8" y="20" width="5" height="11" rx="1.5" fill="white" opacity="0.92"></rect>
-      <rect x="15.5" y="20" width="5" height="11" rx="1.5" fill="white" opacity="0.92"></rect>
-      <rect x="23" y="20" width="5" height="11" rx="1.5" fill="white" opacity="0.92"></rect>
-      <rect x="6" y="31" width="24" height="3" rx="1" fill="#f5a623"></rect>
-    </svg>
-    Webex Bank
-  </div>
-  <div class="footer-divider"></div>
   © 2026 Webex Bank — All rights reserved. Rates and terms subject to change. This is a simulated demo environment.
 </div>
+
 <script>
-  function openTab(evt, tabId) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    var el = document.getElementById(tabId);
-    if (el) el.classList.add('active');
-    evt.currentTarget.classList.add('active');
-  }
-  function toggleFaq(el) {
-    el.closest('.faq-item').classList.toggle('open');
-  }
+function openTab(evt, tabName) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
 </script>
+
 
 
 

@@ -3135,6 +3135,10 @@
 <p><em>"Congratulations, You have completed lab 1"</em></p>
 </blockquote>
 <p>This confirms that the full end-to-end flow is working — from Campaign Manager initiating the call, through the CPA detection identifying a live voice, routing through the Go To node, and arriving at the <code>Lab1_completed</code> flow which plays the TTS message.</p>
+<details class="note" open="open">
+<summary>Note</summary>
+<p>Note that the <strong>End Flow</strong> node does not disconnect the call, so you must hang up manually after testing. We have chosen <strong>End Flow</strong> over <strong>Disconnect Contact</strong> because the call will eventually be routed to a queue in future exercises.</p>
+</details>
 <hr>
 <h2 id="lab-completion">Lab Completion ✅<a class="headerlink" href="#lab-completion" title="Permanent link">¶</a></h2>
 <p>At this point, you have successfully:</p>
