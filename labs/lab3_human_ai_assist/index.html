@@ -1233,6 +1233,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inboundoutbound-detection-for-faster-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inbound/Outbound Detection for Faster Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1567,18 +1584,18 @@
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>debt_balance</code></copy></td>
-<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;"><code>Number</code></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;"><copy><code>User's debt balance</code></copy></td>
-<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"><copy><code>User's debt balance. The value needs to include at least 2 decimals. If the value is 1000, we should use 1000.00</code></copy></td>
+<td style="text-align: left;"><copy><code>10000.00</code></copy></td>
 <td style="text-align: left;"><code>No</code></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>susp_transaction</code></copy></td>
 <td style="text-align: left;"><code>Number</code></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;"><copy><code>Amount of the transaction identified as suspicious</code></copy></td>
-<td style="text-align: left;"><copy><code>10000</code></copy></td>
+<td style="text-align: left;"><copy><code>Amount of the transaction identified as suspicious. The value needs to include at least 2 decimals. If the value is 1000, we should use 1000.00</code></copy></td>
+<td style="text-align: left;"><copy><code>10000.00</code></copy></td>
 <td style="text-align: left;"><code>No</code></td>
 </tr>
 <tr>
@@ -1612,7 +1629,7 @@
 <details class="gif" open="open">
 <summary>Transfer Action Setup</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/transfer_action.gif" data-title="Alt Text" data-desc-position="top"><img alt="Alt Text" src="../assets/transfer_action.gif"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_transfer_action.gif" data-title="Alt Text" data-desc-position="top"><img alt="Alt Text" src="../assets/lab3_transfer_action.gif"></a>
 <figcaption>Transfer Action Configuration</figcaption>
 </figure><p></p>
 </details>
@@ -1621,7 +1638,7 @@
 <p>In Lab 2, the <em>Escalated</em> outcome of the <strong>Virtual Agent V2</strong> node was connected to a temporary <strong>Play Message</strong> node. In this section, you will replace that temporary path with a production-ready escalation flow. This involves extracting the contextual data that Alex collected during the conversation, passing it to the human agent via the queue, and enabling Real-Time Transcription so the fraud specialist has a live view of the conversation from the moment it arrives</p>
 <details class="webex" open="open">
 <summary>Prepare Call Flow</summary>
-<p>When Alex triggers the <code>fraud_transfer</code> action, the entities defined in that action (e.g., <code>ivr_verified</code>, <code>debt_balance</code>, <code>susp_trans</code>) are passed into the flow within the metadata output variable from <strong>Virtual Agent V2</strong> node. You need to capture these into flow variables so they can be presented to the agent. </p>
+<p>When Alex triggers the <code>fraud_transfer</code> action, the entities defined in that action (e.g., <code>ivr_verified</code>, <code>debt_balance</code>, <code>susp_transaction</code>) are passed into the flow within the metadata output variable from <strong>Virtual Agent V2</strong> node. You need to capture these into flow variables so they can be presented to the agent. </p>
 <ol>
 <li>Go to <strong>Control Hub</strong> -&gt; <strong>Contact Center</strong> -&gt; <strong>Flows</strong></li>
 <li>Open your flow <strong>AI_Agent_DebtCollection</strong></li>
@@ -1655,15 +1672,15 @@
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>debt_balance</code></copy></td>
-<td style="text-align: left;"><code>String</code></td>
-<td style="text-align: left;"><copy><code>0</code></copy></td>
+<td style="text-align: left;"><code>Decimal</code></td>
+<td style="text-align: left;"><copy><code>0.0</code></copy></td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;"><copy><code>Debt Balance</code></copy></td>
 </tr>
 <tr>
 <td style="text-align: left;"><copy><code>susp_transaction</code></copy></td>
-<td style="text-align: left;"><code>String</code></td>
-<td style="text-align: left;"><copy><code>0</code></copy></td>
+<td style="text-align: left;"><code>Decimal</code></td>
+<td style="text-align: left;"><copy><code>0.0</code></copy></td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;"><copy><code>Transaction Amount</code></copy></td>
 </tr>
@@ -2225,10 +2242,23 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>From <a href="https://admin.webex.com">Control Hub</a> navigate to <strong>[Contact Center]</strong> and under <strong>Quick Links</strong> click on the <strong>Webex AI Agent</strong> link. The Webex AI Agent studio will open in a new window. </li>
 <li>On the left navigation menu, the name of each option shows up when you hover over the icons, select the AI Assistant Skill icon. </li>
 <li>Click the option <strong>+ Create Skill</strong>. Select the option <strong>Start from scratch</strong> and click <strong>Next</strong>. </li>
-<li>Enter the <strong>Skill name</strong> <copy><code>Counter_Fraud_Assistant</code></copy> and enter the following in the <strong>Goal</strong> section: 
-    <copy><code>You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.</code></copy></li>
-<li>Click <strong>Create</strong> and the main configuration page for the AI Assistant skill comes up, add the following prompt to the <strong>Instructions</strong> section: 
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># AI Assistant Action Orchestration
+<li>
+<p>Enter the <strong>Skill name</strong> <copy><code>Counter_Fraud_Assistant</code></copy> and enter the following in the <strong>Goal</strong> section: 
+    <copy><code>You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.</code></copy></p>
+<details class="tip" open="open">
+<summary>Best Practices for AI Assistant Instructions</summary>
+<p>To ensure your AI Assistant provides high-quality, reliable guidance, follow these guidelines:</p>
+<ol>
+<li><strong>Agent-Guidance Style</strong>: Frame instructions as guidance for the human agent (e.g., "Guide the agent to collect the customer ID") rather than direct commands.</li>
+<li><strong>Be Specific and Unambiguous</strong>: Clearly state the assistant's role, required fields, and the exact conditions under which an action should be triggered.</li>
+<li><strong>Define Required Fields</strong>: Specify the exact fields needed for each action; avoid vague terms like "relevant information."</li>
+<li><strong>Validation Rules</strong>: Define formats (e.g., regex) and validation logic clearly. If a field has a specific pattern (like a Customer ID), state it so the assistant can validate it before triggering an action.</li>
+</ol>
+</details>
+</li>
+<li>
+<p>Click <strong>Create</strong> and the main configuration page for the AI Assistant skill comes up, add the following prompt to the <strong>Instructions</strong> section: 
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># AI Assistant Action Orchestration
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Before asking the AGENT to collect any data from the CUSTOMER, check the conversation history. If the data was already provided, reuse it instead of asking again.
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>If the AGENT has acknowledged the CUSTOMER's intent but has not yet asked for the specific required data, do not repeat or pre-empt the suggestion. Allow the conversation to progress.
@@ -2258,7 +2288,8 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>### Additional Considerations
 </span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>
 </span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>- **User Experience**: Ensure that the language used is empathetic and supportive, as customers may be distressed about potential fraud.
-</span></code></pre></div></li>
+</span></code></pre></div><p></p>
+</li>
 <li>Go to the <strong>Knowledge</strong> tab and select the <strong>FraudKB</strong> you created. Click <strong>Save Changes</strong>. </li>
 <li>Navigate to the <strong>Actions</strong> tab and click on <strong>+ New Action</strong>.</li>
 <li>Fill in the <strong>General information</strong> of your action<ul>
@@ -2350,7 +2381,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <td style="text-align: left;"><code>String</code></td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;"><copy><code>**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.</code></copy></td>
-<td style="text-align: left;"><copy><code>TRAN-001</code></copy></td>
+<td style="text-align: left;"><copy><code>101010</code></copy></td>
 <td style="text-align: left;"><code>Yes</code></td>
 <td style="text-align: left;"><code>No</code></td>
 </tr>
@@ -2403,6 +2434,106 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </details>
 </details>
 <h2 id="testing">Testing <img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f9ea.svg" title=":test_tube:"><a class="headerlink" href="#testing" title="Permanent link">¶</a></h2>
+<h3 id="inboundoutbound-detection-for-faster-testing">Inbound/Outbound Detection for Faster Testing<a class="headerlink" href="#inboundoutbound-detection-for-faster-testing" title="Permanent link">¶</a></h3>
+<p>During the outbound campaign flow, calls are initiated by the Campaign Manager and can take 2-5 minutes to be generated. To speed up testing during this lab, you will add a simple check at the start of the flow to detect whether the call is outbound (initiated by the campaign) or inbound (you calling the entry point directly from your phone). This allows you to test the AI Agent immediately without waiting for the dialer.</p>
+<p>The logic is straightforward: if the ANI (the number that initiated the call) matches the campaign outdial number, the call is outbound and we use the DNIS (the customer's number) as the phone number sent to the AI Agent. If it does not match, the call is inbound and we use the ANI (your phone number) instead.</p>
+<details class="webex" open="open">
+<summary>Configure Call Direction Detection</summary>
+<ol>
+<li>In the <code>AI_Agent_DebtCollection</code> flow, click on <strong>Global Flow Properties</strong> (gear icon).</li>
+<li>
+<p>Under <strong>Custom Flow Variables</strong>, click <strong>Create flow variable</strong> and add:</p>
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Type</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>String</code></td>
+<td><em>(empty)</em></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>On the canvas, drag a <strong>Condition</strong> node immediately after the <code>NewPhoneContact</code> start node.</p>
+</li>
+<li>Rename the node to <copy><code>Detect_Call_Direction</code></copy>.</li>
+<li>
+<ul>
+<li><strong>Expression</strong>: <code>{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}</code></li>
+</ul>
+<p>Configure the condition expression:</p>
+<p>Replace <code>+XXXXXXXXXXX</code> with the outdial ANI number configured in your campaign (Lab 1.5).</p>
+</li>
+<li>
+<p><strong>True Path (Outbound)</strong>:</p>
+<ul>
+<li>Drag a <strong>Set Variable</strong> node onto the canvas and connect it to the <strong>True</strong> output of the Condition node.</li>
+<li>Rename the node to <copy><code>Set_Outbound_Phone</code></copy>.</li>
+<li><strong>Variable</strong>: select <code>phone_number</code></li>
+<li><strong>Set Value</strong>: <code>{{NewPhoneContact.DNIS}}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>False Path (Inbound)</strong>:</p>
+<details class="inline end" open="open">
+<summary>Inbound Test - Flow View</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_inbound_test.png" data-title="Inbound Test - Flow View" data-desc-position="top"><img alt="Inbound Test - Flow View" src="../assets/lab3_inbound_test.png"></a>
+</figure><p></p>
+</details>
+<ul>
+<li>Drag a <strong>Set Variable</strong> node onto the canvas and connect it to the <strong>False</strong> output of the Condition node.</li>
+<li>Rename the node to <copy><code>Set_Inbound_Phone</code></copy>.</li>
+<li>
+<p>Configure the following variables within this node:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Set Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>phone_number</code></td>
+<td><code>{{NewPhoneContact.ANI}}</code></td>
+</tr>
+<tr>
+<td><code>firstName</code></td>
+<td><code>John</code></td>
+</tr>
+<tr>
+<td><code>lastName</code></td>
+<td><code>Doe</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>Replace <code>John</code> and <code>Doe</code> with the first name and last name of the test customer in your Airtable Customers table.</p>
+</li>
+<li>
+<p>Connect both <strong>Set Variable</strong> nodes to the <strong>Virtual Agent V2</strong> node (<code>DebtCollectionAgent</code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Dynamic Customer Lookup for Inbound Calls</p>
+<p>For this lab, hardcoding the customer name is sufficient for testing. In a production environment, you would add an <strong>HTTP Request</strong> node after this Set Variable node to dynamically fetch the customer name from Airtable using the <code>phone_number</code> variable. The configuration would be similar to the <code>Fetch Customer Info</code> HTTP Request node used in the <code>fetch_balance</code> Webex Connect flow (Lab 2.3):</p>
+<ul>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Endpoint URL</strong>: <code>https://api.airtable.com/v0/&lt;yourBaseID&gt;/Customers?filterByFormula={PhoneNumber}="{{phone_number}}"</code></li>
+<li><strong>Header</strong>: <code>Authorization</code> â <code>Bearer &lt;yourPersonalToken&gt;</code></li>
+</ul>
+<p>You would then use the <strong>Parse</strong> settings within the <strong>HTTP Request</strong> node to map the response values to the <code>firstName</code> and <code>lastName</code> global variables.</p>
+</div>
+</li>
+</ol>
+</details>
 <details class="webex" open="open">
 <summary>Preparation</summary>
 <p>Before testing, ensure the following:</p>
