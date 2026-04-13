@@ -203,6 +203,9 @@ The final step in this lab is to establish a Gmail Forwarding Rule, which ensure
 	- Copy the complete URL and paste in a browser. It will take you to the confirmation page. 
 	- Click on **[Confirm]**. 
 
+		???+ Warning
+			In some cases we have seen the forwarding rule to be defaulted to disabled and we had to manually set it back to forwarding.  To make sure, get back to your gmail settings, and under **Forwarding and POP/IMAP** verify the forwarding rule is enabled.
+
 	Your email asset is now fully functional in your tenant!
 
 

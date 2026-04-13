@@ -448,9 +448,9 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
 ???+ Webex "***FraudCases*** table"
 
     !!! download "FraudCases Table"
-        Download the csv file for the [Transactions Table](./bcamp_files/airtable_FraudCases.csv).
+        Download the csv file for the [FraudCases Table](./bcamp_files/airtable_FraudCases.csv).
 
-    Now proceed as in previous table to import the csv file of the **Transactions** table.
+    Now proceed as in previous table to import the csv file of the **FraudCases** table.
     
     1. Once you have downloaded your .csv file, click on **+ Add or import** and select **CSV file**. Drop or select your `airtable_FraudCases.csv` file and click **[Upload 1 file]**
 
