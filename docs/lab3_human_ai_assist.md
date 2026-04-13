@@ -63,8 +63,8 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
         | Entity Name | Type | Value | Description | Example | Required |
         | :----- | :--- | :--- | :--- | :--- | :--- |
         | <copy>`ivr_verified`</copy>  | `String` | | <copy>`Send a true or false value depending if the user was successfully authenticated before executing this action.`</copy> | <copy>`True, False`</copy> |`Yes` | 
-        | <copy>`debt_balance`</copy>  | `String` | | <copy>`User's debt balance`</copy> | <copy>`10000`</copy> |`No` | 
-        | <copy>`susp_transaction`</copy>  | `Number` | | <copy>`Amount of the transaction identified as suspicious`</copy> | <copy>`10000`</copy> |`No` | 
+        | <copy>`debt_balance`</copy>  | `Number` | | <copy>`User's debt balance. The value needs to include at least 2 decimals. If the value is 1000, we should use 1000.00`</copy> | <copy>`10000.00`</copy> |`No` | 
+        | <copy>`susp_transaction`</copy>  | `Number` | | <copy>`Amount of the transaction identified as suspicious. The value needs to include at least 2 decimals. If the value is 1000, we should use 1000.00`</copy> | <copy>`10000.00`</copy> |`No` | 
         | <copy>`susp_vendor`</copy>  | `String` | | <copy>`Vendor of the transaction identified as suspicious`</copy> |  |`No` |
         | <copy>`susp_date`</copy>  | `Date` | `mm/dd/YY` | <copy>`Date of the transaction identified as suspicious`</copy> |  |`No` |
     7. Click **Add**.
@@ -76,7 +76,7 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
     9. Click **Save Changes** and **Publish**. 
     ???+ gif "Transfer Action Setup"
         <figure markdown>
-        ![Alt Text](./assets/transfer_action.gif)
+        ![Alt Text](./assets/lab3_transfer_action.gif)
         <figcaption>Transfer Action Configuration</figcaption>
         </figure>
 
@@ -86,7 +86,7 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
 In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected to a temporary **Play Message** node. In this section, you will replace that temporary path with a production-ready escalation flow. This involves extracting the contextual data that Alex collected during the conversation, passing it to the human agent via the queue, and enabling Real-Time Transcription so the fraud specialist has a live view of the conversation from the moment it arrives
 
 ???+ webex "Prepare Call Flow"
-    When Alex triggers the `fraud_transfer` action, the entities defined in that action (e.g., `ivr_verified`, `debt_balance`, `susp_trans`) are passed into the flow within the metadata output variable from **Virtual Agent V2** node. You need to capture these into flow variables so they can be presented to the agent. 
+    When Alex triggers the `fraud_transfer` action, the entities defined in that action (e.g., `ivr_verified`, `debt_balance`, `susp_transaction`) are passed into the flow within the metadata output variable from **Virtual Agent V2** node. You need to capture these into flow variables so they can be presented to the agent. 
     
     1. Go to **Control Hub** -> **Contact Center** -> **Flows**
     2. Open your flow **AI_Agent_DebtCollection**
@@ -97,8 +97,8 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
         | :--- | :--- | :--- | :--- | :--- |
         | <copy>`transfer_type`</copy> | `String` | <copy>`agent_transfer`</copy> | No | N/A |
         | <copy>`ivr_verified`</copy> | `String` | <copy>`False`</copy> | Yes | <copy>`IVR Verified`</copy> | 
-        | <copy>`debt_balance`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Debt Balance`</copy> |
-        | <copy>`susp_transaction`</copy> | `String` | <copy>`0`</copy> | Yes | <copy>`Transaction Amount`</copy> | 
+        | <copy>`debt_balance`</copy> | `Decimal` | <copy>`0.0`</copy> | Yes | <copy>`Debt Balance`</copy> |
+        | <copy>`susp_transaction`</copy> | `Decimal` | <copy>`0.0`</copy> | Yes | <copy>`Transaction Amount`</copy> | 
         | <copy>`susp_vendor`</copy> | `String` | <copy>`Unknown`</copy> | Yes | <copy>`Transaction Vendor`</copy> |
         | <copy>`susp_date`</copy> | `String` | <copy>`N/A`</copy> | Yes | <copy>`Transaction Date`</copy> |
 
@@ -503,6 +503,14 @@ During this lab section we will focus on how to effectively setup an AI Assistan
     3. Click the option **+ Create Skill**. Select the option **Start from scratch** and click **Next**. 
     4. Enter the **Skill name** <copy>`Counter_Fraud_Assistant`</copy> and enter the following in the **Goal** section: 
         <copy>`You are an ai assistant working for Webex Financial Group. You will be assisting human agents that are specialized in handling fraud scenarios for our customers. Provide timely recommendations about our fraud prevention and dispute transaction policies.`</copy>
+
+        ???+ tip "Best Practices for AI Assistant Instructions"
+            To ensure your AI Assistant provides high-quality, reliable guidance, follow these guidelines:
+
+            1. **Agent-Guidance Style**: Frame instructions as guidance for the human agent (e.g., "Guide the agent to collect the customer ID") rather than direct commands.
+            2. **Be Specific and Unambiguous**: Clearly state the assistant's role, required fields, and the exact conditions under which an action should be triggered.
+            3. **Define Required Fields**: Specify the exact fields needed for each action; avoid vague terms like "relevant information."
+            4. **Validation Rules**: Define formats (e.g., regex) and validation logic clearly. If a field has a specific pattern (like a Customer ID), state it so the assistant can validate it before triggering an action.
     5.  Click **Create** and the main configuration page for the AI Assistant skill comes up, add the following prompt to the **Instructions** section: 
     ```
     # AI Assistant Action Orchestration
@@ -571,7 +579,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
         | Entity Name | Type | Value | Description | Example | Required | Agent Review |
         | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
         | <copy>`CustomerID`</copy> | `regex` | <copy>`CUST-\d{3}`</copy> | <copy>`CustomerID provided by the customer or agent.`</copy> | <copy>`CUST-020`</copy> |`Yes` | `No`|
-        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`TRAN-001`</copy> | `Yes` | `No`|
+        | <copy>`TransactionID`</copy> | `String` | NA | <copy>`**Do not request this value from the Agent or Customer**. This is the TransactionID received when the [fetch_transactions] actions was executed. Each pending transaction had a unique TransactionID.`</copy> | <copy>`101010`</copy> | `Yes` | `No`|
         ???+ warning "TransactionID Entity Description"
             Pay close attention to the description of the `TransactionID` entity. The instruction **"Do not request this value from the Agent or Customer"** is a guardrail embedded directly into the entity definition. This tells the LLM to extract the TransactionID from the output of the previous `fetch_transactions` action rather than asking the human agent to provide it manually. This reduces friction and prevents errors.
     16. Associate the action flow in the **Webex Connect Flow Builder Fulfillment** section:
@@ -605,6 +613,67 @@ During this lab section we will focus on how to effectively setup an AI Assistan
         </figure>
 
 ## Testing :test_tube:
+
+### Inbound/Outbound Detection for Faster Testing
+
+During the outbound campaign flow, calls are initiated by the Campaign Manager and can take 2-5 minutes to be generated. To speed up testing during this lab, you will add a simple check at the start of the flow to detect whether the call is outbound (initiated by the campaign) or inbound (you calling the entry point directly from your phone). This allows you to test the AI Agent immediately without waiting for the dialer.
+
+The logic is straightforward: if the ANI (the number that initiated the call) matches the campaign outdial number, the call is outbound and we use the DNIS (the customer's number) as the phone number sent to the AI Agent. If it does not match, the call is inbound and we use the ANI (your phone number) instead.
+
+???+ webex "Configure Call Direction Detection"
+
+    1. In the `AI_Agent_DebtCollection` flow, click on **Global Flow Properties** (gear icon).
+    2. Under **Custom Flow Variables**, click **Create flow variable** and add:
+
+        | Variable Name | Type | Default Value |
+        |---|---|---|
+        | `phone_number` | `String` | *(empty)* |
+
+    3. On the canvas, drag a **Condition** node immediately after the `NewPhoneContact` start node.
+    4. Rename the node to <copy>`Detect_Call_Direction`</copy>.
+    5. Configure the condition expression:
+        - **Expression**: `{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}`
+
+        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5).
+
+    6. **True Path (Outbound)**:
+        - Drag a **Set Variable** node onto the canvas and connect it to the **True** output of the Condition node.
+        - Rename the node to <copy>`Set_Outbound_Phone`</copy>.
+        - **Variable**: select `phone_number`
+        - **Set Value**: `{{NewPhoneContact.DNIS}}`
+
+    7. **False Path (Inbound)**:
+    
+        ???+ inline end "Inbound Test - Flow View"
+            <figure markdown>
+            ![Inbound Test - Flow View](./assets/lab3_inbound_test.png)
+            </figure>
+        - Drag a **Set Variable** node onto the canvas and connect it to the **False** output of the Condition node.
+        - Rename the node to <copy>`Set_Inbound_Phone`</copy>.
+        - Configure the following variables within this node:
+
+            | Variable | Set Value |
+            |---|---|
+            | `phone_number` | `{{NewPhoneContact.ANI}}` |
+            | `firstName` | `John` |
+            | `lastName` | `Doe` |
+
+        Replace `John` and `Doe` with the first name and last name of the test customer in your Airtable Customers table.
+
+    8. Connect both **Set Variable** nodes to the **Virtual Agent V2** node (`DebtCollectionAgent`).
+
+        !!! note "Dynamic Customer Lookup for Inbound Calls"
+            For this lab, hardcoding the customer name is sufficient for testing. In a production environment, you would add an **HTTP Request** node after this Set Variable node to dynamically fetch the customer name from Airtable using the `phone_number` variable. The configuration would be similar to the `Fetch Customer Info` HTTP Request node used in the `fetch_balance` Webex Connect flow (Lab 2.3):
+
+            - **Method**: `GET`
+            - **Endpoint URL**: `https://api.airtable.com/v0/<yourBaseID>/Customers?filterByFormula={PhoneNumber}="{{phone_number}}"`
+            - **Header**: `Authorization` â `Bearer <yourPersonalToken>`
+
+            You would then use the **Parse** settings within the **HTTP Request** node to map the response values to the `firstName` and `lastName` global variables.
+        
+
+
+
 
 ???+ webex "Preparation"
     Before testing, ensure the following:
