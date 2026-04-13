@@ -107,7 +107,7 @@ Now that your Google Cloud credentials are ready, the third step is to register 
 		| Parameter 		| Value   						|  
 		| :---------- 		| :--------------				|  
 		|**SMTP Server** 	|<copy>smtp.gmail.com</copy> 	|
-		|**Username** 		|<the gmail username> 			|			
+		|**Username** 		|`<the gmail username>` 			|			
 		|**Port** 	|<copy>465</copy> 	|				
 		|**Security** 	| `SSL`	|				
 		|**Client ID** 	|Copy the Client ID of your OAuth client	|				
