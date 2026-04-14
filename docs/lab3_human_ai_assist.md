@@ -213,10 +213,10 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
  In this lab, we will focus on the **Summarization**, **Real-Time Transcript** and  **Real-Time Assist** configuration. 
 
 ???+ webex "WxCC AI Assistant Configuration"
-    1. Open **Control Hub** and navigate to Contact Center > AI Assistant. In some tenants the **AI Assistant** menu card might be renamed to **AI Features**, the following configuration still applies. 
-    2. The first 2 options in this page will be for **Agent Wellbeing** and **AutoCSAT**, but this are not relevant for this lab. 
+    1. Open **Control Hub** and navigate to Contact Center > AI Features. In some tenants the **AI Features** menu card might still show up as **AI Assistant**, the following configuration still applies. 
+    2. The options for **Agent Wellbeing** and **AutoCSAT**, are not relevant for this lab. 
     3. Enable the **Generated Summaries**  toggle and select the check box for all of the different summarization types. 
-    4. Summarization is enabled at the queue level, for the purpose of this lab, you can either select the **All queues** option or specify the **Individual queue** you will be using in this lab.
+    4. Summarization types are enabled at the global level, for the purpose of this lab, you can either select the **All queues** option or specify the **Individual queue** you will be using in this lab.
 
         ???+ tip "Summarization Scope"
             Selecting **All queues** is the quickest option for a lab environment. In a production deployment, you would typically scope summarization to specific queues to control costs and ensure relevance.
@@ -224,7 +224,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
     6. Before we can **Assign AI Assistant skills** to a queue, we need to create the skill in the AI Agent studio. We will cover this topic in lab 3.4. 
     ???+ gif "AI Assistant Configuration in Control Hub"
         <figure markdown>
-        ![Set Escalation Context](./assets/lab3_ai_assistant_config.gif)
+        ![AI Assistant Configuration](./assets/lab3_ai_assistant_config_new.gif)
         <figcaption>Enabling Summarization, RTT, and RTA in Control Hub</figcaption>
         </figure>
 
@@ -608,7 +608,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 
     ???+ gif "Assign Skill to Queue"
         <figure markdown>
-        ![Assign Skill](./assets/lab3_assistant_skill_queue.gif)
+        ![Assign Skill](./assets/lab3_assistant_skill_queue_new.gif)
         <figcaption>Assigning the Counter Fraud Assistant skill to the Fraud Queue</figcaption>
         </figure>
 
