@@ -1703,7 +1703,7 @@
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>Debt Disclosure: Use [fetch_balance]  output to inform the customer of their balance and maturity date.
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>Payment Negotiation: Offer total or partial payment options.
 </span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>Payment Execution: If accepted, execute [payment_session] and inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Confirmation: Use [payment_confirm] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Confirmation: Use [confirm_payment] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
 </span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>Account &amp; Transaction Support: Provide account details and/or the number of recent transactions (amount, date, vendor and city) requested by the customer. 
 </span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>General Enquiries: Use the Knowledge Base for banking questions.If information is duplicated in different Knowledge Base sources, do not repeat the same information twice.
 </span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
@@ -1893,7 +1893,7 @@
 <li>[fetch_balance]: To retrieve real-time customer data.</li>
 <li>[authenticate_user]: To verify customer identity.</li>
 <li>[payment_session]: To trigger a NovaPay session and email a URL.</li>
-<li>[payment_confirm]: To validate and update the database after a payment.</li>
+<li>[confirm_payment]: To validate and update the database after a payment.</li>
 <li>[fetch_transactions]: To pull the last transactions of account activity.</li>
 </ul>
 <details class="info" open="open">
@@ -3188,7 +3188,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </details>
 </details>
 <h3 id="confirm_payment-action">[confirm_payment] Action<a class="headerlink" href="#confirm_payment-action" title="Permanent link">¶</a></h3>
-<p>With the NovaPay session initiated and the payment URL sent, the final step in the debt resolution flow is verification. The <em>payment_confirm</em> action acts as the AI Agent’s 'closing clerk.' In this section, you will configure the logic that allows Alex to move beyond simply providing a link to actually validating the transaction's success. This action queries the NovaPay API to check the real-time status of the payment session. Once a 'Success' state is detected, the agent will trigger a synchronized update to the Debt Database, ensuring the customer's balance is reconciled immediately. Mastering this action is key to building an autonomous agent that doesn't just talk about debt, but actively resolves it.</p>
+<p>With the NovaPay session initiated and the payment URL sent, the final step in the debt resolution flow is verification. The <em>confirm_payment</em> action acts as the AI Agent’s 'closing clerk.' In this section, you will configure the logic that allows Alex to move beyond simply providing a link to actually validating the transaction's success. This action queries the NovaPay API to check the real-time status of the payment session. Once a 'Success' state is detected, the agent will trigger a synchronized update to the Debt Database, ensuring the customer's balance is reconciled immediately. Mastering this action is key to building an autonomous agent that doesn't just talk about debt, but actively resolves it.</p>
 <p>As before, we will follow our typical approach: </p>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Create the fulfillment flow that will implement the action in Webex Connect</li>
