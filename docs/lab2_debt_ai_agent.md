@@ -129,7 +129,7 @@ In this first step, you will define the "brain" and personality of your AI Agent
         Debt Disclosure: Use [fetch_balance]  output to inform the customer of their balance and maturity date.
         Payment Negotiation: Offer total or partial payment options.
         Payment Execution: If accepted, execute [payment_session] and inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
-        Confirmation: Use [payment_confirm] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
+        Confirmation: Use [confirm_payment] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
         Account & Transaction Support: Provide account details and/or the number of recent transactions (amount, date, vendor and city) requested by the customer. 
         General Enquiries: Use the Knowledge Base for banking questions.If information is duplicated in different Knowledge Base sources, do not repeat the same information twice.
 
@@ -314,7 +314,7 @@ This is where you give Alex the power to interact with your backend systems. You
 - [fetch_balance]: To retrieve real-time customer data.
 - [authenticate_user]: To verify customer identity.
 - [payment_session]: To trigger a NovaPay session and email a URL.
-- [payment_confirm]: To validate and update the database after a payment.
+- [confirm_payment]: To validate and update the database after a payment.
 - [fetch_transactions]: To pull the last transactions of account activity.
 
 ???+ info "AI Agent handover to Human Agents"
@@ -1143,7 +1143,7 @@ As in the previous actions, we will:
 
 ### [confirm_payment] Action
 
-With the NovaPay session initiated and the payment URL sent, the final step in the debt resolution flow is verification. The *payment_confirm* action acts as the AI Agent’s 'closing clerk.' In this section, you will configure the logic that allows Alex to move beyond simply providing a link to actually validating the transaction's success. This action queries the NovaPay API to check the real-time status of the payment session. Once a 'Success' state is detected, the agent will trigger a synchronized update to the Debt Database, ensuring the customer's balance is reconciled immediately. Mastering this action is key to building an autonomous agent that doesn't just talk about debt, but actively resolves it.
+With the NovaPay session initiated and the payment URL sent, the final step in the debt resolution flow is verification. The *confirm_payment* action acts as the AI Agent’s 'closing clerk.' In this section, you will configure the logic that allows Alex to move beyond simply providing a link to actually validating the transaction's success. This action queries the NovaPay API to check the real-time status of the payment session. Once a 'Success' state is detected, the agent will trigger a synchronized update to the Debt Database, ensuring the customer's balance is reconciled immediately. Mastering this action is key to building an autonomous agent that doesn't just talk about debt, but actively resolves it.
 
 As before, we will follow our typical approach: 
 
