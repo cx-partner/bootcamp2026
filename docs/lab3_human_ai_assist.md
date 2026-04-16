@@ -231,7 +231,7 @@ In Lab 2, the *Escalated* outcome of the **Virtual Agent V2** node was connected
 ???+ webex "Desktop Layout Setup"
     The AI Assistant is part of the default Desktop layout, however we understand that you might have your own layout that has been previously customized to include other widgets. 
     We will review the steps to make the necessary changes to a Desktop layout for the AI Assistant and the Real-Time Transcription window to show up on the Agent Desktop. 
-    !!! download "Knowledge base document"
+    !!! download "Desktop Layout"
         If you don't need to update your own Desktop Layout, download a template [HERE](./bcamp_files/Finance_Desktop.json){:download="Finance_Desktop.json"} and ignore the next steps. 
     
     1. Open your JSON layout file using a text editor (Sublime, Notepad++, etc) or IDE (VS Code, etc). 
