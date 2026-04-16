@@ -1813,7 +1813,7 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
         The variables **firstName** and **lastName** on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the *Outbound_DebtCollection* flow to this flow. 
 
         ???+ Warning
-            The starting node has been renamed to NewContact and is already pushed to some tenants. If your tenant has been update to the new name, make sure you use the right variable: *NewContact.DNIS* instead. 
+            The starting node has been renamed to **NewContact** and has been already pushed to some tenants. If your tenant has been updated to the new name, make sure you use the variable: *NewContact.DNIS* instead the old *NewPhoneContact.DNIS* for the phoneNumber value. 
 
         The variables **phoneNumber**, **firstName** and **lastName** on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).
 
