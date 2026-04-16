@@ -31,7 +31,6 @@ This lab introduces the concept of **agent-to-agent transfer**, where one AI Age
 In order to be able to complete this lab, you must:
 
 * [x] Have your **Airtable repositories** completed for the *Customer*, *Investment*, and *Positions* tables
-* [x] Have an **email digital channel** available in your tenant
 * [x] Have completed [Lab 2 - Automating Debt Collection](lab2_debt_ai_agent.md)
 * [x] Have completed [Lab 3 - Human Escalation and RT Assist](lab3_human_ai_assist.md)
 
@@ -56,15 +55,14 @@ In this lab you will perform the following tasks:
 Just as we configured a `fraud_transfer` action in Lab 3, we will now create an `investment_transfer` action that Alex will use when a customer expresses interest in their investment portfolio, stock purchases, or market inquiries.
 
 ???+ webex "Create the Transfer Action in Alex"
-    1. From [Control Hub](https://admin.webex.com) navigate to **[Contact Center]** and under **Quick Links** click on the **Webex AI Agent** link. The Webex AI Agent studio will open in a new window.
+    1. From [Control Hub](https://admin.webex.com) navigate to **Contact Center** and under **Quick Links** click on the **Webex AI Agent** link. The Webex AI Agent studio will open in a new window.
     2. In the **AI Agent Studio**, select your *Finance Debt Collection Agent* (Alex)
     3. Click on **Actions**
-    4. Click on **Create new** and select **Transfer**
+    4. Click on **Add Actions** and select **Transfer**
     5. Fill in the **General information** of your action:
         - **Action name**: <copy>investment_transfer</copy>
         - **Action description**: <copy>Action to transfer the call to the Investment Advisor AI Agent when the customer wants to discuss their investment portfolio, buy or sell stocks, or inquire about market data.</copy>
-        - **Transfer visibility**: You can either enable or disable the **Announce transfer** toggle
-    6. Select the **Add new entity** option, fill out the entity details with this information:
+    6. Select the **+New Input entity** option, fill out the entity details with this information:
 
         | Entity Name | Type | Description | Example | Required |
         | :----- | :--- | :--- | :--- | :--- |
@@ -76,7 +74,7 @@ Just as we configured a `fraud_transfer` action in Lab 3, we will now create an 
     8. Go back to the **Profile** tab and add the following into the **Instructions**:
         ```text
         **Investment Transfer Logic:**
-        If the customer wants to discuss investments, buy or sell stocks, check their portfolio, or inquire about market data, transfer to the Investment Advisor using the **[investment_transfer]** transfer action.
+        If the customer wants to discuss investments, buy or sell stocks, check their portfolio, or inquire about market data, authenticate them and transfer to the Investment Advisor using the **investment_transfer** transfer action.
         ```
     9. Click **Save Changes** and **Publish**.
 
@@ -132,17 +130,8 @@ In this section, you will create a second autonomous AI Agent — the **Investme
         Background: You handle investment-related conversations transferred from the Debt Collection Agent (Alex). The customer has already been authenticated.
         Environment: Voice line with potential background noise. Keep responses clear and concise.
 
-        3. Task
-        Available Actions:
+        3. Steps:
 
-        [get_stock_price]: Retrieve current market data for a stock ticker.
-        [get_portfolio]: Retrieve the customer's current investment positions.
-        [initiate_order]: Place a buy or sell order and send a payment link to the customer.
-        [confirm_order]: Confirm payment completion and finalize the order in the portfolio.
-
-        Steps:
-
-        Greeting: Welcome the customer and ask how you can help with their investments.
         Portfolio Review: If requested, use [get_portfolio] to retrieve and present current positions.
         Stock Inquiry: If the customer asks about a stock, use [get_stock_price] to provide current market data.
         Order Placement: If the customer wants to buy or sell:
@@ -199,23 +188,24 @@ The Investment Advisor's tools are hosted on an external MCP Server. To connect 
 
     1. Navigate to the [Webex Developer Portal](https://developer.webex.com).
     2. Log in with your Webex credentials.
-    3. Navigate to the **Agentic Apps** section.
-    4. Click **Create New App**.
+    3. From the Home page, click on **Start Building Apps**.
+    4. Then click **Create an Agentic App**. 
     5. Fill in the app details:
-        - **App Name**: <copy>`Webex Finance MCP Server`</copy>
+        - **Agentic App Module**: **MCP**
+        - **Transport Type**: **Stremeable HTTP**
+        - **Agentic App Name**: <copy>`Finance_MCP_[PARTNER_NAME]`</copy> Replace the PARTNER_NAME placeholder in the name. 
         - **Description**: <copy>`MCP Server providing stock market data, portfolio management, and order execution tools for the Webex Financial Group Investment Advisor.`</copy>
-        - **App Type**: Select **MCP Server**
-        - **MCP Server URL**: <copy>`https://mcp.cx-tme.com/investment/mcp`</copy>
-
-    6. Under **Authentication**, select **API Key** as the authentication method.
+        - **Agentic App Icon**: Select any icon or upload your own icon. 
+        - **Agentic App URL**: <copy>`https://mcp.cx-tme.com/investment/mcp`</copy>
+        - **Agentic App auth type**: **API Key**
 
         ???+ warning "API Key Security"
             This API key is shared across all bootcamp participants for lab purposes only. In a production environment, each application would have its own unique API key. Never share API keys in public repositories or documentation.
 
-    8. Click **Create** (or **Submit**).
+    8. Click **Add Agentic App**.
 
     ???+ info "What happens during registration?"
-        When you register the Agentic App, the Webex platform connects to your MCP Server URL, authenticates using the API key, and discovers the available tools. It reads the tool names, descriptions, and input schemas that were defined in the MCP Server code. These tools then become available for configuration in Control Hub.
+        When you register the Agentic App, you can either keep the app for only use within your Webex tenant or submit it to the App Hub for other customers to find it within Control Hub. 
 
     ???+ gif "Register Agentic App"
         <figure markdown>
@@ -234,11 +224,11 @@ After registering the app in the Developer Portal, you need to provision it in *
     1. From [Control Hub](https://admin.webex.com), navigate to **Apps** > **Agentic Apps**.
     2. You should see the **Webex Finance MCP Server** app in the list. Click on it.
     3. In the **General** tab:
-        - Set the app to **Allowed** for your organization.
+        - Set the app to **Allowed** for your organization and click **Save**. 
 
     4. In the **Authentication** tab:
         - The authentication method should already be set to **API Key** based on your Developer Portal configuration.
-        - Enter the API Key:
+        - Enter the API Key and click **Save**:
 
             <copy>`wxai_mcp_4c8232360c9d9e159b9018d9140ebbace155afa746703b3bd66261216a73ddad`</copy>
 
@@ -252,13 +242,11 @@ After registering the app in the Developer Portal, you need to provision it in *
             | `initiate_order` | Initiates a stock order and sends a payment link via email |
             | `confirm_order` | Confirms payment and writes the position to the portfolio |
 
-        - **Enable** all four tools.
+        - **Enable** all four tools and click **Save**.
         - Optionally, toggle **Allow signature change** for each tool if you anticipate the MCP Server tools may be updated during the bootcamp.
 
         ???+ tip "Tool Governance"
-            The Tools tab in Control Hub is where administrators can control which MCP tools are available to AI Agents in the organization. This is a key governance feature — even if the MCP Server exposes 20 tools, the administrator can choose to enable only the ones relevant to the business use case.
-
-    6. Click **Save**.
+            The Tools tab in Control Hub is where administrators can control which MCP tools are available to Webex AI Agents in the organization. This is a key governance feature — even if the MCP Server exposes 20 tools, the administrator can choose to enable only the ones relevant to the business use case.
 
     ???+ gif "Provision Agentic App in Control Hub"
         <figure markdown>
@@ -275,13 +263,12 @@ Now that the Agentic App is provisioned, you need to connect the MCP tools to yo
 ???+ webex "Add MCP Tools as Actions"
 
     1. In the **AI Agent Studio**, select your *Investment Advisor Agent*.
-    2. Click on **[Actions]**.
-    3. Click on **[Create new]** and select **MCP**.
+    2. Select the **Actions** tab.
+    3. Click on **+Add Actions** and use the **Select Available* option.
 
         ???+ info "MCP Action Type"
-            Unlike Lab 2 where you selected **Fulfillment** (backed by Webex Connect flows), here you select **MCP**. This tells the AI Agent that the action is fulfilled by an external MCP Server rather than a Webex Connect flow.
+            Unlike Lab 2 where you selected **Fulfillment** (backed by Webex Connect flows), here you are going to select available tools. This tells the AI Agent that the action is fulfilled by an external MCP Server rather than a Webex Connect flow.
 
-    4. Select the **Webex Finance MCP Server** Agentic App from the list.
     5. You should see the four available tools. Select **get_stock_price** and click **Add**.
     6. Review the action configuration:
         - **Action name**: `get_stock_price`
@@ -325,7 +312,16 @@ In Lab 3, you modified the flow to handle the `fraud_transfer` by routing to a h
 ???+ webex "Update the Flow"
 
     1. Go to **Control Hub** -> **Contact Center** -> **Flows**
-    2. Open your flow **AI_Agent_DebtCollection**
+    2. Open your flow **AI_Agent_DebtCollection** and go into **Edit** mode. 
+    3. First, we need to create the flow variables that will hold the context from Alex. Click on the **Global Flow Properties** panel (the gear icon in the top-right of the flow editor).
+    4. Under **Custom Flow Variables**, click the option **Create flow variable** and create the following variables:
+
+        | Variable Name | Type | Default Value |
+        | :--- | :--- | :--- |
+        | <copy>`customer_id`</copy> | `String` | |
+        | <copy>`customer_email`</copy> | `String` | |
+        | <copy>`investment_id`</copy> | `String` | |
+
     3. Locate the **Case** node named `Transfer_Check`.
     4. Add a new case:
         - **Case 3** = <copy>`investment_transfer`</copy>
