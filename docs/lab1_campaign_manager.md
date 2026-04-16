@@ -9,7 +9,7 @@ In this lab, you will configure an **end-to-end outbound IVR campaign** using We
 ???+ purpose "Lab Objectives"
     By the end of this lab, you will have configured the full stack required to run an outbound IVR campaign in Webex Contact Center. Key objectives include:
 
-    - **WxCC Infrastructure Setup:** Configure agents, teams, outdial queues, global variables, and entry points on Control Hub.
+    - **WxCC Infrastructure Setup:** Configure teams, outdial queues, global variables, and entry points on Control Hub.
     - **Flow Design:** Build an outbound campaign flow with CPA-based routing and event flows, including Answer Machine Detection (AMD) and Live Voice handling.
     - **Campaign Manager Configuration:** Complete all prerequisite campaign administration settings including business days, contact modes, field mappings, suppression rules, and telephony outcomes.
     - **Campaign Activation:** Create a campaign group, configure and activate the campaign, and upload a contact list to trigger live calls.

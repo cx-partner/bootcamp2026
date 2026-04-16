@@ -196,6 +196,12 @@ The following entities must be configured in Control Hub before the Bootcamp:
     - One DN per attendee must be available and mapped to their Voice Entry Point.
     - Attendees will use their **own mobile device** to simulate the customer and receive outbound calls from the Contact Center during the labs.
 
+    ???+ warning
+        IMPORTANT: make sure your Location/Site in Control Hub has a Main Number assigned. **You will not be able to make or receive calls until this number is added!!!**
+
+        Go to your **Location**, select the *Site* and go the **PSTN** tab. Assign a Main number in the **PSTN Configuration** section. 
+
+
 ### Users Setup
 
 Every attendee requires an agent user role configured in Control Hub with the correct licence and profile assignments.
