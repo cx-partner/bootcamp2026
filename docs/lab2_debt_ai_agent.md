@@ -1812,6 +1812,9 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
             ``` 
         The variables **firstName** and **lastName** on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the *Outbound_DebtCollection* flow to this flow. 
 
+        ???+ Warning
+            The starting node has been renamed to NewContact and is already pushed to some tenants. If your tenant has been update to the new name, make sure you use the right variable: *NewContact.DNIS* instead. 
+
         The variables **phoneNumber**, **firstName** and **lastName** on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).
 
         - In the *Decryption Settings*, set the **Enable decryption** slider to ease troubleshooting during debugging. Make sure the **enable decryption** slider is set in the **Global Flow Properties** panel 
