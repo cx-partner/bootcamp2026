@@ -104,18 +104,7 @@ In this section, you will create a second autonomous AI Agent — the **Investme
             <copy>`You are an Investment Advisor for Webex Financial Group. Your mission is to help customers manage their investment portfolio, provide stock market information, and execute buy or sell orders. You use real-time market data and the customer's portfolio to provide informed recommendations. Maintain a professional, knowledgeable, and helpful tone.`</copy>
 
     5. Click the **[Create]** button.
-
-    ???+ gif "Create Investment Advisor"
-        <figure markdown>
-        ![Create Investment Advisor](./assets/lab4_create_investment_advisor.gif)
-        </figure>
-
-???+ webex "Configure the Investment Advisor Instructions"
-
-    From the AI Agent configuration page:
-
-    1. Select your **Time zone**
-    2. Fill in the **Welcome message**:
+    2. From the AI Agent configuration page, fill in the **Welcome message**:
         ```text
         Hello! I'm your Investment Advisor from Webex Financial Group. I can help you check your portfolio, look up stock prices, and place buy or sell orders. How can I assist you today?
         ```
@@ -170,9 +159,9 @@ In this section, you will create a second autonomous AI Agent — the **Investme
     ???+ tip "Investment Advisor vs. Alex"
         Notice the key difference: Alex is focused on **debt recovery** with strict security protocols and authentication flows. The Investment Advisor assumes the customer has **already been authenticated** by Alex and focuses purely on investment operations. This separation of concerns is a core principle of multi-agent architecture.
 
-    ???+ gif "Investment Advisor Instructions"
+    ???+ gif "Create Investment Advisor"
         <figure markdown>
-        ![Investment Advisor Instructions](./assets/lab4_investment_advisor_instructions.gif)
+        ![Create Investment Advisor](./assets/lab4_create_investment_advisor.gif)
         </figure>
 
 ---
