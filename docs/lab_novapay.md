@@ -204,7 +204,6 @@ The NovaPay frontend that hosts the user interface is hosted publicly using GitH
 
 	2. Under Git Provider, select your NovaPay Repository
 		- Select GitHub
-		- 
 
 
 
