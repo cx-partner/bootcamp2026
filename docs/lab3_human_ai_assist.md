@@ -70,8 +70,8 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
     7. Click **Add**.
     8. Go back to the **Profile** tab and add the following into the **Instructions**: 
     ```
-    **Escalation Logic:**
-    If fraud is suspected, escalate to a Fraud Specialist by using the **[fraud_transfer]** transfer action.
+    **Fraud Escalation Logic:**
+    If fraud is suspected, pull the recent transactions using the **[fetch_transactions]** actions. Attempt to identify the suspicious transaction before escalating to a Fraud Specialist by using the **[fraud_transfer]** transfer action.
     ```
     9. Click **Save Changes** and **Publish**. 
     ???+ gif "Transfer Action Setup"
