@@ -1621,8 +1621,8 @@
 <p>Click <strong>Add</strong>.</p>
 </li>
 <li>Go back to the <strong>Profile</strong> tab and add the following into the <strong>Instructions</strong>: 
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>**Escalation Logic:**
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>If fraud is suspected, escalate to a Fraud Specialist by using the **[fraud_transfer]** transfer action.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>**Fraud Escalation Logic:**
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>If fraud is suspected, pull the recent transactions using the **[fetch_transactions]** actions. Attempt to identify the suspicious transaction before escalating to a Fraud Specialist by using the **[fraud_transfer]** transfer action.
 </span></code></pre></div></li>
 <li>Click <strong>Save Changes</strong> and <strong>Publish</strong>. </li>
 </ol>
