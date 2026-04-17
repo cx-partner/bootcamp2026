@@ -632,9 +632,10 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
     3. On the canvas, drag a **Condition** node immediately after the `NewPhoneContact` start node.
     4. Rename the node to <copy>`Detect_Call_Direction`</copy>.
     5. Configure the condition expression:
-        - **Expression**: `{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}`
 
-        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5).
+        - **Expression**: <copy>`{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}`</copy>
+
+        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5). Also, make sure that the **NewPhoneContact.ANI** variable is correct, changes in flow designer have made this show up as **NewContact.ANI**. 
 
     6. **True Path (Outbound)**:
         - Drag a **Set Variable** node onto the canvas and connect it to the **True** output of the Condition node.
