@@ -70,8 +70,8 @@ Our AI Agent for debt collection (Alex) can perform multiple tasks (check balanc
     7. Click **Add**.
     8. Go back to the **Profile** tab and add the following into the **Instructions**: 
     ```
-    **Escalation Logic:**
-    If fraud is suspected, escalate to a Fraud Specialist by using the **[fraud_transfer]** transfer action.
+    **Fraud Escalation Logic:**
+    If fraud is suspected, pull the recent transactions using the **[fetch_transactions]** actions. Attempt to identify the suspicious transaction before escalating to a Fraud Specialist by using the **[fraud_transfer]** transfer action.
     ```
     9. Click **Save Changes** and **Publish**. 
     ???+ gif "Transfer Action Setup"
@@ -632,9 +632,10 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
     3. On the canvas, drag a **Condition** node immediately after the `NewPhoneContact` start node.
     4. Rename the node to <copy>`Detect_Call_Direction`</copy>.
     5. Configure the condition expression:
-        - **Expression**: `{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}`
 
-        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5).
+        - **Expression**: <copy>`{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}`</copy>
+
+        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5). Also, make sure that the **NewPhoneContact.ANI** variable is correct, changes in flow designer have made this show up as **NewContact.ANI**. 
 
     6. **True Path (Outbound)**:
         - Drag a **Set Variable** node onto the canvas and connect it to the **True** output of the Condition node.

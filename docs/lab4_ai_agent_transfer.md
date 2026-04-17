@@ -74,7 +74,7 @@ Just as we configured a `fraud_transfer` action in Lab 3, we will now create an 
     8. Go back to the **Profile** tab and add the following into the **Instructions**:
         ```text
         **Investment Transfer Logic:**
-        If the customer wants to discuss investments, buy or sell stocks, check their portfolio, or inquire about market data, authenticate them and transfer to the Investment Advisor using the **investment_transfer** transfer action.
+        If the customer wants to discuss investments, buy or sell stocks, check their portfolio, or inquire about market data, authenticate them and transfer to the Investment Advisor using the **[investment_transfer]** transfer action.
         ```
     9. Click **Save Changes** and **Publish**.
 
@@ -120,6 +120,8 @@ In this section, you will create a second autonomous AI Agent — the **Investme
         Environment: Voice line with potential background noise. Keep responses clear and concise.
 
         3. Steps:
+
+        **Always collect the Investment ID before perform any other tasks**. You can use the tool [get_investment_account] to get it using the Customer ID (for example, CUST-002)
 
         Portfolio Review: If requested, use [get_portfolio] to retrieve and present current positions.
         Stock Inquiry: If the customer asks about a stock, use [get_stock_price] to provide current market data.
@@ -230,8 +232,9 @@ After registering the app in the Developer Portal, you need to provision it in *
             | `get_portfolio` | Retrieves investment positions for a given investment account |
             | `initiate_order` | Initiates a stock order and sends a payment link via email |
             | `confirm_order` | Confirms payment and writes the position to the portfolio |
+            | `get_investment_account` | Checks the Investment ID using the Customer ID
 
-        - **Enable** all four tools and click **Save**.
+        - **Enable** all five tools and click **Save**.
         - Optionally, toggle **Allow signature change** for each tool if you anticipate the MCP Server tools may be updated during the bootcamp.
 
         ???+ tip "Tool Governance"
@@ -266,6 +269,7 @@ Now that the Agentic App is provisioned, you need to connect the MCP tools to yo
         - Select **get_portfolio** and click **Add**.
         - Select **initiate_order** and click **Add**.
         - Select **confirm_order** and click **Add**.
+        - Select **get_investment_account** and click **Add**.
 
     8. You should now see all four MCP actions in the **Actions** panel of your AI Agent.
 
