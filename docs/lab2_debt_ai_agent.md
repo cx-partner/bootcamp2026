@@ -130,7 +130,7 @@ In this first step, you will define the "brain" and personality of your AI Agent
         Payment Negotiation: Offer total or partial payment options.
         Payment Execution: If accepted, execute [payment_session] and inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
         Confirmation: Use [confirm_payment] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
-        Account & Transaction Support: Provide account details and/or the number of recent transactions (amount, date, vendor and city) requested by the customer. 
+        Account & Transaction Support: Provide account info and up to five latest transactions via [fetch_transactions]. For each transaction, clearly list the amount, date, vendor, and city. 
         General Enquiries: Use the Knowledge Base for banking questions.If information is duplicated in different Knowledge Base sources, do not repeat the same information twice.
 
         4. Response Guidelines
@@ -1290,7 +1290,7 @@ As before, we will follow our typical approach:
                 |		-----		|	-----	| -----	|
                 |  `$(n3.paymentStatus)`	|	*Equals ignore case* | <copy>completed</copy> |
 
-                Make sure the *$(n3.paymentStatus)* matches the output variable of the **HTPP Request** node.
+                Make sure the *$(n3.paymentStatus)* matches the output variable of the **HTTP Request** node.
 
             - Set the *None of the above* branch to <copy>Transaction not Completed</copy>
 
@@ -1301,7 +1301,7 @@ As before, we will follow our typical approach:
             ![Transaction Failed](./assets/confirm_payment%20flow%205.png)
             </figure>
 
-        - To complete the node, click on the green outlet at the right of the **Email** node and drag it to the canvas. Release it to open the **End** dialogue. Let´s set the *Transaction not Complete* option
+        - To complete the node, click on the green outlet at the right of the **HTTP Request** node and drag it to the canvas. Release it to open the **End** dialogue. Let´s set the *Transaction not Complete* option
 
             - Set the **Node Event** value to `Transaction not Completed`
             - Set the **Flow Result** value to `102 - Flow completed with an error [Error]`
@@ -1354,7 +1354,7 @@ As before, we will follow our typical approach:
             | Parameter | Value | Notes |
             | :--- | :--- | :--- |
             | **Method** | `PATCH` | |
-            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/appcyTYF3nQqgReHR/Customers/$(n2.aiAgent.RecordID)`</copy>| Make sure the RecordID value corresponds to the variable in your **Start Node**|
+            | **Endpoint URL** | <copy>`https://api.airtable.com/v0/<BaseID>/Customers/$(n2.aiAgent.RecordID)`</copy>| Use the BaseID value of your Airtable Base and make sure the RecordID value corresponds to the variable in your **Start Node**|
             | **Header** | <copy>`Authorization`</copy>  |  |
             | **Value** | `Bearer <yourPersonalToken>` | Populate your [Airtable personal token](https://airtable.com/create/tokens) |
             | **Header** | <copy>`Content-Type`</copy> | click **+ Add Another Header** |
