@@ -2465,11 +2465,11 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </li>
 <li>Rename the node to <copy><code>Detect_Call_Direction</code></copy>.</li>
 <li>
-<ul>
-<li><strong>Expression</strong>: <code>{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}</code></li>
-</ul>
 <p>Configure the condition expression:</p>
-<p>Replace <code>+XXXXXXXXXXX</code> with the outdial ANI number configured in your campaign (Lab 1.5).</p>
+<ul>
+<li><strong>Expression</strong>: <copy><code>{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}</code></copy></li>
+</ul>
+<p>Replace <code>+XXXXXXXXXXX</code> with the outdial ANI number configured in your campaign (Lab 1.5). Also, make sure that the <strong>NewPhoneContact.ANI</strong> variable is correct, changes in flow designer have made this show up as <strong>NewContact.ANI</strong>. </p>
 </li>
 <li>
 <p><strong>True Path (Outbound)</strong>:</p>
