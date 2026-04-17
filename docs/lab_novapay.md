@@ -228,7 +228,7 @@ The NovaPay frontend that hosts the user interface is hosted publicly using GitH
 
 	???+ gif "Create a Render Web Service"
 		<figure markdown>
-            ![Render Web Service creation](./assets/Create Render User.gif)
+            ![Render Web Service creation](./assets/Create%20Render%20Web%20Service.gif)
             </figure>
 
 ---
