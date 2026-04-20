@@ -596,12 +596,10 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 ???+ webex "Assign AI Assistant Skill to a Queue"
     With the skill created, you need to assign it to the queue that your fraud specialists are monitoring.
 
-    1. Go back to **Control Hub** > **Contact Center** > **AI Assistant**.
-    2. Scroll down to the **Real-Time Assist** section.
-    3. Click on **Assign AI Assistant Skills**.
-    4. From the available skills, select **Counter_Fraud_Assistant**.
-    5. Click **Add queues** and select the queue you are using for fraud escalation (e.g., `Fraud_Queue`).
-    6. Click **[Save]**.
+    1. Go back to **Control Hub** > **Contact Center** > **AI Features**.
+    2. Click on the **Queue** tab and then click the queue you are using for this lab.
+    3. Scroll down to the Real-Time Assist section. Enable the **Apply Real-time Assist** and select the **Counter_Fraud_Assistant** skill. 
+    4. Click **Save**. 
 
     ???+ info "Skill-to-Queue Mapping"
         AI Assistant skills are assigned at the **queue level**, not at the agent level. This means any agent who receives a call from the assigned queue will automatically have the RTA skill active during that interaction. If an agent handles calls from multiple queues, different skills can be applied depending on which queue the call originated from.
