@@ -2519,6 +2519,16 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </li>
 <li>
 <p>Connect both <strong>Set Variable</strong> nodes to the <strong>Virtual Agent V2</strong> node (<code>DebtCollectionAgent</code>).</p>
+</li>
+<li>
+<p>To complete your test environment, make sure you update the <strong>State Event</strong> data in the <strong>Virtual Agent V2</strong> node to pass on the new <em>phone_number</em> variable. </p>
+<p>In the <em>State Event</em> section, change the json structure to the below one in the <em>Event Data</em> field:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="nt">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="p">{{</span><span class="err">pho</span><span class="kc">ne</span><span class="err">_</span><span class="kc">nu</span><span class="err">mber</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="err">'</span><span class="p">{{</span><span class="err">las</span><span class="kc">t</span><span class="err">Name</span><span class="p">}}</span><span class="err">'</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">}</span>
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Dynamic Customer Lookup for Inbound Calls</p>
 <p>For this lab, hardcoding the customer name is sufficient for testing. In a production environment, you would add an <strong>HTTP Request</strong> node after this Set Variable node to dynamically fetch the customer name from Airtable using the <code>phone_number</code> variable. The configuration would be similar to the <code>Fetch Customer Info</code> HTTP Request node used in the <code>fetch_balance</code> Webex Connect flow (Lab 2.3):</p>
