@@ -663,6 +663,18 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
 
     8. Connect both **Set Variable** nodes to the **Virtual Agent V2** node (`DebtCollectionAgent`).
 
+    9. To complete your test environment, make sure you update the **State Event** data in the **Virtual Agent V2** node to pass on the new *phone_number* variable. 
+
+        In the *State Event* section, change the json structure to the below one in the *Event Data* field:
+
+        ```json
+        {
+            "phoneNumber": '{{phone_number}}', 
+            "firstName":'{{firstName}}', 
+            "lastName":'{{lastName}}'
+        }
+        ``` 
+
         !!! note "Dynamic Customer Lookup for Inbound Calls"
             For this lab, hardcoding the customer name is sufficient for testing. In a production environment, you would add an **HTTP Request** node after this Set Variable node to dynamically fetch the customer name from Airtable using the `phone_number` variable. The configuration would be similar to the `Fetch Customer Info` HTTP Request node used in the `fetch_balance` Webex Connect flow (Lab 2.3):
 
