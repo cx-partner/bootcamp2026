@@ -549,19 +549,20 @@ These are the required steps:
 
             |		Key		|	Value	|
             |		-----		|	-----	|
-            |	<copy>RecordID</copy>	|	$(n3.RecordID)	|
-            |	<copy>Email</copy>	|	$(n3.Email)	|
-            |	<copy>CustomerID</copy>	|	$(n3.CustomerID)	|
-            |	<copy>RewardsTier</copy>	|	$(n3.RewardsTier)	|
-            |	<copy>firstName</copy>	|	$(n3.FirstName)	|
-            |	<copy>MaturityDate</copy>	|	$(n3.MaturityDate)	|
-            |	<copy>CreditCard</copy>	|	$(n3.CreditCard)	|
-            |	<copy>CashbackBalance</copy>	|	$(n3.CashbackBalance)	|
-            |	<copy>PIN</copy>	|	$(n3.PIN)	|
-            |	<copy>DOB</copy>	|	$(n3.DOB)	|
-            |	<copy>lastName</copy>	|	$(n3.LastName)	|
-            |	<copy>balance</copy>	|	$(n3.Balance)	|
+            |	<copy>RecordID</copy>	|	$(n4.RecordID)	|
+            |	<copy>Email</copy>	|	$(n4.Email)	|
+            |	<copy>CustomerID</copy>	|	$(n4.CustomerID)	|
+            |	<copy>RewardsTier</copy>	|	$(n4.RewardsTier)	|
+            |	<copy>firstName</copy>	|	$(n4.FirstName)	|
+            |	<copy>MaturityDate</copy>	|	$(n4.MaturityDate)	|
+            |	<copy>CreditCard</copy>	|	$(n4.CreditCard)	|
+            |	<copy>CashbackBalance</copy>	|	$(n4.CashbackBalance)	|
+            |	<copy>PIN</copy>	|	$(n4.PIN)	|
+            |	<copy>DOB</copy>	|	$(n4.DOB)	|
+            |	<copy>lastName</copy>	|	$(n4.LastName)	|
+            |	<copy>balance</copy>	|	$(n4.Balance)	|
 
+        Note the numbering for your variables might be different. Make sure it corresponds to the output variables of your **HTTRequest** node. 
 
         - Click on **[Save]**
         - Save the flow!!
@@ -752,7 +753,7 @@ We will proceed as in the previous action:
         - **Action name**: <copy>*authenticate_user*</copy>
         - **Action description**: copy and paste the following description.
        
-            <copy>This action returns two random postions ((1st, 2nd, 3rd, or 4th) and the corresponding digits in the 4-digit PIN. To ensure security, the AI Agent must never ask for the full PIN. </copy>
+            <copy>This action returns two random positions ((1st, 2nd, 3rd, or 4th) and the corresponding digits in the 4-digit PIN. To ensure security, the AI Agent must never ask for the full PIN. </copy>
         
     5. Under **Slot filling** click on **[New input entity]**
     6. In the **Add a new input entity** dialogue window, populate: 
