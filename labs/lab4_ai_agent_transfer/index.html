@@ -1786,7 +1786,7 @@
 <p>In the <strong>Tools</strong> tab:</p>
 <ul>
 <li>
-<p>You should see the four tools exposed by the MCP Server:</p>
+<p>You should see the five tools exposed by the MCP Server:</p>
 <table>
 <thead>
 <tr>
@@ -1853,7 +1853,7 @@
 </details>
 </li>
 <li>
-<p>You should see the four available tools. Select <strong>get_stock_price</strong> and click <strong>Add</strong>.</p>
+<p>You should see the five available tools. Select <strong>get_stock_price</strong> and click <strong>Add</strong>.</p>
 </li>
 <li>Review the action configuration:<ul>
 <li><strong>Action name</strong>: <code>get_stock_price</code></li>
@@ -1870,7 +1870,7 @@
 </ul>
 </li>
 <li>
-<p>You should now see all four MCP actions in the <strong>Actions</strong> panel of your AI Agent.</p>
+<p>You should now see all five MCP actions in the <strong>Actions</strong> panel of your AI Agent.</p>
 </li>
 </ol>
 <details class="warning" open="open">
@@ -2033,7 +2033,7 @@
 <p>Before testing, ensure the following:</p>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> <strong>Alex</strong> has been published with the <code>investment_transfer</code> action (Lab 4.1).</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>Investment Advisor</strong> has been published with the four MCP actions (Lab 4.2 &amp; 4.5).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>Investment Advisor</strong> has been published with the five MCP actions (Lab 4.2 &amp; 4.5).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>Agentic App</strong> is registered and provisioned with all tools enabled (Lab 4.3 &amp; 4.4).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> The <strong>flow</strong> has been published with the investment transfer path (Lab 4.6).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Your <strong>Airtable</strong> has the Investment and Positions tables populated with test data.</li>
@@ -2132,7 +2132,7 @@
 <summary>Troubleshooting</summary>
 <ul>
 <li><strong>Transfer not triggering</strong>: Verify that Alex's instructions include the <code>investment_transfer</code> logic and that the action is published. Check the AI Agent Sessions logs in the AI Agent Studio.</li>
-<li><strong>MCP tools not appearing</strong>: Ensure the Agentic App is set to <strong>Allowed</strong> in Control Hub and all four tools are <strong>Enabled</strong> in the Tools tab.</li>
+<li><strong>MCP tools not appearing</strong>: Ensure the Agentic App is set to <strong>Allowed</strong> in Control Hub and all five tools are <strong>Enabled</strong> in the Tools tab.</li>
 <li><strong>Airtable write fails</strong>: Verify your Airtable Base ID and API Key are correct in the AI Agent instructions. Also confirm that the Positions table has the expected field names: <code>Position_ID</code>, <code>Investment_Acct</code>, <code>Stock_Ticker</code>, <code>Quantity</code>, <code>Purchase_Price</code>, <code>Current_Price</code>.</li>
 <li><strong>Payment link not received</strong>: Check that the WEBHOOK_URL in the MCP Server <code>.env</code> file points to a valid Webex Connect webhook that sends emails. Also verify the NovaPay service is responsive.</li>
 <li><strong>Context variables empty after transfer</strong>: Verify the Parse node path expressions match the entity names in the <code>investment_transfer</code> action. Use the flow debugger in Webex Connect to inspect the raw MetaData JSON.</li>
@@ -2145,7 +2145,7 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configured a transfer action in Alex to hand off investment-related conversations.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Created a second AI Agent (Investment Advisor) with a specialized persona and instructions.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Registered and provisioned an external MCP Server as an Agentic App in the Webex ecosystem.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Connected four MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Connected five MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Updated the call flow to route investment transfers to the Investment Advisor AI Agent.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Tested the complete multi-agent scenario from debt collection to investment advisory with live MCP tool execution.</li>
 </ul>
