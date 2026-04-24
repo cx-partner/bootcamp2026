@@ -224,7 +224,7 @@ After registering the app in the Developer Portal, you need to provision it in *
             <copy>`wxai_mcp_4c8232360c9d9e159b9018d9140ebbace155afa746703b3bd66261216a73ddad`</copy>
 
     5. In the **Tools** tab:
-        - You should see the four tools exposed by the MCP Server:
+        - You should see the five tools exposed by the MCP Server:
 
             | Tool Name | Description |
             | :--- | :--- |
@@ -261,7 +261,7 @@ Now that the Agentic App is provisioned, you need to connect the MCP tools to yo
         ???+ info "MCP Action Type"
             Unlike Lab 2 where you selected **Fulfillment** (backed by Webex Connect flows), here you are going to select available tools. This tells the AI Agent that the action is fulfilled by an external MCP Server rather than a Webex Connect flow.
 
-    5. You should see the four available tools. Select **get_stock_price** and click **Add**.
+    5. You should see the five available tools. Select **get_stock_price** and click **Add**.
     6. Review the action configuration:
         - **Action name**: `get_stock_price`
         - The input schema (the `ticker` parameter) is automatically populated from the MCP Server's tool definition.
@@ -271,7 +271,7 @@ Now that the Agentic App is provisioned, you need to connect the MCP tools to yo
         - Select **confirm_order** and click **Add**.
         - Select **get_investment_account** and click **Add**.
 
-    8. You should now see all four MCP actions in the **Actions** panel of your AI Agent.
+    8. You should now see all five MCP actions in the **Actions** panel of your AI Agent.
 
     ???+ warning "Airtable Credentials"
         The `get_portfolio`, `initiate_order`, and `confirm_order` tools require your Airtable Base ID and API Key as input parameters. You need to instruct the AI Agent to use these values when calling these tools. Go back to the **Profile** tab and add the following to the **Instructions**:
@@ -377,7 +377,7 @@ You can now test the full multi-agent flow from debt collection through investme
     Before testing, ensure the following:
 
     * [x] **Alex** has been published with the `investment_transfer` action (Lab 4.1).
-    * [x] The **Investment Advisor** has been published with the four MCP actions (Lab 4.2 & 4.5).
+    * [x] The **Investment Advisor** has been published with the five MCP actions (Lab 4.2 & 4.5).
     * [x] The **Agentic App** is registered and provisioned with all tools enabled (Lab 4.3 & 4.4).
     * [x] The **flow** has been published with the investment transfer path (Lab 4.6).
     * [x] Your **Airtable** has the Investment and Positions tables populated with test data.
@@ -441,7 +441,7 @@ You can now test the full multi-agent flow from debt collection through investme
 ???+ bug "Troubleshooting"
 
     - **Transfer not triggering**: Verify that Alex's instructions include the `investment_transfer` logic and that the action is published. Check the AI Agent Sessions logs in the AI Agent Studio.
-    - **MCP tools not appearing**: Ensure the Agentic App is set to **Allowed** in Control Hub and all four tools are **Enabled** in the Tools tab.
+    - **MCP tools not appearing**: Ensure the Agentic App is set to **Allowed** in Control Hub and all five tools are **Enabled** in the Tools tab.
     - **Airtable write fails**: Verify your Airtable Base ID and API Key are correct in the AI Agent instructions. Also confirm that the Positions table has the expected field names: `Position_ID`, `Investment_Acct`, `Stock_Ticker`, `Quantity`, `Purchase_Price`, `Current_Price`.
     - **Payment link not received**: Check that the WEBHOOK_URL in the MCP Server `.env` file points to a valid Webex Connect webhook that sends emails. Also verify the NovaPay service is responsive.
     - **Context variables empty after transfer**: Verify the Parse node path expressions match the entity names in the `investment_transfer` action. Use the flow debugger in Webex Connect to inspect the raw MetaData JSON.
@@ -455,7 +455,7 @@ At this point, you have successfully:
 - [x] Configured a transfer action in Alex to hand off investment-related conversations.
 - [x] Created a second AI Agent (Investment Advisor) with a specialized persona and instructions.
 - [x] Registered and provisioned an external MCP Server as an Agentic App in the Webex ecosystem.
-- [x] Connected four MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.
+- [x] Connected five MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.
 - [x] Updated the call flow to route investment transfers to the Investment Advisor AI Agent.
 - [x] Tested the complete multi-agent scenario from debt collection to investment advisory with live MCP tool execution.
 
