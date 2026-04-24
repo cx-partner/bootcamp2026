@@ -902,7 +902,7 @@ The script has two modes:
 
 ### Understanding the Output
 
-The output from the check script will look like: 
+For clean tables, the output from the check script will look like: 
 
 ```
 ==============================================================
@@ -990,51 +990,129 @@ SUMMARY
 ✔  All field names are clean. Safe to start lab exercises.
 ```
 
+In case of dirty fields are present in any of the tables, the output of the script will look like: 
+
+``` 
+==============================================================
+  Airtable field-name checker  |  base: appcyTYF3nQqgReHR
+  Mode: CHECK only (read-only)
+==============================================================
+
+Found 5 table(s).
+
+  Table: 'Customers'  (17 fields)
+  -------------------------------
+    ✓  'CustomerID'
+    ✓  'FirstName'
+    ✓  'LastName'
+    ✓  'PIN'
+    ✓  'DOB'
+    ✓  'SocialSecurity'
+    ✓  'PhoneNumber'
+    ✓  'Balance'
+    ✓  'MaturityDate'
+    ✓  'CashbackBalance'
+    ✓  'Email'
+    ✓  'Address'
+    ✓  'RewardsTier'
+    ✗  '\ufeffCreditCard'
+       ↳ U+FEFF (ZERO WIDTH NO-BREAK SPACE)
+       → suggested clean name: 'CreditCard'
+    ✓  'Transactions'
+    ✓  'InvestmentAccount'
+    ✓  'FraudCases'
+
+  Table: 'Transactions'  (9 fields)
+  ---------------------------------
+    ✓  'TransactionID'
+    ✓  'CustomerID'
+    ✓  'Amount'
+    ✓  'Vendor'
+    ✓  'City'
+    ✓  'FirstName (from FirstName)'
+    ✓  'LastName'
+    ✓  'Date'
+    ✓  'FraudCases'
+    All fields look clean.
+
+  Table: 'Investment'  (8 fields)
+  -------------------------------
+    ✓  'Investment_Acct'
+    ✓  'CustomerID'
+    ✓  'FirstName (from CustomerID)'
+    ✓  'LastName (from CustomerID)'
+    ✓  'Total_Investment_Balance'
+    ✓  'Risk_Tolerance'
+    ✓  'Preferred_Sector'
+    ✓  'Positions'
+    All fields look clean.
+
+  Table: 'Positions'  (7 fields)
+  ------------------------------
+    ✓  'Position_ID'
+    ✓  'Investment_Acct'
+    ✓  'Stock_Ticker'
+    ✓  'Quantity'
+    ✓  'Purchase_Price'
+    ✓  'Current_Price'
+    ✓  'Position_Value'
+    All fields look clean.
+
+  Table: 'FraudCases'  (7 fields)
+  -------------------------------
+    ✓  'CaseID'
+    ✓  'CustomerID'
+    ✓  'TransactionID'
+    ✓  'Amount (from Assignee)'
+    ✓  'Vendor (from Assignee)'
+    ✓  'City (from Assignee)'
+    ✓  'Status'
+    All fields look clean.
+
+==============================================================
+SUMMARY
+==============================================================
+  Tables checked  : 5
+  Fields checked  : 48
+  Dirty fields    : 1
+
+⚠  1 dirty field(s) found. Re-run with --fix to rename them automatically.
+
+  Detailed report written to: field_issues_report.txt
+``` 
 
 
 #### Clean field
 
-```
-Table: 'Experiments'  (4 fields)
-  ✓  'Sample ID'
-  ✓  'Result'
-```
+<figure markdown>
+![Clean Field](./assets/Airtable_clean_field.png)
+</figure> 
 
 A green tick means the field name contains no hidden characters and is safe to use.
 
 #### Dirty field
 
-```
-  ✗  '\ufeffTemperature'
-     ↳ U+FEFF (ZERO WIDTH NO-BREAK SPACE / BOM)
-     → suggested clean name: 'Temperature'
 
-  ✗  'Notes '
-     ↳ leading/trailing whitespace
-     → suggested clean name: 'Notes'
-```
+<figure markdown>
+![Dirty Field](./assets/Airtable_dirty_field.png)
+</figure> 
 
 A red cross means the field name contains one or more hidden characters. The script shows the exact character(s) found and the suggested clean name.
 
 #### Summary block
 
-```
-══════════════════════════════════════════════════════════════
-SUMMARY
-══════════════════════════════════════════════════════════════
-  Tables checked  : 3
-  Fields checked  : 24
-  Dirty fields    : 2
+<figure markdown>
+![Summary dirty](./assets/Airtable_summary_dirty.png)
+</figure>
 
-⚠  2 dirty field(s) found. Re-run with --fix to rename them.
-```
 If you get dirty fields reported, either re-run the script with the --fix option or manually remove and re-edit the field name in your Airtable. 
 
 If all fields are clean, you will see:
 
-```
-✔  All field names are clean. Safe to start lab exercises.
-```
+<figure markdown>
+![Summary clean](./assets/Airtable_summary_clean.png)
+</figure>
+
 In this case, you are good to go with the Bootcamp labs!!!!
 
 #### Report file
