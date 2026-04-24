@@ -829,6 +829,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#pre-lab-check-verifying-airtable-field-name-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Lab Check: Verifying Airtable Field Name Integrity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-Lab Check: Verifying Airtable Field Name Integrity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-hidden-characters-in-csv-imported-field-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Hidden Characters in CSV-Imported Field Names
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution-a-pre-flight-checker-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution: A Pre-Flight Checker Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding the Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-reference-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick-Reference Cheat Sheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1940,6 +2012,441 @@ on "Create token".</li>
 <summary>Test your Airtable API with Postman</summary>
 <p>While you can manage records and visualize data directly through the Airtable Web Interface (GUI), defining an Airtable API collection in Postman is a valuable step for this Bootcamp. Although not strictly required for basic data entry, a Postman collection allows you to verify your API configuration and ensure your endpoints are responsive. Since our automated flows will rely on this API to read and write data, setting up your collection now will guarantee your base is fully optimized and "integration-ready."</p>
 </details>
+<h2 id="pre-lab-check-verifying-airtable-field-name-integrity">Pre-Lab Check: Verifying Airtable Field Name Integrity<a class="headerlink" href="#pre-lab-check-verifying-airtable-field-name-integrity" title="Permanent link">¶</a></h2>
+<p>Before starting any lab exercise that interacts with Airtable tables via the API, it is essential to verify that all field names in your base are free of <strong>hidden special characters</strong>. These characters are silently introduced when tables are created by importing CSV files, and while they are invisible in the Airtable UI, they cause hard-to-diagnose errors when accessing or modifying data through the API. Although the .csv files have been cleaned up, the problem may exist in your Airtable base if you created it before the clean up. </p>
+<p>This guide explains the problem, how to detect it, and how to fix it automatically — with a step-by-step setup guide for both macOS and Windows.</p>
+<hr>
+<h3 id="the-problem-hidden-characters-in-csv-imported-field-names">The Problem: Hidden Characters in CSV-Imported Field Names<a class="headerlink" href="#the-problem-hidden-characters-in-csv-imported-field-names" title="Permanent link">¶</a></h3>
+<p>When Airtable tables are created by importing CSV files, column headers are used as field names. CSV files — especially those exported from Excel, Google Sheets, or other tools — frequently embed invisible characters in those headers without any visible indication. The most common offenders are:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Unicode</th>
+<th>Typical origin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Byte Order Mark (BOM)</td>
+<td><code>U+FEFF</code></td>
+<td>Excel / CSV exports</td>
+</tr>
+<tr>
+<td>Non-breaking space</td>
+<td><code>U+00A0</code></td>
+<td>Copy-paste from web or Word</td>
+</tr>
+<tr>
+<td>Zero-width space</td>
+<td><code>U+200B</code></td>
+<td>Web copy-paste</td>
+</tr>
+<tr>
+<td>Zero-width non-joiner</td>
+<td><code>U+200C</code></td>
+<td>Word processors</td>
+</tr>
+<tr>
+<td>Zero-width joiner</td>
+<td><code>U+200D</code></td>
+<td>Word processors</td>
+</tr>
+<tr>
+<td>Soft hyphen</td>
+<td><code>U+00AD</code></td>
+<td>Word processors</td>
+</tr>
+<tr>
+<td>Left-to-right mark</td>
+<td><code>U+200E</code></td>
+<td>RTL/LTR mixed text</td>
+</tr>
+<tr>
+<td>Right-to-left mark</td>
+<td><code>U+200F</code></td>
+<td>RTL/LTR mixed text</td>
+</tr>
+<tr>
+<td>ASCII control characters</td>
+<td><code>U+0000</code>–<code>U+001F</code></td>
+<td>Corrupt or malformed CSV</td>
+</tr>
+<tr>
+<td>Leading / trailing whitespace</td>
+<td>space, tab, newline</td>
+<td>CSV column header formatting</td>
+</tr>
+</tbody>
+</table>
+<p>These characters are <strong>completely invisible</strong> in the Airtable interface. A field named <code>Temperature</code> and a field named <code>​Temperature</code> (with a hidden BOM at the start) look identical on screen. However, when your code references the field by name — for example, when filtering records, updating values, or building formulas — Airtable treats them as different names and the API call fails or returns unexpected results.</p>
+<hr>
+<h3 id="the-solution-a-pre-flight-checker-script">The Solution: A Pre-Flight Checker Script<a class="headerlink" href="#the-solution-a-pre-flight-checker-script" title="Permanent link">¶</a></h3>
+<p>A Python script is provided that connects to the Airtable <strong>Metadata API</strong>, inspects every field name in every table of your base, detects any hidden or non-printable characters, and optionally renames the offending fields automatically.</p>
+<p>The script has two modes:</p>
+<ul>
+<li><strong>Check mode</strong> (read-only, safe): scans all field names and reports any issues without making changes.</li>
+<li><strong>Fix mode</strong>: automatically renames all dirty fields to their clean equivalents.</li>
+</ul>
+<details class="recommendation" open="open">
+<summary>Recommendation</summary>
+<p>Run the script in <strong>Check mode</strong> at the start of the Bootcamp. Only use <strong>Fix mode</strong> if issues are found.</p>
+</details>
+<hr>
+<details class="webex" open="open">
+<summary>Prerequisites</summary>
+<ol>
+<li>
+<p>Python 3.10 or higher</p>
+<p><strong>macOS</strong> — open Terminal and run:
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python3<span class="w"> </span>--version
+</span></code></pre></div><p></p>
+<p><strong>Windows</strong> — open Command Prompt or PowerShell and run:
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python --version
+</span></code></pre></div><p></p>
+<p>If no version is shown, download and install Python from <a href="https://python.org/downloads">python.org/downloads</a>.  </p>
+<blockquote>
+<p><br> ⚠️ <strong>Windows users:</strong> during installation, make sure to tick <strong>"Add Python to PATH"</strong>.
+<br>
+<br></p>
+</blockquote>
+</li>
+<li>
+<p>The <code>requests</code> library</p>
+<p><strong>macOS:</strong>
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip3<span class="w"> </span>install<span class="w"> </span>requests
+</span></code></pre></div><p></p>
+<p><strong>Windows:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip install requests
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>The checker script</p>
+<div class="admonition download check script">
+<p class="admonition-title">Download</p>
+<p>Download the <a download="check_airtable_fields.py" href="../bcamp_files/check_airtable_fields.py">Check Airtable Fields</a> file and save it into a folder you can easily navigate to, for example:</p>
+<ul>
+<li>macOS: <code>~/Documents/lab-tools/</code></li>
+<li>Windows: <code>C:\Users\YourName\Documents\lab-tools\</code></li>
+</ul>
+</div>
+</li>
+<li>
+<p>Setting Up Airtable Credentials</p>
+<p>The script requires two credentials: the <strong>Personal Access Token</strong> (PAT) and your <strong>Base ID</strong>.</p>
+<p>Remember the Base ID is visible in the URL:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>https://airtable.com/appXXXXXXXXXXXXXX/tblYYYYYYYYYYYYYY/...
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>                     ^^^^^^^^^^^^^^^^^
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                     This is your Base ID (starts with "app")
+</span></code></pre></div>
+<details class="info inline end" open="open">
+<summary>Update Token scope</summary>
+<p></p><figure markdown="">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/Airtable%20Token%20scope.png" data-title="Update token" data-desc-position="top"><img alt="Update token" src="../assets/Airtable%20Token%20scope.png"></a>
+</figure> <p></p>
+</details>
+<p>At this stage you have already created your PAT and saved it. In order to make sure we can access the metadata API, you need to add a new scope to your token: </p>
+<ol>
+<li>Go to <a href="https://airtable.com/create/tokens">airtable.com/create/tokens</a></li>
+<li>Click on your token</li>
+<li>Click on <strong>+ Add a scope</strong> and add:<ul>
+<li><code>schema:bases:read</code> — required to inspect field names</li>
+<li><code>schema:bases:write</code> — required only if you want to auto-fix field names</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>[Save changes]</strong></p>
+<blockquote>
+<p>⚠️ <strong>Important:</strong> Both scopes and base access must be configured. A token that is missing either will be rejected with a <code>403</code> error, even if the token itself is valid. See the <a href="#troubleshooting">Troubleshooting</a> section for details.</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<p>Now you have everything you need for your verification script. </p>
+</details>
+<details class="webex" open="open">
+<summary>Configuring the Script</summary>
+<p>The script reads your credentials from <strong>environment variables</strong>. Set them as follows before running the script. Use your Airtable Base ID and PAT. </p>
+<p><strong>macOS (Terminal)</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AIRTABLE_TOKEN</span><span class="o">=</span><span class="s2">"patXXXXXXXXXXXXXX"</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AIRTABLE_BASE_ID</span><span class="o">=</span><span class="s2">"appXXXXXXXXXXXXXX"</span>
+</span></code></pre></div>
+<blockquote>
+<p>These variables last only for the current Terminal session. </p>
+</blockquote>
+<p><strong>Windows — Command Prompt</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>set AIRTABLE_TOKEN=patXXXXXXXXXXXXXX
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>set AIRTABLE_BASE_ID=appXXXXXXXXXXXXXX
+</span></code></pre></div>
+<p><strong>Windows — PowerShell</strong></p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">$env:AIRTABLE_TOKEN</span><span class="p">=</span><span class="s2">"patXXXXXXXXXXXXXX"</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">$env:AIRTABLE_BASE_ID</span><span class="p">=</span><span class="s2">"appXXXXXXXXXXXXXX"</span>
+</span></code></pre></div>
+</details>
+<hr>
+<details class="webex" open="open">
+<summary>Running the Script</summary>
+<p>Open a terminal, navigate to the folder where <code>check_airtable_fields.py</code> is saved, and run the appropriate command.</p>
+<ol>
+<li>
+<p>Navigate to the script folder</p>
+<p><strong>macOS:</strong>
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>~/Documents/lab-tools
+</span></code></pre></div><p></p>
+<p><strong>Windows:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>cd C:\Users\YourName\Documents\lab-tools
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>Check mode (always run this first)</p>
+<p><strong>macOS:</strong>
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python3<span class="w"> </span>check_airtable_fields.py
+</span></code></pre></div><p></p>
+<p><strong>Windows:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>python check_airtable_fields.py
+</span></code></pre></div><p></p>
+</li>
+<li>
+<p>Fix mode (only if issues are found)</p>
+<p><strong>macOS:</strong>
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>python3<span class="w"> </span>check_airtable_fields.py<span class="w"> </span>--fix
+</span></code></pre></div><p></p>
+<p><strong>Windows:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>python check_airtable_fields.py --fix
+</span></code></pre></div><p></p>
+</li>
+</ol>
+</details>
+<hr>
+<h3 id="understanding-the-output">Understanding the Output<a class="headerlink" href="#understanding-the-output" title="Permanent link">¶</a></h3>
+<p>The output from the check script will look like: </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>==============================================================
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  Airtable field-name checker  |  base: appcyTYF3nQqgReHR
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>  Mode: CHECK only (read-only)
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>==============================================================
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>Found 5 table(s).
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>  Table: 'Customers'  (17 fields)
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>  -------------------------------
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    ✓  'CustomerID'
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    ✓  'FirstName'
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>    ✓  'LastName'
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>    ✓  'PIN'
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    ✓  'DOB'
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>    ✓  'SocialSecurity'
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>    ✓  'PhoneNumber'
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>    ✓  'Balance'
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>    ✓  'MaturityDate'
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>    ✓  'CashbackBalance'
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>    ✓  'Email'
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>    ✓  'Address'
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>    ✓  'RewardsTier'
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>    ✓  'CreditCard'
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>    ✓  'Transactions'
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>    ✓  'InvestmentAccount'
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>    ✓  'FraudCases'
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>    All fields look clean.
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>  Table: 'Transactions'  (9 fields)
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>  ---------------------------------
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>    ✓  'TransactionID'
+</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a>    ✓  'CustomerID'
+</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>    ✓  'Amount'
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>    ✓  'Vendor'
+</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a>    ✓  'City'
+</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>    ✓  'FirstName (from FirstName)'
+</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a>    ✓  'LastName'
+</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a>    ✓  'Date'
+</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a>    ✓  'FraudCases'
+</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a>    All fields look clean.
+</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a>
+</span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a>  Table: 'Investment'  (8 fields)
+</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a>  -------------------------------
+</span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a>    ✓  'Investment_Acct'
+</span><span id="__span-16-45"><a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a>    ✓  'CustomerID'
+</span><span id="__span-16-46"><a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a>    ✓  'FirstName (from CustomerID)'
+</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a>    ✓  'LastName (from CustomerID)'
+</span><span id="__span-16-48"><a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>    ✓  'Total_Investment_Balance'
+</span><span id="__span-16-49"><a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a>    ✓  'Risk_Tolerance'
+</span><span id="__span-16-50"><a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a>    ✓  'Preferred_Sector'
+</span><span id="__span-16-51"><a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a>    ✓  'Positions'
+</span><span id="__span-16-52"><a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a>    All fields look clean.
+</span><span id="__span-16-53"><a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a>
+</span><span id="__span-16-54"><a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a>  Table: 'Positions'  (7 fields)
+</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a>  ------------------------------
+</span><span id="__span-16-56"><a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a>    ✓  'Position_ID'
+</span><span id="__span-16-57"><a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a>    ✓  'Investment_Acct'
+</span><span id="__span-16-58"><a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a>    ✓  'Stock_Ticker'
+</span><span id="__span-16-59"><a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a>    ✓  'Quantity'
+</span><span id="__span-16-60"><a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a>    ✓  'Purchase_Price'
+</span><span id="__span-16-61"><a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a>    ✓  'Current_Price'
+</span><span id="__span-16-62"><a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a>    ✓  'Position_Value'
+</span><span id="__span-16-63"><a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a>    All fields look clean.
+</span><span id="__span-16-64"><a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a>
+</span><span id="__span-16-65"><a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a>  Table: 'FraudCases'  (7 fields)
+</span><span id="__span-16-66"><a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a>  -------------------------------
+</span><span id="__span-16-67"><a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a>    ✓  'CaseID'
+</span><span id="__span-16-68"><a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a>    ✓  'CustomerID'
+</span><span id="__span-16-69"><a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a>    ✓  'TransactionID'
+</span><span id="__span-16-70"><a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a>    ✓  'Amount (from Assignee)'
+</span><span id="__span-16-71"><a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a>    ✓  'Vendor (from Assignee)'
+</span><span id="__span-16-72"><a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a>    ✓  'City (from Assignee)'
+</span><span id="__span-16-73"><a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a>    ✓  'Status'
+</span><span id="__span-16-74"><a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a>    All fields look clean.
+</span><span id="__span-16-75"><a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a>
+</span><span id="__span-16-76"><a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a>==============================================================
+</span><span id="__span-16-77"><a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a>SUMMARY
+</span><span id="__span-16-78"><a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a>==============================================================
+</span><span id="__span-16-79"><a id="__codelineno-16-79" name="__codelineno-16-79" href="#__codelineno-16-79"></a>  Tables checked  : 5
+</span><span id="__span-16-80"><a id="__codelineno-16-80" name="__codelineno-16-80" href="#__codelineno-16-80"></a>  Fields checked  : 48
+</span><span id="__span-16-81"><a id="__codelineno-16-81" name="__codelineno-16-81" href="#__codelineno-16-81"></a>  Dirty fields    : 0
+</span><span id="__span-16-82"><a id="__codelineno-16-82" name="__codelineno-16-82" href="#__codelineno-16-82"></a>
+</span><span id="__span-16-83"><a id="__codelineno-16-83" name="__codelineno-16-83" href="#__codelineno-16-83"></a>✔  All field names are clean. Safe to start lab exercises.
+</span></code></pre></div>
+<h4 id="clean-field">Clean field<a class="headerlink" href="#clean-field" title="Permanent link">¶</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Table: 'Experiments'  (4 fields)
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  ✓  'Sample ID'
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>  ✓  'Result'
+</span></code></pre></div>
+<p>A green tick means the field name contains no hidden characters and is safe to use.</p>
+<h4 id="dirty-field">Dirty field<a class="headerlink" href="#dirty-field" title="Permanent link">¶</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>  ✗  '\ufeffTemperature'
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>     ↳ U+FEFF (ZERO WIDTH NO-BREAK SPACE / BOM)
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>     → suggested clean name: 'Temperature'
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  ✗  'Notes '
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>     ↳ leading/trailing whitespace
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>     → suggested clean name: 'Notes'
+</span></code></pre></div>
+<p>A red cross means the field name contains one or more hidden characters. The script shows the exact character(s) found and the suggested clean name.</p>
+<h4 id="summary-block">Summary block<a class="headerlink" href="#summary-block" title="Permanent link">¶</a></h4>
+<p></p><div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>══════════════════════════════════════════════════════════════
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>SUMMARY
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>══════════════════════════════════════════════════════════════
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>  Tables checked  : 3
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  Fields checked  : 24
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>  Dirty fields    : 2
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>⚠  2 dirty field(s) found. Re-run with --fix to rename them.
+</span></code></pre></div>
+If you get dirty fields reported, either re-run the script with the --fix option or manually remove and re-edit the field name in your Airtable. <p></p>
+<p>If all fields are clean, you will see:</p>
+<p></p><div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>✔  All field names are clean. Safe to start lab exercises.
+</span></code></pre></div>
+In this case, you are good to go with the Bootcamp labs!!!!<p></p>
+<h4 id="report-file">Report file<a class="headerlink" href="#report-file" title="Permanent link">¶</a></h4>
+<p>If any issues are found, the script also writes a plain-text file called <code>field_issues_report.txt</code> in the same folder, which lists every problem found — useful to keep as an audit record.</p>
+<hr>
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h3>
+<h4 id="403-invalid_permissions_or_model_not_found"><code>403 INVALID_PERMISSIONS_OR_MODEL_NOT_FOUND</code><a class="headerlink" href="#403-invalid_permissions_or_model_not_found" title="Permanent link">¶</a></h4>
+<p>This is the most common error. It means the token reached Airtable but was rejected. It does <strong>not</strong> mean the token is invalid. Check the following on your token settings page at <a href="https://airtable.com/create/tokens">airtable.com/create/tokens</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>What to look for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scopes</td>
+<td><code>schema:bases:read</code> must be listed</td>
+</tr>
+<tr>
+<td>Access</td>
+<td>Your base ID must be explicitly added</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> The Metadata API (<code>/v0/meta/bases/...</code>) requires <code>schema:bases:read</code> specifically. A token that works on the regular data API (<code>/v0/{baseId}/{tableName}</code>) — for example one tested in Postman — will still fail on the Metadata API if this scope is missing.</p>
+</blockquote>
+<hr>
+<h4 id="environment-variable-not-set">Environment variable not set<a class="headerlink" href="#environment-variable-not-set" title="Permanent link">¶</a></h4>
+<p>If the script exits with <code>ERROR: Set AIRTABLE_TOKEN</code>, the variable was not found in the environment. This commonly happens after opening a new Terminal window.</p>
+<p>Verify the variable is set:
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># macOS / Linux</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$AIRTABLE_TOKEN</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Windows Command Prompt</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nb">echo</span><span class="w"> </span>%AIRTABLE_TOKEN%
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Windows PowerShell</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$env</span>:AIRTABLE_TOKEN
+</span></code></pre></div><p></p>
+<p>If nothing is printed, re-run the <code>export</code> / <code>set</code> command from the <strong>Configuring the Script</strong> section.</p>
+<hr>
+<h4 id="token-contains-hidden-characters">Token contains hidden characters<a class="headerlink" href="#token-contains-hidden-characters" title="Permanent link">¶</a></h4>
+<p>If the token was copy-pasted with surrounding spaces or invisible characters, the script will be sending a malformed <code>Authorization</code> header. Run the debug snippet below to inspect it:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"AIRTABLE_TOKEN"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Length : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">TOKEN</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Repr   : </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">TOKEN</span><span class="p">[:</span><span class="mi">15</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>A valid token should look like:
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Length : 82
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Repr   : 'patHV74kWm....'
+</span></code></pre></div><p></p>
+<p>If <code>repr()</code> shows any <code>\n</code>, <code>\r</code>, <code>\ufeff</code>, or unexpected spaces around the value, unset the variable and re-set it carefully.</p>
+<hr>
+<h4 id="modulenotfounderror-no-module-named-requests"><code>ModuleNotFoundError: No module named 'requests'</code><a class="headerlink" href="#modulenotfounderror-no-module-named-requests" title="Permanent link">¶</a></h4>
+<p>The <code>requests</code> library is not installed. Run:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># macOS</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>pip3<span class="w"> </span>install<span class="w"> </span>requests
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Windows</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>pip<span class="w"> </span>install<span class="w"> </span>requests
+</span></code></pre></div>
+<hr>
+<h3 id="quick-reference-cheat-sheet">Quick-Reference Cheat Sheet<a class="headerlink" href="#quick-reference-cheat-sheet" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>macOS</th>
+<th>Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Check Python</td>
+<td><code>python3 --version</code></td>
+<td><code>python --version</code></td>
+</tr>
+<tr>
+<td>Install library</td>
+<td><code>pip3 install requests</code></td>
+<td><code>pip install requests</code></td>
+</tr>
+<tr>
+<td>Set token</td>
+<td><code>export AIRTABLE_TOKEN="..."</code></td>
+<td><code>set AIRTABLE_TOKEN=...</code></td>
+</tr>
+<tr>
+<td>Set base ID</td>
+<td><code>export AIRTABLE_BASE_ID="..."</code></td>
+<td><code>set AIRTABLE_BASE_ID=...</code></td>
+</tr>
+<tr>
+<td>Run check</td>
+<td><code>python3 check_airtable_fields.py</code></td>
+<td><code>python check_airtable_fields.py</code></td>
+</tr>
+<tr>
+<td>Run fix</td>
+<td><code>python3 check_airtable_fields.py --fix</code></td>
+<td><code>python check_airtable_fields.py --fix</code></td>
+</tr>
+<tr>
+<td>Verify env var</td>
+<td><code>echo $AIRTABLE_TOKEN</code></td>
+<td><code>echo %AIRTABLE_TOKEN%</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
