@@ -712,3 +712,415 @@ Tokens](https://airtable.com/developers/web/guides/personal-access-tokens)
 ???+ Challenge "Test your Airtable API with Postman"
 
     While you can manage records and visualize data directly through the Airtable Web Interface (GUI), defining an Airtable API collection in Postman is a valuable step for this Bootcamp. Although not strictly required for basic data entry, a Postman collection allows you to verify your API configuration and ensure your endpoints are responsive. Since our automated flows will rely on this API to read and write data, setting up your collection now will guarantee your base is fully optimized and "integration-ready."
+
+## Pre-Lab Check: Verifying Airtable Field Name Integrity
+
+Before starting any lab exercise that interacts with Airtable tables via the API, it is essential to verify that all field names in your base are free of **hidden special characters**. These characters are silently introduced when tables are created by importing CSV files, and while they are invisible in the Airtable UI, they cause hard-to-diagnose errors when accessing or modifying data through the API. Although the .csv files have been cleaned up, the problem may exist in your Airtable base if you created it before the clean up. 
+
+This guide explains the problem, how to detect it, and how to fix it automatically — with a step-by-step setup guide for both macOS and Windows.
+
+---
+
+### The Problem: Hidden Characters in CSV-Imported Field Names
+
+When Airtable tables are created by importing CSV files, column headers are used as field names. CSV files — especially those exported from Excel, Google Sheets, or other tools — frequently embed invisible characters in those headers without any visible indication. The most common offenders are:
+
+| Character | Unicode | Typical origin |
+|---|---|---|
+| Byte Order Mark (BOM) | `U+FEFF` | Excel / CSV exports |
+| Non-breaking space | `U+00A0` | Copy-paste from web or Word |
+| Zero-width space | `U+200B` | Web copy-paste |
+| Zero-width non-joiner | `U+200C` | Word processors |
+| Zero-width joiner | `U+200D` | Word processors |
+| Soft hyphen | `U+00AD` | Word processors |
+| Left-to-right mark | `U+200E` | RTL/LTR mixed text |
+| Right-to-left mark | `U+200F` | RTL/LTR mixed text |
+| ASCII control characters | `U+0000`–`U+001F` | Corrupt or malformed CSV |
+| Leading / trailing whitespace | space, tab, newline | CSV column header formatting |
+
+These characters are **completely invisible** in the Airtable interface. A field named `Temperature` and a field named `​Temperature` (with a hidden BOM at the start) look identical on screen. However, when your code references the field by name — for example, when filtering records, updating values, or building formulas — Airtable treats them as different names and the API call fails or returns unexpected results.
+
+---
+
+### The Solution: A Pre-Flight Checker Script
+
+A Python script is provided that connects to the Airtable **Metadata API**, inspects every field name in every table of your base, detects any hidden or non-printable characters, and optionally renames the offending fields automatically.
+
+The script has two modes:
+
+- **Check mode** (read-only, safe): scans all field names and reports any issues without making changes.
+- **Fix mode**: automatically renames all dirty fields to their clean equivalents.
+
+???+ Recommendation
+    Run the script in **Check mode** at the start of the Bootcamp. Only use **Fix mode** if issues are found.
+
+---
+
+???+ webex "Prerequisites"
+
+    1. Python 3.10 or higher
+
+        **macOS** — open Terminal and run:
+        ```bash
+        python3 --version
+        ```
+
+        **Windows** — open Command Prompt or PowerShell and run:
+        ```cmd
+        python --version
+        ```
+
+        If no version is shown, download and install Python from [python.org/downloads](https://python.org/downloads).  
+        > <br> ⚠️ **Windows users:** during installation, make sure to tick **"Add Python to PATH"**.
+        <br>
+        <br>
+
+
+
+    2. The `requests` library
+
+        **macOS:**
+        ```bash
+        pip3 install requests
+        ```
+
+        **Windows:**
+        ```cmd
+        pip install requests
+        ```
+
+
+    3. The checker script
+
+        !!! download Check Script
+            Download the [Check Airtable Fields](./bcamp_files/check_airtable_fields.py){:download="check_airtable_fields.py"} file and save it into a folder you can easily navigate to, for example:
+
+            - macOS: `~/Documents/lab-tools/`
+            - Windows: `C:\Users\YourName\Documents\lab-tools\`
+
+    4. Setting Up Airtable Credentials
+
+        The script requires two credentials: the **Personal Access Token** (PAT) and your **Base ID**.
+
+        Remember the Base ID is visible in the URL:
+
+        ```
+        https://airtable.com/appXXXXXXXXXXXXXX/tblYYYYYYYYYYYYYY/...
+                             ^^^^^^^^^^^^^^^^^
+                             This is your Base ID (starts with "app")
+        ```
+
+        ???+ info inline end "Update Token scope"
+            <figure markdown>
+            ![Update token](./assets/Airtable%20Token%20scope.png)
+            </figure> 
+
+
+        At this stage you have already created your PAT and saved it. In order to make sure we can access the metadata API, you need to add a new scope to your token: 
+
+        1. Go to [airtable.com/create/tokens](https://airtable.com/create/tokens)
+        2. Click on your token
+        4. Click on **+ Add a scope** and add:
+            - `schema:bases:read` — required to inspect field names
+            - `schema:bases:write` — required only if you want to auto-fix field names
+        5. Click **[Save changes]**
+
+            > ⚠️ **Important:** Both scopes and base access must be configured. A token that is missing either will be rejected with a `403` error, even if the token itself is valid. See the [Troubleshooting](#troubleshooting) section for details.
+
+    Now you have everything you need for your verification script. 
+
+???+ Webex "Configuring the Script"
+
+    The script reads your credentials from **environment variables**. Set them as follows before running the script. Use your Airtable Base ID and PAT. 
+
+    **macOS (Terminal)**
+
+    ```bash
+    export AIRTABLE_TOKEN="patXXXXXXXXXXXXXX"
+    export AIRTABLE_BASE_ID="appXXXXXXXXXXXXXX"
+    ```
+
+    > These variables last only for the current Terminal session. 
+
+    **Windows — Command Prompt**
+
+    ```cmd
+    set AIRTABLE_TOKEN=patXXXXXXXXXXXXXX
+    set AIRTABLE_BASE_ID=appXXXXXXXXXXXXXX
+    ```
+
+    **Windows — PowerShell**
+
+    ```powershell
+    $env:AIRTABLE_TOKEN="patXXXXXXXXXXXXXX"
+    $env:AIRTABLE_BASE_ID="appXXXXXXXXXXXXXX"
+    ```
+
+---
+
+???+ Webex "Running the Script"
+
+    Open a terminal, navigate to the folder where `check_airtable_fields.py` is saved, and run the appropriate command.
+
+    1. Navigate to the script folder
+
+        **macOS:**
+        ```bash
+        cd ~/Documents/lab-tools
+        ```
+
+        **Windows:**
+        ```cmd
+        cd C:\Users\YourName\Documents\lab-tools
+        ```
+
+    2. Check mode (always run this first)
+
+        **macOS:**
+        ```bash
+        python3 check_airtable_fields.py
+        ```
+
+        **Windows:**
+        ```cmd
+        python check_airtable_fields.py
+        ```
+
+    3. Fix mode (only if issues are found)
+
+        **macOS:**
+        ```bash
+        python3 check_airtable_fields.py --fix
+        ```
+
+        **Windows:**
+        ```cmd
+        python check_airtable_fields.py --fix
+        ```
+
+---
+
+### Understanding the Output
+
+The output from the check script will look like: 
+
+```
+==============================================================
+  Airtable field-name checker  |  base: appcyTYF3nQqgReHR
+  Mode: CHECK only (read-only)
+==============================================================
+
+Found 5 table(s).
+
+  Table: 'Customers'  (17 fields)
+  -------------------------------
+    ✓  'CustomerID'
+    ✓  'FirstName'
+    ✓  'LastName'
+    ✓  'PIN'
+    ✓  'DOB'
+    ✓  'SocialSecurity'
+    ✓  'PhoneNumber'
+    ✓  'Balance'
+    ✓  'MaturityDate'
+    ✓  'CashbackBalance'
+    ✓  'Email'
+    ✓  'Address'
+    ✓  'RewardsTier'
+    ✓  'CreditCard'
+    ✓  'Transactions'
+    ✓  'InvestmentAccount'
+    ✓  'FraudCases'
+    All fields look clean.
+
+  Table: 'Transactions'  (9 fields)
+  ---------------------------------
+    ✓  'TransactionID'
+    ✓  'CustomerID'
+    ✓  'Amount'
+    ✓  'Vendor'
+    ✓  'City'
+    ✓  'FirstName (from FirstName)'
+    ✓  'LastName'
+    ✓  'Date'
+    ✓  'FraudCases'
+    All fields look clean.
+
+  Table: 'Investment'  (8 fields)
+  -------------------------------
+    ✓  'Investment_Acct'
+    ✓  'CustomerID'
+    ✓  'FirstName (from CustomerID)'
+    ✓  'LastName (from CustomerID)'
+    ✓  'Total_Investment_Balance'
+    ✓  'Risk_Tolerance'
+    ✓  'Preferred_Sector'
+    ✓  'Positions'
+    All fields look clean.
+
+  Table: 'Positions'  (7 fields)
+  ------------------------------
+    ✓  'Position_ID'
+    ✓  'Investment_Acct'
+    ✓  'Stock_Ticker'
+    ✓  'Quantity'
+    ✓  'Purchase_Price'
+    ✓  'Current_Price'
+    ✓  'Position_Value'
+    All fields look clean.
+
+  Table: 'FraudCases'  (7 fields)
+  -------------------------------
+    ✓  'CaseID'
+    ✓  'CustomerID'
+    ✓  'TransactionID'
+    ✓  'Amount (from Assignee)'
+    ✓  'Vendor (from Assignee)'
+    ✓  'City (from Assignee)'
+    ✓  'Status'
+    All fields look clean.
+
+==============================================================
+SUMMARY
+==============================================================
+  Tables checked  : 5
+  Fields checked  : 48
+  Dirty fields    : 0
+
+✔  All field names are clean. Safe to start lab exercises.
+```
+
+
+
+#### Clean field
+
+```
+Table: 'Experiments'  (4 fields)
+  ✓  'Sample ID'
+  ✓  'Result'
+```
+
+A green tick means the field name contains no hidden characters and is safe to use.
+
+#### Dirty field
+
+```
+  ✗  '\ufeffTemperature'
+     ↳ U+FEFF (ZERO WIDTH NO-BREAK SPACE / BOM)
+     → suggested clean name: 'Temperature'
+
+  ✗  'Notes '
+     ↳ leading/trailing whitespace
+     → suggested clean name: 'Notes'
+```
+
+A red cross means the field name contains one or more hidden characters. The script shows the exact character(s) found and the suggested clean name.
+
+#### Summary block
+
+```
+══════════════════════════════════════════════════════════════
+SUMMARY
+══════════════════════════════════════════════════════════════
+  Tables checked  : 3
+  Fields checked  : 24
+  Dirty fields    : 2
+
+⚠  2 dirty field(s) found. Re-run with --fix to rename them.
+```
+If you get dirty fields reported, either re-run the script with the --fix option or manually remove and re-edit the field name in your Airtable. 
+
+If all fields are clean, you will see:
+
+```
+✔  All field names are clean. Safe to start lab exercises.
+```
+In this case, you are good to go with the Bootcamp labs!!!!
+
+#### Report file
+
+If any issues are found, the script also writes a plain-text file called `field_issues_report.txt` in the same folder, which lists every problem found — useful to keep as an audit record.
+
+---
+
+### Troubleshooting
+
+#### `403 INVALID_PERMISSIONS_OR_MODEL_NOT_FOUND`
+
+This is the most common error. It means the token reached Airtable but was rejected. It does **not** mean the token is invalid. Check the following on your token settings page at [airtable.com/create/tokens](https://airtable.com/create/tokens):
+
+| Check | What to look for |
+|---|---|
+| Scopes | `schema:bases:read` must be listed |
+| Access | Your base ID must be explicitly added |
+
+> **Note:** The Metadata API (`/v0/meta/bases/...`) requires `schema:bases:read` specifically. A token that works on the regular data API (`/v0/{baseId}/{tableName}`) — for example one tested in Postman — will still fail on the Metadata API if this scope is missing.
+
+---
+
+#### Environment variable not set
+
+If the script exits with `ERROR: Set AIRTABLE_TOKEN`, the variable was not found in the environment. This commonly happens after opening a new Terminal window.
+
+Verify the variable is set:
+```bash
+# macOS / Linux
+echo $AIRTABLE_TOKEN
+
+# Windows Command Prompt
+echo %AIRTABLE_TOKEN%
+
+# Windows PowerShell
+echo $env:AIRTABLE_TOKEN
+```
+
+If nothing is printed, re-run the `export` / `set` command from the **Configuring the Script** section.
+
+---
+
+#### Token contains hidden characters
+
+If the token was copy-pasted with surrounding spaces or invisible characters, the script will be sending a malformed `Authorization` header. Run the debug snippet below to inspect it:
+
+```python
+import os
+TOKEN = os.getenv("AIRTABLE_TOKEN", "")
+print(f"Length : {len(TOKEN)}")
+print(f"Repr   : {repr(TOKEN[:15])}")
+```
+
+A valid token should look like:
+```
+Length : 82
+Repr   : 'patHV74kWm....'
+```
+
+If `repr()` shows any `\n`, `\r`, `\ufeff`, or unexpected spaces around the value, unset the variable and re-set it carefully.
+
+---
+
+#### `ModuleNotFoundError: No module named 'requests'`
+
+The `requests` library is not installed. Run:
+
+```bash
+# macOS
+pip3 install requests
+
+# Windows
+pip install requests
+```
+
+---
+
+### Quick-Reference Cheat Sheet
+
+| Step | macOS | Windows |
+|---|---|---|
+| Check Python | `python3 --version` | `python --version` |
+| Install library | `pip3 install requests` | `pip install requests` |
+| Set token | `export AIRTABLE_TOKEN="..."` | `set AIRTABLE_TOKEN=...` |
+| Set base ID | `export AIRTABLE_BASE_ID="..."` | `set AIRTABLE_BASE_ID=...` |
+| Run check | `python3 check_airtable_fields.py` | `python check_airtable_fields.py` |
+| Run fix | `python3 check_airtable_fields.py --fix` | `python check_airtable_fields.py --fix` |
+| Verify env var | `echo $AIRTABLE_TOKEN` | `echo %AIRTABLE_TOKEN%` |
