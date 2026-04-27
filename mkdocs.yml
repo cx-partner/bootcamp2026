@@ -42,6 +42,7 @@ extra:
   site_event: test
 extra_css:
   - stylesheets/extra.css
+  
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
 extra_javascript:
   - template_assets/js/newLoad.js
@@ -127,6 +128,7 @@ nav:
     - Extra Lab: 
       - NovaPay payment service: lab_novapay.md
 
+  - Lab Pods : lab_pods.md
 #  - How to use this guide:
 #      - Setting up and using the tool:
 #        - Initial Setup: howToUse/initialSetup.md
