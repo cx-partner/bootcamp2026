@@ -130,7 +130,7 @@ In this first step, you will define the "brain" and personality of your AI Agent
         Payment Negotiation: Offer total or partial payment options.
         Payment Execution: If accepted, execute [payment_session] and inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
         Confirmation: Use [confirm_payment] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
-        Account & Transaction Support: Provide account info and up to five latest transactions via [fetch_transactions]. For each transaction, clearly list the amount, date, vendor, and city. 
+        Account & Transaction Support: Use [fetch_transactions] to provide account info and up to five most recent transactions including the amount, date, vendor, and city for each transaction. 
         General Enquiries: Use the Knowledge Base for banking questions.If information is duplicated in different Knowledge Base sources, do not repeat the same information twice.
 
         4. Response Guidelines
@@ -1794,6 +1794,9 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
     2. Open your flow **AI_Agent_DebtCollection**. Enable the **Edit** slider at the top of the canvas.
     3. Delete the **Play Message** node
     4. From the *Activities Library* drag and drop a **Virtual Agent V2** to the right of the **NewPhoneContact** event. 
+
+        > Note the event may appear as **NewContact** in your flow. 
+
     5. Connect the **NewPhoneContact** node to the new node.
     6. Click on the **Virtual Agent V2** node and configure the settings below in the *Activity Settings* panel on the right side of the canvas. 
 
@@ -1811,10 +1814,11 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
                 "lastName":'{{lastName}}'
             }
             ``` 
+        
         The variables **firstName** and **lastName** on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the *Outbound_DebtCollection* flow to this flow. 
 
         ???+ Warning
-            The starting node has been renamed to **NewContact** and has been already pushed to some tenants. If your tenant has been updated to the new name, make sure you use the variable: *NewContact.DNIS* instead the old *NewPhoneContact.DNIS* for the phoneNumber value. 
+            If the starting node has been renamed to **NewContact** and has been already pushed to your tenant, make sure you use the variable: *NewContact.DNIS* instead of the old *NewPhoneContact.DNIS* for the phoneNumber value. 
 
         The variables **phoneNumber**, **firstName** and **lastName** on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).
 
@@ -1884,13 +1888,22 @@ Your Agent flow should look like the one below and is now ready for testing!!
 
 ## Lab 2.6 - Test the complete scenario
 
+???+ hint "Speed up Testing"
+    Although we recommend you to test the complete scenario, with the outbound call connecting the AI Agent, it can be cumbersome for troubleshooting due to the time it takes for the Campaign Manager to process the contact list and generate the outbound call. In order to speed up the testing you can add an inbound call option to your flow to avoid the waiting time . 
+
+    The modification in the flow to acomodate the inbound option is described in the **Testing** section of **Lab 3**, under the [Inbound/Outbound Detection for Faster Testing](lab3_human_ai_assist.md#inboundoutbound-detection-for-faster-testing)
+
 You can now test the complete scenario. Follow this steps: 
 
 1. In the Campaign Manager portal, upload your contact list to your campaign with an entry that corresponds to your test customer. It should have the proper *first name*, *last_name* and *phone number*.
 2. Make sure those details are the same as the ones populated in your *Airtable Customers* table for the test customer, including the real email where the payment session will be sent
-3. Make sure your *Airtable Transactions* table is populated with some entries if you want to test the transacions query with the AI Agent. 
+3. Make sure your *Airtable Transactions* table is populated with some entries if you want to test the transactions query with the AI Agent. 
 
-As the contact list is uploaded and processed in your campaign, a call should be generated to your customer phone number. Once you answer the call, it will be connected to the AI Agent. You can now test all the AI Agent capabilities that we have designed in this lab in a live call. 
+If you use the Campaing Manager, once the contact list is uploaded and processed in your campaign, a call should be generated to your customer phone number. Once you answer the call, it will be connected to the AI Agent. 
+
+> If you use the inbound option for testing, you just need to make a call to your inbound number and the call will be connected to the AI Agent.
+
+You can now test all the AI Agent capabilities that we have designed in this lab in a live call. 
 
 
 ???+ Warning

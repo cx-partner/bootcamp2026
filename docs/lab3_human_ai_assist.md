@@ -628,18 +628,25 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
         | `phone_number` | `String` | *(empty)* |
 
     3. On the canvas, drag a **Condition** node immediately after the `NewPhoneContact` start node.
+
+        >Note the start node might appear as *NewContact* in your flow.
+
     4. Rename the node to <copy>`Detect_Call_Direction`</copy>.
     5. Configure the condition expression:
 
         - **Expression**: <copy>`{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}`</copy>
 
-        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5). Also, make sure that the **NewPhoneContact.ANI** variable is correct, changes in flow designer have made this show up as **NewContact.ANI**. 
+        Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5). 
+        
+        > If the start node in your flow has been moved to **NewContact**, the system variable will show up as **NewContact.ANI**. 
 
     6. **True Path (Outbound)**:
         - Drag a **Set Variable** node onto the canvas and connect it to the **True** output of the Condition node.
         - Rename the node to <copy>`Set_Outbound_Phone`</copy>.
         - **Variable**: select `phone_number`
         - **Set Value**: `{{NewPhoneContact.DNIS}}`
+            
+            > or *NewContact.DNIS* if your Start node is renamed to **NewContact**
 
     7. **False Path (Inbound)**:
     
@@ -657,6 +664,8 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
             | `firstName` | `John` |
             | `lastName` | `Doe` |
 
+            > Remember it might be *NewContact.ANI* in your flow.
+        
         Replace `John` and `Doe` with the first name and last name of the test customer in your Airtable Customers table.
 
     8. Connect both **Set Variable** nodes to the **Virtual Agent V2** node (`DebtCollectionAgent`).

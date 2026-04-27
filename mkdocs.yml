@@ -42,9 +42,11 @@ extra:
   site_event: test
 extra_css:
   - stylesheets/extra.css
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
 extra_javascript:
   - template_assets/js/newLoad.js
   - template_assets/js/setInfo.js
+  - javascripts/extra.js 
 plugins:
   - search
   
@@ -101,8 +103,6 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
-
-  
 
 nav:
   - Home: index.md

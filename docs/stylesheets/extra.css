@@ -52,3 +52,14 @@ form#info button{
 form#info button:hover{
     background-color:rgb(195, 193, 201);
 }
+
+/* Style for when the item is successfully copied */
+copy.copied::after {
+  content: "\f00c"; /* Font Awesome code for the checkmark (check) */
+  color: #2ecc71;  /* Success Green */
+}
+
+copy.copied {
+  color: #2ecc71;
+  transition: all 0.2s ease;
+}

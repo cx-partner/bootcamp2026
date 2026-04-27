@@ -194,6 +194,10 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
     3. In the **Global Flow Properties** panel on the right:
         - Under **Global Variables**, click **Add global variables** and add both `firstName` and `lastName`.
     4. From the **Activities Library**, drag a **Play Message** node onto the canvas and connect it to the **NewPhoneContact** Start node.
+
+        ???+ Warning
+            The **NewPhoneContact** event is being renamed into **NewContact**, so this might be the name you see in your start node.
+
     5. Configure the **Play Message** node:
         - **Activity Label**: `EndOfLab1`
         - Enable **Text-to-Speech**
@@ -224,7 +228,11 @@ Now create the main outbound campaign flow. This flow handles the outbound diall
     3. Name it <copy>`Outbound_DebtCollection`</copy>.
     3. In the **Global Flow Properties** panel:
         - Under **Global Variables**, add both `firstName` and `lastName`.
-    4. The Main flow canvas starts with a **NewPhoneContact** Start node. Connect it to an **End Flow** node as a placeholder — the actual logic is handled in Event flows.
+    4. The Main flow canvas starts with a **NewPhoneContact** Start node.
+    
+        > Note the Start node might be **NewContact** instead.
+
+        Connect it to an **End Flow** node as a placeholder — the actual logic is handled in Event flows.
 
     <figure markdown>
     ![Outbound_DebtCollection flow global variables](./assets/lab1_p7_img2.png)
