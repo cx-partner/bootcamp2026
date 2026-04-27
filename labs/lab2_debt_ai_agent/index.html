@@ -54,6 +54,8 @@
     
       <link rel="stylesheet" href="../stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1704,7 +1706,7 @@
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>Payment Negotiation: Offer total or partial payment options.
 </span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>Payment Execution: If accepted, execute [payment_session] and inform the customer a Payment URL has been sent to their email. Wait for payment confirmation.
 </span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Confirmation: Use [confirm_payment] to verify payment and inform the customer of the result, including the amount paid the confirmation code and the remaining balance.
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>Account &amp; Transaction Support: Provide account info and up to five latest transactions via [fetch_transactions]. For each transaction, clearly list the amount, date, vendor, and city. 
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>Account &amp; Transaction Support: Use [fetch_transactions] to provide account info and up to five most recent transactions including the amount, date, vendor, and city for each transaction. 
 </span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>General Enquiries: Use the Knowledge Base for banking questions.If information is duplicated in different Knowledge Base sources, do not repeat the same information twice.
 </span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
 </span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>4. Response Guidelines
@@ -4225,8 +4227,15 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <li>Go to Control Hub -&gt; Contact Center -&gt; Flows</li>
 <li>Open your flow <strong>AI_Agent_DebtCollection</strong>. Enable the <strong>Edit</strong> slider at the top of the canvas.</li>
 <li>Delete the <strong>Play Message</strong> node</li>
-<li>From the <em>Activities Library</em> drag and drop a <strong>Virtual Agent V2</strong> to the right of the <strong>NewPhoneContact</strong> event. </li>
-<li>Connect the <strong>NewPhoneContact</strong> node to the new node.</li>
+<li>
+<p>From the <em>Activities Library</em> drag and drop a <strong>Virtual Agent V2</strong> to the right of the <strong>NewPhoneContact</strong> event. </p>
+<blockquote>
+<p>Note the event may appear as <strong>NewContact</strong> in your flow. </p>
+</blockquote>
+</li>
+<li>
+<p>Connect the <strong>NewPhoneContact</strong> node to the new node.</p>
+</li>
 <li>
 <p>Click on the <strong>Virtual Agent V2</strong> node and configure the settings below in the <em>Activity Settings</em> panel on the right side of the canvas. </p>
 <ul>
@@ -4248,7 +4257,7 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <p>The variables <strong>firstName</strong> and <strong>lastName</strong> on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the <em>Outbound_DebtCollection</em> flow to this flow. </p>
 <details class="warning" open="open">
 <summary>Warning</summary>
-<p>The starting node has been renamed to <strong>NewContact</strong> and has been already pushed to some tenants. If your tenant has been updated to the new name, make sure you use the variable: <em>NewContact.DNIS</em> instead the old <em>NewPhoneContact.DNIS</em> for the phoneNumber value. </p>
+<p>If the starting node has been renamed to <strong>NewContact</strong> and has been already pushed to your tenant, make sure you use the variable: <em>NewContact.DNIS</em> instead of the old <em>NewPhoneContact.DNIS</em> for the phoneNumber value. </p>
 </details>
 <p>The variables <strong>phoneNumber</strong>, <strong>firstName</strong> and <strong>lastName</strong> on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).</p>
 <ul>
@@ -4325,13 +4334,22 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </details>
 <hr>
 <h2 id="lab-26-test-the-complete-scenario">Lab 2.6 - Test the complete scenario<a class="headerlink" href="#lab-26-test-the-complete-scenario" title="Permanent link">¶</a></h2>
+<details class="hint" open="open">
+<summary>Speed up Testing</summary>
+<p>Although we recommend you to test the complete scenario, with the outbound call connecting the AI Agent, it can be cumbersome for troubleshooting due to the time it takes for the Campaign Manager to process the contact list and generate the outbound call. In order to speed up the testing you can add an inbound call option to your flow to avoid the waiting time . </p>
+<p>The modification in the flow to acomodate the inbound option is described in the <strong>Testing</strong> section of <strong>Lab 3</strong>, under the <a href="../lab3_human_ai_assist/#inboundoutbound-detection-for-faster-testing">Inbound/Outbound Detection for Faster Testing</a></p>
+</details>
 <p>You can now test the complete scenario. Follow this steps: </p>
 <ol>
 <li>In the Campaign Manager portal, upload your contact list to your campaign with an entry that corresponds to your test customer. It should have the proper <em>first name</em>, <em>last_name</em> and <em>phone number</em>.</li>
 <li>Make sure those details are the same as the ones populated in your <em>Airtable Customers</em> table for the test customer, including the real email where the payment session will be sent</li>
-<li>Make sure your <em>Airtable Transactions</em> table is populated with some entries if you want to test the transacions query with the AI Agent. </li>
+<li>Make sure your <em>Airtable Transactions</em> table is populated with some entries if you want to test the transactions query with the AI Agent. </li>
 </ol>
-<p>As the contact list is uploaded and processed in your campaign, a call should be generated to your customer phone number. Once you answer the call, it will be connected to the AI Agent. You can now test all the AI Agent capabilities that we have designed in this lab in a live call. </p>
+<p>If you use the Campaing Manager, once the contact list is uploaded and processed in your campaign, a call should be generated to your customer phone number. Once you answer the call, it will be connected to the AI Agent. </p>
+<blockquote>
+<p>If you use the inbound option for testing, you just need to make a call to your inbound number and the call will be connected to the AI Agent.</p>
+</blockquote>
+<p>You can now test all the AI Agent capabilities that we have designed in this lab in a live call. </p>
 <details class="warning" open="open">
 <summary>Warning</summary>
 <p>As the room environment may be noisy, please avoid using speaker mode for your calls to avoid unintended responses.  </p>
@@ -4451,6 +4469,8 @@ You have successfully completed Lab 2. You are now ready to move on to the next 
         <script src="../template_assets/js/newLoad.js"></script>
       
         <script src="../template_assets/js/setInfo.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
       
     
   

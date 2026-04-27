@@ -54,6 +54,8 @@
     
       <link rel="stylesheet" href="../stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2134,8 +2136,16 @@
 <li>Under <strong>Global Variables</strong>, click <strong>Add global variables</strong> and add both <code>firstName</code> and <code>lastName</code>.</li>
 </ul>
 </li>
-<li>From the <strong>Activities Library</strong>, drag a <strong>Play Message</strong> node onto the canvas and connect it to the <strong>NewPhoneContact</strong> Start node.</li>
-<li>Configure the <strong>Play Message</strong> node:<ul>
+<li>
+<p>From the <strong>Activities Library</strong>, drag a <strong>Play Message</strong> node onto the canvas and connect it to the <strong>NewPhoneContact</strong> Start node.</p>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>The <strong>NewPhoneContact</strong> event is being renamed into <strong>NewContact</strong>, so this might be the name you see in your start node.</p>
+</details>
+</li>
+<li>
+<p>Configure the <strong>Play Message</strong> node:</p>
+<ul>
 <li><strong>Activity Label</strong>: <code>EndOfLab1</code></li>
 <li>Enable <strong>Text-to-Speech</strong></li>
 <li><strong>Connector</strong>: <code>Cisco Cloud Text-to-Speech</code></li>
@@ -2167,7 +2177,13 @@
 <li>Under <strong>Global Variables</strong>, add both <code>firstName</code> and <code>lastName</code>.</li>
 </ul>
 </li>
-<li>The Main flow canvas starts with a <strong>NewPhoneContact</strong> Start node. Connect it to an <strong>End Flow</strong> node as a placeholder — the actual logic is handled in Event flows.</li>
+<li>
+<p>The Main flow canvas starts with a <strong>NewPhoneContact</strong> Start node.</p>
+<blockquote>
+<p>Note the Start node might be <strong>NewContact</strong> instead.</p>
+</blockquote>
+<p>Connect it to an <strong>End Flow</strong> node as a placeholder — the actual logic is handled in Event flows.</p>
+</li>
 </ol>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p7_img2.png" data-title="Outbound_DebtCollection flow global variables" data-desc-position="top"><img alt="Outbound_DebtCollection flow global variables" src="../assets/lab1_p7_img2.png"></a>
@@ -3257,6 +3273,8 @@
         <script src="../template_assets/js/newLoad.js"></script>
       
         <script src="../template_assets/js/setInfo.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
       
     
   

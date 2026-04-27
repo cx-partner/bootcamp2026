@@ -54,6 +54,8 @@
     
       <link rel="stylesheet" href="../stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2460,14 +2462,22 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </li>
 <li>
 <p>On the canvas, drag a <strong>Condition</strong> node immediately after the <code>NewPhoneContact</code> start node.</p>
+<blockquote>
+<p>Note the start node might appear as <em>NewContact</em> in your flow.</p>
+</blockquote>
 </li>
-<li>Rename the node to <copy><code>Detect_Call_Direction</code></copy>.</li>
+<li>
+<p>Rename the node to <copy><code>Detect_Call_Direction</code></copy>.</p>
+</li>
 <li>
 <p>Configure the condition expression:</p>
 <ul>
 <li><strong>Expression</strong>: <copy><code>{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}</code></copy></li>
 </ul>
-<p>Replace <code>+XXXXXXXXXXX</code> with the outdial ANI number configured in your campaign (Lab 1.5). Also, make sure that the <strong>NewPhoneContact.ANI</strong> variable is correct, changes in flow designer have made this show up as <strong>NewContact.ANI</strong>. </p>
+<p>Replace <code>+XXXXXXXXXXX</code> with the outdial ANI number configured in your campaign (Lab 1.5). </p>
+<blockquote>
+<p>If the start node in your flow has been moved to <strong>NewContact</strong>, the system variable will show up as <strong>NewContact.ANI</strong>. </p>
+</blockquote>
 </li>
 <li>
 <p><strong>True Path (Outbound)</strong>:</p>
@@ -2475,7 +2485,12 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Drag a <strong>Set Variable</strong> node onto the canvas and connect it to the <strong>True</strong> output of the Condition node.</li>
 <li>Rename the node to <copy><code>Set_Outbound_Phone</code></copy>.</li>
 <li><strong>Variable</strong>: select <code>phone_number</code></li>
-<li><strong>Set Value</strong>: <code>{{NewPhoneContact.DNIS}}</code></li>
+<li>
+<p><strong>Set Value</strong>: <code>{{NewPhoneContact.DNIS}}</code></p>
+<blockquote>
+<p>or <em>NewContact.DNIS</em> if your Start node is renamed to <strong>NewContact</strong></p>
+</blockquote>
+</li>
 </ul>
 </li>
 <li>
@@ -2513,6 +2528,9 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p>Remember it might be <em>NewContact.ANI</em> in your flow.</p>
+</blockquote>
 </li>
 </ul>
 <p>Replace <code>John</code> and <code>Doe</code> with the first name and last name of the test customer in your Airtable Customers table.</p>
@@ -2766,6 +2784,8 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
         <script src="../template_assets/js/newLoad.js"></script>
       
         <script src="../template_assets/js/setInfo.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
       
     
   
