@@ -1329,6 +1329,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Lab 4.4 Provision the Agentic App in Control Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lab-441-understanding-the-mcp-server-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4.4.1 Understanding the MCP Server Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1762,6 +1779,10 @@
 </details>
 <hr>
 <h2 id="lab-43-register-the-mcp-server-as-an-agentic-app">Lab 4.3 Register the MCP Server as an Agentic App<a class="headerlink" href="#lab-43-register-the-mcp-server-as-an-agentic-app" title="Permanent link">¶</a></h2>
+<details class="important" open="open">
+<summary>Important</summary>
+<p>For sections 4.3 and 4.4, you must use a <strong>Customer Administrator</strong> account rather than a Partner account. Partner accounts do not have the permissions required to access the <strong>Agentic Apps</strong> configuration in Control Hub, which is the only way to authorize and enable specific MCP tools for your AI Agent.</p>
+</details>
 <p>The Investment Advisor's tools are hosted on an external MCP Server. To connect the AI Agent to this server, you must first register it as an <strong>Agentic App</strong> in the Webex Developer Portal.</p>
 <details class="info" open="open">
 <summary>What is an Agentic App?</summary>
@@ -1808,6 +1829,10 @@
 </details>
 <hr>
 <h2 id="lab-44-provision-the-agentic-app-in-control-hub">Lab 4.4 Provision the Agentic App in Control Hub<a class="headerlink" href="#lab-44-provision-the-agentic-app-in-control-hub" title="Permanent link">¶</a></h2>
+<details class="important" open="open">
+<summary>Important</summary>
+<p>For sections 4.3 and 4.4, you must use a <strong>Customer Administrator</strong> account rather than a Partner account. Partner accounts do not have the permissions required to access the <strong>Agentic Apps</strong> configuration in Control Hub, which is the only way to authorize and enable specific MCP tools for your AI Agent.</p>
+</details>
 <p>After registering the app in the Developer Portal, you need to provision it in <strong>Control Hub</strong> to control access and configure authentication for your organization.</p>
 <details class="webex" open="open">
 <summary>Provision the Agentic App</summary>
@@ -1886,6 +1911,246 @@
 </details>
 </details>
 <hr>
+<h3 id="lab-441-understanding-the-mcp-server-tools">Lab 4.4.1 Understanding the MCP Server Tools<a class="headerlink" href="#lab-441-understanding-the-mcp-server-tools" title="Permanent link">¶</a></h3>
+<p>Before registering and connecting the MCP Server, it's important to understand what each tool does and how it interacts with your Airtable data.</p>
+<p>The MCP Server is pre-deployed and shared across all participants. You do not need to host or modify it. It exposes five tools that the Investment Advisor will call during conversations. Each tool either <strong>reads from</strong> or <strong>writes to</strong> your Airtable tables using the Base ID and API Key you provide in the agent instructions.</p>
+<h4 id="tool-overview">Tool Overview<a class="headerlink" href="#tool-overview" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tool</th>
+<th style="text-align: left;">Operation</th>
+<th style="text-align: left;">Tables Involved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>get_investment_account</code></td>
+<td style="text-align: left;">Read</td>
+<td style="text-align: left;">Customers → Investment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_stock_price</code></td>
+<td style="text-align: left;">Read (no Airtable)</td>
+<td style="text-align: left;">None — uses hardcoded market data</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_portfolio</code></td>
+<td style="text-align: left;">Read</td>
+<td style="text-align: left;">Investment → Positions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>initiate_order</code></td>
+<td style="text-align: left;">Read (SELL) / External API (BUY)</td>
+<td style="text-align: left;">Positions (SELL validation only)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>confirm_order</code></td>
+<td style="text-align: left;">Write</td>
+<td style="text-align: left;">Positions</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="tool-details">Tool Details<a class="headerlink" href="#tool-details" title="Permanent link">¶</a></h4>
+<details class="webex" open="open">
+<summary><code>get_investment_account</code></summary>
+<ul>
+<li><strong>What it does:</strong> Takes a Customer ID (e.g., <code>CUST-001</code>), looks it up in your <strong>Customers</strong> table, then finds the linked record in your <strong>Investment</strong> table.</li>
+<li><strong>What it returns:</strong> The Investment Account ID (e.g., <code>INV-001</code>).</li>
+<li><strong>Airtable impact:</strong> Read-only. Nothing is modified.</li>
+</ul>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Customer ID (CUST-001) → Customers table → linked Investment record → Investment Account ID (INV-001)
+</span></code></pre></div><p></p>
+</details>
+<details class="webex" open="open">
+<summary><code>get_stock_price</code></summary>
+<ul>
+<li><strong>What it does:</strong> Takes a stock ticker (e.g., <code>MOON</code>) and returns the current price, daily change, sector, and volatility.</li>
+<li><strong>What it returns:</strong> Market data for the requested ticker.</li>
+<li><strong>Airtable impact:</strong> None. Stock data is hardcoded on the server.</li>
+</ul>
+<p><strong>Available tickers:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ticker</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Sector</th>
+<th style="text-align: left;">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MOON</td>
+<td style="text-align: left;">MoonShotMeme</td>
+<td style="text-align: left;">Tech</td>
+<td style="text-align: left;">$42.69</td>
+</tr>
+<tr>
+<td style="text-align: left;">YLO</td>
+<td style="text-align: left;">YOLO-Tech</td>
+<td style="text-align: left;">Tech</td>
+<td style="text-align: left;">$8.05</td>
+</tr>
+<tr>
+<td style="text-align: left;">DEBT</td>
+<td style="text-align: left;">InfiniteDebtInc</td>
+<td style="text-align: left;">Finance</td>
+<td style="text-align: left;">$102.40</td>
+</tr>
+<tr>
+<td style="text-align: left;">CATV</td>
+<td style="text-align: left;">CatVideoStreaming</td>
+<td style="text-align: left;">Entertainment</td>
+<td style="text-align: left;">$15.20</td>
+</tr>
+<tr>
+<td style="text-align: left;">HYPE</td>
+<td style="text-align: left;">HypeTrainHoldings</td>
+<td style="text-align: left;">Retail</td>
+<td style="text-align: left;">$250.00</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="webex" open="open">
+<summary><code>get_portfolio</code></summary>
+<ul>
+<li><strong>What it does:</strong> Takes an Investment Account ID, queries your <strong>Investment</strong> table, follows the linked records into your <strong>Positions</strong> table, and returns all positions.</li>
+<li><strong>What it returns:</strong> A list of positions, each with the Position ID, ticker, quantity, purchase price, and current price.</li>
+<li><strong>Airtable impact:</strong> Read-only. Nothing is modified.</li>
+</ul>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Investment Account ID (INV-001) → Investment table → linked Positions records → list of positions
+</span></code></pre></div><p></p>
+</details>
+<details class="webex" open="open">
+<summary><code>initiate_order</code></summary>
+<p>This tool behaves differently depending on whether the customer is <strong>buying</strong> or <strong>selling</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">BUY Flow</label><label for="__tabbed_1_2">SELL Flow</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Calculates the total cost based on the current stock price and quantity.</li>
+<li>Creates a payment session with <strong>NovaPay</strong> (external payment provider).</li>
+<li>Triggers a webhook to send a payment link to the customer's email.</li>
+<li>Returns the payment session ID and URL.</li>
+</ol>
+<p><strong>Airtable impact:</strong> None at this stage. The position is only written after payment is confirmed via <code>confirm_order</code>.</p>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Order details → NovaPay API → payment session created → payment link emailed to customer
+</span></code></pre></div><p></p>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>Looks up the customer's existing position for that ticker in your <strong>Positions</strong> table.</li>
+<li>Validates that the customer owns enough shares to sell.</li>
+<li>If the customer tries to sell more shares than they own, returns an error with the current holding.</li>
+<li>If validated, returns a confirmation prompt with the order details and projected proceeds.</li>
+</ol>
+<p><strong>Airtable impact:</strong> Read-only at this stage. The position is only updated after the customer confirms via <code>confirm_order</code>.</p>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Order details → Positions table lookup → ownership validated → confirmation prompt returned
+</span></code></pre></div><p></p>
+</div>
+</div>
+</div>
+</details>
+<details class="webex" open="open">
+<summary><code>confirm_order</code></summary>
+<p>This tool also behaves differently for <strong>BUY</strong> and <strong>SELL</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">BUY Confirmation</label><label for="__tabbed_2_2">SELL Confirmation — Partial Sell</label><label for="__tabbed_2_3">SELL Confirmation — Full Sell</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Checks the NovaPay payment status using the payment session ID.</li>
+<li>If payment is still pending, returns a pending status and asks the agent to try again later.</li>
+<li>If payment is completed, creates a <strong>new row</strong> in your <strong>Positions</strong> table with the Position ID, ticker, quantity, and purchase price.</li>
+</ol>
+<p><strong>Airtable impact:</strong> A new record is <strong>created</strong> in the Positions table, linked to the Investment account.</p>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Payment session ID → NovaPay status check → if completed → new Positions record created
+</span></code></pre></div><p></p>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>No payment check is performed.</li>
+<li>Finds the existing position in your <strong>Positions</strong> table.</li>
+<li><strong>Reduces the Quantity</strong> on the existing record. For example, if the customer owns 10 shares and sells 3, the quantity is updated to 7.</li>
+</ol>
+<p><strong>Airtable impact:</strong> The existing Positions record is <strong>updated</strong> (quantity reduced).</p>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Sell 3 of 10 shares → Positions record updated → Quantity: 10 → 7
+</span></code></pre></div><p></p>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>No payment check is performed.</li>
+<li>Finds the existing position in your <strong>Positions</strong> table.</li>
+<li>Since the customer is selling <strong>all</strong> shares, the position record is <strong>deleted</strong> from the table.</li>
+</ol>
+<p><strong>Airtable impact:</strong> The existing Positions record is <strong>deleted</strong>.</p>
+<p><strong>Data flow:</strong>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Sell 10 of 10 shares → Positions record deleted → position closed
+</span></code></pre></div><p></p>
+</div>
+</div>
+</div>
+<details class="tip" open="open">
+<summary>Partial vs. Full Sell</summary>
+<p>The server automatically determines whether to update or delete based on the remaining quantity. If <code>remaining = 0</code>, the record is deleted. Otherwise, only the quantity field is updated.</p>
+</details>
+</details>
+<hr>
+<h4 id="required-airtable-fields">Required Airtable Fields<a class="headerlink" href="#required-airtable-fields" title="Permanent link">¶</a></h4>
+<p>For the tools to work correctly, your <strong>Positions</strong> table must have the following fields:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>Position_ID</code></td>
+<td style="text-align: left;">Text</td>
+<td style="text-align: left;">Unique identifier (e.g., POS-001). Auto-generated by the server.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Investment_Acct</code></td>
+<td style="text-align: left;">Link to Investment</td>
+<td style="text-align: left;">Links the position to the investment account.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Stock_Ticker</code></td>
+<td style="text-align: left;">Text</td>
+<td style="text-align: left;">The stock ticker symbol (e.g., MOON).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Quantity</code></td>
+<td style="text-align: left;">Number</td>
+<td style="text-align: left;">Number of shares held. Updated on partial sells.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Purchase_Price</code></td>
+<td style="text-align: left;">Number</td>
+<td style="text-align: left;">Price per share at time of purchase.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Current_Price</code></td>
+<td style="text-align: left;">Number</td>
+<td style="text-align: left;">Current market price per share. Updated on sells.</td>
+</tr>
+</tbody>
+</table>
+<details class="warning" open="open">
+<summary>Field Name Accuracy</summary>
+<p>The MCP Server uses these exact field names when reading and writing to Airtable. If your field names do not match (e.g., <code>Stock Ticker</code> instead of <code>Stock_Ticker</code>), the tools will fail. Double-check your Airtable column names before testing.</p>
+</details>
 <h2 id="lab-45-connect-the-mcp-tools-to-the-investment-advisor">Lab 4.5 Connect the MCP Tools to the Investment Advisor<a class="headerlink" href="#lab-45-connect-the-mcp-tools-to-the-investment-advisor" title="Permanent link">¶</a></h2>
 <p>Now that the Agentic App is provisioned, you need to connect the MCP tools to your Investment Advisor AI Agent as actions.</p>
 <details class="webex" open="open">
@@ -1924,10 +2189,10 @@
 <details class="warning" open="open">
 <summary>Airtable Credentials</summary>
 <p>The <code>get_portfolio</code>, <code>initiate_order</code>, and <code>confirm_order</code> tools require your Airtable Base ID and API Key as input parameters. You need to instruct the AI Agent to use these values when calling these tools. Go back to the <strong>Profile</strong> tab and add the following to the <strong>Instructions</strong>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>**Airtable Configuration:**
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>When calling tools that require airtable_base_id and airtable_api_key, use the following values:
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>- airtable_base_id: YOUR_BASE_ID
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>- airtable_api_key: YOUR_API_KEY
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>**Airtable Configuration:**
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>When calling tools that require airtable_base_id and airtable_api_key, use the following values:
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>- airtable_base_id: YOUR_BASE_ID
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>- airtable_api_key: YOUR_API_KEY
 </span></code></pre></div>
 <p>Replace <code>YOUR_BASE_ID</code> and <code>YOUR_API_KEY</code> with your actual Airtable credentials.</p>
 <details class="tip" open="open">
@@ -2045,11 +2310,11 @@
 <li>In the <em>Virtual Agent</em> drop down menu, select your <strong>Investment Advisor Agent</strong>.</li>
 <li>
 <p>In the <em>State Event</em> section, copy the below JSON in the <em>Event Data</em> field:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nt">"customer_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{customer_id}}"</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{customer_email}}"</span><span class="p">,</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">"investment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{investment_id}}"</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="nt">"customer_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{customer_id}}"</span><span class="p">,</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{customer_email}}"</span><span class="p">,</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">"investment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{investment_id}}"</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <details class="warning" open="open">
 <summary>Warning</summary>
