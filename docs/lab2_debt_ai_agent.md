@@ -974,8 +974,8 @@ As in the previous actions, we will:
 
             |		Output Variable Name		|	Response Path	|
             |		-----		|	-----	|
-            |	<copy>	PaymentSessionId	</copy>	|	$.sessionId|
-            |	<copy>	PaymentURL	</copy>	|	$.paymentUrl	|
+            |	<copy>PaymentSessionId</copy>	|	$.sessionId|
+            |	<copy>PaymentURL</copy>	|	$.paymentUrl	|
 
             - Click on **[Save]**
             - Save the flow!
