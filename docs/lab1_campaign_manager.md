@@ -259,12 +259,12 @@ This event fires when the dialler receives a CPA result for an outbound call att
             |---|---|
             | **AMD** | <copy>`AMD`</copy> |
             | **ABANDONED** | <copy>`ABANDONED`</copy> |
-            | **LIVE_VOICE_IVR_CAM** | <copy>`LIVE_VOICE_IVR_CAM`</copy> |
+            | **LIVE_VOICE** | <copy>`LIVE_VOICE`</copy> |
             | **Default** | (default fallthrough) |
 
     <figure markdown style="width: 70%;">
     ![Event flows overview](./assets/lab1_p8_img1.png)
-    <figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE_IVR_CAM outputs</figcaption>
+    <figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE outputs</figcaption>
     </figure>
 
 
@@ -285,12 +285,12 @@ This event fires when the dialler receives a CPA result for an outbound call att
     <figcaption>Play Message node configured with TTS "Goodbye" for AMD and Abandoned call outcomes</figcaption>
     </figure>
 
-**Handling Live Voice (LIVE_VOICE_IVR_CAM) outcome:**
+**Handling Live Voice (LIVE_VOICE) outcome:**
 
 ???+ webex "Configure Live Voice Routing"
 
     1. Drag a **Go To** node onto the canvas.
-    2. Connect the **LIVE_VOICE_IVR_CAM** output of the **Case** node to the **Go To** node.
+    2. Connect the **LIVE_VOICE** output of the **Case** node to the **Go To** node.
     3. Connect also the **Default** output of the **Case** node to the **Go To** node.
     3. Configure the **Go To** node:
         - **Activity Label**: `GoTo_AIAgent`
@@ -678,7 +678,7 @@ The system provides a **primary (read-only) outcome set**. You must **duplicate*
     ![Telephony outcomes](./assets/lab1_p22_img2.jpeg)
 
     ![Telephony outcomes list](./assets/lab1_p23_img1.png)
-    <figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE_IVR_CAM, BUSY, INVALID_NUMBER, and others</figcaption>
+    <figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE, BUSY, INVALID_NUMBER, and others</figcaption>
     </figure>
 
 ### UI Users
