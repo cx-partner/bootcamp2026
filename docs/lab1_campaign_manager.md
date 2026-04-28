@@ -1008,7 +1008,6 @@ At this point, you have successfully:
 - [x] Built the `AI_Agent_DebtCollection` test flow with a congratulatory TTS message
 - [x] Built the `Outbound_DebtCollection` campaign flow with CPA-based routing (AMD, Abandoned, Live Voice)
 - [x] Configured the outdial Entry Point (Channel) and Outdial ANI
-- [x] Set up Business Hours in Control Hub
 - [x] Completed all Campaign Manager prerequisites (business days, contact modes, field mappings, suppression rules, telephony outcomes, wrap-up codes, meta-tags)
 - [x] Created, configured, and activated the `Bootcamp_campaign` Progressive IVR campaign
 - [x] Uploaded a contact list and received a live test call
