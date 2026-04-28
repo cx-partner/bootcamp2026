@@ -1302,7 +1302,7 @@ As before, we will follow our typical approach:
             ![Transaction Failed](./assets/confirm_payment%20flow%205.png)
             </figure>
 
-        - To complete the node, click on the green outlet at the right of the **HTTP Request** node and drag it to the canvas. Release it to open the **End** dialogue. Let´s set the *Transaction not Complete* option
+        - To complete the node, click on the green outlet at the right of the **Branch** node and drag it to the canvas. Release it to open the **End** dialogue. Let´s set the *Transaction not Complete* option
 
             - Set the **Node Event** value to `Transaction not Completed`
             - Set the **Flow Result** value to `102 - Flow completed with an error [Error]`
