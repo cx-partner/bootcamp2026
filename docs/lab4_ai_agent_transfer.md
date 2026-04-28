@@ -170,6 +170,9 @@ In this section, you will create a second autonomous AI Agent — the **Investme
 
 ## Lab 4.3 Register the MCP Server as an Agentic App
 
+???+ Important
+    For sections 4.3 and 4.4, you must use a **Customer Administrator** account rather than a Partner account. Partner accounts do not have the permissions required to access the **Agentic Apps** configuration in Control Hub, which is the only way to authorize and enable specific MCP tools for your AI Agent.
+
 The Investment Advisor's tools are hosted on an external MCP Server. To connect the AI Agent to this server, you must first register it as an **Agentic App** in the Webex Developer Portal.
 
 ???+ info "What is an Agentic App?"
@@ -207,6 +210,9 @@ The Investment Advisor's tools are hosted on an external MCP Server. To connect 
 ---
 
 ## Lab 4.4 Provision the Agentic App in Control Hub
+
+???+ Important
+    For sections 4.3 and 4.4, you must use a **Customer Administrator** account rather than a Partner account. Partner accounts do not have the permissions required to access the **Agentic Apps** configuration in Control Hub, which is the only way to authorize and enable specific MCP tools for your AI Agent.
 
 After registering the app in the Developer Portal, you need to provision it in **Control Hub** to control access and configure authentication for your organization.
 
@@ -247,6 +253,161 @@ After registering the app in the Developer Portal, you need to provision it in *
         </figure>
 
 ---
+
+### Lab 4.4.1 Understanding the MCP Server Tools
+
+Before registering and connecting the MCP Server, it's important to understand what each tool does and how it interacts with your Airtable data.
+
+The MCP Server is pre-deployed and shared across all participants. You do not need to host or modify it. It exposes five tools that the Investment Advisor will call during conversations. Each tool either **reads from** or **writes to** your Airtable tables using the Base ID and API Key you provide in the agent instructions.
+
+
+#### Tool Overview
+
+| Tool | Operation | Tables Involved |
+| :--- | :--- | :--- |
+| `get_investment_account` | Read | Customers → Investment |
+| `get_stock_price` | Read (no Airtable) | None — uses hardcoded market data |
+| `get_portfolio` | Read | Investment → Positions |
+| `initiate_order` | Read (SELL) / External API (BUY) | Positions (SELL validation only) |
+| `confirm_order` | Write | Positions |
+
+---
+
+#### Tool Details
+
+???+ webex "`get_investment_account`"
+
+    - **What it does:** Takes a Customer ID (e.g., `CUST-001`), looks it up in your **Customers** table, then finds the linked record in your **Investment** table.
+    - **What it returns:** The Investment Account ID (e.g., `INV-001`).
+    - **Airtable impact:** Read-only. Nothing is modified.
+
+    **Data flow:**
+    ```
+    Customer ID (CUST-001) → Customers table → linked Investment record → Investment Account ID (INV-001)
+    ```
+
+???+ webex "`get_stock_price`"
+
+    - **What it does:** Takes a stock ticker (e.g., `MOON`) and returns the current price, daily change, sector, and volatility.
+    - **What it returns:** Market data for the requested ticker.
+    - **Airtable impact:** None. Stock data is hardcoded on the server.
+
+    **Available tickers:**
+
+    | Ticker | Name | Sector | Price |
+    | :--- | :--- | :--- | :--- |
+    | MOON | MoonShotMeme | Tech | $42.69 |
+    | YLO | YOLO-Tech | Tech | $8.05 |
+    | DEBT | InfiniteDebtInc | Finance | $102.40 |
+    | CATV | CatVideoStreaming | Entertainment | $15.20 |
+    | HYPE | HypeTrainHoldings | Retail | $250.00 |
+
+???+ webex "`get_portfolio`"
+
+    - **What it does:** Takes an Investment Account ID, queries your **Investment** table, follows the linked records into your **Positions** table, and returns all positions.
+    - **What it returns:** A list of positions, each with the Position ID, ticker, quantity, purchase price, and current price.
+    - **Airtable impact:** Read-only. Nothing is modified.
+
+    **Data flow:**
+    ```
+    Investment Account ID (INV-001) → Investment table → linked Positions records → list of positions
+    ```
+
+???+ webex "`initiate_order`"
+
+    This tool behaves differently depending on whether the customer is **buying** or **selling**.
+
+    === "BUY Flow"
+
+        1. Calculates the total cost based on the current stock price and quantity.
+        2. Creates a payment session with **NovaPay** (external payment provider).
+        3. Triggers a webhook to send a payment link to the customer's email.
+        4. Returns the payment session ID and URL.
+
+        **Airtable impact:** None at this stage. The position is only written after payment is confirmed via `confirm_order`.
+
+        **Data flow:**
+        ```
+        Order details → NovaPay API → payment session created → payment link emailed to customer
+        ```
+
+    === "SELL Flow"
+
+        1. Looks up the customer's existing position for that ticker in your **Positions** table.
+        2. Validates that the customer owns enough shares to sell.
+        3. If the customer tries to sell more shares than they own, returns an error with the current holding.
+        4. If validated, returns a confirmation prompt with the order details and projected proceeds.
+
+        **Airtable impact:** Read-only at this stage. The position is only updated after the customer confirms via `confirm_order`.
+
+        **Data flow:**
+        ```
+        Order details → Positions table lookup → ownership validated → confirmation prompt returned
+        ```
+
+???+ webex "`confirm_order`"
+
+    This tool also behaves differently for **BUY** and **SELL**.
+
+    === "BUY Confirmation"
+
+        1. Checks the NovaPay payment status using the payment session ID.
+        2. If payment is still pending, returns a pending status and asks the agent to try again later.
+        3. If payment is completed, creates a **new row** in your **Positions** table with the Position ID, ticker, quantity, and purchase price.
+
+        **Airtable impact:** A new record is **created** in the Positions table, linked to the Investment account.
+
+        **Data flow:**
+        ```
+        Payment session ID → NovaPay status check → if completed → new Positions record created
+        ```
+
+    === "SELL Confirmation — Partial Sell"
+
+        1. No payment check is performed.
+        2. Finds the existing position in your **Positions** table.
+        3. **Reduces the Quantity** on the existing record. For example, if the customer owns 10 shares and sells 3, the quantity is updated to 7.
+
+        **Airtable impact:** The existing Positions record is **updated** (quantity reduced).
+
+        **Data flow:**
+        ```
+        Sell 3 of 10 shares → Positions record updated → Quantity: 10 → 7
+        ```
+
+    === "SELL Confirmation — Full Sell"
+
+        1. No payment check is performed.
+        2. Finds the existing position in your **Positions** table.
+        3. Since the customer is selling **all** shares, the position record is **deleted** from the table.
+
+        **Airtable impact:** The existing Positions record is **deleted**.
+
+        **Data flow:**
+        ```
+        Sell 10 of 10 shares → Positions record deleted → position closed
+        ```
+
+    ???+ tip "Partial vs. Full Sell"
+        The server automatically determines whether to update or delete based on the remaining quantity. If `remaining = 0`, the record is deleted. Otherwise, only the quantity field is updated.
+
+---
+
+#### Required Airtable Fields
+
+For the tools to work correctly, your **Positions** table must have the following fields:
+
+| Field Name | Type | Description |
+| :--- | :--- | :--- |
+| `Position_ID` | Text | Unique identifier (e.g., POS-001). Auto-generated by the server. |
+| `Investment_Acct` | Link to Investment | Links the position to the investment account. |
+| `Stock_Ticker` | Text | The stock ticker symbol (e.g., MOON). |
+| `Quantity` | Number | Number of shares held. Updated on partial sells. |
+| `Purchase_Price` | Number | Price per share at time of purchase. |
+| `Current_Price` | Number | Current market price per share. Updated on sells. |
+
+???+ warning "Field Name Accuracy"
+    The MCP Server uses these exact field names when reading and writing to Airtable. If your field names do not match (e.g., `Stock Ticker` instead of `Stock_Ticker`), the tools will fail. Double-check your Airtable column names before testing.
 
 ## Lab 4.5 Connect the MCP Tools to the Investment Advisor
 
