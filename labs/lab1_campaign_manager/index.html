@@ -2255,8 +2255,8 @@
 <td><copy><code>ABANDONED</code></copy></td>
 </tr>
 <tr>
-<td><strong>LIVE_VOICE_IVR_CAM</strong></td>
-<td><copy><code>LIVE_VOICE_IVR_CAM</code></copy></td>
+<td><strong>LIVE_VOICE</strong></td>
+<td><copy><code>LIVE_VOICE</code></copy></td>
 </tr>
 <tr>
 <td><strong>Default</strong></td>
@@ -2270,7 +2270,7 @@
 </ol>
 <p></p><figure markdown="" style="width: 70%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p8_img1.png" data-title="Event flows overview" data-desc-position="top"><img alt="Event flows overview" src="../assets/lab1_p8_img1.png"></a>
-<figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE_IVR_CAM outputs</figcaption>
+<figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE outputs</figcaption>
 </figure><p></p>
 </details>
 <p><strong>Handling AMD and Abandoned outcomes:</strong></p>
@@ -2292,12 +2292,12 @@
 <figcaption>Play Message node configured with TTS "Goodbye" for AMD and Abandoned call outcomes</figcaption>
 </figure><p></p>
 </details>
-<p><strong>Handling Live Voice (LIVE_VOICE_IVR_CAM) outcome:</strong></p>
+<p><strong>Handling Live Voice (LIVE_VOICE) outcome:</strong></p>
 <details class="webex" open="open">
 <summary>Configure Live Voice Routing</summary>
 <ol>
 <li>Drag a <strong>Go To</strong> node onto the canvas.</li>
-<li>Connect the <strong>LIVE_VOICE_IVR_CAM</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
+<li>Connect the <strong>LIVE_VOICE</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
 <li>Connect also the <strong>Default</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
 <li>Configure the <strong>Go To</strong> node:<ul>
 <li><strong>Activity Label</strong>: <code>GoTo_AIAgent</code></li>
@@ -2800,7 +2800,7 @@
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p22_img2.jpeg" data-title="Telephony outcomes" data-desc-position="top"><img alt="Telephony outcomes" src="../assets/lab1_p22_img2.jpeg"></a><p></p>
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p23_img1.png" data-title="Telephony outcomes list" data-desc-position="top"><img alt="Telephony outcomes list" src="../assets/lab1_p23_img1.png"></a>
-</p><figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE_IVR_CAM, BUSY, INVALID_NUMBER, and others</figcaption>
+</p><figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE, BUSY, INVALID_NUMBER, and others</figcaption>
 </figure><p></p>
 </details>
 <h3 id="ui-users">UI Users<a class="headerlink" href="#ui-users" title="Permanent link">¶</a></h3>
