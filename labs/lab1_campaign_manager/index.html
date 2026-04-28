@@ -1186,26 +1186,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lab-16-configure-business-hours" class="md-nav__link">
+  <a href="#lab-16-campaign-manager-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab 1.6 - Configure Business Hours
+        Lab 1.6 - Campaign Manager Configuration
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lab-17-campaign-manager-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lab 1.7 - Campaign Manager Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Lab 1.7 - Campaign Manager Configuration">
+    <nav class="md-nav" aria-label="Lab 1.6 - Campaign Manager Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1346,15 +1335,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lab-18-campaign-management" class="md-nav__link">
+  <a href="#lab-17-campaign-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab 1.8 - Campaign Management
+        Lab 1.7 - Campaign Management
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Lab 1.8 - Campaign Management">
+    <nav class="md-nav" aria-label="Lab 1.7 - Campaign Management">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1396,15 +1385,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lab-19-upload-contact-list-and-test" class="md-nav__link">
+  <a href="#lab-18-upload-contact-list-and-test" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab 1.9 - Upload Contact List and Test
+        Lab 1.8 - Upload Contact List and Test
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Lab 1.9 - Upload Contact List and Test">
+    <nav class="md-nav" aria-label="Lab 1.8 - Upload Contact List and Test">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1941,7 +1930,6 @@
 <li>Configure Global Variables and Wrap-up Codes</li>
 <li>Build the Outbound Campaign Flow (Main + Event flows)</li>
 <li>Create the Outdial Entry Point (Channel) and Outdial ANI</li>
-<li>Configure Business Hours</li>
 <li>Complete Campaign Manager prerequisites</li>
 <li>Create, activate, and upload contacts to the Campaign</li>
 </ol>
@@ -2469,40 +2457,7 @@
 </figure><p></p>
 </details>
 <hr>
-<h2 id="lab-16-configure-business-hours">Lab 1.6 - Configure Business Hours<a class="headerlink" href="#lab-16-configure-business-hours" title="Permanent link">¶</a></h2>
-<p>Business hours are defined in Control Hub and consumed by Campaign Manager to enforce calling windows. Campaign Manager can only enable or disable the days you define here.</p>
-<details class="webex" open="open">
-<summary>Create Business Hours</summary>
-<ol>
-<li>In Control Hub, navigate to <strong>Contact Center</strong> → <strong>Business Hours</strong>.</li>
-<li>Click <strong>Create</strong> and configure:<ul>
-<li><strong>Name</strong>: <code>BH_Bootcamp</code></li>
-<li><strong>Timezone</strong>: <code>Europe/London</code></li>
-</ul>
-</li>
-<li>Click <strong>Add shift</strong> and configure a shift:<ul>
-<li><strong>Shift name</strong>: <code>Shift_bootcamp</code></li>
-<li><strong>Days</strong>: Monday, Tuesday, Wednesday, Thursday, Friday</li>
-<li><strong>Time duration</strong>: <code>9:00 AM</code> to <code>9:00 PM</code></li>
-</ul>
-</li>
-<li>Click <strong>Save</strong>, then click <strong>Create</strong> to finalise the business hours schedule.</li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For this lab, we will <strong>not</strong> configure Holidays or Overrides. The Campaign Manager will use the shift schedule as defined.</p>
-</div>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p12_img2.png" data-title="Business Hours configuration" data-desc-position="top"><img alt="Business Hours configuration" src="../assets/lab1_p12_img2.png"></a>
-<figcaption>BH_Bootcamp business hours showing Monday–Friday shift (9:00 AM–9:00 PM, Europe/London timezone)</figcaption>
-</figure><p></p>
-<p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p12_img3.png" data-title="Add shift dialog" data-desc-position="top"><img alt="Add shift dialog" src="../assets/lab1_p12_img3.png"></a>
-<figcaption>Add shift dialog with Monday–Friday selected and 9:00 AM–9:00 PM time duration</figcaption>
-</figure><p></p>
-</details>
-<hr>
-<h2 id="lab-17-campaign-manager-configuration">Lab 1.7 - Campaign Manager Configuration<a class="headerlink" href="#lab-17-campaign-manager-configuration" title="Permanent link">¶</a></h2>
+<h2 id="lab-16-campaign-manager-configuration">Lab 1.6 - Campaign Manager Configuration<a class="headerlink" href="#lab-16-campaign-manager-configuration" title="Permanent link">¶</a></h2>
 <p>Open the <strong>Webex Campaign Management</strong> portal. On first login, you will see the welcome screen outlining all the administration areas to configure before launching campaigns.</p>
 <figure style="width: 70%;">
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p13_img1.png" data-title="Campaign Manager welcome screen" data-desc-position="top"><img alt="Campaign Manager welcome screen" src="../assets/lab1_p13_img1.png"></a></p>
@@ -2510,19 +2465,7 @@
 </figure>
 <p>Complete each section in order as described below.</p>
 <h3 id="business-days">Business Days<a class="headerlink" href="#business-days" title="Permanent link">¶</a></h3>
-<p>Business days are synced from Control Hub. In Campaign Manager, you can only toggle each day on or off — you cannot define shift times here.</p>
-<details class="webex" open="open">
-<summary>Configure Business Days</summary>
-<ol>
-<li>In Campaign Manager left navigation panel, navigate to <strong>Voice campaigns administration</strong> → <strong>Business days</strong>.</li>
-<li>Enable <strong>Monday</strong> through <strong>Friday</strong> by toggling each day to <strong>Business day</strong>.</li>
-<li>Leave <strong>Saturday</strong> and <strong>Sunday</strong> as <strong>Non-business day</strong>.</li>
-</ol>
-<p></p><figure markdown="" style="width: 75%;">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p14_img1.png" data-title="Business days configuration" data-desc-position="top"><img alt="Business days configuration" src="../assets/lab1_p14_img1.png"></a>
-<figcaption>Business days showing Monday–Friday enabled as Business day, Saturday and Sunday as Non-business day</figcaption>
-</figure><p></p>
-</details>
+<p>Business days are used solely for the purpose of contact list expiry calculation. They have no association with 'Business hours' on the Control Hub. We won't use this option as part this lab.</p>
 <h3 id="contact-modes">Contact Modes<a class="headerlink" href="#contact-modes" title="Permanent link">¶</a></h3>
 <p>Contact modes define the type of phone number in your contact list (e.g. Home, Office, Mobile). For this lab, we use a single contact mode mapped to the <code>phoneNumber</code> column in the CSV.</p>
 <details class="webex" open="open">
@@ -2894,7 +2837,7 @@
 <p>For more information, refer to the <a href="https://docs-campaign-for-contact-centers.webexcampaign.com/docs/wrap-up-code-sets">Wrap-up code sets documentation</a>.</p>
 </details>
 <hr>
-<h2 id="lab-18-campaign-management">Lab 1.8 - Campaign Management<a class="headerlink" href="#lab-18-campaign-management" title="Permanent link">¶</a></h2>
+<h2 id="lab-17-campaign-management">Lab 1.7 - Campaign Management<a class="headerlink" href="#lab-17-campaign-management" title="Permanent link">¶</a></h2>
 <p>With all prerequisites in place, you are ready to create the campaign group, configure the campaign, and activate it.</p>
 <h3 id="create-a-campaign-group">Create a Campaign Group<a class="headerlink" href="#create-a-campaign-group" title="Permanent link">¶</a></h3>
 <p>A campaign group is a container (wrapper) for one or more campaigns. You must create the group first before creating any campaigns inside it.</p>
@@ -3129,7 +3072,7 @@
 </details>
 </details>
 <hr>
-<h2 id="lab-19-upload-contact-list-and-test">Lab 1.9 - Upload Contact List and Test<a class="headerlink" href="#lab-19-upload-contact-list-and-test" title="Permanent link">¶</a></h2>
+<h2 id="lab-18-upload-contact-list-and-test">Lab 1.8 - Upload Contact List and Test<a class="headerlink" href="#lab-18-upload-contact-list-and-test" title="Permanent link">¶</a></h2>
 <h3 id="upload-the-contact-list">Upload the Contact List<a class="headerlink" href="#upload-the-contact-list" title="Permanent link">¶</a></h3>
 <p>Now that the campaign is active, upload your contact list CSV to trigger the outbound calls.</p>
 <details class="webex" open="open">
