@@ -256,7 +256,7 @@ After registering the app in the Developer Portal, you need to provision it in *
 
 ### Lab 4.4.1 Understanding the MCP Server Tools
 
-Before registering and connecting the MCP Server, it's important to understand what each tool does and how it interacts with your Airtable data.
+Before adding the MCP tools to your Webex AI Agent, it's important to understand what each tool does and how it interacts with your Airtable data.
 
 The MCP Server is pre-deployed and shared across all participants. You do not need to host or modify it. It exposes five tools that the Investment Advisor will call during conversations. Each tool either **reads from** or **writes to** your Airtable tables using the Base ID and API Key you provide in the agent instructions.
 

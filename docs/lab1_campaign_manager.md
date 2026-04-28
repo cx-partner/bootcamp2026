@@ -50,9 +50,8 @@ In this lab you will perform the following tasks:
 3. Configure Global Variables and Wrap-up Codes
 4. Build the Outbound Campaign Flow (Main + Event flows)
 5. Create the Outdial Entry Point (Channel) and Outdial ANI
-6. Configure Business Hours
-7. Complete Campaign Manager prerequisites
-8. Create, activate, and upload contacts to the Campaign
+6. Complete Campaign Manager prerequisites
+7. Create, activate, and upload contacts to the Campaign
 
 ---
 
@@ -260,12 +259,12 @@ This event fires when the dialler receives a CPA result for an outbound call att
             |---|---|
             | **AMD** | <copy>`AMD`</copy> |
             | **ABANDONED** | <copy>`ABANDONED`</copy> |
-            | **LIVE_VOICE_IVR_CAM** | <copy>`LIVE_VOICE_IVR_CAM`</copy> |
+            | **LIVE_VOICE** | <copy>`LIVE_VOICE`</copy> |
             | **Default** | (default fallthrough) |
 
     <figure markdown style="width: 70%;">
     ![Event flows overview](./assets/lab1_p8_img1.png)
-    <figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE_IVR_CAM outputs</figcaption>
+    <figcaption>Case node configured with CPAResult variable showing AMD, ABANDONED, and LIVE_VOICE outputs</figcaption>
     </figure>
 
 
@@ -286,12 +285,12 @@ This event fires when the dialler receives a CPA result for an outbound call att
     <figcaption>Play Message node configured with TTS "Goodbye" for AMD and Abandoned call outcomes</figcaption>
     </figure>
 
-**Handling Live Voice (LIVE_VOICE_IVR_CAM) outcome:**
+**Handling Live Voice (LIVE_VOICE) outcome:**
 
 ???+ webex "Configure Live Voice Routing"
 
     1. Drag a **Go To** node onto the canvas.
-    2. Connect the **LIVE_VOICE_IVR_CAM** output of the **Case** node to the **Go To** node.
+    2. Connect the **LIVE_VOICE** output of the **Case** node to the **Go To** node.
     3. Connect also the **Default** output of the **Case** node to the **Go To** node.
     3. Configure the **Go To** node:
         - **Activity Label**: `GoTo_AIAgent`
@@ -382,38 +381,8 @@ The Outdial ANI is the caller ID displayed to customers when they receive the ou
 
 ---
 
-## Lab 1.6 - Configure Business Hours
 
-Business hours are defined in Control Hub and consumed by Campaign Manager to enforce calling windows. Campaign Manager can only enable or disable the days you define here.
-
-???+ webex "Create Business Hours"
-
-    1. In Control Hub, navigate to **Contact Center** → **Business Hours**.
-    2. Click **Create** and configure:
-        - **Name**: `BH_Bootcamp`
-        - **Timezone**: `Europe/London`
-    3. Click **Add shift** and configure a shift:
-        - **Shift name**: `Shift_bootcamp`
-        - **Days**: Monday, Tuesday, Wednesday, Thursday, Friday
-        - **Time duration**: `9:00 AM` to `9:00 PM`
-    4. Click **Save**, then click **Create** to finalise the business hours schedule.
-
-    !!! note
-        For this lab, we will **not** configure Holidays or Overrides. The Campaign Manager will use the shift schedule as defined.
-
-    <figure markdown>
-    ![Business Hours configuration](./assets/lab1_p12_img2.png)
-    <figcaption>BH_Bootcamp business hours showing Monday–Friday shift (9:00 AM–9:00 PM, Europe/London timezone)</figcaption>
-    </figure>
-
-    <figure markdown>
-    ![Add shift dialog](./assets/lab1_p12_img3.png)
-    <figcaption>Add shift dialog with Monday–Friday selected and 9:00 AM–9:00 PM time duration</figcaption>
-    </figure>
-
----
-
-## Lab 1.7 - Campaign Manager Configuration
+## Lab 1.6 - Campaign Manager Configuration
 
 Open the **Webex Campaign Management** portal. On first login, you will see the welcome screen outlining all the administration areas to configure before launching campaigns.
 
@@ -426,18 +395,7 @@ Complete each section in order as described below.
 
 ### Business Days
 
-Business days are synced from Control Hub. In Campaign Manager, you can only toggle each day on or off — you cannot define shift times here.
-
-???+ webex "Configure Business Days"
-
-    1. In Campaign Manager left navigation panel, navigate to **Voice campaigns administration** → **Business days**.
-    2. Enable **Monday** through **Friday** by toggling each day to **Business day**.
-    3. Leave **Saturday** and **Sunday** as **Non-business day**.
-
-    <figure markdown style="width: 75%;">
-    ![Business days configuration](./assets/lab1_p14_img1.png)
-    <figcaption>Business days showing Monday–Friday enabled as Business day, Saturday and Sunday as Non-business day</figcaption>
-    </figure>
+Business days are used solely for the purpose of contact list expiry calculation. They have no association with 'Business hours' on the Control Hub. We won't use this option as part of this lab.
 
 ### Contact Modes
 
@@ -720,7 +678,7 @@ The system provides a **primary (read-only) outcome set**. You must **duplicate*
     ![Telephony outcomes](./assets/lab1_p22_img2.jpeg)
 
     ![Telephony outcomes list](./assets/lab1_p23_img1.png)
-    <figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE_IVR_CAM, BUSY, INVALID_NUMBER, and others</figcaption>
+    <figcaption>Bootcamp_Primary_telephony_outcome_set showing all 20 telephony outcomes including AMD, ABANDONED, LIVE_VOICE, BUSY, INVALID_NUMBER, and others</figcaption>
     </figure>
 
 ### UI Users
@@ -765,7 +723,7 @@ Wrap-up codes defined in Control Hub are synced to Campaign Manager. You can con
 
 ---
 
-## Lab 1.8 - Campaign Management
+## Lab 1.7 - Campaign Management
 
 With all prerequisites in place, you are ready to create the campaign group, configure the campaign, and activate it.
 
@@ -960,7 +918,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
 ---
 
-## Lab 1.9 - Upload Contact List and Test
+## Lab 1.8 - Upload Contact List and Test
 
 ### Upload the Contact List
 
@@ -1050,8 +1008,7 @@ At this point, you have successfully:
 - [x] Built the `AI_Agent_DebtCollection` test flow with a congratulatory TTS message
 - [x] Built the `Outbound_DebtCollection` campaign flow with CPA-based routing (AMD, Abandoned, Live Voice)
 - [x] Configured the outdial Entry Point (Channel) and Outdial ANI
-- [x] Set up Business Hours in Control Hub
-- [x] Completed all Campaign Manager prerequisites (business days, contact modes, field mappings, suppression rules, telephony outcomes, wrap-up codes, meta-tags)
+- [x] Completed all Campaign Manager prerequisites (, contact modes, field mappings, suppression rules, telephony outcomes, wrap-up codes, meta-tags)
 - [x] Created, configured, and activated the `Bootcamp_campaign` Progressive IVR campaign
 - [x] Uploaded a contact list and received a live test call
 
