@@ -16,6 +16,8 @@ All the users in the Bootcamp tenant are assigned to a US location with US numbe
 
 > Use WebRTC in the agent desktop for you Agent.
 
+[Webex Campaign Manager portal](https://Bootcamp.wxcc.webexcampaign.us/nextgen)
+
 WxConnect email asset: **bcampfy26@gmail.com**
 
 > use this email address as your Webex Connect email asset to send the email communications to your customer. 
