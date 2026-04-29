@@ -292,7 +292,7 @@ We need to define a couple of environmental variables. Navigate to your workspac
     	| Key          | Value                                                      |
 		| ------------ | ---------------------------------------------------------- |
 		| REDIS_URL    | The Internal Redis URL you copied above                    |
-		| FRONTEND_URL | https://<your-GitHub-username>.github.io/NovaPay/backend/frontend |
+		| FRONTEND_URL | `https://<your-GitHub-username>.github.io/NovaPay/backend/frontend` |
 
 	4. Click on **Save, Rebuild and Deploy**
 
