@@ -407,7 +407,7 @@ During this lab section we will focus on how to effectively setup an AI Assistan
         ???+ Important
             This step uses the Airtable API to create a new record in a **FraudCases** table. Before proceeding, ensure you have:
 
-            - A **FraudCases** table created in your Airtable base with the following fields: `CaseID` (Single line text), `Status` (Single line text), `CustomerID` (Link to Customers table), and `TransactionID` (Link to Transactions table).
+            - A **FraudCases** table created in your Airtable base with the following fields: `CaseID` (Single line text), `Status` (Single Select), `CustomerID` (Link to Customers table), and `TransactionID` (Link to Transactions table).
             - Your [Airtable API](https://airtable.com/developers/web/api/introduction) base ID handy.
             - Your [Personal Access Token](https://airtable.com/create/tokens) created with write permissions.
 
