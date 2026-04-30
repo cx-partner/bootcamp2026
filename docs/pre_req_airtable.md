@@ -489,7 +489,7 @@ Next we will need to create four tables for our Webex Bank: **Customers**, **Tra
     
         To complete the example population, add the customer and the transaction to the fraud case: 
 
-        In the **Customers** table, click the `+`symbol in the *FraudCases* empty cell of the customer record and add the *TRAN-001* to the customer record. 
+        In the **Customers** table, click the `+`symbol in the *FraudCases* empty cell of the customer record and add the *805615* to the customer record. 
 
         Proceed the same in the **Transactions** table. 
         
