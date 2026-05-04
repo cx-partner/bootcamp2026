@@ -12,6 +12,8 @@ If the **Pod#** has been allocated to you, the *#* number will determine the use
 
 All the users in the Bootcamp tenant are assigned to a US location (Office) with US numbers. 
 
+> Note the Agents might not have the *Contact Center* flag assigned in their profile. Enabling this flag allows you to assign the Agent to a Site and a Team. 
+
 > Use the customer included in your Pod# to simulate all the call scenarios during the bootcamp. Log into a Webex App with the assigned customer credentials and you will be able to make and receive calls to/from US numbers. 
 
 > Use WebRTC in the agent desktop for your Agent.
