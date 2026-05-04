@@ -124,9 +124,11 @@ Lab 1 requires the **Webex Campaign Management** add-on module to be enabled in 
 
     If you have received this email, your Campaign Manager module is active. Navigate to the URL provided to confirm access. You should be able to access with your Control Hub admin credentials. 
 
-For partners attending the Bootcamp that have not the Native Campaign Manager feature enabled, we have requested the provisioning of the feature in their Gold Tenant. We provided the email of one of the attendees to the Bootcamp. To verify availability, check whether you received the activation email above, and confirm you can log in to the Campaign Manager portal. If you cannot access Campaign Manager from the provided URL contact us following the instructions above. 
+For partners attending the Bootcamp that do not have the Native Campaign Manager feature enabled, we have requested the provisioning of the feature in their Gold Tenant. We provided the email of one of the attendees registered for the Bootcamp. To verify availability, check whether you received the activation email above, and confirm you can log in to the Campaign Manager portal. If you cannot access Campaign Manager from the provided URL contact us following the instructions above. 
 
-NOTE that there is no cross launch link from Control Hub yet for the Campaign Manager.
+> NOTE: If you don´t find the activation email in your Inbox, check the spam or junk folder. The email sender should be *Kamalakar Bayya*
+
+> NOTE: There is no cross launch link from Control Hub to the Campaign Manager portal when the feature is activated via feature-flag.
 
 ???+ tip "Additional Campaign Manager resources"
     The activation email contains also a few resources that provide a useful orientation to the Campaign Manager module:

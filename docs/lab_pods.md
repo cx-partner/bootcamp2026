@@ -10,19 +10,23 @@ If the **Pod#** has been allocated to you, the *#* number will determine the use
 | agent    | bootcampfy26+agent#@gmail.com | Bootcamp!26 |
 | customer | bootcampfy26+cust#@gmail.com | Bootcamp!26 |
 
-All the users in the Bootcamp tenant are assigned to a US location with US numbers (Office). 
+All the users in the Bootcamp tenant are assigned to a US location (Office) with US numbers. 
 
 > Use the customer included in your Pod# to simulate all the call scenarios during the bootcamp. Log into a Webex App with the assigned customer credentials and you will be able to make and receive calls to/from US numbers. 
 
-> Use WebRTC in the agent desktop for you Agent.
+> Use WebRTC in the agent desktop for your Agent.
+
+> Use the available *BootcampOutdialANI* in the Lab tenant for your lab 1. You **DO NOT NEED TO CREATE ANOTHER OUTDIAL ANI**.
 
 [Webex Campaign Manager portal](https://Bootcamp.wxcc.webexcampaign.us/nextgen)
+
+> Log into the Campaign Manager portal with the assigned POD admin user.
 
 WxConnect email asset: **bcampfy26@gmail.com**
 
 > use this email address as your Webex Connect email asset to send the email communications to your customer. 
 
-Developer Portal: Use the assigned admin account to log into the Developer Portal when required. 
+Developer Portal: Use the assigned POD admin account to log into the Developer Portal when required. 
 
 ???+ Warning "Rule: **Standardized Naming Convention**"  
     To prevent configuration conflicts in the shared Bootcamp tenant, all users must follow a rigorous naming convention. Prepend all created entities and components with your assigned POD number (e.g., POD#_).
