@@ -1382,13 +1382,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lab-completion" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lab Completion ✅
+        Troubleshooting
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#airtable-api-calls-by-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Airtable API Calls by Tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#novapay-api-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NovaPay API Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2441,28 +2469,333 @@
 </tbody>
 </table>
 </details>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <details class="bug" open="open">
-<summary>Troubleshooting</summary>
+<summary>General Troubleshooting</summary>
 <ul>
 <li><strong>Transfer not triggering</strong>: Verify that Alex's instructions include the <code>investment_transfer</code> logic and that the action is published. Check the AI Agent Sessions logs in the AI Agent Studio.</li>
 <li><strong>MCP tools not appearing</strong>: Ensure the Agentic App is set to <strong>Allowed</strong> in Control Hub and all five tools are <strong>Enabled</strong> in the Tools tab.</li>
-<li><strong>Airtable write fails</strong>: Verify your Airtable Base ID and API Key are correct in the AI Agent instructions. Also confirm that the Positions table has the expected field names: <code>Position_ID</code>, <code>Investment_Acct</code>, <code>Stock_Ticker</code>, <code>Quantity</code>, <code>Purchase_Price</code>, <code>Current_Price</code>.</li>
-<li><strong>Payment link not received</strong>: Check that the WEBHOOK_URL in the MCP Server <code>.env</code> file points to a valid Webex Connect webhook that sends emails. Also verify the NovaPay service is responsive.</li>
 <li><strong>Context variables empty after transfer</strong>: Verify the Parse node path expressions match the entity names in the <code>investment_transfer</code> action. Use the flow debugger in Webex Connect to inspect the raw MetaData JSON.</li>
 </ul>
 </details>
-<hr>
-<h2 id="lab-completion">Lab Completion ✅<a class="headerlink" href="#lab-completion" title="Permanent link">¶</a></h2>
-<p>At this point, you have successfully:</p>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Configured a transfer action in Alex to hand off investment-related conversations.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Created a second AI Agent (Investment Advisor) with a specialized persona and instructions.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Registered and provisioned an external MCP Server as an Agentic App in the Webex ecosystem.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Connected five MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Updated the call flow to route investment transfers to the Investment Advisor AI Agent.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled="" checked=""><span class="task-list-indicator"></span></label> Tested the complete multi-agent scenario from debt collection to investment advisory with live MCP tool execution.</li>
+<details class="bug" open="open">
+<summary>Email Delivery Issues</summary>
+<p>The payment link email sent by NovaPay may land in the <strong>spam/junk folder</strong> due to the NovaPay domain reputation. The sender email is <code>wxccpartner@gmail.com</code>.</p>
+<p><strong>Recommended steps:</strong></p>
+<ol>
+<li>Check your <strong>spam/junk folder</strong> for the payment link email.</li>
+<li>If found in spam, mark it as "Not Spam" and add <code>wxccpartner@gmail.com</code> as a trusted sender/contact.</li>
+<li>If using Gmail, check the <strong>Promotions</strong> tab as well.</li>
+<li><strong>Verify the customer email</strong> passed to <code>initiate_order</code> is correct. Check the AI Agent session logs to see the exact parameters sent.</li>
+<li><strong>NovaPay cold start</strong>: The NovaPay service is hosted on Render's free tier and may take 30-60 seconds to wake up on the first request. If <code>initiate_order</code> returns an error, try again after a minute.</li>
+<li><strong>Webhook not configured</strong>: If the MCP Server's <code>WEBHOOK_URL</code> environment variable is not set, the payment link will still be created (and returned in the tool response) but the email will not be sent. In this case, the AI Agent should still be able to relay the payment URL verbally or via chat.</li>
+</ol>
+<details class="tip" open="open">
+<summary>Use Digital Preview Instead of Voice for Testing</summary>
+<p>When testing the payment flow, it is recommended to use the <strong>AI Agent Preview (Digital)</strong> option instead of voice. When using the voice channel, the AI Agent will prompt you every ~15 seconds with "Are you still there?" while you are waiting to receive and complete the payment email. The digital preview allows you to take your time completing the payment without being interrupted.</p>
+</details>
+<!-- Add screenshot of AI Agent Preview digital option here -->
+</details>
+<details class="bug" open="open">
+<summary>Airtable Field and Table Name Errors</summary>
+<p>The MCP Server uses <strong>exact field names and table names</strong> when making API calls to Airtable. Mismatches will cause errors that may not be immediately obvious.</p>
+<p><strong>Common symptoms and causes:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Error Code</th>
+<th style="text-align: left;">Symptom</th>
+<th style="text-align: left;">Likely Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>422</code> (Unprocessable Entity)</td>
+<td style="text-align: left;"><code>get_investment_account</code> fails</td>
+<td style="text-align: left;">Field values in your <strong>Customers</strong> table contain invalid or special characters (e.g., curly quotes, invisible Unicode characters in <code>CustomerID</code>). Re-type the values manually instead of pasting from formatted sources.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>403</code> (Forbidden)</td>
+<td style="text-align: left;"><code>get_portfolio</code> or <code>confirm_order</code> fails</td>
+<td style="text-align: left;">The MCP Server is looking for a table named <strong><code>Investment</code></strong> but your Airtable base has it named <strong><code>Investments</code></strong> (or another variation).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>404</code> (Not Found)</td>
+<td style="text-align: left;">Any tool fails</td>
+<td style="text-align: left;">A table or field referenced by the MCP Server does not exist in your Airtable base.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>422</code> (Unprocessable Entity)</td>
+<td style="text-align: left;"><code>confirm_order</code> fails on write</td>
+<td style="text-align: left;">Field names in your <strong>Positions</strong> table don't match what the MCP Server expects (e.g., <code>Stock Ticker</code> instead of <code>Stock_Ticker</code>).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to verify your Airtable setup:</strong></p>
+<p>Run through the <a href="https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity">Pre-Lab Check: Verifying Airtable Field Name Integrity</a> to confirm your table names, field names, and field values are correct before troubleshooting further.</p>
+<!-- Add screenshot showing correct Airtable table/field names here -->
+<details class="tip" open="open">
+<summary>Quick Validation</summary>
+<p>You can also test your Airtable setup independently by using the Airtable API directly in a browser or tool like Postman:
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>GET https://api.airtable.com/v0/YOUR_BASE_ID/Investment
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Authorization: Bearer YOUR_API_KEY
+</span></code></pre></div>
+If this returns your records successfully, the table name and API key are correct. If you get a <code>403</code> or <code>404</code>, revisit the <a href="https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity">Airtable Field Name Integrity check</a>.<p></p>
+</details>
+</details>
+<details class="bug" open="open">
+<summary>Airtable Write Failures</summary>
+<p>If <code>confirm_order</code> fails when trying to write a new position or update an existing one:</p>
+<ol>
+<li><strong>Verify Airtable credentials</strong>: Confirm that the <code>airtable_base_id</code> and <code>airtable_api_key</code> in your AI Agent instructions are correct and have write permissions.</li>
+<li><strong>Check field names and table names</strong>: Run through the <a href="https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity">Pre-Lab Check: Verifying Airtable Field Name Integrity</a> to validate your Airtable structure.</li>
+<li><strong>Check linked record format</strong>: The <code>Investment_Acct</code> field in the Positions table must be a <strong>Link to another record</strong> type pointing to the Investment table. If it's a plain text field, writes will fail with a 422 error.</li>
+<li><strong>Check API key permissions</strong>: Ensure your Airtable Personal Access Token has <code>data.records:read</code> and <code>data.records:write</code> scopes for the correct base.</li>
+</ol>
+<!-- Add screenshot showing Airtable API key permissions configuration here -->
+</details>
+<details class="bug" open="open">
+<summary>Customer Administrator Account Required</summary>
+<p>Certain operations in this lab <strong>require a Customer Administrator account</strong>. A Partner account does not have the necessary permissions.</p>
+<p><strong>Operations that require Customer Admin:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Operation</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Provisioning the Agentic App in Control Hub (Lab 4.4)</td>
+<td style="text-align: left;">The <strong>Apps &gt; Agentic Apps</strong> section is only accessible to Customer Admins</td>
+</tr>
+<tr>
+<td style="text-align: left;">Enabling MCP tools in Control Hub (Lab 4.4)</td>
+<td style="text-align: left;">Tool enablement is an org-level admin function</td>
+</tr>
+<tr>
+<td style="text-align: left;">Selecting MCP actions in the AI Agent (Lab 4.5)</td>
+<td style="text-align: left;">The "Select Available" option to discover MCP tools requires the org-level Agentic App to be provisioned, which is only visible to Customer Admins</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If you see any of the following symptoms, you are likely using the wrong account type:</strong></p>
+<ul>
+<li>The <strong>Apps</strong> section in Control Hub does not show <strong>Agentic Apps</strong>.</li>
+<li>The AI Agent <strong>Actions &gt; Select Available</strong> shows no tools even though the Agentic App is registered in the Developer Portal.</li>
+<li>You receive a permission error when trying to set the Agentic App to <strong>Allowed</strong>.</li>
 </ul>
-<p><strong>Congratulations!</strong> You have successfully completed Lab 4 and the entire Bootcamp. You have built a fully operational, multi-agent contact center solution that combines proactive outreach, autonomous AI Agents, human escalation with AI assistance, and cross-skill orchestration with external MCP integrations.</p>
+<details class="warning" open="open">
+<summary>Action Required</summary>
+<p>If you are logged in with a Partner account, log out and log back in with your <strong>Customer Administrator</strong> credentials before proceeding with Labs 4.3 and 4.4. You can switch back to the Partner account for other lab sections.</p>
+</details>
+<!-- Add screenshot showing the difference between Partner and Customer Admin view in Control Hub here -->
+</details>
+<details class="bug" open="open">
+<summary>MCP Server API Reference</summary>
+<p>The MCP Server is hosted at <code>https://mcp.cx-tme.com/investment/mcp</code> and exposes the following internal APIs. These are called automatically by the AI Agent through the MCP protocol — you do not need to call them directly. This reference is provided for troubleshooting purposes.</p>
+<p><strong>MCP Tools (called by the AI Agent):</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tool</th>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>get_investment_account</code></td>
+<td style="text-align: left;">MCP Tool Call</td>
+<td style="text-align: left;">Resolves Customer ID → Investment Account ID via Airtable</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_stock_price</code></td>
+<td style="text-align: left;">MCP Tool Call</td>
+<td style="text-align: left;">Returns hardcoded market data for a given ticker</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_portfolio</code></td>
+<td style="text-align: left;">MCP Tool Call</td>
+<td style="text-align: left;">Reads Investment and Positions tables from Airtable</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>initiate_order</code></td>
+<td style="text-align: left;">MCP Tool Call</td>
+<td style="text-align: left;">BUY: creates NovaPay session + sends email. SELL: validates ownership</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>confirm_order</code></td>
+<td style="text-align: left;">MCP Tool Call</td>
+<td style="text-align: left;">BUY: checks payment + writes position. SELL: updates/deletes position</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>External APIs called by the MCP Server:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">API</th>
+<th style="text-align: left;">URL</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Airtable API</td>
+<td style="text-align: left;"><code>https://api.airtable.com/v0/{base_id}/{table}</code></td>
+<td style="text-align: left;">Reads and writes customer, investment, and position data</td>
+</tr>
+<tr>
+<td style="text-align: left;">NovaPay Create Session</td>
+<td style="text-align: left;"><code>https://novapay-moeh.onrender.com/api/create-session</code></td>
+<td style="text-align: left;">Creates a payment session for BUY orders</td>
+</tr>
+<tr>
+<td style="text-align: left;">NovaPay Session Status</td>
+<td style="text-align: left;"><code>https://novapay-moeh.onrender.com/api/session-status</code></td>
+<td style="text-align: left;">Checks payment completion status for BUY confirmation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Webhook (Email)</td>
+<td style="text-align: left;">Configured via environment variable</td>
+<td style="text-align: left;">Sends payment link email to customer</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="airtable-api-calls-by-tool">Airtable API Calls by Tool<a class="headerlink" href="#airtable-api-calls-by-tool" title="Permanent link">¶</a></h3>
+<p>All Airtable requests use the following headers:
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Authorization: Bearer {airtable_api_key}
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Content-Type: application/json
+</span></code></pre></div><p></p>
+<hr>
+<p><strong><code>get_investment_account</code></strong> — Airtable Calls:</p>
+<p><em>Step 1 — Look up customer record:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>GET https://api.airtable.com/v0/{base_id}/Customers?filterByFormula={CustomerID}="CUST-001"&amp;maxRecords=1
+</span></code></pre></div>
+Returns the Airtable record ID for the customer (e.g., <code>rec1abc123</code>).<p></p>
+<p><em>Step 2 — Find linked investment account:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>GET https://api.airtable.com/v0/{base_id}/Investment
+</span></code></pre></div>
+Iterates through all Investment records and matches where the <code>CustomerID</code> linked field contains the customer record ID from Step 1. Returns the <code>Investment_Acct</code> value (e.g., <code>INV-001</code>).<p></p>
+<hr>
+<p><strong><code>get_portfolio</code></strong> — Airtable Calls:</p>
+<p><em>Step 1 — Look up investment record:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+</span></code></pre></div>
+Returns the Investment record, including the <code>Positions</code> field (an array of linked Positions record IDs).<p></p>
+<p><em>Step 2 — Fetch each linked position:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+</span></code></pre></div>
+Called once per linked position record ID. Returns <code>Position_ID</code>, <code>Stock_Ticker</code>, <code>Quantity</code>, <code>Purchase_Price</code>, and <code>Current_Price</code>.<p></p>
+<hr>
+<p><strong><code>initiate_order</code> (SELL only)</strong> — Airtable Calls:</p>
+<p><em>Step 1 — Look up investment record:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+</span></code></pre></div><p></p>
+<p><em>Step 2 — Find matching position by ticker:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+</span></code></pre></div>
+Called for each linked position until one matches the requested <code>Stock_Ticker</code>. Returns the current <code>Quantity</code> to validate the customer owns enough shares.<p></p>
+<details class="info" open="open">
+<summary>BUY orders do not call Airtable</summary>
+<p>For BUY orders, <code>initiate_order</code> only calls the NovaPay API (see below). No Airtable reads or writes happen until <code>confirm_order</code>.</p>
+</details>
+<hr>
+<p><strong><code>confirm_order</code> (BUY)</strong> — Airtable Calls:</p>
+<p><em>Step 1 — Get next Position ID:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GET https://api.airtable.com/v0/{base_id}/Positions?fields[]=Position_ID&amp;sort[0][field]=Position_ID&amp;sort[0][direction]=desc&amp;maxRecords=1
+</span></code></pre></div>
+Returns the highest existing <code>Position_ID</code> (e.g., <code>POS-003</code>) so the server can generate the next one (<code>POS-004</code>).<p></p>
+<p><em>Step 2 — Create new position record:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>POST https://api.airtable.com/v0/{base_id}/Positions
+</span></code></pre></div>
+Request body:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">{</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">        </span><span class="nt">"Position_ID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POS-004"</span><span class="p">,</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">        </span><span class="nt">"Investment_Acct"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"rec_investment_record_id"</span><span class="p">],</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">        </span><span class="nt">"Stock_Ticker"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CATV"</span><span class="p">,</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">        </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">        </span><span class="nt">"Purchase_Price"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.20</span><span class="p">,</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">        </span><span class="nt">"Current_Price"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.20</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">    </span><span class="nt">"typecast"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="p">}</span>
+</span></code></pre></div><p></p>
+<hr>
+<p><strong><code>confirm_order</code> (SELL — Partial)</strong> — Airtable Calls:</p>
+<p><em>Step 1 — Find existing position (same as <code>initiate_order</code> SELL):</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+</span></code></pre></div><p></p>
+<p><em>Step 2 — Update position quantity:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>PATCH https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+</span></code></pre></div>
+Request body:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">        </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">        </span><span class="nt">"Current_Price"</span><span class="p">:</span><span class="w"> </span><span class="mf">42.69</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="p">}</span>
+</span></code></pre></div>
+Example: Customer owned 10 shares, sold 3, new quantity is 7.<p></p>
+<hr>
+<p><strong><code>confirm_order</code> (SELL — Full)</strong> — Airtable Calls:</p>
+<p><em>Step 1 — Find existing position (same as above):</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+</span></code></pre></div><p></p>
+<p><em>Step 2 — Delete position record:</em>
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>DELETE https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+</span></code></pre></div>
+The position is fully closed and removed from the table.<p></p>
+<hr>
+<h3 id="novapay-api-details">NovaPay API Details<a class="headerlink" href="#novapay-api-details" title="Permanent link">¶</a></h3>
+<p><em>Create Session</em> (<code>POST /api/create-session</code>):
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>POST https://novapay-moeh.onrender.com/api/create-session
+</span></code></pre></div>
+Request body:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">{</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">76.00</span><span class="p">,</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span><span class="nt">"customerEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer@example.com"</span><span class="p">,</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="nt">"agentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"session-id-from-ai-agent"</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="p">}</span>
+</span></code></pre></div>
+Returns:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">{</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">    </span><span class="nt">"sessionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nova_sess_abc123"</span><span class="p">,</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="nt">"paymentUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://novapay-moeh.onrender.com/pay/nova_sess_abc123"</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="p">}</span>
+</span></code></pre></div><p></p>
+<p><em>Session Status</em> (<code>GET /api/session-status</code>):
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>GET https://novapay-moeh.onrender.com/api/session-status?sessionId=nova_sess_abc123
+</span></code></pre></div>
+Returns:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">    </span><span class="nt">"confirmationCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONF-7891"</span><span class="p">,</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">    </span><span class="nt">"last4"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4242"</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="p">}</span>
+</span></code></pre></div><p></p>
+<p>Possible <code>status</code> values: <code>pending</code>, <code>completed</code>, <code>expired</code>, <code>failed</code></p>
+<details class="tip" open="open">
+<summary>Testing APIs Independently</summary>
+<p>If a tool is failing, you can reproduce the exact Airtable or NovaPay API call using Postman, curl, or your browser to isolate whether the issue is with the MCP Server or with your Airtable configuration.</p>
+<p><strong>Airtable example:</strong>
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Authorization: Bearer YOUR_API_KEY"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">     </span><span class="s2">"https://api.airtable.com/v0/YOUR_BASE_ID/Investment"</span>
+</span></code></pre></div><p></p>
+<p><strong>NovaPay example:</strong>
+</p><div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>curl<span class="w"> </span><span class="s2">"https://novapay-moeh.onrender.com/api/session-status?sessionId=YOUR_SESSION_ID"</span>
+</span></code></pre></div><p></p>
+<p>If Airtable returns a <code>403</code> or <code>404</code>, revisit the <a href="https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity">Airtable Field Name Integrity check</a>. If NovaPay returns a timeout or 503, wait 30-60 seconds for the service to wake up (Render free tier cold start) and retry.</p>
+</details>
+</details>
 
 
 
