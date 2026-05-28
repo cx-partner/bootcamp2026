@@ -539,7 +539,7 @@ Before creating the field mapping, create your contact list file.
     <figcaption>File header data types: all set to String. PII protection enabled for phoneNumber</figcaption>
     </figure>
 
-    Click **Save** to finalise the field mapping.
+    Click **Save** to finalise the field mapping. You might get a pop up message like *Some global variables are unmapped in step# 5*. This is due to the fact the phonenumber is not being mapped to any global variable. That is fine, just click on **Save field mapping as is** to continue. 
 
 ### Org Exclusion Dates
 
