@@ -599,25 +599,299 @@ You can now test the full multi-agent flow from debt collection through investme
     | `confirm_order` works | Payment verified, position added to Airtable | ☐ |
     | New position visible in Airtable | Positions table has a new row | ☐ |
 
-???+ bug "Troubleshooting"
+## Troubleshooting
+
+???+ bug "General Troubleshooting"
 
     - **Transfer not triggering**: Verify that Alex's instructions include the `investment_transfer` logic and that the action is published. Check the AI Agent Sessions logs in the AI Agent Studio.
     - **MCP tools not appearing**: Ensure the Agentic App is set to **Allowed** in Control Hub and all five tools are **Enabled** in the Tools tab.
-    - **Airtable write fails**: Verify your Airtable Base ID and API Key are correct in the AI Agent instructions. Also confirm that the Positions table has the expected field names: `Position_ID`, `Investment_Acct`, `Stock_Ticker`, `Quantity`, `Purchase_Price`, `Current_Price`.
-    - **Payment link not received**: Check that the WEBHOOK_URL in the MCP Server `.env` file points to a valid Webex Connect webhook that sends emails. Also verify the NovaPay service is responsive.
     - **Context variables empty after transfer**: Verify the Parse node path expressions match the entity names in the `investment_transfer` action. Use the flow debugger in Webex Connect to inspect the raw MetaData JSON.
 
----
+???+ bug "Email Delivery Issues"
 
-## Lab Completion ✅
+    The payment link email sent by NovaPay may land in the **spam/junk folder** due to the NovaPay domain reputation. The sender email is `wxccpartner@gmail.com`.
 
-At this point, you have successfully:
+    **Recommended steps:**
 
-- [x] Configured a transfer action in Alex to hand off investment-related conversations.
-- [x] Created a second AI Agent (Investment Advisor) with a specialized persona and instructions.
-- [x] Registered and provisioned an external MCP Server as an Agentic App in the Webex ecosystem.
-- [x] Connected five MCP tools (get_stock_price, get_portfolio, initiate_order, confirm_order) to the Investment Advisor.
-- [x] Updated the call flow to route investment transfers to the Investment Advisor AI Agent.
-- [x] Tested the complete multi-agent scenario from debt collection to investment advisory with live MCP tool execution.
+    1. Check your **spam/junk folder** for the payment link email.
+    2. If found in spam, mark it as "Not Spam" and add `wxccpartner@gmail.com` as a trusted sender/contact.
+    3. If using Gmail, check the **Promotions** tab as well.
+    4. **Verify the customer email** passed to `initiate_order` is correct. Check the AI Agent session logs to see the exact parameters sent.
+    5. **NovaPay cold start**: The NovaPay service is hosted on Render's free tier and may take 30-60 seconds to wake up on the first request. If `initiate_order` returns an error, try again after a minute.
+    6. **Webhook not configured**: If the MCP Server's `WEBHOOK_URL` environment variable is not set, the payment link will still be created (and returned in the tool response) but the email will not be sent. In this case, the AI Agent should still be able to relay the payment URL verbally or via chat.
 
-**Congratulations!** You have successfully completed Lab 4 and the entire Bootcamp. You have built a fully operational, multi-agent contact center solution that combines proactive outreach, autonomous AI Agents, human escalation with AI assistance, and cross-skill orchestration with external MCP integrations.
+    ???+ tip "Use Digital Preview Instead of Voice for Testing"
+        When testing the payment flow, it is recommended to use the **AI Agent Preview (Digital)** option instead of voice. When using the voice channel, the AI Agent will prompt you every ~15 seconds with "Are you still there?" while you are waiting to receive and complete the payment email. The digital preview allows you to take your time completing the payment without being interrupted.
+
+    <!-- Add screenshot of AI Agent Preview digital option here -->
+
+???+ bug "Airtable Field and Table Name Errors"
+
+    The MCP Server uses **exact field names and table names** when making API calls to Airtable. Mismatches will cause errors that may not be immediately obvious.
+
+    **Common symptoms and causes:**
+
+    | Error Code | Symptom | Likely Cause |
+    | :--- | :--- | :--- |
+    | `422` (Unprocessable Entity) | `get_investment_account` fails | Field values in your **Customers** table contain invalid or special characters (e.g., curly quotes, invisible Unicode characters in `CustomerID`). Re-type the values manually instead of pasting from formatted sources. |
+    | `403` (Forbidden) | `get_portfolio` or `confirm_order` fails | The MCP Server is looking for a table named **`Investment`** but your Airtable base has it named **`Investments`** (or another variation). |
+    | `404` (Not Found) | Any tool fails | A table or field referenced by the MCP Server does not exist in your Airtable base. |
+    | `422` (Unprocessable Entity) | `confirm_order` fails on write | Field names in your **Positions** table don't match what the MCP Server expects (e.g., `Stock Ticker` instead of `Stock_Ticker`). |
+
+    **How to verify your Airtable setup:**
+
+    Run through the [Pre-Lab Check: Verifying Airtable Field Name Integrity](https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity) to confirm your table names, field names, and field values are correct before troubleshooting further.
+
+    <!-- Add screenshot showing correct Airtable table/field names here -->
+
+    ???+ tip "Quick Validation"
+        You can also test your Airtable setup independently by using the Airtable API directly in a browser or tool like Postman:
+        ```
+        GET https://api.airtable.com/v0/YOUR_BASE_ID/Investment
+        Authorization: Bearer YOUR_API_KEY
+        ```
+        If this returns your records successfully, the table name and API key are correct. If you get a `403` or `404`, revisit the [Airtable Field Name Integrity check](https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity).
+
+???+ bug "Airtable Write Failures"
+
+    If `confirm_order` fails when trying to write a new position or update an existing one:
+
+    1. **Verify Airtable credentials**: Confirm that the `airtable_base_id` and `airtable_api_key` in your AI Agent instructions are correct and have write permissions.
+    2. **Check field names and table names**: Run through the [Pre-Lab Check: Verifying Airtable Field Name Integrity](https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity) to validate your Airtable structure.
+    3. **Check linked record format**: The `Investment_Acct` field in the Positions table must be a **Link to another record** type pointing to the Investment table. If it's a plain text field, writes will fail with a 422 error.
+    4. **Check API key permissions**: Ensure your Airtable Personal Access Token has `data.records:read` and `data.records:write` scopes for the correct base.
+
+    <!-- Add screenshot showing Airtable API key permissions configuration here -->
+
+???+ bug "Customer Administrator Account Required"
+
+    Certain operations in this lab **require a Customer Administrator account**. A Partner account does not have the necessary permissions.
+
+    **Operations that require Customer Admin:**
+
+    | Operation | Why |
+    | :--- | :--- |
+    | Provisioning the Agentic App in Control Hub (Lab 4.4) | The **Apps > Agentic Apps** section is only accessible to Customer Admins |
+    | Enabling MCP tools in Control Hub (Lab 4.4) | Tool enablement is an org-level admin function |
+    | Selecting MCP actions in the AI Agent (Lab 4.5) | The "Select Available" option to discover MCP tools requires the org-level Agentic App to be provisioned, which is only visible to Customer Admins |
+
+    **If you see any of the following symptoms, you are likely using the wrong account type:**
+
+    - The **Apps** section in Control Hub does not show **Agentic Apps**.
+    - The AI Agent **Actions > Select Available** shows no tools even though the Agentic App is registered in the Developer Portal.
+    - You receive a permission error when trying to set the Agentic App to **Allowed**.
+
+    ???+ warning "Action Required"
+        If you are logged in with a Partner account, log out and log back in with your **Customer Administrator** credentials before proceeding with Labs 4.3 and 4.4. You can switch back to the Partner account for other lab sections.
+
+    <!-- Add screenshot showing the difference between Partner and Customer Admin view in Control Hub here -->
+
+???+ bug "MCP Server API Reference"
+
+    The MCP Server is hosted at `https://mcp.cx-tme.com/investment/mcp` and exposes the following internal APIs. These are called automatically by the AI Agent through the MCP protocol — you do not need to call them directly. This reference is provided for troubleshooting purposes.
+
+    **MCP Tools (called by the AI Agent):**
+
+    | Tool | Method | Description |
+    | :--- | :--- | :--- |
+    | `get_investment_account` | MCP Tool Call | Resolves Customer ID → Investment Account ID via Airtable |
+    | `get_stock_price` | MCP Tool Call | Returns hardcoded market data for a given ticker |
+    | `get_portfolio` | MCP Tool Call | Reads Investment and Positions tables from Airtable |
+    | `initiate_order` | MCP Tool Call | BUY: creates NovaPay session + sends email. SELL: validates ownership |
+    | `confirm_order` | MCP Tool Call | BUY: checks payment + writes position. SELL: updates/deletes position |
+
+    ---
+
+    **External APIs called by the MCP Server:**
+
+    | API | URL | Purpose |
+    | :--- | :--- | :--- |
+    | Airtable API | `https://api.airtable.com/v0/{base_id}/{table}` | Reads and writes customer, investment, and position data |
+    | NovaPay Create Session | `https://novapay-moeh.onrender.com/api/create-session` | Creates a payment session for BUY orders |
+    | NovaPay Session Status | `https://novapay-moeh.onrender.com/api/session-status` | Checks payment completion status for BUY confirmation |
+    | Webhook (Email) | Configured via environment variable | Sends payment link email to customer |
+
+    ---
+
+    ### Airtable API Calls by Tool
+
+    All Airtable requests use the following headers:
+    ```
+    Authorization: Bearer {airtable_api_key}
+    Content-Type: application/json
+    ```
+
+    ---
+
+    **`get_investment_account`** — Airtable Calls:
+
+    *Step 1 — Look up customer record:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Customers?filterByFormula={CustomerID}="CUST-001"&maxRecords=1
+    ```
+    Returns the Airtable record ID for the customer (e.g., `rec1abc123`).
+
+    *Step 2 — Find linked investment account:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Investment
+    ```
+    Iterates through all Investment records and matches where the `CustomerID` linked field contains the customer record ID from Step 1. Returns the `Investment_Acct` value (e.g., `INV-001`).
+
+    ---
+
+    **`get_portfolio`** — Airtable Calls:
+
+    *Step 1 — Look up investment record:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+    ```
+    Returns the Investment record, including the `Positions` field (an array of linked Positions record IDs).
+
+    *Step 2 — Fetch each linked position:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+    ```
+    Called once per linked position record ID. Returns `Position_ID`, `Stock_Ticker`, `Quantity`, `Purchase_Price`, and `Current_Price`.
+
+    ---
+
+    **`initiate_order` (SELL only)** — Airtable Calls:
+
+    *Step 1 — Look up investment record:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+    ```
+
+    *Step 2 — Find matching position by ticker:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+    ```
+    Called for each linked position until one matches the requested `Stock_Ticker`. Returns the current `Quantity` to validate the customer owns enough shares.
+
+    ???+ info "BUY orders do not call Airtable"
+        For BUY orders, `initiate_order` only calls the NovaPay API (see below). No Airtable reads or writes happen until `confirm_order`.
+
+    ---
+
+    **`confirm_order` (BUY)** — Airtable Calls:
+
+    *Step 1 — Get next Position ID:*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Positions?fields[]=Position_ID&sort[0][field]=Position_ID&sort[0][direction]=desc&maxRecords=1
+    ```
+    Returns the highest existing `Position_ID` (e.g., `POS-003`) so the server can generate the next one (`POS-004`).
+
+    *Step 2 — Create new position record:*
+    ```
+    POST https://api.airtable.com/v0/{base_id}/Positions
+    ```
+    Request body:
+    ```json
+    {
+        "fields": {
+            "Position_ID": "POS-004",
+            "Investment_Acct": ["rec_investment_record_id"],
+            "Stock_Ticker": "CATV",
+            "Quantity": 5,
+            "Purchase_Price": 15.20,
+            "Current_Price": 15.20
+        },
+        "typecast": true
+    }
+    ```
+
+    ---
+
+    **`confirm_order` (SELL — Partial)** — Airtable Calls:
+
+    *Step 1 — Find existing position (same as `initiate_order` SELL):*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+    GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+    ```
+
+    *Step 2 — Update position quantity:*
+    ```
+    PATCH https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+    ```
+    Request body:
+    ```json
+    {
+        "fields": {
+            "Quantity": 7,
+            "Current_Price": 42.69
+        }
+    }
+    ```
+    Example: Customer owned 10 shares, sold 3, new quantity is 7.
+
+    ---
+
+    **`confirm_order` (SELL — Full)** — Airtable Calls:
+
+    *Step 1 — Find existing position (same as above):*
+    ```
+    GET https://api.airtable.com/v0/{base_id}/Investment?filterByFormula={Investment_Acct}="INV-001"
+    GET https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+    ```
+
+    *Step 2 — Delete position record:*
+    ```
+    DELETE https://api.airtable.com/v0/{base_id}/Positions/{record_id}
+    ```
+    The position is fully closed and removed from the table.
+
+    ---
+
+    ### NovaPay API Details
+
+    *Create Session* (`POST /api/create-session`):
+    ```
+    POST https://novapay-moeh.onrender.com/api/create-session
+    ```
+    Request body:
+    ```json
+    {
+        "amount": 76.00,
+        "customerEmail": "customer@example.com",
+        "agentId": "session-id-from-ai-agent"
+    }
+    ```
+    Returns:
+    ```json
+    {
+        "sessionId": "nova_sess_abc123",
+        "paymentUrl": "https://novapay-moeh.onrender.com/pay/nova_sess_abc123"
+    }
+    ```
+
+    *Session Status* (`GET /api/session-status`):
+    ```
+    GET https://novapay-moeh.onrender.com/api/session-status?sessionId=nova_sess_abc123
+    ```
+    Returns:
+    ```json
+    {
+        "status": "completed",
+        "confirmationCode": "CONF-7891",
+        "last4": "4242"
+    }
+    ```
+
+    Possible `status` values: `pending`, `completed`, `expired`, `failed`
+
+    ???+ tip "Testing APIs Independently"
+        If a tool is failing, you can reproduce the exact Airtable or NovaPay API call using Postman, curl, or your browser to isolate whether the issue is with the MCP Server or with your Airtable configuration.
+
+        **Airtable example:**
+        ```bash
+        curl -H "Authorization: Bearer YOUR_API_KEY" \
+             "https://api.airtable.com/v0/YOUR_BASE_ID/Investment"
+        ```
+
+        **NovaPay example:**
+        ```bash
+        curl "https://novapay-moeh.onrender.com/api/session-status?sessionId=YOUR_SESSION_ID"
+        ```
+
+        If Airtable returns a `403` or `404`, revisit the [Airtable Field Name Integrity check](https://cx-partner.github.io/bootcamp2026/labs/pre_req_airtable/#pre-lab-check-verifying-airtable-field-name-integrity). If NovaPay returns a timeout or 503, wait 30-60 seconds for the service to wake up (Render free tier cold start) and retry.
