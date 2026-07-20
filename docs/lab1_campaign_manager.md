@@ -810,7 +810,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
     !!! Warning
         
-        The file mappings can only be changed while the campaign is in **Draft** status.
+        The field mapping can only be changed while the campaign is in **Draft** status.
 
 
     <figure markdown>
@@ -926,9 +926,9 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 ???+ webex "Activate Campaign"
 
     !!! Warning
-        Once the campaign is active, the field mappings can not be changed in the *Contact List Source* node. If it needs to be changed, a new campaign has to be created with the new field mappings (It could be a duplication of an existing one where you just need to change the field mappings item before saving it).
+        Once a campaign is active, field mappings in the Contact List Source node cannot be modified. To change them, you must create a new campaign —or duplicate the existing one— and update the field mappings before activation.
 
-        The file mappings can be changed while the campaign is in **Draft** status.
+        The field mapping can be changed while the campaign is in **Draft** status.
     
     1. Back in the Campaign group list, locate **Bootcamp_campaign** (status: **Draft**).
     2. Click the **⋮ Actions** menu and select **Activate**.
