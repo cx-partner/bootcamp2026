@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../template_assets/webex75.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -2024,7 +2024,7 @@
 </table>
 </li>
 <li>
-<p>Under <strong>Call distribution</strong>, click <strong>Create a group</strong>, expand it, and select <code>Bootcamp_Team</code>.</p>
+<p>Under <strong>Call distribution</strong>, click <strong>Create a group</strong>, expand it, and select your Team.</p>
 </li>
 <li>
 <p>Fill in the mandatory <strong>Advanced settings</strong>:</p>
@@ -2040,6 +2040,9 @@
 </ol>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p4_img2.png" data-title="Create Outdial Queue" data-desc-position="top"><img alt="Create Outdial Queue" src="../assets/lab1_p4_img2.png"></a>
+</figure><p></p>
+<p></p><figure markdown="" style="width: 70%;">
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p4_img3.png" data-title="Create Outdial Queue2" data-desc-position="top"><img alt="Create Outdial Queue2" src="../assets/lab1_p4_img3.png"></a>
 <figcaption>Creating the Bootcamp_OutVoiceQueue with Outbound queue direction and Outbound campaign enabled</figcaption>
 </figure><p></p>
 <div class="admonition note">
@@ -2165,7 +2168,7 @@
 <li>In Control Hub, navigate to <strong>Contact Center</strong> → <strong>Flows</strong>.</li>
 <li>Click <strong>Manage Flows -&gt; Create Flows</strong> </li>
 <li>Select <strong>Flow</strong> and <strong>Start from scratch</strong> and click <strong>Next</strong></li>
-<li>Name the flow <copy><code>AI_Agent_DebtCollection</code></copy>.</li>
+<li>Name the flow <copy><code>AI_Agent_DebtCollection</code></copy> and select <strong>Voice</strong> as the channel type.</li>
 <li>In the <strong>Global Flow Properties</strong> panel on the right:<ul>
 <li>Under <strong>Global Variables</strong>, click <strong>Add global variables</strong> and add both <code>firstName</code> and <code>lastName</code>.</li>
 </ul>
@@ -2174,7 +2177,7 @@
 <p>From the <strong>Activities Library</strong>, drag a <strong>Play Message</strong> node onto the canvas and connect it to the <strong>NewPhoneContact</strong> Start node.</p>
 <details class="warning" open="open">
 <summary>Warning</summary>
-<p>The <strong>NewPhoneContact</strong> event is being renamed into <strong>NewContact</strong>, so this might be the name you see in your start node.</p>
+<p>The <strong>NewPhoneContact</strong> event is being renamed into <strong>StartFlow</strong>, so this might be the name you see in your start node.</p>
 </details>
 </li>
 <li>
@@ -2206,7 +2209,7 @@
 <ol>
 <li>In Control Hub, navigate to <strong>Contact Center</strong> → <strong>Flows</strong>.</li>
 <li>Click <strong>Manage Flows -&gt; Create Flows</strong> and select <strong>Flow</strong> and <strong>Start from scratch</strong> in the next window. Click <strong>Next</strong></li>
-<li>Name it <copy><code>Outbound_DebtCollection</code></copy>.</li>
+<li>Name it <copy><code>Outbound_DebtCollection</code></copy> and select <strong>Voice</strong> as the channel type.</li>
 <li>In the <strong>Global Flow Properties</strong> panel:<ul>
 <li>Under <strong>Global Variables</strong>, add both <code>firstName</code> and <code>lastName</code>.</li>
 </ul>
@@ -2214,7 +2217,7 @@
 <li>
 <p>The Main flow canvas starts with a <strong>NewPhoneContact</strong> Start node.</p>
 <blockquote>
-<p>Note the Start node might be <strong>NewContact</strong> instead.</p>
+<p>Note the Start node might be <strong>StartFlow</strong> instead.</p>
 </blockquote>
 <p>Connect it to an <strong>End Flow</strong> node as a placeholder — the actual logic is handled in Event flows.</p>
 </li>
@@ -2227,7 +2230,7 @@
 <h4 id="configure-event-flows">Configure Event Flows<a class="headerlink" href="#configure-event-flows" title="Permanent link">¶</a></h4>
 <p>The campaign logic is driven by <strong>Event flows</strong>. Click on <strong>Event flows</strong> at the top of the flow builder to switch to the event flow canvas. You will configure one key event:</p>
 <p><strong>OutboundCampaignCallResult</strong></p>
-<p>This event fires when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live conversation.</p>
+<p>This event triggers when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live conversation.</p>
 <details class="webex" open="open">
 <summary>Configure OutboundCampaignCallResult Event</summary>
 <ol>
@@ -2255,8 +2258,8 @@
 <td><copy><code>ABANDONED</code></copy></td>
 </tr>
 <tr>
-<td><strong>LIVE_VOICE</strong></td>
-<td><copy><code>LIVE_VOICE</code></copy></td>
+<td><strong>LIVE_VOICE_IVR_CAMPAIGN</strong></td>
+<td><copy><code>LIVE_VOICE_IVR_CAMPAIGN</code></copy></td>
 </tr>
 <tr>
 <td><strong>Default</strong></td>
@@ -2292,12 +2295,12 @@
 <figcaption>Play Message node configured with TTS "Goodbye" for AMD and Abandoned call outcomes</figcaption>
 </figure><p></p>
 </details>
-<p><strong>Handling Live Voice (LIVE_VOICE) outcome:</strong></p>
+<p><strong>Handling Live Voice outcome:</strong></p>
 <details class="webex" open="open">
 <summary>Configure Live Voice Routing</summary>
 <ol>
 <li>Drag a <strong>Go To</strong> node onto the canvas.</li>
-<li>Connect the <strong>LIVE_VOICE</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
+<li>Connect the <strong>LIVE_VOICE_IVR_CAMPAIGN</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
 <li>Connect also the <strong>Default</strong> output of the <strong>Case</strong> node to the <strong>Go To</strong> node.</li>
 <li>Configure the <strong>Go To</strong> node:<ul>
 <li><strong>Activity Label</strong>: <code>GoTo_AIAgent</code></li>
@@ -2424,36 +2427,15 @@
 </ul>
 </li>
 <li>
-<p>Under <strong>Entry list</strong>, click <strong>Add More</strong> and add your PSTN numbers:</p>
-<table>
-<thead>
-<tr>
-<th>Entry</th>
-<th>Name</th>
-<th>Contact number</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><code>US-DIALOUT</code></td>
-<td><code>+13502502108</code></td>
-</tr>
-<tr>
-<td>2</td>
-<td><code>PSTN</code></td>
-<td><code>+442046200604</code></td>
-</tr>
-</tbody>
-</table>
+<p>Under <strong>Entry list</strong>, click <strong>Add More</strong> and add your PSTN numbers</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p></p><figure markdown="">
+<p></p><figure markdown="" style="width: 70%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p12_img1.png" data-title="Bootcamp_outANI configuration" data-desc-position="top"><img alt="Bootcamp_outANI configuration" src="../assets/lab1_p12_img1.png"></a>
-<figcaption>Bootcamp_outANI configured with US and UK PSTN numbers for outdial caller ID</figcaption>
+<figcaption>BootcampOutdialANI configured for outdial caller ID</figcaption>
 </figure><p></p>
 </details>
 <hr>
@@ -2463,7 +2445,11 @@
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p13_img1.png" data-title="Campaign Manager welcome screen" data-desc-position="top"><img alt="Campaign Manager welcome screen" src="../assets/lab1_p13_img1.png"></a></p>
 <figcaption>Welcome to Webex Campaign Management — administration checklist</figcaption>
 </figure>
-<p>Complete each section in order as described below.</p>
+<p>Once in the Campaign Manager configuration protal, you will click on the <em>Voice Campaign Administration</em> button in the left navigation panel, and will go through each item as described in the sections below. </p>
+<figure style="width: 30%;">
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p13_img2.png" data-title="Campaign Manager Administration" data-desc-position="top"><img alt="Campaign Manager Administration" src="../assets/lab1_p13_img2.png"></a></p>
+<figcaption>Welcome to Webex Campaign Management — administration checklist</figcaption>
+</figure>
 <h3 id="business-days">Business Days<a class="headerlink" href="#business-days" title="Permanent link">¶</a></h3>
 <p>Business days are used solely for the purpose of contact list expiry calculation. They have no association with 'Business hours' on the Control Hub. We won't use this option as part of this lab.</p>
 <h3 id="contact-modes">Contact Modes<a class="headerlink" href="#contact-modes" title="Permanent link">¶</a></h3>
@@ -2531,6 +2517,10 @@
 <p>If you don´t see the variables, click <em>Refresh from Control Hub</em> at the top-right of the page</p>
 </li>
 </ol>
+<details class="note" open="open">
+<summary>Note</summary>
+<p>Campaign Manager is case-insensitive. If variables in Control Hub differ only by character case, Campaign Manager will treat them as duplicates and only import one of them. E.g. if <em>lastname</em> and <em>Lastname</em> are global variables in Control Hub, Campaign Manager will ignore one of them. </p>
+</details>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Before you can use Global Variables in Campaign Manager, you must designate a <strong>customer-unique-identifier</strong> and <strong>account-unique-identifier</strong> for compliance with call attempt regulations. For this lab, since we are not configuring unique identifiers, this step is skipped.</p>
@@ -2549,8 +2539,8 @@
 <p>Create or <a href="../bcamp_files/contact_list_bootcamp.csv">download</a> a CSV file named <code>contact_list_bootcamp.csv</code> with the following header structure:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>firstName,lastName,phoneNumber
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>John,Smith,+442012345678
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Jane,Doe,+442087654321
 </span></code></pre></div>
+<p>Populate your own customer firstname, lastname and phoneNumber. This will be the customer in your Airtable with the pending debt.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
@@ -2585,8 +2575,8 @@
 <figcaption>Contact mode mapping showing phoneNumber mapped to the Phone contact mode</figcaption>
 </figure><p></p>
 <p><strong>Step 3 — Specify country of all phone numbers:</strong></p>
-<p>Select <strong>United Kingdom +44</strong> (or the appropriate country for your numbers) and set the format to:
-<code>Prefixed with + sign and country code i.e. '+&lt;country code&gt;&lt;phone number&gt;'</code></p>
+<p>Select the appropriate country code for your numbers and set the format to:
+<em><code>Prefixed with + sign and country code i.e. '+&lt;country code&gt;&lt;phone number&gt;'</code></em></p>
 <p></p><figure markdown="" style="width: 80%;">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p18_img1.png" data-title="Country and phone number format" data-desc-position="top"><img alt="Country and phone number format" src="../assets/lab1_p18_img1.png"></a>
 <figcaption>Phone number format set to E.164 with + prefix and country code</figcaption>
@@ -2875,6 +2865,9 @@
 <p>An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.</p>
 </li>
 </ol>
+<p></p><figure markdown="" style="width: 80%;">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p26_img4.png" data-title="Campaign flow" data-desc-position="top"><img alt="Campaign flow" src="../assets/lab1_p26_img4.png"></a>
+</figure><p></p>
 </details>
 <p><strong>Node 1 — Dialer configuration:</strong></p>
 <details class="webex" open="open">
@@ -2894,7 +2887,7 @@
 </tr>
 <tr>
 <td><strong>Outdial ANI</strong></td>
-<td><code>+442046200604</code> <em>(select your PSTN ANI)</em></td>
+<td><code>+442046200604</code> <em>(select your Outdial ANI)</em></td>
 </tr>
 <tr>
 <td><strong>Dialing mode</strong></td>
@@ -2910,7 +2903,7 @@
 </tr>
 </tbody>
 </table>
-<p>Click <strong>Save changes</strong>.</p>
+<p>Click <strong>Save changes</strong> at the right-bottom of the page.</p>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p26_img2.png" data-title="Dialer configuration" data-desc-position="top"><img alt="Dialer configuration" src="../assets/lab1_p26_img2.png"></a>
 </figure><p></p>
@@ -2920,14 +2913,18 @@
 <summary>Configure Contact List Source</summary>
 <ol>
 <li>Click the <strong>Contact list source</strong> node.</li>
-<li>Set <strong>Select contact list source</strong> to <code>Manual file upload</code>.</li>
-<li>Set <strong>Select field mapping</strong> to <code>Bootcamp_field_mapping</code>.</li>
+<li>The <strong>Select contact list source</strong> is by default set to the options <em>File</em> and <em>API</em>. We will use manual file upload.</li>
+<li>Set <strong>Select field mapping</strong> to the field mapping you created before: <code>Bootcamp_field_mapping</code>.</li>
 <li>Set the contact expiration to 10 days.</li>
 <li>Click <strong>Save changes</strong>.</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The actual contact list file will be uploaded after the campaign is activated. For now, just associate the field mapping.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The file mappings can only be changed while the campaign is in <strong>Draft</strong> status.</p>
 </div>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p26_img3.png" data-title="Contact list source configuration" data-desc-position="top"><img alt="Contact list source configuration" src="../assets/lab1_p26_img3.png"></a>
@@ -2959,6 +2956,10 @@
 <li>Leave it checked (enabled).</li>
 <li>Click <strong>Save changes</strong>.</li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note you can define specific campaign exclusion dates that would only apply for the current campaign. We will not use it in this bootcamp.</p>
+</div>
 <p></p><figure markdown="">
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p28_img2.jpeg" data-title="Schedule exclusion dates" data-desc-position="top"><img alt="Schedule exclusion dates" src="../assets/lab1_p28_img2.jpeg"></a>
 </figure><p></p>
@@ -2970,7 +2971,7 @@
 <li>
 <p>Click the <strong>Contact attempts strategy</strong> node, then click <strong>Configure</strong>.</p>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p28_img3.jpeg" data-title="Contact attempts strategy" data-desc-position="top"><img alt="Contact attempts strategy" src="../assets/lab1_p28_img3.jpeg"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p28_img3.png" data-title="Contact attempts strategy" data-desc-position="top"><img alt="Contact attempts strategy" src="../assets/lab1_p28_img3.png"></a>
 </figure><p></p>
 </li>
 <li>
@@ -3057,6 +3058,11 @@
 </details>
 <details class="webex" open="open">
 <summary>Activate Campaign</summary>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Once the campaign is active, the field mappings can not be changed in the <em>Contact List Source</em> node. If it needs to be changed, a new campaign has to be created with the new field mappings (It could be a duplication of an existing one where you just need to change the field mappings item before saving it).</p>
+<p>The file mappings can be changed while the campaign is in <strong>Draft</strong> status.</p>
+</div>
 <ol>
 <li>Back in the Campaign group list, locate <strong>Bootcamp_campaign</strong> (status: <strong>Draft</strong>).</li>
 <li>Click the <strong>⋮ Actions</strong> menu and select <strong>Activate</strong>.</li>
@@ -3111,7 +3117,7 @@
 </ol>
 </details>
 <h3 id="monitor-upload-status">Monitor Upload Status<a class="headerlink" href="#monitor-upload-status" title="Permanent link">¶</a></h3>
-<p>After uploading, the contact list will show a status of <strong>Uploading</strong>, then transition to <strong>Active</strong> once processed. You can see the processing going through different status: <em>Processed, Valid, Eligible...</em>. Make sure you click <strong>Refresh</strong> to see the latest status.</p>
+<p>After uploading, the contact list will show a status of <strong>Uploading</strong>, then it will transition to <strong>Active</strong> once processed. You can see the processing going through different status: <em>Processed, Valid, Eligible...</em>. Make sure you click <strong>Refresh</strong> to see the latest status.</p>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab1_p32_img1.png" data-title="Contact list uploading status" data-desc-position="top"><img alt="Contact list uploading status" src="../assets/lab1_p32_img1.png"></a></p>
 </figure>
@@ -3256,7 +3262,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexesmkd", "navigation.instant", "navigation.top", "navigation.footer", "search.suggest", "content.code.copy", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../template_assets/js/newLoad.js"></script>
       
