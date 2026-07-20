@@ -99,7 +99,7 @@ The outdial queue is what connects your outbound campaign to the agent pool. It 
         | **Outbound campaign** | Enabled (toggle ON) |
         | **Agent assignment** | `Teams` → select `Bootcamp_Team` |
 
-    3. Under **Call distribution**, click **Create a group**, expand it, and select `Bootcamp_Team`.
+    3. Under **Call distribution**, click **Create a group**, expand it, and select your Team.
     4. Fill in the mandatory **Advanced settings**:
 
         - **Service level threshold**: *200*
@@ -110,8 +110,13 @@ The outdial queue is what connects your outbound campaign to the agent pool. It 
 
     <figure markdown>
     ![Create Outdial Queue](./assets/lab1_p4_img2.png)
+    </figure>
+
+    <figure markdown style="width: 70%;">
+    ![Create Outdial Queue2](./assets/lab1_p4_img3.png)
     <figcaption>Creating the Bootcamp_OutVoiceQueue with Outbound queue direction and Outbound campaign enabled</figcaption>
     </figure>
+    
 
     !!! note
         The **Contact direction** and **Channel type** fields cannot be changed after the queue is created. Double-check these values before clicking Create.
@@ -189,13 +194,13 @@ The flow plays a congratulatory TTS message when a live voice contact is detecte
     1. In Control Hub, navigate to **Contact Center** → **Flows**.
     2. Click **Manage Flows -> Create Flows** 
     3. Select **Flow** and **Start from scratch** and click **Next**
-    4. Name the flow <copy>`AI_Agent_DebtCollection`</copy>.
+    4. Name the flow <copy>`AI_Agent_DebtCollection`</copy> and select **Voice** as the channel type.
     3. In the **Global Flow Properties** panel on the right:
         - Under **Global Variables**, click **Add global variables** and add both `firstName` and `lastName`.
     4. From the **Activities Library**, drag a **Play Message** node onto the canvas and connect it to the **NewPhoneContact** Start node.
 
         ???+ Warning
-            The **NewPhoneContact** event is being renamed into **NewContact**, so this might be the name you see in your start node.
+            The **NewPhoneContact** event is being renamed into **StartFlow**, so this might be the name you see in your start node.
 
     5. Configure the **Play Message** node:
         - **Activity Label**: `EndOfLab1`
@@ -224,12 +229,12 @@ Now create the main outbound campaign flow. This flow handles the outbound diall
 
     1. In Control Hub, navigate to **Contact Center** → **Flows**.
     2. Click **Manage Flows -> Create Flows** and select **Flow** and **Start from scratch** in the next window. Click **Next**
-    3. Name it <copy>`Outbound_DebtCollection`</copy>.
+    3. Name it <copy>`Outbound_DebtCollection`</copy> and select **Voice** as the channel type.
     3. In the **Global Flow Properties** panel:
         - Under **Global Variables**, add both `firstName` and `lastName`.
     4. The Main flow canvas starts with a **NewPhoneContact** Start node.
     
-        > Note the Start node might be **NewContact** instead.
+        > Note the Start node might be **StartFlow** instead.
 
         Connect it to an **End Flow** node as a placeholder — the actual logic is handled in Event flows.
 
@@ -244,7 +249,7 @@ The campaign logic is driven by **Event flows**. Click on **Event flows** at the
 
 **OutboundCampaignCallResult**
 
-This event fires when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live conversation.
+This event triggers when the dialler receives a CPA result for an outbound call attempt. It determines whether the call reached an answering machine, was abandoned, or reached a live conversation.
 
 ???+ webex "Configure OutboundCampaignCallResult Event"
 
@@ -259,7 +264,7 @@ This event fires when the dialler receives a CPA result for an outbound call att
             |---|---|
             | **AMD** | <copy>`AMD`</copy> |
             | **ABANDONED** | <copy>`ABANDONED`</copy> |
-            | **LIVE_VOICE** | <copy>`LIVE_VOICE`</copy> |
+            | **LIVE_VOICE_IVR_CAMPAIGN** | <copy>`LIVE_VOICE_IVR_CAMPAIGN`</copy> |
             | **Default** | (default fallthrough) |
 
     <figure markdown style="width: 70%;">
@@ -285,12 +290,12 @@ This event fires when the dialler receives a CPA result for an outbound call att
     <figcaption>Play Message node configured with TTS "Goodbye" for AMD and Abandoned call outcomes</figcaption>
     </figure>
 
-**Handling Live Voice (LIVE_VOICE) outcome:**
+**Handling Live Voice outcome:**
 
 ???+ webex "Configure Live Voice Routing"
 
     1. Drag a **Go To** node onto the canvas.
-    2. Connect the **LIVE_VOICE** output of the **Case** node to the **Go To** node.
+    2. Connect the **LIVE_VOICE_IVR_CAMPAIGN** output of the **Case** node to the **Go To** node.
     3. Connect also the **Default** output of the **Case** node to the **Go To** node.
     3. Configure the **Go To** node:
         - **Activity Label**: `GoTo_AIAgent`
@@ -365,18 +370,13 @@ The Outdial ANI is the caller ID displayed to customers when they receive the ou
     1. In Control Hub, navigate to **Contact Center** → **Outdial ANI**.
     2. Click **Create** and configure:
         - **Name**: `Bootcamp_outANI`
-    3. Under **Entry list**, click **Add More** and add your PSTN numbers:
-
-        | Entry | Name | Contact number |
-        |---|---|---|
-        | 1 | `US-DIALOUT` | `+13502502108` |
-        | 2 | `PSTN` | `+442046200604` |
+    3. Under **Entry list**, click **Add More** and add your PSTN numbers
 
     4. Click **Save**.
 
-    <figure markdown>
+    <figure markdown style="width: 70%;">
     ![Bootcamp_outANI configuration](./assets/lab1_p12_img1.png)
-    <figcaption>Bootcamp_outANI configured with US and UK PSTN numbers for outdial caller ID</figcaption>
+    <figcaption>BootcampOutdialANI configured for outdial caller ID</figcaption>
     </figure>
 
 ---
@@ -391,7 +391,12 @@ Open the **Webex Campaign Management** portal. On first login, you will see the 
 <figcaption>Welcome to Webex Campaign Management — administration checklist</figcaption>
 </figure>
 
-Complete each section in order as described below.
+Once in the Campaign Manager configuration protal, you will click on the *Voice Campaign Administration* button in the left navigation panel, and will go through each item as described in the sections below. 
+
+<figure markdown style="width: 30%;">
+![Campaign Manager Administration](./assets/lab1_p13_img2.png)
+<figcaption>Welcome to Webex Campaign Management — administration checklist</figcaption>
+</figure>
 
 ### Business Days
 
@@ -439,6 +444,9 @@ Global variables are synced from Control Hub. They appear here for informational
 
         If you don´t see the variables, click *Refresh from Control Hub* at the top-right of the page
 
+    ???+ note
+        Campaign Manager is case-insensitive. If variables in Control Hub differ only by character case, Campaign Manager will treat them as duplicates and only import one of them. E.g. if *lastname* and *Lastname* are global variables in Control Hub, Campaign Manager will ignore one of them. 
+
     !!! important
         Before you can use Global Variables in Campaign Manager, you must designate a **customer-unique-identifier** and **account-unique-identifier** for compliance with call attempt regulations. For this lab, since we are not configuring unique identifiers, this step is skipped.
 
@@ -462,8 +470,9 @@ Before creating the field mapping, create your contact list file.
     ```csv
     firstName,lastName,phoneNumber
     John,Smith,+442012345678
-    Jane,Doe,+442087654321
     ```
+
+    Populate your own customer firstname, lastname and phoneNumber. This will be the customer in your Airtable with the pending debt.
 
     !!! note
         - All phone numbers must use the E.164 format with the `+` prefix and country code (e.g. `+442012345678`).
@@ -503,8 +512,8 @@ Before creating the field mapping, create your contact list file.
 
     **Step 3 — Specify country of all phone numbers:**
 
-    Select **United Kingdom +44** (or the appropriate country for your numbers) and set the format to:
-    `Prefixed with + sign and country code i.e. '+<country code><phone number>'`
+    Select the appropriate country code for your numbers and set the format to:
+    *`Prefixed with + sign and country code i.e. '+<country code><phone number>'`*
 
     <figure markdown style="width: 80%;">
     ![Country and phone number format](./assets/lab1_p18_img1.png)
@@ -762,6 +771,10 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
     3. An untitled campaign opens with a visual node-based configuration canvas. Work through each node from left to right.
 
+    <figure markdown style="width: 80%;">
+        ![Campaign flow](./assets/lab1_p26_img4.png)
+    </figure>
+
 **Node 1 — Dialer configuration:**
 
 ???+ webex "Configure Dialer"
@@ -771,12 +784,12 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     | Field | Value |
     |---|---|
     | **Control Hub channel** | `Campaign_EP` |
-    | **Outdial ANI** | `+442046200604` *(select your PSTN ANI)* |
+    | **Outdial ANI** | `+442046200604` *(select your Outdial ANI)* |
     | **Dialing mode** | `Progressive IVR` |
     | **CPA parameters** | Enabled (leave defaults) |
     | **# of contacts to be sent to the dialer in each push** | `100` |
 
-    Click **Save changes**.
+    Click **Save changes** at the right-bottom of the page.
 
     <figure markdown>
     ![Dialer configuration](./assets/lab1_p26_img2.png)
@@ -787,13 +800,18 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 ???+ webex "Configure Contact List Source"
 
     1. Click the **Contact list source** node.
-    2. Set **Select contact list source** to `Manual file upload`.
-    3. Set **Select field mapping** to `Bootcamp_field_mapping`.
+    2. The **Select contact list source** is by default set to the options *File* and *API*. We will use manual file upload.
+    3. Set **Select field mapping** to the field mapping you created before: `Bootcamp_field_mapping`.
     4. Set the contact expiration to 10 days.
     4. Click **Save changes**.
 
     !!! note
         The actual contact list file will be uploaded after the campaign is activated. For now, just associate the field mapping.
+
+    !!! Warning
+        
+        The file mappings can only be changed while the campaign is in **Draft** status.
+
 
     <figure markdown>
     ![Contact list source configuration](./assets/lab1_p26_img3.png)
@@ -823,6 +841,10 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     3. Leave it checked (enabled).
     4. Click **Save changes**.
 
+    !!! Note
+        Note you can define specific campaign exclusion dates that would only apply for the current campaign. We will not use it in this bootcamp.
+
+
     <figure markdown>
     ![Schedule exclusion dates](./assets/lab1_p28_img2.jpeg)
     </figure>
@@ -834,7 +856,7 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
     1. Click the **Contact attempts strategy** node, then click **Configure**.
 
         <figure markdown>
-        ![Contact attempts strategy](./assets/lab1_p28_img3.jpeg)
+        ![Contact attempts strategy](./assets/lab1_p28_img3.png)
         </figure>
 
     2. Configure the following sections:
@@ -903,6 +925,11 @@ A campaign group is a container (wrapper) for one or more campaigns. You must cr
 
 ???+ webex "Activate Campaign"
 
+    !!! Warning
+        Once the campaign is active, the field mappings can not be changed in the *Contact List Source* node. If it needs to be changed, a new campaign has to be created with the new field mappings (It could be a duplication of an existing one where you just need to change the field mappings item before saving it).
+
+        The file mappings can be changed while the campaign is in **Draft** status.
+    
     1. Back in the Campaign group list, locate **Bootcamp_campaign** (status: **Draft**).
     2. Click the **⋮ Actions** menu and select **Activate**.
     3. In the confirmation dialog, click **Confirm**.
@@ -958,7 +985,7 @@ Now that the campaign is active, upload your contact list CSV to trigger the out
 
 ### Monitor Upload Status
 
-After uploading, the contact list will show a status of **Uploading**, then transition to **Active** once processed. You can see the processing going through different status: *Processed, Valid, Eligible...*. Make sure you click **Refresh** to see the latest status.
+After uploading, the contact list will show a status of **Uploading**, then it will transition to **Active** once processed. You can see the processing going through different status: *Processed, Valid, Eligible...*. Make sure you click **Refresh** to see the latest status.
 
 
 
