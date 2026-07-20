@@ -614,9 +614,15 @@ During this lab section we will focus on how to effectively setup an AI Assistan
 
 ### Inbound/Outbound Detection for Faster Testing
 
-During the outbound campaign flow, calls are initiated by the Campaign Manager and can take 2-5 minutes to be generated. To speed up testing during this lab, you will add a simple check at the start of the flow to detect whether the call is outbound (initiated by the campaign) or inbound (you calling the entry point directly from your phone). This allows you to test the AI Agent immediately without waiting for the dialer.
+During the outbound campaign flow, calls are initiated by the Campaign Manager and can take 2-5 minutes to be generated. To speed up testing during this lab, you will define and inbound entry point to your flow and you will add a simple check at the start of the flow to detect whether the call is outbound (initiated by the campaign) or inbound (you calling the entry point directly from your phone). This allows you to test the AI Agent immediately without waiting for the dialer.
 
 The logic is straightforward: if the ANI (the number that initiated the call) matches the campaign outdial number, the call is outbound and we use the DNIS (the customer's number) as the phone number sent to the AI Agent. If it does not match, the call is inbound and we use the ANI (your phone number) instead.
+
+Remember you need to define an Inbound telephony entry point under Channels in Control Hub, assign a DN to the channel and configure your *AI_Agent_DebtCollection* flow as the Routing flow in the Channel.
+
+<figure markdown style="width: 70%;">
+![Inbound Test - Entry Point](./assets/lab3_inbound_test1.png)
+</figure>
 
 ???+ webex "Configure Call Direction Detection"
 
@@ -629,7 +635,7 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
 
     3. On the canvas, drag a **Condition** node immediately after the `NewPhoneContact` start node.
 
-        >Note the start node might appear as *NewContact* in your flow.
+        >Note the start node might appear as *StartFlow* in your flow.
 
     4. Rename the node to <copy>`Detect_Call_Direction`</copy>.
     5. Configure the condition expression:
@@ -638,21 +644,19 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
 
         Replace `+XXXXXXXXXXX` with the outdial ANI number configured in your campaign (Lab 1.5). 
         
-        > If the start node in your flow has been moved to **NewContact**, the system variable will show up as **NewContact.ANI**. 
 
     6. **True Path (Outbound)**:
         - Drag a **Set Variable** node onto the canvas and connect it to the **True** output of the Condition node.
         - Rename the node to <copy>`Set_Outbound_Phone`</copy>.
         - **Variable**: select `phone_number`
         - **Set Value**: `{{NewPhoneContact.DNIS}}`
-            
-            > or *NewContact.DNIS* if your Start node is renamed to **NewContact**
+
 
     7. **False Path (Inbound)**:
     
         ???+ inline end "Inbound Test - Flow View"
             <figure markdown>
-            ![Inbound Test - Flow View](./assets/lab3_inbound_test.png)
+            ![Inbound Test - Flow View](./assets/lab3_inbound_test2.png)
             </figure>
         - Drag a **Set Variable** node onto the canvas and connect it to the **False** output of the Condition node.
         - Rename the node to <copy>`Set_Inbound_Phone`</copy>.
@@ -664,7 +668,6 @@ The logic is straightforward: if the ANI (the number that initiated the call) ma
             | `firstName` | `John` |
             | `lastName` | `Doe` |
 
-            > Remember it might be *NewContact.ANI* in your flow.
         
         Replace `John` and `Doe` with the first name and last name of the test customer in your Airtable Customers table.
 

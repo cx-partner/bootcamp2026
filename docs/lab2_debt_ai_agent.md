@@ -1795,9 +1795,12 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
     3. Delete the **Play Message** node
     4. From the *Activities Library* drag and drop a **Virtual Agent V2** to the right of the **NewPhoneContact** event. 
 
-        > Note the event may appear as **NewContact** in your flow. 
+        > Note the event may appear as **StartFlow** in your flow. 
 
     5. Connect the **NewPhoneContact** node to the new node.
+
+        > Note the **NewPhoneContact** node is now renamed to **StartFlow**
+
     6. Click on the **Virtual Agent V2** node and configure the settings below in the *Activity Settings* panel on the right side of the canvas. 
 
         - Click in the pencil of the **Activity Label** and provide a name: <copy>DebtCollectionAgent</copy>. Make sure you click the tick on the right after editing to save the name. 
@@ -1816,9 +1819,6 @@ In the final stage of Lab 2, you will bridge the gap between the Campaign Manage
             ``` 
         
         The variables **firstName** and **lastName** on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the *Outbound_DebtCollection* flow to this flow. 
-
-        ???+ Warning
-            If the starting node has been renamed to **NewContact** and has been already pushed to your tenant, make sure you use the variable: *NewContact.DNIS* instead of the old *NewPhoneContact.DNIS* for the phoneNumber value. 
 
         The variables **phoneNumber**, **firstName** and **lastName** on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).
 
