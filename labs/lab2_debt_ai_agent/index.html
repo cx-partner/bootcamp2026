@@ -4276,11 +4276,14 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 <li>
 <p>From the <em>Activities Library</em> drag and drop a <strong>Virtual Agent V2</strong> to the right of the <strong>NewPhoneContact</strong> event. </p>
 <blockquote>
-<p>Note the event may appear as <strong>NewContact</strong> in your flow. </p>
+<p>Note the event may appear as <strong>StartFlow</strong> in your flow. </p>
 </blockquote>
 </li>
 <li>
 <p>Connect the <strong>NewPhoneContact</strong> node to the new node.</p>
+<blockquote>
+<p>Note the <strong>NewPhoneContact</strong> node is now renamed to <strong>StartFlow</strong></p>
+</blockquote>
 </li>
 <li>
 <p>Click on the <strong>Virtual Agent V2</strong> node and configure the settings below in the <em>Activity Settings</em> panel on the right side of the canvas. </p>
@@ -4301,10 +4304,6 @@ Before leaving the flow editor, make sure you <strong>[Make Live]</strong> the f
 </li>
 </ul>
 <p>The variables <strong>firstName</strong> and <strong>lastName</strong> on the right are defined as Global Variables and its value is assigned in the outbound campaign from the contact list and mapped from the <em>Outbound_DebtCollection</em> flow to this flow. </p>
-<details class="warning" open="open">
-<summary>Warning</summary>
-<p>If the starting node has been renamed to <strong>NewContact</strong> and has been already pushed to your tenant, make sure you use the variable: <em>NewContact.DNIS</em> instead of the old <em>NewPhoneContact.DNIS</em> for the phoneNumber value. </p>
-</details>
 <p>The variables <strong>phoneNumber</strong>, <strong>firstName</strong> and <strong>lastName</strong> on the left must be the same variables you have used in your AI Agent configuration (in the welcome message, the description or the activities).</p>
 <ul>
 <li>In the <em>Decryption Settings</em>, set the <strong>Enable decryption</strong> slider to ease troubleshooting during debugging. Make sure the <strong>enable decryption</strong> slider is set in the <strong>Global Flow Properties</strong> panel </li>

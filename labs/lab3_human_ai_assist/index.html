@@ -2481,8 +2481,12 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </details>
 <h2 id="testing">Testing <img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f9ea.svg" title=":test_tube:"><a class="headerlink" href="#testing" title="Permanent link">¶</a></h2>
 <h3 id="inboundoutbound-detection-for-faster-testing">Inbound/Outbound Detection for Faster Testing<a class="headerlink" href="#inboundoutbound-detection-for-faster-testing" title="Permanent link">¶</a></h3>
-<p>During the outbound campaign flow, calls are initiated by the Campaign Manager and can take 2-5 minutes to be generated. To speed up testing during this lab, you will add a simple check at the start of the flow to detect whether the call is outbound (initiated by the campaign) or inbound (you calling the entry point directly from your phone). This allows you to test the AI Agent immediately without waiting for the dialer.</p>
+<p>During the outbound campaign flow, calls are initiated by the Campaign Manager and can take 2-5 minutes to be generated. To speed up testing during this lab, you will define and inbound entry point to your flow and you will add a simple check at the start of the flow to detect whether the call is outbound (initiated by the campaign) or inbound (you calling the entry point directly from your phone). This allows you to test the AI Agent immediately without waiting for the dialer.</p>
 <p>The logic is straightforward: if the ANI (the number that initiated the call) matches the campaign outdial number, the call is outbound and we use the DNIS (the customer's number) as the phone number sent to the AI Agent. If it does not match, the call is inbound and we use the ANI (your phone number) instead.</p>
+<p>Remember you need to define an Inbound telephony entry point under Channels in Control Hub, assign a DN to the channel and configure your <em>AI_Agent_DebtCollection</em> flow as the Routing flow in the Channel.</p>
+<figure style="width: 70%;">
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_inbound_test1.png" data-title="Inbound Test - Entry Point" data-desc-position="top"><img alt="Inbound Test - Entry Point" src="../assets/lab3_inbound_test1.png"></a></p>
+</figure>
 <details class="webex" open="open">
 <summary>Configure Call Direction Detection</summary>
 <ol>
@@ -2509,7 +2513,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>
 <p>On the canvas, drag a <strong>Condition</strong> node immediately after the <code>NewPhoneContact</code> start node.</p>
 <blockquote>
-<p>Note the start node might appear as <em>NewContact</em> in your flow.</p>
+<p>Note the start node might appear as <em>StartFlow</em> in your flow.</p>
 </blockquote>
 </li>
 <li>
@@ -2521,9 +2525,6 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li><strong>Expression</strong>: <copy><code>{{NewPhoneContact.ANI=="+XXXXXXXXXXX"}}</code></copy></li>
 </ul>
 <p>Replace <code>+XXXXXXXXXXX</code> with the outdial ANI number configured in your campaign (Lab 1.5). </p>
-<blockquote>
-<p>If the start node in your flow has been moved to <strong>NewContact</strong>, the system variable will show up as <strong>NewContact.ANI</strong>. </p>
-</blockquote>
 </li>
 <li>
 <p><strong>True Path (Outbound)</strong>:</p>
@@ -2531,12 +2532,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <li>Drag a <strong>Set Variable</strong> node onto the canvas and connect it to the <strong>True</strong> output of the Condition node.</li>
 <li>Rename the node to <copy><code>Set_Outbound_Phone</code></copy>.</li>
 <li><strong>Variable</strong>: select <code>phone_number</code></li>
-<li>
-<p><strong>Set Value</strong>: <code>{{NewPhoneContact.DNIS}}</code></p>
-<blockquote>
-<p>or <em>NewContact.DNIS</em> if your Start node is renamed to <strong>NewContact</strong></p>
-</blockquote>
-</li>
+<li><strong>Set Value</strong>: <code>{{NewPhoneContact.DNIS}}</code></li>
 </ul>
 </li>
 <li>
@@ -2544,7 +2540,7 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 <details class="inline end" open="open">
 <summary>Inbound Test - Flow View</summary>
 <p></p><figure markdown="">
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_inbound_test.png" data-title="Inbound Test - Flow View" data-desc-position="top"><img alt="Inbound Test - Flow View" src="../assets/lab3_inbound_test.png"></a>
+<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../assets/lab3_inbound_test2.png" data-title="Inbound Test - Flow View" data-desc-position="top"><img alt="Inbound Test - Flow View" src="../assets/lab3_inbound_test2.png"></a>
 </figure><p></p>
 </details>
 <ul>
@@ -2574,9 +2570,6 @@ an AI Assistant is very different. On the AI Agent side you have to ask tell it 
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>Remember it might be <em>NewContact.ANI</em> in your flow.</p>
-</blockquote>
 </li>
 </ul>
 <p>Replace <code>John</code> and <code>Doe</code> with the first name and last name of the test customer in your Airtable Customers table.</p>
