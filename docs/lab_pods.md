@@ -6,9 +6,9 @@ If the **Pod#** has been allocated to you, the *#* number will determine the use
 
 | user type |  user Id |  Password |
 | ----      | ----     |   ----    |
-| admin     | bootcampfy26+admin#@gmail.com | Bootcamp!26 |
-| agent    | bootcampfy26+agent#@gmail.com | Bootcamp!26 |
-| customer | bootcampfy26+cust#@gmail.com | Bootcamp!26 |
+| admin     | bootcampfy26+admin#@gmail.com | xxxxxxxx |
+| agent    | bootcampfy26+agent#@gmail.com | xxxxxxxx |
+| customer | bootcampfy26+cust#@gmail.com | xxxxxxxx |
 
 All the users in the Bootcamp tenant are assigned to a US location (Office) with US numbers. 
 
