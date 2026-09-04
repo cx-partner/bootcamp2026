@@ -1,8 +1,8 @@
 ---
-site_name: "2026 Webex Contact Center Partner Bootcamp - Partner Pre-requisites" 
-site_description: "Partner Tenant Pre-requisites"
-site_author: Luis Garcia Delgado, Juan Corral, Sebastian Hernandez, Stephanie Ross
-site_url: https://cx-partner.github.io/bootcamp2026/pre-req/
+site_name: "How To Use GitHub for Mkdocs documentation" 
+site_description: "How to Use Guide"
+site_author: Anonymous
+site_url: https://cx-partner.github.io/bootcamp2026/how-to-use/
 copyright: Copyright &copy; 2026 Cisco
 theme:
   name: material
