@@ -44,7 +44,7 @@ jobs:
       - name: Build Limited Site
         run: mkdocs build -f mkdocs-howtouse.yml -d site/how-to-use
 
-      # 3. Deploy the entire 'site' folder to the gh-pages branch
+      # 4. Deploy the entire 'site' folder to the gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

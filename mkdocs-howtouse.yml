@@ -52,7 +52,7 @@ plugins:
         - "lab*.md"             # Exclude all files in the root
         - "overview.md"        # Exclude all files in the docs folder
         - "conclusion.md"
-        - "how*.md"
+        - "pre-req*.md"
         - "Webex*.md"
   
   # - with-pdf:
@@ -112,7 +112,7 @@ markdown_extensions:
   
 
 nav:
-#  - Home: index.md
+# - Home: index.md
 #  - Readme:
 #      - 2026 WxCC Bootcamp: overview.md
 #  - Pre-requisites: 
@@ -135,13 +135,13 @@ nav:
 #      - NovaPay payment service: lab_novapay.md
 
   - How to use this guide:
-      - Setting up and using the tool:
-        - Initial Setup: howToUse/initialSetup.md
-        - Using the tool after the initial setup: howToUse/postInitial.md
-        - Publishing your changes: howToUse/syncChanges.md
-      - Styling and Advanced Features:
-        - Markdown and Other References: howToUse/references.md
-        - Custom Features: howToUse/customFeatures.md
-        - Custom Admonitions: howToUse/admonition.md
+    - Setting up and using the tool:
+      - Initial Setup: howToUse/initialSetup.md
+      - Using the tool after the initial setup: howToUse/postInitial.md
+      - Publishing your changes: howToUse/syncChanges.md
+    - Styling and Advanced Features:
+      - Markdown and Other References: howToUse/references.md
+      - Custom Features: howToUse/customFeatures.md
+      - Custom Admonitions: howToUse/admonition.md
 
 #  - Webex Bank Rewards Program: ./bcamp_files/Webex_Bank_Rewards_Program.md
