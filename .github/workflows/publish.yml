@@ -39,6 +39,11 @@ jobs:
       - name: Build Limited Site
         run: mkdocs build -f mkdocs-prereq.yml -d site/pre-req
 
+      # 3. Build the Limited Site (How to Use) into a subfolder named 'how-to-use'
+      # Accessible at: https://cx-partner.github.io/bootcamp2026/how-to-use/
+      - name: Build Limited Site
+        run: mkdocs build -f mkdocs-howtouse.yml -d site/how-to-use
+
       # 3. Deploy the entire 'site' folder to the gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
